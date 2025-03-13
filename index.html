@@ -612,7 +612,88 @@
             }
         }
         
-        /* Media Queries */
+        /* Language Selector */
+        .language-selector {
+            position: relative;
+            margin-left: 20px;
+        }
+        
+        .language-btn {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .language-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .language-btn img {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            border-radius: 50%;
+        }
+        
+        .language-btn span {
+            margin-right: 6px;
+        }
+        
+        .language-btn i {
+            font-size: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .language-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 150px;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s;
+        }
+        
+        .language-selector.active .language-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(5px);
+        }
+        
+        .language-selector.active .language-btn i {
+            transform: rotate(180deg);
+        }
+        
+        .language-option {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .language-option:hover {
+            background: #f5f7fa;
+        }
+        
+        .language-option img {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+            border-radius: 50%;
+        }
         @media (max-width: 992px) {
             nav ul {
                 position: fixed;
@@ -647,6 +728,12 @@
             .hero p {
                 font-size: 18px;
             }
+            
+            .language-selector {
+                position: absolute;
+                top: 20px;
+                right: 70px;
+            }
         }
         
         @media (max-width: 768px) {
@@ -670,6 +757,18 @@
             
             .contact-form {
                 padding: 30px 20px;
+            }
+            
+            .header-container {
+                padding: 0 15px;
+            }
+            
+            .language-btn span {
+                display: none;
+            }
+            
+            .language-btn {
+                padding: 8px;
             }
         }
         
@@ -703,6 +802,35 @@
                     <li><a href="#contact">Contact</a></li>
                 </ul>
             </nav>
+            <div class="language-selector" id="languageSelector">
+                <button class="language-btn">
+                    <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMCAwIDY0IDY0Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0wIDBoNjR2NjRIMHoiLz48cGF0aCBmaWxsPSIjMzkzOUE1IiBkPSJNMCAwaDMydjMyaC0zMnoiLz48cGF0aCBmaWxsPSIjREY0NzUzIiBkPSJNNjQgMHY2NEgwVjMySDBWMGg2NHoiLz48cGF0aCBmaWxsPSIjRkZGRkZGIiBmaWxsLXJ1bGU9Im5vbnplcm8iIGQ9Ik03LjY2IDEwLjkxbC0xLjA2LjY3Ljc2IDIuMTRMNC45NyAxMGgtMS45TDIuODIgMDIuNjhsMS42LS40MmgyLjU1bDEuMzMgNy43LTEuMDYuNjd6TTIwLjU1IDEwLjM2bC41IDQuMDctMS43OS0yLjU2TDE3LjMgOC4zNGgtMi4wNkwxMy4zIDExLjg3bC0uNTEtNC4wOCAxLjY3LS44LjU2IDQuNDYgMS45OC0zLjcxaDEuNkwyMC42IDE0LjQ1bC0uNTYtNC44NSAxLjc4LjhMMjAuNTUgMTAuMzZ6Ii8+PC9nPjwvc3ZnPg==" alt="English">
+                    <span>English</span>
+                    <i>▼</i>
+                </button>
+                <div class="language-dropdown">
+                    <div class="language-option" data-lang="en">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMCAwIDY0IDY0Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0wIDBoNjR2NjRIMHoiLz48cGF0aCBmaWxsPSIjMzkzOUE1IiBkPSJNMCAwaDMydjMyaC0zMnoiLz48cGF0aCBmaWxsPSIjREY0NzUzIiBkPSJNNjQgMHY2NEgwVjMySDBWMGg2NHoiLz48cGF0aCBmaWxsPSIjRkZGRkZGIiBmaWxsLXJ1bGU9Im5vbnplcm8iIGQ9Ik03LjY2IDEwLjkxbC0xLjA2LjY3Ljc2IDIuMTRMNC45NyAxMGgtMS45TDIuODIgMDIuNjhsMS42LS40MmgyLjU1bDEuMzMgNy43LTEuMDYuNjd6TTIwLjU1IDEwLjM2bC41IDQuMDctMS43OS0yLjU2TDE3LjMgOC4zNGgtMi4wNkwxMy4zIDExLjg3bC0uNTEtNC4wOCAxLjY3LS44LjU2IDQuNDYgMS45OC0zLjcxaDEuNkwyMC42IDE0LjQ1bC0uNTYtNC44NSAxLjc4LjhMMjAuNTUgMTAuMzZ6Ii8+PC9nPjwvc3ZnPg==" alt="English">
+                        English
+                    </div>
+                    <div class="language-option" data-lang="id">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMCAwIDY0IDY0Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiNGRkZGRkYiIGQ9Ik0wIDBoNjR2MzJIMHoiLz48cGF0aCBmaWxsPSIjQ0UxMTI2IiBkPSJNMCAzMmg2NHYzMkgweiIvPjwvZz48L3N2Zz4=" alt="Indonesian">
+                        Indonesia
+                    </div>
+                    <div class="language-option" data-lang="es">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMCAwIDY0IDY0Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiNDOEMwOUIiIGQ9Ik0wIDBoNjR2MTJIMHpNMCA1Mmg2NHYxMkgweiIvPjxwYXRoIGZpbGw9IiNDODQxMkYiIGQ9Ik0wIDEyaDY0djQwSDB6Ii8+PC9nPjwvc3ZnPg==" alt="Spanish">
+                        Español
+                    </div>
+                    <div class="language-option" data-lang="zh">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMCAwIDY0IDY0Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiNERTI5MTAiIGQ9Ik0wIDBoNjR2NjRIMHoiLz48cGF0aCBmaWxsPSIjRkZERTAwIiBmaWxsLXJ1bGU9Im5vbnplcm8iIGQ9Ik0xMiA4bDIuNiA4aDE4LjI4TDI0LjggMjIuMmwyLjYgOC0zLjA3LTUuNS0yLjQ2LTQuNS0zLjA3IDUuNSAyLjYtOC04LjA4LTYuMnpNMzIgOGwtLjM0IDEuMS0uMzMgMS4xLS4zNCAxLjEuOTMuNyAxLjIzLjkgMS0uNzYuNzgtLjU3LjQ0IDEtLjk1LjctLjc2LjU3LTEgLjc2LS40NC0xLS43Ny0uNTgtMS0uNzYgMS4xNC0uMzIuODgtLjI1LjMzLTEuMXpNMzYgMTRsMS41NSA0LjhoMS44M2wtMS40OCA0LjU1LTIuMi0xLjYtMS43NSAxLjI3IDEuNTUtNC43OC0xLjgtMS4zLTEuNDMgMS4wNSAxLjQ4LTQuNTZoMS44MmwtLjAyLjAxIDEuNzUtMS4yNHpNMjQgMjFsMS41NSA0LjhoMTQuOTNsLTEuNDggNC41Ni04LjA4LTYuMi04LjEgNi4xNSAxLjU1LTQuNzgtMTQtMTAuMTVoMS43OGwtLjAyLjAyIDExLjg3IDUuNnoiLz48L2c+PC9zdmc+" alt="Chinese">
+                        中文
+                    </div>
+                    <div class="language-option" data-lang="ar">
+                        <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI2NCIgaGVpZ2h0PSI2NCIgdmlld0JveD0iMCAwIDY0IDY0Ij48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGZpbGw9IiMwMDZDMzUiIGQ9Ik0wIDBoNjR2NjRIMHoiLz48cGF0aCBmaWxsPSIjRkZGRkZGIiBmaWxsLXJ1bGU9Im5vbnplcm8iIGQ9Ik0yMCAyNmMtMS4xMDUgMC0yIC44OTUtMiAydjEwYzAgMS4xMDUuODk1IDIgMiAyaDE4YTQgNCAwIDAgMCAwLThoLTZ2LTJoNnYtNGgtMTh6bTQgNGgxMHYySDI0di0yeiIvPjwvZz48L3N2Zz4=" alt="Arabic">
+                        العربية
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -1349,6 +1477,48 @@
         // Initialize testimonials display
         document.addEventListener('DOMContentLoaded', function() {
             displayTestimonials(1);
+            
+            // Language selector functionality
+            const languageSelector = document.getElementById('languageSelector');
+            const languageBtn = languageSelector.querySelector('.language-btn');
+            const languageOptions = languageSelector.querySelectorAll('.language-option');
+            
+            // Toggle language dropdown
+            languageBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                languageSelector.classList.toggle('active');
+            });
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                if (!languageSelector.contains(e.target)) {
+                    languageSelector.classList.remove('active');
+                }
+            });
+            
+            // Language selection
+            languageOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    const langName = this.textContent.trim();
+                    const flagImg = this.querySelector('img').getAttribute('src');
+                    
+                    // Update button with selected language
+                    languageBtn.querySelector('span').textContent = langName;
+                    languageBtn.querySelector('img').setAttribute('src', flagImg);
+                    languageBtn.querySelector('img').setAttribute('alt', langName);
+                    
+                    // Close dropdown
+                    languageSelector.classList.remove('active');
+                    
+                    // Here you would typically implement language change functionality
+                    // For demonstration purposes, we'll just show an alert
+                    alert(`Language changed to ${langName}`);
+                    
+                    // In a real implementation, you would load translated content here
+                    // changeLanguage(lang);
+                });
+            });
         });
     </script>
 </body>
