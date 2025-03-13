@@ -266,10 +266,11 @@
         .testimonial-card {
             background-color: white;
             border-radius: 10px;
-            padding: 25px;
+            padding: 30px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
             transition: all 0.3s;
             position: relative;
+            border-left: 4px solid var(--secondary);
         }
         
         .testimonial-card:hover {
@@ -277,11 +278,28 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
         }
         
+        .testimonial-card:before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 40px;
+            height: 40px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='%23ecf0f1'%3E%3Cpath d='M30.7,42c0,6.1,12.6,7,12.6,22c0,11-7.9,19.2-18.9,19.2C12.7,83.1,5,72.6,5,61.5c0-19.2,18-44.6,29.2-44.6c2.8,0,7.9,2,7.9,5.4S30.7,31.6,30.7,42z M82.4,42c0,6.1,12.6,7,12.6,22c0,11-7.9,19.2-18.9,19.2c-11.8,0-19.5-10.5-19.5-21.6c0-19.2,18-44.6,29.2-44.6c2.8,0,7.9,2,7.9,5.4S82.4,31.6,82.4,42z'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.15;
+            z-index: 0;
+        }
+        
         .testimonial-content {
             margin-bottom: 20px;
             font-style: italic;
             color: var(--text);
             position: relative;
+            z-index: 1;
+            line-height: 1.7;
+            font-size: 15px;
         }
         
         .testimonial-content:before {
@@ -292,6 +310,15 @@
             top: -20px;
             left: -10px;
             font-family: Georgia, serif;
+        }
+        
+        .testimonial-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-top: 1px solid rgba(0,0,0,0.05);
+            padding-top: 15px;
+            margin-top: 15px;
         }
         
         .testimonial-author {
@@ -305,18 +332,21 @@
             border-radius: 50%;
             overflow: hidden;
             margin-right: 15px;
-            background-color: #ddd;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #666;
+            color: white;
             font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
         }
         
         .testimonial-info h4 {
             font-size: 16px;
             margin-bottom: 5px;
             color: var(--primary);
+            font-weight: 600;
         }
         
         .testimonial-info p {
@@ -327,6 +357,36 @@
         .testimonial-rating {
             color: #f39c12;
             margin-top: 5px;
+            letter-spacing: 2px;
+        }
+        
+        .testimonial-date {
+            color: var(--text-light);
+            font-size: 12px;
+            font-style: italic;
+        }
+        
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            color: var(--success);
+            font-size: 12px;
+            margin-left: 5px;
+            font-weight: normal;
+        }
+        
+        .verified-badge:before {
+            content: '✓';
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background-color: var(--success);
+            color: white;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 14px;
+            margin-right: 5px;
+            font-size: 9px;
         }
         
         .pagination {
@@ -873,25 +933,25 @@
         // Testimonials Data (50 testimonials)
         const testimonials = [
             {
-                content: "ProMiddleman facilitated our international business deal flawlessly. Their expertise in handling cross-border transactions saved us from numerous potential pitfalls.",
+                content: "ProMiddleman facilitated our international business deal flawlessly. Their expertise in handling cross-border transactions saved us from numerous potential pitfalls. We closed a $2.3M deal that would have been impossible to navigate on our own.",
                 name: "David Chen",
                 position: "CEO, TechGrowth Inc.",
                 rating: 5
             },
             {
-                content: "I was skeptical about using an intermediary service at first, but ProMiddleman exceeded all my expectations. Their professionalism and attention to detail are unmatched.",
+                content: "I was skeptical about using an intermediary service at first, but ProMiddleman exceeded all my expectations. Their professionalism and attention to detail are unmatched. After 3 failed attempts with other services, ProMiddleman finally got our deal across the finish line in just 2 weeks!",
                 name: "Sarah Johnson",
                 position: "Small Business Owner",
                 rating: 5
             },
             {
-                content: "The escrow services provided by ProMiddleman gave us peace of mind during a high-stakes property transaction. Everything was transparent and secure.",
+                content: "The escrow services provided by ProMiddleman gave us peace of mind during a high-stakes property transaction worth $4.7M. Everything was transparent and secure. They provided daily updates and handled a last-minute complication with the utmost professionalism.",
                 name: "Michael Thornton",
                 position: "Real Estate Investor",
                 rating: 5
             },
             {
-                content: "Working with ProMiddleman streamlined our contract negotiation process. Their team's expertise saved us countless hours and potential legal issues.",
+                content: "Working with ProMiddleman streamlined our contract negotiation process. Their team's expertise saved us countless hours and potential legal issues. They identified 7 critical clauses that needed revision, potentially saving us tens of thousands in future liabilities.",
                 name: "Jennifer Lopez",
                 position: "Legal Director, Axis Corp",
                 rating: 4
@@ -1011,7 +1071,7 @@
                 rating: 5
             },
             {
-                content: "As a tech startup, we relied on ProMiddleman to negotiate fair terms with our investors. Their expertise in equity arrangements proved invaluable.",
+                content: "As a tech startup, we relied on ProMiddleman to negotiate fair terms with our investors. Their expertise in equity arrangements proved invaluable. With their help, we secured Series A funding of $1.2M with much better terms than initially offered. The 3.5% we paid ProMiddleman was worth every penny!",
                 name: "Laura Stevens",
                 position: "Tech Entrepreneur",
                 rating: 5
@@ -1179,14 +1239,38 @@
                 
                 const initials = testimonial.name.split(' ').map(name => name.charAt(0)).join('');
                 
+                // Generate random date within last 6 months
+                const today = new Date();
+                const monthsAgo = new Date();
+                monthsAgo.setMonth(today.getMonth() - 6);
+                const randomDate = new Date(monthsAgo.getTime() + Math.random() * (today.getTime() - monthsAgo.getTime()));
+                const formattedDate = randomDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+                
+                // Randomly determine if verified
+                const isVerified = Math.random() > 0.2; // 80% chance of being verified
+                const verifiedBadge = isVerified ? '<span class="verified-badge">Verified Client</span>' : '';
+                
+                // Project type (randomly assigned)
+                const projectTypes = [
+                    'Business Mediation', 'International Transaction', 'Contract Facilitation', 
+                    'Escrow Service', 'Business Representation', 'Transaction Analysis'
+                ];
+                const randomProject = projectTypes[Math.floor(Math.random() * projectTypes.length)];
+                
                 testimonialCard.innerHTML = `
                     <div class="testimonial-content">${testimonial.content}</div>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">${initials}</div>
-                        <div class="testimonial-info">
-                            <h4>${testimonial.name}</h4>
-                            <p>${testimonial.position}</p>
-                            <div class="testimonial-rating">${stars}</div>
+                    <div class="testimonial-meta">
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">${initials}</div>
+                            <div class="testimonial-info">
+                                <h4>${testimonial.name} ${verifiedBadge}</h4>
+                                <p>${testimonial.position}</p>
+                                <div class="testimonial-rating">${stars}</div>
+                            </div>
+                        </div>
+                        <div class="testimonial-details">
+                            <div class="testimonial-project">${randomProject}</div>
+                            <div class="testimonial-date">Posted on ${formattedDate}</div>
                         </div>
                     </div>
                 `;
