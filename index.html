@@ -3,603 +3,662 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Deskripsi halaman Anda di sini (50-160 karakter)">
-    
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://yourusername.github.io/your-repo/">
-    <meta property="og:title" content="Judul Halaman Anda | Brand">
-    <meta property="og:description" content="Deskripsi halaman Anda di sini (50-160 karakter)">
-    <meta property="og:image" content="https://yourusername.github.io/your-repo/images/og-image.jpg">
-    
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://yourusername.github.io/your-repo/">
-    <meta property="twitter:title" content="Judul Halaman Anda | Brand">
-    <meta property="twitter:description" content="Deskripsi halaman Anda di sini (50-160 karakter)">
-    <meta property="twitter:image" content="https://yourusername.github.io/your-repo/images/twitter-image.jpg">
-    
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://yourusername.github.io/your-repo/current-page.html">
-    
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    
-    <title>Judul Halaman Anda | Brand</title>
-    
-    <!-- Preload Critical Assets -->
-    <link rel="preload" href="css/style.css" as="style">
-    <link rel="preload" href="js/main.js" as="script">
-    <link rel="preload" href="fonts/your-font.woff2" as="font" type="font/woff2" crossorigin>
-    
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/style.css">
-    
-    <!-- Structured Data / JSON-LD -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "Article",
-        "headline": "Judul Artikel Anda",
-        "description": "Deskripsi artikel Anda",
-        "image": "https://yourusername.github.io/your-repo/images/article-image.jpg",
-        "author": {
-            "@type": "Person",
-            "name": "Nama Penulis"
-        },
-        "publisher": {
-            "@type": "Organization",
-            "name": "Nama Organisasi",
-            "logo": {
-                "@type": "ImageObject",
-                "url": "https://yourusername.github.io/your-repo/images/logo.png"
-            }
-        },
-        "datePublished": "2025-03-15T09:00:00+07:00",
-        "dateModified": "2025-03-15T09:00:00+07:00"
-    }
-    </script>
-    
+    <title>Jasa Rekber Terpercaya</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Critical CSS inline */
         :root {
-            --primary-color: #3498db;
-            --secondary-color: #2ecc71;
-            --text-color: #333;
-            --bg-color: #fff;
-            --accent-color: #e74c3c;
-            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            --container-width: 1200px;
+            --primary-color: #4267B2;
+            --secondary-color: #3b5998;
+            --accent-color: #5b7bd5;
+            --light-color: #f0f2f5;
+            --dark-color: #333;
+            --success-color: #42b72a;
+            --danger-color: #e41e3f;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            font-family: var(--font-main);
+            background-color: var(--light-color);
+            color: var(--dark-color);
             line-height: 1.6;
-            color: var(--text-color);
-            background-color: var(--bg-color);
         }
         
         .container {
-            width: 100%;
-            max-width: var(--container-width);
+            max-width: 1200px;
             margin: 0 auto;
             padding: 0 20px;
         }
         
-        .header {
+        /* Header Styles */
+        header {
+            background-color: var(--primary-color);
+            color: white;
             padding: 20px 0;
-            background-color: var(--bg-color);
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
         }
         
-        .header-content {
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+        }
+        
+        .nav {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            color: var(--primary-color);
-        }
-        
-        .nav-menu {
+        .nav ul {
             display: flex;
             list-style: none;
         }
         
-        .nav-item {
+        .nav ul li {
             margin-left: 20px;
         }
         
-        .nav-link {
+        .nav ul li a {
+            color: white;
             text-decoration: none;
-            color: var(--text-color);
-            transition: color 0.3s ease;
+            font-weight: 500;
+            transition: color 0.3s;
         }
         
-        .nav-link:hover {
-            color: var(--primary-color);
+        .nav ul li a:hover {
+            color: var(--light-color);
         }
         
+        /* Hero Section */
         .hero {
-            padding: 60px 0;
+            background: linear-gradient(rgba(66, 103, 178, 0.8), rgba(59, 89, 152, 0.9)), url('/api/placeholder/1200/600') center/cover;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            background-color: #f9f9f9;
+            color: white;
+            padding: 0 20px;
         }
         
-        .hero-title {
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 20px;
+            max-width: 600px;
+            margin-bottom: 30px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background-color: var(--success-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: #38a123;
+        }
+        
+        /* About Section */
+        .about {
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .about h2 {
             font-size: 36px;
             margin-bottom: 20px;
-            color: var(--text-color);
-        }
-        
-        .hero-description {
-            font-size: 18px;
-            margin-bottom: 30px;
-            max-width: 800px;
-            margin-left: auto;
-            margin-right: auto;
-            color: #666;
-        }
-        
-        .content {
-            padding: 40px 0;
-        }
-        
-        .article {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .article-meta {
-            margin-bottom: 20px;
-            color: #666;
-            font-size: 14px;
-        }
-        
-        .article-title {
-            font-size: 32px;
-            margin-bottom: 20px;
-            color: var(--text-color);
-        }
-        
-        .article-image {
-            width: 100%;
-            height: auto;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        
-        .article-content {
-            font-size: 16px;
-            line-height: 1.8;
-        }
-        
-        .article-content h2 {
-            font-size: 24px;
-            margin: 30px 0 15px;
-            color: var(--text-color);
-        }
-        
-        .article-content h3 {
-            font-size: 20px;
-            margin: 25px 0 10px;
-            color: var(--text-color);
-        }
-        
-        .article-content p {
-            margin-bottom: 20px;
-        }
-        
-        .article-content a {
             color: var(--primary-color);
-            text-decoration: none;
         }
         
-        .article-content a:hover {
-            text-decoration: underline;
+        .about p {
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-size: 18px;
         }
         
-        .article-content ul, .article-content ol {
-            margin: 0 0 20px 20px;
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+            background-color: white;
         }
         
-        .article-content li {
-            margin-bottom: 10px;
-        }
-        
-        .article-share {
-            margin: 40px 0;
-            display: flex;
-            gap: 10px;
-        }
-        
-        .share-button {
-            padding: 8px 15px;
-            border: none;
-            border-radius: 4px;
-            background-color: var(--primary-color);
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .share-button:hover {
-            opacity: 0.9;
-        }
-        
-        .related-posts {
-            margin-top: 60px;
-        }
-        
-        .related-posts-title {
-            font-size: 24px;
-            margin-bottom: 20px;
+        .section-title {
             text-align: center;
+            font-size: 36px;
+            margin-bottom: 60px;
+            color: var(--primary-color);
         }
         
-        .related-posts-grid {
+        .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
         }
         
-        .related-post-card {
-            border-radius: 8px;
+        .service-card {
+            background-color: var(--light-color);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .service-card i {
+            font-size: 48px;
+            color: var(--primary-color);
+            margin-bottom: 20px;
+        }
+        
+        .service-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        /* Admins Section */
+        .admins {
+            padding: 80px 0;
+            background-color: var(--light-color);
+        }
+        
+        .admins-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+        
+        .admin-card {
+            background-color: white;
+            border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
         }
         
-        .related-post-card:hover {
-            transform: translateY(-5px);
+        .admin-card:hover {
+            transform: translateY(-10px);
         }
         
-        .related-post-image {
+        .admin-img {
+            height: 200px;
+            background-color: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .admin-img img {
             width: 100%;
-            height: 180px;
+            height: 100%;
             object-fit: cover;
         }
         
-        .related-post-content {
-            padding: 15px;
+        .admin-info {
+            padding: 20px;
+            text-align: center;
         }
         
-        .related-post-title {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-        
-        .related-post-excerpt {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-        
-        .read-more {
+        .admin-info h3 {
+            font-size: 22px;
+            margin-bottom: 5px;
             color: var(--primary-color);
-            text-decoration: none;
-            font-weight: bold;
-            font-size: 14px;
         }
         
-        .read-more:hover {
-            text-decoration: underline;
+        .admin-info p {
+            color: #666;
+            margin-bottom: 15px;
         }
         
-        .footer {
-            background-color: #333;
+        .admin-contact {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .fb-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: var(--primary-color);
             color: white;
-            padding: 40px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+        
+        .fb-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .fb-btn i {
+            margin-right: 5px;
+        }
+        
+        /* Testimonials Section */
+        .testimonials {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .testimonial-card {
+            background-color: var(--light-color);
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+        }
+        
+        .testimonial-author img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 15px;
+            background-color: #ddd;
+        }
+        
+        .author-info h4 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            color: var(--primary-color);
+        }
+        
+        .author-info p {
+            color: #666;
+        }
+        
+        /* CTA Section */
+        .cta {
+            padding: 80px 0;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+        }
+        
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            font-size: 18px;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+        
+        .cta-btn {
+            background-color: white;
+            color: var(--primary-color);
+        }
+        
+        .cta-btn:hover {
+            background-color: var(--light-color);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 50px 0 20px;
         }
         
         .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 30px;
+            margin-bottom: 40px;
         }
         
         .footer-section h3 {
-            font-size: 18px;
-            margin-bottom: 15px;
+            font-size: 20px;
+            margin-bottom: 20px;
         }
         
-        .footer-links {
+        .footer-section ul {
             list-style: none;
         }
         
-        .footer-link {
+        .footer-section ul li {
             margin-bottom: 10px;
         }
         
-        .footer-link a {
-            color: #ccc;
+        .footer-section ul li a {
+            color: #ddd;
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: color 0.3s;
         }
         
-        .footer-link a:hover {
+        .footer-section ul li a:hover {
             color: white;
         }
         
         .footer-bottom {
-            margin-top: 30px;
             text-align: center;
             padding-top: 20px;
             border-top: 1px solid #444;
         }
         
-        /* Responsiveness */
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 20px;
+            transition: color 0.3s;
+        }
+        
+        .social-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        /* Responsive Design */
         @media (max-width: 768px) {
-            .hero-title {
-                font-size: 28px;
+            .hero h1 {
+                font-size: 36px;
             }
             
-            .article-title {
-                font-size: 26px;
+            .hero p {
+                font-size: 18px;
             }
             
-            .nav-menu {
-                display: none;
+            .nav {
+                flex-direction: column;
             }
             
-            .mobile-menu-button {
-                display: block;
+            .nav ul {
+                margin-top: 20px;
+            }
+            
+            .nav ul li {
+                margin: 0 10px;
+            }
+            
+            .section-title {
+                font-size: 30px;
+                margin-bottom: 40px;
             }
         }
     </style>
 </head>
 <body>
-    <header class="header">
+    <!-- Header Section -->
+    <header>
         <div class="container">
-            <div class="header-content">
-                <a href="index.html" class="logo">YourBrand</a>
-                <nav>
-                    <ul class="nav-menu">
-                        <li class="nav-item"><a href="index.html" class="nav-link">Beranda</a></li>
-                        <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-                        <li class="nav-item"><a href="about.html" class="nav-link">Tentang</a></li>
-                        <li class="nav-item"><a href="contact.html" class="nav-link">Kontak</a></li>
-                    </ul>
-                    <button class="mobile-menu-button" aria-label="Menu" style="display: none;">
-                        <svg width="24" height="24" viewBox="0 0 24 24">
-                            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" fill="currentColor"></path>
-                        </svg>
-                    </button>
-                </nav>
-            </div>
+            <nav class="nav">
+                <div class="logo">Rekber Terpercaya</div>
+                <ul>
+                    <li><a href="#home">Beranda</a></li>
+                    <li><a href="#about">Tentang</a></li>
+                    <li><a href="#services">Layanan</a></li>
+                    <li><a href="#admins">Admin</a></li>
+                    <li><a href="#testimonials">Testimoni</a></li>
+                    <li><a href="#contact">Kontak</a></li>
+                </ul>
+            </nav>
         </div>
     </header>
 
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h1 class="hero-title">Judul Artikel Utama Anda</h1>
-                <p class="hero-description">Deskripsi singkat untuk menarik perhatian pembaca. Pastikan deskripsi ini informatif dan relevan dengan isi konten.</p>
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <h1>Jasa Rekening Bersama Terpercaya</h1>
+        <p>Membantu transaksi online Anda dengan aman, cepat, dan terpercaya. Layanan rekber 24 jam dengan admin profesional.</p>
+        <a href="#admins" class="btn">Hubungi Admin Sekarang</a>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <h2>Tentang Kami</h2>
+            <p>Rekber Terpercaya hadir sejak 2020 sebagai solusi untuk transaksi online yang aman dan terpercaya. Kami telah membantu ribuan transaksi online dengan nilai total miliaran rupiah. Dengan tim admin yang profesional dan berpengalaman, kami siap melayani Anda 24 jam setiap hari.</p>
+            <p>Kami berkomitmen untuk menjaga kepercayaan dan keamanan transaksi Anda. Setiap transaksi dilakukan dengan prosedur yang ketat dan transparan. Kami menjamin keamanan dana Anda hingga barang sampai di tangan pembeli.</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <h2 class="section-title">Layanan Kami</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Jasa Rekber Marketplace</h3>
+                    <p>Melayani transaksi jual beli di berbagai marketplace seperti Tokopedia, Bukalapak, Shopee, dan lainnya.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-gamepad"></i>
+                    <h3>Jasa Rekber Game</h3>
+                    <p>Melayani transaksi jual beli item game, akun game, voucher game, dan lainnya.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Jasa Rekber Gadget</h3>
+                    <p>Melayani transaksi jual beli smartphone, laptop, komputer, dan perangkat elektronik lainnya.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-car"></i>
+                    <h3>Jasa Rekber Otomotif</h3>
+                    <p>Melayani transaksi jual beli kendaraan, sparepart, dan aksesori kendaraan.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-tshirt"></i>
+                    <h3>Jasa Rekber Fashion</h3>
+                    <p>Melayani transaksi jual beli fashion, sepatu, tas, dan aksesoris.</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-ellipsis-h"></i>
+                    <h3>Jasa Rekber Lainnya</h3>
+                    <p>Melayani berbagai macam transaksi online lainnya. Hubungi admin untuk informasi lebih lanjut.</p>
+                </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section class="content">
-            <div class="container">
-                <article class="article">
-                    <div class="article-meta">
-                        <span class="article-date">15 Maret 2025</span> &bull; 
-                        <span class="article-author">oleh <a href="#">Nama Penulis</a></span> &bull; 
-                        <span class="article-category">dalam <a href="#">Kategori</a></span>
+    <!-- Admins Section -->
+    <section class="admins" id="admins">
+        <div class="container">
+            <h2 class="section-title">Tim Admin Kami</h2>
+            <div class="admins-grid">
+                <div class="admin-card">
+                    <div class="admin-img">
+                        <img src="/api/placeholder/300/300" alt="Admin 1">
                     </div>
-
-                    <h1 class="article-title">Judul Artikel Utama Anda</h1>
-                    
-                    <img src="/api/placeholder/800/450" alt="Deskripsi gambar artikel" class="article-image" width="800" height="450" loading="lazy">
-                    
-                    <div class="article-content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula, nunc in hendrerit efficitur, dui orci fermentum risus, at efficitur nisl nisl ut urna. Suspendisse potenti. Phasellus vestibulum enim in justo sodales, sed scelerisque magna egestas.</p>
-                        
-                        <h2>Sub Judul Pertama</h2>
-                        <p>Pellentesque varius lectus ac lectus tempor, sed convallis libero commodo. Donec sodales mauris nibh, at pretium sem tincidunt at. Etiam vel ipsum fringilla, pharetra nulla eget, posuere sem. Mauris et arcu et mauris convallis condimentum quis ac elit.</p>
-                        
-                        <p>Fusce sit amet massa ut tortor pulvinar elementum et vitae eros:</p>
-                        <ul>
-                            <li>Poin penting pertama dengan <a href="#">link relevan</a></li>
-                            <li>Poin penting kedua yang mendukung pernyataan di atas</li>
-                            <li>Poin penting ketiga dengan detail-detail pendukung</li>
-                        </ul>
-                        
-                        <h2>Sub Judul Kedua</h2>
-                        <p>Vestibulum auctor convallis lacinia. Sed euismod pharetra ante, eget fringilla nulla semper vel. Etiam eget aliquam neque. Morbi ac urna nec arcu feugiat ultrices.</p>
-                        
-                        <h3>Sub-sub Judul</h3>
-                        <p>Quisque ut augue vel velit auctor luctus. Nam ligula risus, facilisis eu imperdiet sit amet, rhoncus sit amet nisi. Donec vehicula hendrerit risus, eu vehicula eros tincidunt eget. In hac habitasse platea dictumst.</p>
-                        
-                        <p>Cras porttitor elit ac diam consequat congue:</p>
-                        <ol>
-                            <li>Langkah pertama dalam proses</li>
-                            <li>Langkah kedua yang harus diikuti</li>
-                            <li>Langkah ketiga untuk menyelesaikan proses</li>
-                        </ol>
-                        
-                        <h2>Kesimpulan</h2>
-                        <p>Aenean vel nulla vitae libero viverra dignissim. Vivamus in convallis dolor, vitae commodo elit. Cras quis mi sed justo vehicula tempor. Proin id viverra nisl, vitae interdum enim. Phasellus vulputate augue vitae elit placerat, vel posuere mi placerat.</p>
-                    </div>
-                    
-                    <div class="article-share">
-                        <span>Bagikan:</span>
-                        <button class="share-button" data-platform="facebook">
-                            Facebook
-                        </button>
-                        <button class="share-button" data-platform="twitter">
-                            Twitter
-                        </button>
-                        <button class="share-button" data-platform="linkedin">
-                            LinkedIn
-                        </button>
-                    </div>
-                    
-                    <div class="related-posts">
-                        <h3 class="related-posts-title">Artikel Terkait</h3>
-                        <div class="related-posts-grid">
-                            <div class="related-post-card">
-                                <img src="/api/placeholder/300/180" alt="Artikel terkait 1" class="related-post-image" width="300" height="180" loading="lazy">
-                                <div class="related-post-content">
-                                    <h4 class="related-post-title">Judul Artikel Terkait Pertama</h4>
-                                    <p class="related-post-excerpt">Ringkasan singkat dari artikel terkait untuk memberikan gambaran isi konten.</p>
-                                    <a href="#" class="read-more">Baca Selengkapnya</a>
-                                </div>
-                            </div>
-                            
-                            <div class="related-post-card">
-                                <img src="/api/placeholder/300/180" alt="Artikel terkait 2" class="related-post-image" width="300" height="180" loading="lazy">
-                                <div class="related-post-content">
-                                    <h4 class="related-post-title">Judul Artikel Terkait Kedua</h4>
-                                    <p class="related-post-excerpt">Ringkasan singkat dari artikel terkait untuk memberikan gambaran isi konten.</p>
-                                    <a href="#" class="read-more">Baca Selengkapnya</a>
-                                </div>
-                            </div>
-                            
-                            <div class="related-post-card">
-                                <img src="/api/placeholder/300/180" alt="Artikel terkait 3" class="related-post-image" width="300" height="180" loading="lazy">
-                                <div class="related-post-content">
-                                    <h4 class="related-post-title">Judul Artikel Terkait Ketiga</h4>
-                                    <p class="related-post-excerpt">Ringkasan singkat dari artikel terkait untuk memberikan gambaran isi konten.</p>
-                                    <a href="#" class="read-more">Baca Selengkapnya</a>
-                                </div>
-                            </div>
+                    <div class="admin-info">
+                        <h3>Ahmad Fauzi</h3>
+                        <p>Senior Admin</p>
+                        <p>Berpengalaman sejak 2018</p>
+                        <div class="admin-contact">
+                            <a href="https://facebook.com" class="fb-btn"><i class="fab fa-facebook-f"></i> Hubungi di Facebook</a>
                         </div>
                     </div>
-                </article>
+                </div>
+                <div class="admin-card">
+                    <div class="admin-img">
+                        <img src="/api/placeholder/300/300" alt="Admin 2">
+                    </div>
+                    <div class="admin-info">
+                        <h3>Siti Nurhaliza</h3>
+                        <p>Admin Utama</p>
+                        <p>Berpengalaman sejak 2019</p>
+                        <div class="admin-contact">
+                            <a href="https://facebook.com" class="fb-btn"><i class="fab fa-facebook-f"></i> Hubungi di Facebook</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-card">
+                    <div class="admin-img">
+                        <img src="/api/placeholder/300/300" alt="Admin 3">
+                    </div>
+                    <div class="admin-info">
+                        <h3>Budi Santoso</h3>
+                        <p>Admin</p>
+                        <p>Berpengalaman sejak 2020</p>
+                        <div class="admin-contact">
+                            <a href="https://facebook.com" class="fb-btn"><i class="fab fa-facebook-f"></i> Hubungi di Facebook</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="admin-card">
+                    <div class="admin-img">
+                        <img src="/api/placeholder/300/300" alt="Admin 4">
+                    </div>
+                    <div class="admin-info">
+                        <h3>Dewi Safitri</h3>
+                        <p>Admin</p>
+                        <p>Berpengalaman sejak 2021</p>
+                        <div class="admin-contact">
+                            <a href="https://facebook.com" class="fb-btn"><i class="fab fa-facebook-f"></i> Hubungi di Facebook</a>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <footer class="footer">
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <h2 class="section-title">Testimoni Pelanggan</h2>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Transaksi pertama saya menggunakan rekber ini sangat memuaskan. Prosesnya cepat dan admin sangat responsif. Akan menggunakan jasa ini lagi untuk transaksi berikutnya."</p>
+                <div class="testimonial-author">
+                    <img src="/api/placeholder/60/60" alt="Testimonial Author">
+                    <div class="author-info">
+                        <h4>Rudi Hartono</h4>
+                        <p>Jakarta</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Awalnya ragu untuk menggunakan jasa rekber, tapi setelah mencoba layanan ini, saya merasa aman bertransaksi online. Admin sangat profesional dan jelas dalam memberikan informasi."</p>
+                <div class="testimonial-author">
+                    <img src="/api/placeholder/60/60" alt="Testimonial Author">
+                    <div class="author-info">
+                        <h4>Anita Wijaya</h4>
+                        <p>Surabaya</p>
+                    </div>
+                </div>
+            </div>
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Sudah berkali-kali menggunakan jasa rekber ini untuk transaksi jual beli game. Prosesnya sangat cepat, bahkan di malam hari. Terima kasih atas pelayanannya!"</p>
+                <div class="testimonial-author">
+                    <img src="/api/placeholder/60/60" alt="Testimonial Author">
+                    <div class="author-info">
+                        <h4>Deni Kurniawan</h4>
+                        <p>Bandung</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="contact">
+        <div class="container">
+            <h2>Mulai Bertransaksi dengan Aman Sekarang</h2>
+            <p>Hubungi admin kami untuk informasi lebih lanjut atau langsung mulai menggunakan jasa rekber kami.</p>
+            <a href="#admins" class="btn cta-btn">Hubungi Admin</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
         <div class="container">
             <div class="footer-content">
                 <div class="footer-section">
-                    <h3>Tentang Kami</h3>
-                    <p>Deskripsi singkat tentang website atau brand Anda. Ceritakan sesuatu yang menarik tentang nilai-nilai atau tujuan Anda.</p>
+                    <h3>Rekber Terpercaya</h3>
+                    <p>Jasa rekening bersama terpercaya untuk transaksi online yang aman dan nyaman.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
                 </div>
-                
                 <div class="footer-section">
-                    <h3>Tautan Cepat</h3>
-                    <ul class="footer-links">
-                        <li class="footer-link"><a href="index.html">Beranda</a></li>
-                        <li class="footer-link"><a href="blog.html">Blog</a></li>
-                        <li class="footer-link"><a href="about.html">Tentang</a></li>
-                        <li class="footer-link"><a href="contact.html">Kontak</a></li>
-                        <li class="footer-link"><a href="privacy.html">Kebijakan Privasi</a></li>
+                    <h3>Link Cepat</h3>
+                    <ul>
+                        <li><a href="#home">Beranda</a></li>
+                        <li><a href="#about">Tentang Kami</a></li>
+                        <li><a href="#services">Layanan</a></li>
+                        <li><a href="#admins">Admin</a></li>
+                        <li><a href="#testimonials">Testimoni</a></li>
                     </ul>
                 </div>
-                
                 <div class="footer-section">
-                    <h3>Kategori</h3>
-                    <ul class="footer-links">
-                        <li class="footer-link"><a href="#">Kategori 1</a></li>
-                        <li class="footer-link"><a href="#">Kategori 2</a></li>
-                        <li class="footer-link"><a href="#">Kategori 3</a></li>
-                        <li class="footer-link"><a href="#">Kategori 4</a></li>
-                        <li class="footer-link"><a href="#">Kategori 5</a></li>
+                    <h3>Layanan</h3>
+                    <ul>
+                        <li><a href="#">Rekber Marketplace</a></li>
+                        <li><a href="#">Rekber Game</a></li>
+                        <li><a href="#">Rekber Gadget</a></li>
+                        <li><a href="#">Rekber Otomotif</a></li>
+                        <li><a href="#">Rekber Fashion</a></li>
                     </ul>
                 </div>
-                
                 <div class="footer-section">
-                    <h3>Hubungi Kami</h3>
-                    <p>Email: info@yourbrand.com</p>
-                    <p>Telepon: +62 123 4567 890</p>
-                    <p>Alamat: Jalan Contoh No. 123, Kota, Kode Pos</p>
+                    <h3>Kontak</h3>
+                    <ul>
+                        <li><i class="fas fa-phone"></i> +62 812-3456-7890</li>
+                        <li><i class="fas fa-envelope"></i> info@rekberterpercaya.com</li>
+                        <li><i class="fab fa-whatsapp"></i> +62 812-3456-7890</li>
+                    </ul>
                 </div>
             </div>
-            
             <div class="footer-bottom">
-                <p>&copy; 2025 YourBrand. Hak Cipta Dilindungi.</p>
+                <p>&copy; 2025 Rekber Terpercaya. All Rights Reserved.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Deferred JavaScript -->
-    <script src="js/main.js" defer></script>
-    
+    <!-- JavaScript -->
     <script>
-        // Basic JavaScript functionality
-        document.addEventListener('DOMContentLoaded', function() {
-            // Share buttons functionality
-            const shareButtons = document.querySelectorAll('.share-button');
-            
-            shareButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    const platform = this.dataset.platform;
-                    const url = encodeURIComponent(window.location.href);
-                    const title = encodeURIComponent(document.title);
-                    
-                    let shareUrl;
-                    
-                    switch(platform) {
-                        case 'facebook':
-                            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-                            break;
-                        case 'twitter':
-                            shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
-                            break;
-                        case 'linkedin':
-                            shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
-                            break;
-                    }
-                    
-                    window.open(shareUrl, '_blank', 'width=600,height=400');
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
                 });
             });
-            
-            // Mobile menu toggle
-            const mobileMenuButton = document.querySelector('.mobile-menu-button');
-            const navMenu = document.querySelector('.nav-menu');
-            
-            if (mobileMenuButton) {
-                mobileMenuButton.addEventListener('click', function() {
-                    navMenu.classList.toggle('show');
-                });
-            }
-            
-            // Add smooth scrolling
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        targetElement.scrollIntoView({
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-            
-            // Lazy load images that are not loaded yet
-            if ('loading' in HTMLImageElement.prototype) {
-                const images = document.querySelectorAll('img[loading="lazy"]');
-                images.forEach(img => {
-                    img.src = img.dataset.src;
-                });
-            } else {
-                // Fallback for browsers that don't support lazy loading
-                const script = document.createElement('script');
-                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
-                document.body.appendChild(script);
-            }
         });
     </script>
 </body>
