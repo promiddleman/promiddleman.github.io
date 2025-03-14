@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekber - Rekening Bersama</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        .transaction-success {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto px-4 py-8">
+        <header class="text-center mb-10">
+            <h1 class="text-3xl font-bold text-blue-600">REKBER</h1>
+            <p class="text-lg text-gray-600">Sistem Rekening Bersama Aman dan Terpercaya</p>
+        </header>
+
+        <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md p-6">
+            <!-- Transaction Form -->
+            <div id="transaction-form">
+                <h2 class="text-xl font-semibold mb-4 text-center">Form Transaksi Baru</h2>
+                <form id="rekber-form" class="space-y-4">
+                    <div>
+                        <label for="seller-name" class="block text-sm font-medium text-gray-700">Nama Penjual</label>
+                        <input type="text" id="seller-name" name="seller-name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    
+                    <div>
+                        <label for="seller-contact" class="block text-sm font-medium text-gray-700">Kontak Penjual (WhatsApp/Telp)</label>
+                        <input type="text" id="seller-contact" name="seller-contact" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    
+                    <div>
+                        <label for="buyer-name" class="block text-sm font-medium text-gray-700">Nama Pembeli</label>
+                        <input type="text" id="buyer-name" name="buyer-name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    
+                    <div>
+                        <label for="buyer-contact" class="block text-sm font-medium text-gray-700">Kontak Pembeli (WhatsApp/Telp)</label>
+                        <input type="text" id="buyer-contact" name="buyer-contact" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    
+                    <div>
+                        <label for="item-description" class="block text-sm font-medium text-gray-700">Deskripsi Barang/Jasa</label>
+                        <textarea id="item-description" name="item-description" rows="3" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"></textarea>
+                    </div>
+                    
+                    <div>
+                        <label for="amount" class="block text-sm font-medium text-gray-700">Jumlah Transaksi (Rp)</label>
+                        <input type="number" id="amount" name="amount" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    
+                    <div class="text-center">
+                        <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Buat Transaksi
+                        </button>
+                    </div>
+                </form>
+            </div>
+            
+            <!-- Transaction Success -->
+            <div id="transaction-success" class="transaction-success text-center space-y-4">
+                <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
+                    <p class="font-bold">Transaksi Berhasil Dibuat!</p>
+                    <p>Silahkan simpan kode transaksi Anda.</p>
+                </div>
+                
+                <div class="p-4 border-2 border-dashed border-gray-300 rounded-md">
+                    <p class="text-sm text-gray-600 mb-1">Kode Transaksi:</p>
+                    <p id="transaction-id" class="text-xl font-bold text-blue-600"></p>
+                    <button id="copy-btn" class="mt-2 text-sm text-blue-600 hover:text-blue-800">
+                        Salin Kode
+                    </button>
+                </div>
+                
+                <div class="mt-6">
+                    <p class="text-sm text-gray-600 mb-3">Silahkan hubungi admin untuk verifikasi transaksi:</p>
+                    <a href="https://facebook.com/rekberadmin" target="_blank" id="contact-admin-btn" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                        Hubungi Admin di Facebook
+                    </a>
+                </div>
+                
+                <div class="mt-6">
+                    <button id="new-transaction-btn" class="text-sm text-gray-600 hover:text-gray-800">
+                        Buat Transaksi Baru
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('rekber-form');
+            const transactionForm = document.getElementById('transaction-form');
+            const transactionSuccess = document.getElementById('transaction-success');
+            const transactionIdElement = document.getElementById('transaction-id');
+            const copyBtn = document.getElementById('copy-btn');
+            const newTransactionBtn = document.getElementById('new-transaction-btn');
+            const contactAdminBtn = document.getElementById('contact-admin-btn');
+            
+            // Handle form submission
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Generate transaction ID
+                const transactionId = generateTransactionId();
+                
+                // Collect form data
+                const transactionData = {
+                    id: transactionId,
+                    sellerName: document.getElementById('seller-name').value,
+                    sellerContact: document.getElementById('seller-contact').value,
+                    buyerName: document.getElementById('buyer-name').value,
+                    buyerContact: document.getElementById('buyer-contact').value,
+                    itemDescription: document.getElementById('item-description').value,
+                    amount: document.getElementById('amount').value,
+                    timestamp: new Date().toISOString(),
+                    status: 'pending'
+                };
+                
+                // Save to localStorage (in a real implementation, this would be sent to a server)
+                saveTransaction(transactionData);
+                
+                // Display transaction success
+                displayTransactionSuccess(transactionId);
+                
+                // Update Facebook link with transaction ID
+                updateContactLink(transactionId);
+            });
+            
+            // Generate Transaction ID
+            function generateTransactionId() {
+                return 'RB-' + uuid.v4().substring(0, 8).toUpperCase();
+            }
+            
+            // Save transaction to localStorage
+            function saveTransaction(data) {
+                let transactions = JSON.parse(localStorage.getItem('rekber-transactions') || '[]');
+                transactions.push(data);
+                localStorage.setItem('rekber-transactions', JSON.stringify(transactions));
+            }
+            
+            // Display transaction success
+            function displayTransactionSuccess(transactionId) {
+                transactionForm.style.display = 'none';
+                transactionSuccess.style.display = 'block';
+                transactionIdElement.textContent = transactionId;
+            }
+            
+            // Update contact admin link
+            function updateContactLink(transactionId) {
+                const baseUrl = 'https://facebook.com/rekberadmin';
+                contactAdminBtn.href = `${baseUrl}?msg=Verifikasi transaksi: ${transactionId}`;
+            }
+            
+            // Copy transaction ID
+            copyBtn.addEventListener('click', function() {
+                const transactionId = transactionIdElement.textContent;
+                navigator.clipboard.writeText(transactionId).then(function() {
+                    copyBtn.textContent = 'Kode Disalin!';
+                    setTimeout(() => {
+                        copyBtn.textContent = 'Salin Kode';
+                    }, 2000);
+                });
+            });
+            
+            // New transaction button
+            newTransactionBtn.addEventListener('click', function() {
+                form.reset();
+                transactionSuccess.style.display = 'none';
+                transactionForm.style.display = 'block';
+            });
+        });
+    </script>
+</body>
+</html>
