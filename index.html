@@ -3,663 +3,895 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jasa Rekber Terpercaya</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>TrustedPay - Rekber Testimonials</title>
     <style>
         :root {
-            --primary-color: #4267B2;
-            --secondary-color: #3b5998;
-            --accent-color: #5b7bd5;
-            --light-color: #f0f2f5;
-            --dark-color: #333;
-            --success-color: #42b72a;
-            --danger-color: #e41e3f;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #475569;
+            --light: #f8fafc;
+            --dark: #1e293b;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
-        
+
         body {
-            background-color: var(--light-color);
-            color: var(--dark-color);
+            background-color: var(--gray-100);
+            color: var(--dark);
             line-height: 1.6;
         }
-        
+
+        header {
+            background-color: white;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 1.5rem;
         }
-        
-        /* Header Styles */
-        header {
-            background-color: var(--primary-color);
-            color: white;
-            padding: 20px 0;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .logo {
-            font-size: 28px;
-            font-weight: bold;
-        }
-        
-        .nav {
+
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-        
-        .nav ul {
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .logo svg {
+            margin-right: 0.75rem;
+        }
+
+        nav ul {
             display: flex;
             list-style: none;
         }
-        
-        .nav ul li {
-            margin-left: 20px;
+
+        nav ul li {
+            margin-left: 2rem;
         }
-        
-        .nav ul li a {
-            color: white;
+
+        nav ul li a {
             text-decoration: none;
+            color: var(--secondary);
             font-weight: 500;
-            transition: color 0.3s;
+            transition: color 0.2s;
         }
-        
-        .nav ul li a:hover {
-            color: var(--light-color);
+
+        nav ul li a:hover {
+            color: var(--primary);
         }
-        
-        /* Hero Section */
+
         .hero {
-            background: linear-gradient(rgba(66, 103, 178, 0.8), rgba(59, 89, 152, 0.9)), url('/api/placeholder/1200/600') center/cover;
-            height: 400px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
+            padding: 4rem 0;
+            background-color: var(--primary);
             color: white;
-            padding: 0 20px;
+            text-align: center;
         }
-        
+
         .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
         }
-        
+
         .hero p {
-            font-size: 20px;
-            max-width: 600px;
-            margin-bottom: 30px;
+            font-size: 1.25rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
         }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background-color: var(--success-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s;
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
         }
-        
-        .btn:hover {
-            background-color: #38a123;
-        }
-        
-        /* About Section */
-        .about {
-            padding: 80px 0;
+
+        .stat-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            border-radius: 8px;
             text-align: center;
         }
-        
-        .about h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-            color: var(--primary-color);
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
         }
-        
-        .about p {
-            max-width: 800px;
-            margin: 0 auto 40px;
-            font-size: 18px;
-        }
-        
-        /* Services Section */
-        .services {
-            padding: 80px 0;
+
+        .testimonials {
+            padding: 4rem 0;
             background-color: white;
         }
-        
+
         .section-title {
             text-align: center;
-            font-size: 36px;
-            margin-bottom: 60px;
-            color: var(--primary-color);
+            margin-bottom: 3rem;
         }
-        
-        .services-grid {
+
+        .section-title h2 {
+            font-size: 2rem;
+            color: var(--dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-title p {
+            color: var(--secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .testimonial-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
-        
-        .service-card {
-            background-color: var(--light-color);
-            border-radius: 10px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-        }
-        
-        .service-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .service-card i {
-            font-size: 48px;
-            color: var(--primary-color);
-            margin-bottom: 20px;
-        }
-        
-        .service-card h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-        
-        /* Admins Section */
-        .admins {
-            padding: 80px 0;
-            background-color: var(--light-color);
-        }
-        
-        .admins-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-        }
-        
-        .admin-card {
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
-        }
-        
-        .admin-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .admin-img {
-            height: 200px;
-            background-color: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        
-        .admin-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .admin-info {
-            padding: 20px;
-            text-align: center;
-        }
-        
-        .admin-info h3 {
-            font-size: 22px;
-            margin-bottom: 5px;
-            color: var(--primary-color);
-        }
-        
-        .admin-info p {
-            color: #666;
-            margin-bottom: 15px;
-        }
-        
-        .admin-contact {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 20px;
-        }
-        
-        .fb-btn {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            text-decoration: none;
-            transition: background-color 0.3s;
-        }
-        
-        .fb-btn:hover {
-            background-color: var(--secondary-color);
-        }
-        
-        .fb-btn i {
-            margin-right: 5px;
-        }
-        
-        /* Testimonials Section */
-        .testimonials {
-            padding: 80px 0;
-            background-color: white;
-        }
-        
+
         .testimonial-card {
-            background-color: var(--light-color);
-            padding: 30px;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--gray-200);
         }
-        
-        .testimonial-text {
-            font-style: italic;
-            margin-bottom: 20px;
-            font-size: 18px;
+
+        .testimonial-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
         }
-        
-        .testimonial-author {
+
+        .testimonial-header {
             display: flex;
             align-items: center;
+            margin-bottom: 1rem;
         }
-        
-        .testimonial-author img {
-            width: 60px;
-            height: 60px;
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            margin-right: 15px;
-            background-color: #ddd;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-right: 1rem;
         }
-        
-        .author-info h4 {
-            font-size: 18px;
-            margin-bottom: 5px;
-            color: var(--primary-color);
+
+        .testimonial-user h3 {
+            font-size: 1rem;
+            margin-bottom: 0.25rem;
         }
-        
-        .author-info p {
-            color: #666;
+
+        .testimonial-date {
+            color: var(--gray-400);
+            font-size: 0.875rem;
         }
-        
-        /* CTA Section */
+
+        .transaction-details {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--gray-200);
+            font-size: 0.875rem;
+        }
+
+        .transaction-details span {
+            color: var(--secondary);
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+
+        .transaction-details .amount {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .testimonial-content {
+            color: var(--dark);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .rating {
+            display: flex;
+            margin-top: 1rem;
+            color: var(--warning);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .pagination-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            border: 1px solid var(--gray-300);
+            color: var(--secondary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .pagination-button:hover {
+            background-color: var(--gray-100);
+        }
+
+        .pagination-button.active {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
         .cta {
-            padding: 80px 0;
-            background-color: var(--primary-color);
+            padding: 4rem 0;
+            background-color: var(--primary-dark);
             color: white;
             text-align: center;
         }
-        
+
         .cta h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
+            font-size: 2rem;
+            margin-bottom: 1rem;
         }
-        
+
         .cta p {
-            font-size: 18px;
-            max-width: 600px;
-            margin: 0 auto 30px;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
         }
-        
-        .cta-btn {
+
+        .button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
             background-color: white;
-            color: var(--primary-color);
+            color: var(--primary);
+            border-radius: 6px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.2s;
         }
-        
-        .cta-btn:hover {
-            background-color: var(--light-color);
+
+        .button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
-        
-        /* Footer */
+
+        .trust-indicators {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .trust-item {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+        }
+
+        .trust-item svg {
+            margin-right: 0.75rem;
+        }
+
         footer {
-            background-color: var(--dark-color);
+            background-color: var(--dark);
             color: white;
-            padding: 50px 0 20px;
+            padding: 3rem 0;
         }
-        
+
         .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-            margin-bottom: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 2rem;
         }
-        
-        .footer-section h3 {
-            font-size: 20px;
-            margin-bottom: 20px;
+
+        .footer-logo {
+            flex: 1;
+            min-width: 250px;
         }
-        
-        .footer-section ul {
+
+        .footer-logo p {
+            margin-top: 1rem;
+            color: var(--gray-400);
+        }
+
+        .footer-links {
+            flex: 1;
+            min-width: 150px;
+        }
+
+        .footer-links h3 {
+            font-size: 1.15rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .footer-links h3::after {
+            content: '';
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            width: 50px;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .footer-links ul {
             list-style: none;
         }
-        
-        .footer-section ul li {
-            margin-bottom: 10px;
+
+        .footer-links ul li {
+            margin-bottom: 0.75rem;
         }
-        
-        .footer-section ul li a {
-            color: #ddd;
+
+        .footer-links ul li a {
+            color: var(--gray-400);
             text-decoration: none;
-            transition: color 0.3s;
+            transition: color 0.2s;
         }
-        
-        .footer-section ul li a:hover {
+
+        .footer-links ul li a:hover {
             color: white;
         }
-        
-        .footer-bottom {
+
+        .copyright {
             text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid #444;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray-400);
         }
-        
-        .social-links {
+
+        .loading-spinner {
+            display: none;
+            justify-content: center;
+            padding: 2rem 0;
+        }
+
+        .filter-container {
             display: flex;
-            gap: 15px;
-            margin-top: 20px;
+            justify-content: center;
+            margin-bottom: 2rem;
+            gap: 1rem;
         }
-        
-        .social-links a {
+
+        .filter-button {
+            padding: 0.5rem 1rem;
+            background-color: white;
+            border: 1px solid var(--gray-300);
+            border-radius: 4px;
+            color: var(--secondary);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-button:hover {
+            background-color: var(--gray-100);
+        }
+
+        .filter-button.active {
+            background-color: var(--primary);
             color: white;
-            font-size: 20px;
-            transition: color 0.3s;
+            border-color: var(--primary);
         }
-        
-        .social-links a:hover {
-            color: var(--primary-color);
-        }
-        
-        /* Responsive Design */
+
         @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 36px;
+            .nav-links {
+                display: none;
             }
-            
-            .hero p {
-                font-size: 18px;
+
+            .stat-item {
+                padding: 0.75rem 1rem;
             }
-            
-            .nav {
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+
+            .stats {
+                flex-wrap: wrap;
+            }
+
+            .footer-content {
                 flex-direction: column;
-            }
-            
-            .nav ul {
-                margin-top: 20px;
-            }
-            
-            .nav ul li {
-                margin: 0 10px;
-            }
-            
-            .section-title {
-                font-size: 30px;
-                margin-bottom: 40px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header Section -->
     <header>
         <div class="container">
-            <nav class="nav">
-                <div class="logo">Rekber Terpercaya</div>
-                <ul>
-                    <li><a href="#home">Beranda</a></li>
-                    <li><a href="#about">Tentang</a></li>
-                    <li><a href="#services">Layanan</a></li>
-                    <li><a href="#admins">Admin</a></li>
-                    <li><a href="#testimonials">Testimoni</a></li>
-                    <li><a href="#contact">Kontak</a></li>
-                </ul>
-            </nav>
+            <div class="header-content">
+                <div class="logo">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    TrustedPay
+                </div>
+                <nav class="nav-links">
+                    <ul>
+                        <li><a href="#">Beranda</a></li>
+                        <li><a href="#">Cara Kerja</a></li>
+                        <li><a href="#">Biaya</a></li>
+                        <li><a href="#">Testimonial</a></li>
+                        <li><a href="#">Kontak</a></li>
+                    </ul>
+                </nav>
+            </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero" id="home">
-        <h1>Jasa Rekening Bersama Terpercaya</h1>
-        <p>Membantu transaksi online Anda dengan aman, cepat, dan terpercaya. Layanan rekber 24 jam dengan admin profesional.</p>
-        <a href="#admins" class="btn">Hubungi Admin Sekarang</a>
-    </section>
-
-    <!-- About Section -->
-    <section class="about" id="about">
+    <section class="hero">
         <div class="container">
-            <h2>Tentang Kami</h2>
-            <p>Rekber Terpercaya hadir sejak 2020 sebagai solusi untuk transaksi online yang aman dan terpercaya. Kami telah membantu ribuan transaksi online dengan nilai total miliaran rupiah. Dengan tim admin yang profesional dan berpengalaman, kami siap melayani Anda 24 jam setiap hari.</p>
-            <p>Kami berkomitmen untuk menjaga kepercayaan dan keamanan transaksi Anda. Setiap transaksi dilakukan dengan prosedur yang ketat dan transparan. Kami menjamin keamanan dana Anda hingga barang sampai di tangan pembeli.</p>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services" id="services">
-        <div class="container">
-            <h2 class="section-title">Layanan Kami</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <i class="fas fa-shield-alt"></i>
-                    <h3>Jasa Rekber Marketplace</h3>
-                    <p>Melayani transaksi jual beli di berbagai marketplace seperti Tokopedia, Bukalapak, Shopee, dan lainnya.</p>
+            <h1>Transaksi Aman dengan Rekber Terpercaya</h1>
+            <p>Ribuan pengguna telah memilih TrustedPay sebagai solusi rekening bersama (rekber) untuk transaksi online yang aman dan terpercaya.</p>
+            <a href="#" class="button">Mulai Sekarang</a>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">500,000+</div>
+                    <div>Transaksi Berhasil</div>
                 </div>
-                <div class="service-card">
-                    <i class="fas fa-gamepad"></i>
-                    <h3>Jasa Rekber Game</h3>
-                    <p>Melayani transaksi jual beli item game, akun game, voucher game, dan lainnya.</p>
+                <div class="stat-item">
+                    <div class="stat-number">100,000+</div>
+                    <div>Pengguna Aktif</div>
                 </div>
-                <div class="service-card">
-                    <i class="fas fa-mobile-alt"></i>
-                    <h3>Jasa Rekber Gadget</h3>
-                    <p>Melayani transaksi jual beli smartphone, laptop, komputer, dan perangkat elektronik lainnya.</p>
-                </div>
-                <div class="service-card">
-                    <i class="fas fa-car"></i>
-                    <h3>Jasa Rekber Otomotif</h3>
-                    <p>Melayani transaksi jual beli kendaraan, sparepart, dan aksesori kendaraan.</p>
-                </div>
-                <div class="service-card">
-                    <i class="fas fa-tshirt"></i>
-                    <h3>Jasa Rekber Fashion</h3>
-                    <p>Melayani transaksi jual beli fashion, sepatu, tas, dan aksesoris.</p>
-                </div>
-                <div class="service-card">
-                    <i class="fas fa-ellipsis-h"></i>
-                    <h3>Jasa Rekber Lainnya</h3>
-                    <p>Melayani berbagai macam transaksi online lainnya. Hubungi admin untuk informasi lebih lanjut.</p>
+                <div class="stat-item">
+                    <div class="stat-number">99.8%</div>
+                    <div>Tingkat Kepuasan</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Admins Section -->
-    <section class="admins" id="admins">
+    <section class="testimonials">
         <div class="container">
-            <h2 class="section-title">Tim Admin Kami</h2>
-            <div class="admins-grid">
-                <div class="admin-card">
-                    <div class="admin-img">
-                        <img src="/api/placeholder/300/300" alt="Admin 1">
-                    </div>
-                    <div class="admin-info">
-                        <h3>Ahmad Fauzi</h3>
-                        <p>Senior Admin</p>
-                        <p>Berpengalaman sejak 2018</p>
-                        <div class="admin-contact">
-                            <a href="https://facebook.com" class="fb-btn"><i class="fab fa-facebook-f"></i> Hubungi di Facebook</a>
-                        </div>
-                    </div>
+            <div class="section-title">
+                <h2>Testimoni Pengguna</h2>
+                <p>Pengalaman nyata dari pengguna yang telah merasakan kemudahan dan keamanan bertransaksi dengan TrustedPay.</p>
+            </div>
+            
+            <div class="filter-container">
+                <button class="filter-button active" data-filter="all">Semua Testimoni</button>
+                <button class="filter-button" data-filter="marketplace">Marketplace</button>
+                <button class="filter-button" data-filter="gaming">Jual Beli Game</button>
+                <button class="filter-button" data-filter="digital">Produk Digital</button>
+                <button class="filter-button" data-filter="electronics">Elektronik</button>
+            </div>
+
+            <div id="testimonial-container" class="testimonial-container">
+                <!-- Testimonials will be loaded here -->
+            </div>
+
+            <div class="loading-spinner" id="loading-spinner">
+                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <path d="M12 6v6l4 2"></path>
+                </svg>
+            </div>
+
+            <div class="pagination" id="pagination">
+                <!-- Pagination buttons will be generated here -->
+            </div>
+        </div>
+    </section>
+
+    <section class="cta">
+        <div class="container">
+            <h2>Transaksi dengan Aman Sekarang</h2>
+            <p>Bergabunglah dengan ribuan pengguna yang telah merasakan keamanan bertransaksi dengan TrustedPay.</p>
+            <a href="#" class="button">Daftar Gratis</a>
+            
+            <div class="trust-indicators">
+                <div class="trust-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    Transaksi Aman
                 </div>
-                <div class="admin-card">
-                    <div class="admin-img">
-                        <img src="/api/placeholder/300/300" alt="Admin 2">
-                    </div>
-                    <div class="admin-info">
-                        <h3>Siti Nurhaliza</h3>
-                        <p>Admin Utama</p>
-                        <p>Berpengalaman sejak 2019</p>
-                        <div class="admin-contact">
-                            <a href="https://facebook.com" class="fb-btn"><i class="fab fa-facebook-f"></i> Hubungi di Facebook</a>
-                        </div>
-                    </div>
+                <div class="trust-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                        <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                    </svg>
+                    Diawasi OJK
                 </div>
-                <div class="admin-card">
-                    <div class="admin-img">
-                        <img src="/api/placeholder/300/300" alt="Admin 3">
-                    </div>
-                    <div class="admin-info">
-                        <h3>Budi Santoso</h3>
-                        <p>Admin</p>
-                        <p>Berpengalaman sejak 2020</p>
-                        <div class="admin-contact">
-                            <a href="https://facebook.com" class="fb-btn"><i class="fab fa-facebook-f"></i> Hubungi di Facebook</a>
-                        </div>
-                    </div>
+                <div class="trust-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"></path>
+                        <path d="M2 17l10 5 10-5"></path>
+                        <path d="M2 12l10 5 10-5"></path>
+                    </svg>
+                    Proses Cepat
                 </div>
-                <div class="admin-card">
-                    <div class="admin-img">
-                        <img src="/api/placeholder/300/300" alt="Admin 4">
-                    </div>
-                    <div class="admin-info">
-                        <h3>Dewi Safitri</h3>
-                        <p>Admin</p>
-                        <p>Berpengalaman sejak 2021</p>
-                        <div class="admin-contact">
-                            <a href="https://facebook.com" class="fb-btn"><i class="fab fa-facebook-f"></i> Hubungi di Facebook</a>
-                        </div>
-                    </div>
+                <div class="trust-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                        <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                    </svg>
+                    Dukungan 24/7
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonials">
-        <div class="container">
-            <h2 class="section-title">Testimoni Pelanggan</h2>
-            <div class="testimonial-card">
-                <p class="testimonial-text">"Transaksi pertama saya menggunakan rekber ini sangat memuaskan. Prosesnya cepat dan admin sangat responsif. Akan menggunakan jasa ini lagi untuk transaksi berikutnya."</p>
-                <div class="testimonial-author">
-                    <img src="/api/placeholder/60/60" alt="Testimonial Author">
-                    <div class="author-info">
-                        <h4>Rudi Hartono</h4>
-                        <p>Jakarta</p>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card">
-                <p class="testimonial-text">"Awalnya ragu untuk menggunakan jasa rekber, tapi setelah mencoba layanan ini, saya merasa aman bertransaksi online. Admin sangat profesional dan jelas dalam memberikan informasi."</p>
-                <div class="testimonial-author">
-                    <img src="/api/placeholder/60/60" alt="Testimonial Author">
-                    <div class="author-info">
-                        <h4>Anita Wijaya</h4>
-                        <p>Surabaya</p>
-                    </div>
-                </div>
-            </div>
-            <div class="testimonial-card">
-                <p class="testimonial-text">"Sudah berkali-kali menggunakan jasa rekber ini untuk transaksi jual beli game. Prosesnya sangat cepat, bahkan di malam hari. Terima kasih atas pelayanannya!"</p>
-                <div class="testimonial-author">
-                    <img src="/api/placeholder/60/60" alt="Testimonial Author">
-                    <div class="author-info">
-                        <h4>Deni Kurniawan</h4>
-                        <p>Bandung</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta" id="contact">
-        <div class="container">
-            <h2>Mulai Bertransaksi dengan Aman Sekarang</h2>
-            <p>Hubungi admin kami untuk informasi lebih lanjut atau langsung mulai menggunakan jasa rekber kami.</p>
-            <a href="#admins" class="btn cta-btn">Hubungi Admin</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer>
         <div class="container">
             <div class="footer-content">
-                <div class="footer-section">
-                    <h3>Rekber Terpercaya</h3>
-                    <p>Jasa rekening bersama terpercaya untuk transaksi online yang aman dan nyaman.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                <div class="footer-logo">
+                    <div class="logo">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        TrustedPay
                     </div>
+                    <p>Solusi rekening bersama (rekber) terpercaya untuk keamanan transaksi online Anda. Didukung teknologi canggih dan tim profesional.</p>
                 </div>
-                <div class="footer-section">
-                    <h3>Link Cepat</h3>
+                <div class="footer-links">
+                    <h3>Perusahaan</h3>
                     <ul>
-                        <li><a href="#home">Beranda</a></li>
-                        <li><a href="#about">Tentang Kami</a></li>
-                        <li><a href="#services">Layanan</a></li>
-                        <li><a href="#admins">Admin</a></li>
-                        <li><a href="#testimonials">Testimoni</a></li>
+                        <li><a href="#">Tentang Kami</a></li>
+                        <li><a href="#">Tim Kami</a></li>
+                        <li><a href="#">Karir</a></li>
+                        <li><a href="#">Blog</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
+                <div class="footer-links">
                     <h3>Layanan</h3>
                     <ul>
                         <li><a href="#">Rekber Marketplace</a></li>
                         <li><a href="#">Rekber Game</a></li>
-                        <li><a href="#">Rekber Gadget</a></li>
-                        <li><a href="#">Rekber Otomotif</a></li>
-                        <li><a href="#">Rekber Fashion</a></li>
+                        <li><a href="#">Rekber Elektronik</a></li>
+                        <li><a href="#">API Integrasi</a></li>
                     </ul>
                 </div>
-                <div class="footer-section">
+                <div class="footer-links">
+                    <h3>Bantuan</h3>
+                    <ul>
+                        <li><a href="#">Pusat Bantuan</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Syarat & Ketentuan</a></li>
+                        <li><a href="#">Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
                     <h3>Kontak</h3>
                     <ul>
-                        <li><i class="fas fa-phone"></i> +62 812-3456-7890</li>
-                        <li><i class="fas fa-envelope"></i> info@rekberterpercaya.com</li>
-                        <li><i class="fab fa-whatsapp"></i> +62 812-3456-7890</li>
+                        <li><a href="#">support@trustedpay.id</a></li>
+                        <li><a href="#">+62 21 1234 5678</a></li>
+                        <li><a href="#">WhatsApp</a></li>
+                        <li><a href="#">Telegram</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2025 Rekber Terpercaya. All Rights Reserved.</p>
+            
+            <div class="copyright">
+                &copy; 2025 TrustedPay. Hak Cipta Dilindungi.
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript -->
     <script>
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample data for categories
+            const categories = ['marketplace', 'gaming', 'digital', 'electronics'];
+            
+            // Sample names (Indonesian)
+            const firstNames = [
+                'Agus', 'Budi', 'Citra', 'Dewi', 'Eko', 'Fitri', 'Gunawan', 'Hadi', 'Indah', 'Joko',
+                'Kartika', 'Lukman', 'Maya', 'Nia', 'Oki', 'Putri', 'Qori', 'Ratna', 'Surya', 'Tuti',
+                'Udin', 'Vina', 'Wawan', 'Xena', 'Yanto', 'Zahra', 'Aditya', 'Bayu', 'Cinta', 'Dian',
+                'Edi', 'Fani', 'Gita', 'Hendra', 'Ina', 'Juli', 'Kiki', 'Laras', 'Maman', 'Nining'
+            ];
+            
+            const lastNames = [
+                'Wijaya', 'Saputra', 'Santoso', 'Susanto', 'Kusuma', 'Hidayat', 'Nugraha', 'Pratama', 'Ismanto', 'Firmansyah',
+                'Hartono', 'Sukmawan', 'Pradana', 'Wibowo', 'Hakim', 'Budiman', 'Kurniawan', 'Sanjaya', 'Gunawan', 'Ramadhan'
+            ];
+            
+            // Sample transactions
+            const transactions = [
+                'Jual beli smartphone',
+                'Jual beli laptop',
+                'Jual beli sepeda',
+                'Jual beli kamera',
+                'Jual beli konsol game',
+                'Jual beli laptop gaming',
+                'Jual akun game',
+                'Jual beli parfum',
+                'Jual beli aksesoris HP',
+                'Jual beli jam tangan',
+                'Jual beli headset gaming',
+                'Jual beli tablet',
+                'Jual beli TV LED',
+                'Jual beli furnitur',
+                'Jual beli motor',
+                'Jual beli skin game',
+                'Jual software premium',
+                'Jual beli buku digital',
+                'Jual beli emas digital',
+                'Jual beli komponen PC'
+            ];
+            
+            // Sample testimonial contents
+            const testimonialContents = [
+                "Transaksi pertama saya menggunakan rekber dan sangat puas. Prosesnya cepat dan aman!",
+                "Sempat ragu, tapi ternyata layanan rekber ini sangat terpercaya. Akan pakai lagi untuk transaksi berikutnya.",
+                "Rekber terbaik yang pernah saya gunakan. Admin responsif dan proses pencairan cepat.",
+                "Terima kasih rekber! Transaksi jadi aman dan penjual juga tidak perlu khawatir.",
+                "Biaya admin terjangkau dibanding keamanan yang didapatkan. Sangat merekomendasikan!",
+                "Sudah berkali-kali pakai jasa rekber ini dan tidak pernah mengecewakan.",
+                "Proses verifikasi cepat dan tidak ribet. Sangat membantu untuk transaksi online.",
+                "Akhirnya menemukan rekber yang bisa dipercaya. Transaksi jadi tenang.",
+                "Platform rekber yang user-friendly. Mudah digunakan baik untuk penjual maupun pembeli.",
+                "Admin sangat profesional dan informatif. Selalu menjelaskan proses dengan detail.",
+                "Awalnya takut tertipu, tapi dengan rekber ini jadi tenang. Barang sampai dengan aman.",
+                "Proses pencairan dana cepat setelah konfirmasi barang diterima. Sangat efisien!",
+                "Sudah 5 kali pakai rekber ini dan selalu puas dengan layanannya.",
+                "Alternatif yang bagus untuk transaksi online yang aman. Tidak perlu takut lagi.",
+                "Interface website sangat intuitif. Mudah dipahami untuk pemula sekalipun.",
+                "Transaksi bernilai besar jadi lebih aman dengan rekber ini. Terima kasih!",
+                "Fitur tracking status transaksi sangat membantu untuk memantau proses.",
+                "Customer service responsif dan selalu siap membantu. Layanan prima!",
+                "Proses dispute yang fair jika ada masalah dalam transaksi.",
+                "Fee rekber sangat worth it untuk keamanan yang didapatkan. Recommended!"
+            ];
+            
+            // Generate random testimonials data
+            function generateTestimonials(count) {
+                const testimonials = [];
+                
+                for (let i = 0; i < count; i++) {
+                    const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+                    const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+                    const name = `${firstName} ${lastName}`;
+                    const initials = firstName.charAt(0) + lastName.charAt(0);
+                    
+                    // Generate random date within last 3 months
+                    const now = new Date();
+                    const pastDate = new Date(now.getTime() - Math.random() * 90 * 24 * 60 * 60 * 1000);
+                    const dateStr = pastDate.toLocaleDateString('id-ID', { 
+                        year: 'numeric', 
+                        month: 'long', 
+                        day: 'numeric' 
+                    });
+                    
+                    // Random amount between 100k and 10M
+                    const amount = Math.floor(Math.random() * 9900000 + 100000);
+                    const formattedAmount = new Intl.NumberFormat('id-ID', { 
+                        style: 'currency', 
+                        currency: 'IDR' 
+                    }).format(amount);
+                    
+                    const transaction = transactions[Math.floor(Math.random() * transactions.length)];
+                    const content = testimonialContents[Math.floor(Math.random() * testimonialContents.length)];
+                    const rating = Math.floor(Math.random() * 2) + 4; // 4 or 5 stars
+                    const category = categories[Math.floor(Math.random() * categories.length)];
+                    
+                    testimonials.push({
+                        id: i + 1,
+                        name,
+                        initials,
+                        date: dateStr,
+                        transaction,
+                        amount: formattedAmount,
+                        content,
+                        rating,
+                        category
+                    });
+                }
+                
+                return testimonials;
+            }
+            
+            // Generate 500 random testimonials
+            const allTestimonials = generateTestimonials(500);
+            
+            // Variables for pagination
+            let currentPage = 1;
+            const testimonialsPerPage = 9;
+            let currentFilter = 'all';
+            
+            // Function to render testimonials based on current page and filter
+            function renderTestimonials() {
+                const testimonialContainer = document.getElementById('testimonial-container');
+                testimonialContainer.innerHTML = '';
+                
+                // Filter testimonials based on selected category
+                let filteredTestimonials = allTestimonials;
+                if (currentFilter !== 'all') {
+                    filteredTestimonials = allTestimonials.filter(t => t.category === currentFilter);
+                }
+                
+                // Calculate pagination
+                const startIndex = (currentPage - 1) * testimonialsPerPage;
+                const endIndex = startIndex + testimonialsPerPage;
+                const paginatedTestimonials = filteredTestimonials.slice(startIndex, endIndex);
+                
+                // Render testimonials
+                paginatedTestimonials.forEach(testimonial => {
+                    const testimonialCard = document.createElement('div');
+                    testimonialCard.className = 'testimonial-card';
+                    testimonialCard.setAttribute('data-category', testimonial.category);
+                    
+                    // Generate star rating HTML
+                    let starsHtml = '';
+                    for (let i = 0; i < 5; i++) {
+                        const fillColor = i < testimonial.rating ? 'currentColor' : 'none';
+                        starsHtml += `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="${fillColor}" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>`;
+                    }
+                    
+                    testimonialCard.innerHTML = `
+                        <div class="testimonial-header">
+                            <div class="testimonial-avatar">${testimonial.initials}</div>
+                            <div class="testimonial-user">
+                                <h3>${testimonial.name}</h3>
+                                <div class="testimonial-date">${testimonial.date}</div>
+                            </div>
+                        </div>
+                        <div class="transaction-details">
+                            <span>Transaksi:</span>
+                            <div>${testimonial.transaction}</div>
+                            <span>Nominal:</span>
+                            <div class="amount">${testimonial.amount}</div>
+                        </div>
+                        <div class="testimonial-content">
+                            "${testimonial.content}"
+                        </div>
+                        <div class="rating">
+                            ${starsHtml}
+                        </div>
+                    `;
+                    
+                    testimonialContainer.appendChild(testimonialCard);
+                });
+                
+                // Update pagination
+                renderPagination(filteredTestimonials.length);
+            }
+            
+            // Add event listeners for filter buttons
+            document.querySelectorAll('.filter-button').forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active filter button
+                    document.querySelectorAll('.filter-button').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    button.classList.add('active');
+                    
+                    // Update filter and reset to page 1
+                    currentFilter = button.getAttribute('data-filter');
+                    currentPage = 1;
+                    renderTestimonials();
                 });
             });
+            
+            // Function to render pagination buttons
+            function renderPagination(totalItems) {
+                const paginationContainer = document.getElementById('pagination');
+                paginationContainer.innerHTML = '';
+                
+                const totalPages = Math.ceil(totalItems / testimonialsPerPage);
+                
+                // Add previous button
+                if (totalPages > 1) {
+                    const prevButton = document.createElement('button');
+                    prevButton.className = 'pagination-button';
+                    prevButton.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="15 18 9 12 15 6"></polyline>
+                        </svg>
+                    `;
+                    prevButton.disabled = currentPage === 1;
+                    prevButton.addEventListener('click', () => {
+                        if (currentPage > 1) {
+                            currentPage--;
+                            renderTestimonials();
+                            window.scrollTo({
+                                top: document.querySelector('.testimonials').offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                    paginationContainer.appendChild(prevButton);
+                }
+                
+                // Determine page range to display (show max 5 pages)
+                let startPage = Math.max(1, currentPage - 2);
+                let endPage = Math.min(totalPages, startPage + 4);
+                
+                if (endPage - startPage < 4 && startPage > 1) {
+                    startPage = Math.max(1, endPage - 4);
+                }
+                
+                // Add page buttons
+                for (let i = startPage; i <= endPage; i++) {
+                    const pageButton = document.createElement('button');
+                    pageButton.className = 'pagination-button';
+                    if (i === currentPage) {
+                        pageButton.classList.add('active');
+                    }
+                    pageButton.textContent = i;
+                    pageButton.addEventListener('click', () => {
+                        currentPage = i;
+                        renderTestimonials();
+                        window.scrollTo({
+                            top: document.querySelector('.testimonials').offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    });
+                    paginationContainer.appendChild(pageButton);
+                }
+                
+                // Add next button
+                if (totalPages > 1) {
+                    const nextButton = document.createElement('button');
+                    nextButton.className = 'pagination-button';
+                    nextButton.innerHTML = `
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="9 18 15 12 9 6"></polyline>
+                        </svg>
+                    `;
+                    nextButton.disabled = currentPage === totalPages;
+                    nextButton.addEventListener('click', () => {
+                        if (currentPage < totalPages) {
+                            currentPage++;
+                            renderTestimonials();
+                            window.scrollTo({
+                                top: document.querySelector('.testimonials').offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    });
+                    paginationContainer.appendChild(nextButton);
+                }
+            }
+            
+            // Initial render
+            renderTestimonials();
         });
-    </script>
-</body>
-</html>
