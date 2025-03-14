@@ -1,26 +1,75 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProMiddleman - Trusted Escrow Service</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <meta name="description" content="Deskripsi halaman Anda di sini (50-160 karakter)">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourusername.github.io/your-repo/">
+    <meta property="og:title" content="Judul Halaman Anda | Brand">
+    <meta property="og:description" content="Deskripsi halaman Anda di sini (50-160 karakter)">
+    <meta property="og:image" content="https://yourusername.github.io/your-repo/images/og-image.jpg">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://yourusername.github.io/your-repo/">
+    <meta property="twitter:title" content="Judul Halaman Anda | Brand">
+    <meta property="twitter:description" content="Deskripsi halaman Anda di sini (50-160 karakter)">
+    <meta property="twitter:image" content="https://yourusername.github.io/your-repo/images/twitter-image.jpg">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://yourusername.github.io/your-repo/current-page.html">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="images/favicon.png">
+    
+    <title>Judul Halaman Anda | Brand</title>
+    
+    <!-- Preload Critical Assets -->
+    <link rel="preload" href="css/style.css" as="style">
+    <link rel="preload" href="js/main.js" as="script">
+    <link rel="preload" href="fonts/your-font.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Structured Data / JSON-LD -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Article",
+        "headline": "Judul Artikel Anda",
+        "description": "Deskripsi artikel Anda",
+        "image": "https://yourusername.github.io/your-repo/images/article-image.jpg",
+        "author": {
+            "@type": "Person",
+            "name": "Nama Penulis"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "Nama Organisasi",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://yourusername.github.io/your-repo/images/logo.png"
+            }
+        },
+        "datePublished": "2025-03-15T09:00:00+07:00",
+        "dateModified": "2025-03-15T09:00:00+07:00"
+    }
+    </script>
+    
     <style>
-        /* Custom fonts */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        /* Base styles */
+        /* Critical CSS inline */
         :root {
-            --primary: #2a41e8;
-            --primary-dark: #1e33c7;
-            --secondary: #5bbc2e;
-            --dark: #2a2a2a;
-            --light: #f9f9f9;
-            --gray: #f0f0f0;
-            --text: #555;
-            --border-radius: 8px;
-            --shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            --transition: all 0.3s ease;
+            --primary-color: #3498db;
+            --secondary-color: #2ecc71;
+            --text-color: #333;
+            --bg-color: #fff;
+            --accent-color: #e74c3c;
+            --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            --container-width: 1200px;
         }
         
         * {
@@ -30,1561 +79,527 @@
         }
         
         body {
-            font-family: 'Poppins', sans-serif;
-            color: var(--text);
+            font-family: var(--font-main);
             line-height: 1.6;
-            background-color: #fff;
-        }
-        
-        a {
-            text-decoration: none;
-            color: var(--primary);
-            transition: var(--transition);
-        }
-        
-        a:hover {
-            color: var(--primary-dark);
+            color: var(--text-color);
+            background-color: var(--bg-color);
         }
         
         .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 12px 24px;
-            border-radius: var(--border-radius);
-            font-weight: 600;
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            border: none;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-            color: white;
-        }
-        
-        .btn-secondary {
-            background-color: var(--secondary);
-            color: white;
-        }
-        
-        .btn-secondary:hover {
-            background-color: #4ca724;
-            color: white;
-        }
-        
-        .btn-outline {
-            background-color: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-        }
-        
-        .btn-outline:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-        
-        .section {
-            padding: 80px 0;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        
-        .section-title h2 {
-            font-size: 36px;
-            color: var(--dark);
-            position: relative;
-            display: inline-block;
-            margin-bottom: 15px;
-        }
-        
-        .section-title h2:after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background-color: var(--primary);
-        }
-        
-        .section-title p {
-            font-size: 18px;
-            color: #777;
-        }
-        
-        /* Header styles */
-        header {
-            background-color: #fff;
-            box-shadow: var(--shadow);
-            position: fixed;
-            top: 0;
-            left: 0;
             width: 100%;
-            z-index: 1000;
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 20px;
         }
         
-        .navbar {
+        .header {
+            padding: 20px 0;
+            background-color: var(--bg-color);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 15px 0;
         }
         
         .logo {
-            display: flex;
-            align-items: center;
-        }
-        
-        .logo img {
-            height: 40px;
-            margin-right: 10px;
-        }
-        
-        .logo h1 {
             font-size: 24px;
-            font-weight: 700;
-            color: var(--dark);
+            font-weight: bold;
+            color: var(--primary-color);
         }
         
-        .nav-links {
+        .nav-menu {
             display: flex;
             list-style: none;
         }
         
-        .nav-links li {
-            margin-left: 25px;
+        .nav-item {
+            margin-left: 20px;
         }
         
-        .nav-links a {
-            color: var(--dark);
-            font-weight: 500;
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-color);
+            transition: color 0.3s ease;
         }
         
-        .nav-links a:hover {
-            color: var(--primary);
+        .nav-link:hover {
+            color: var(--primary-color);
         }
         
-        .mobile-menu {
-            display: none;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        
-        /* Hero section */
         .hero {
-            padding: 170px 0 100px;
-            background: linear-gradient(135deg, #2a41e8 0%, #4e6bff 100%);
-            color: white;
+            padding: 60px 0;
             text-align: center;
+            background-color: #f9f9f9;
         }
         
-        .hero h1 {
-            font-size: 48px;
+        .hero-title {
+            font-size: 36px;
             margin-bottom: 20px;
-            font-weight: 700;
+            color: var(--text-color);
         }
         
-        .hero p {
-            font-size: 20px;
+        .hero-description {
+            font-size: 18px;
             margin-bottom: 30px;
-            max-width: 700px;
+            max-width: 800px;
             margin-left: auto;
             margin-right: auto;
+            color: #666;
         }
         
-        .hero-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-top: 30px;
+        .content {
+            padding: 40px 0;
         }
         
-        /* Features section */
-        .features {
-            background-color: var(--light);
+        .article {
+            max-width: 800px;
+            margin: 0 auto;
         }
         
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+        .article-meta {
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 14px;
         }
         
-        .feature-card {
-            background-color: #fff;
-            border-radius: var(--border-radius);
-            padding: 30px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            text-align: center;
+        .article-title {
+            font-size: 32px;
+            margin-bottom: 20px;
+            color: var(--text-color);
         }
         
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .feature-icon {
-            font-size: 48px;
-            color: var(--primary);
+        .article-image {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
             margin-bottom: 20px;
         }
         
-        .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-            color: var(--dark);
+        .article-content {
+            font-size: 16px;
+            line-height: 1.8;
         }
         
-        /* How it works section */
-        .how-it-works {
-            background-color: #fff;
+        .article-content h2 {
+            font-size: 24px;
+            margin: 30px 0 15px;
+            color: var(--text-color);
         }
         
-        .steps {
+        .article-content h3 {
+            font-size: 20px;
+            margin: 25px 0 10px;
+            color: var(--text-color);
+        }
+        
+        .article-content p {
+            margin-bottom: 20px;
+        }
+        
+        .article-content a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .article-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .article-content ul, .article-content ol {
+            margin: 0 0 20px 20px;
+        }
+        
+        .article-content li {
+            margin-bottom: 10px;
+        }
+        
+        .article-share {
+            margin: 40px 0;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            gap: 10px;
         }
         
-        .step {
-            flex: 0 0 calc(33.333% - 30px);
-            text-align: center;
-            padding: 30px;
-            position: relative;
-        }
-        
-        .step-number {
-            width: 60px;
-            height: 60px;
-            background-color: var(--primary);
+        .share-button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: var(--primary-color);
             color: white;
-            border-radius: 50%;
+            cursor: pointer;
             display: flex;
-            justify-content: center;
             align-items: center;
+            gap: 5px;
+        }
+        
+        .share-button:hover {
+            opacity: 0.9;
+        }
+        
+        .related-posts {
+            margin-top: 60px;
+        }
+        
+        .related-posts-title {
             font-size: 24px;
-            font-weight: 700;
-            margin: 0 auto 20px;
+            margin-bottom: 20px;
+            text-align: center;
         }
         
-        .step h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-            color: var(--dark);
-        }
-        
-        .step:not(:last-child):after {
-            content: '\f054';
-            font-family: 'Font Awesome 6 Free';
-            font-weight: 900;
-            position: absolute;
-            top: 60px;
-            right: -15px;
-            color: #ddd;
-            font-size: 24px;
-        }
-        
-        /* Testimonials section */
-        .testimonials {
-            background-color: var(--light);
-        }
-        
-        .testimonial-grid {
+        .related-posts-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
         }
         
-        .testimonial-card {
-            background-color: #fff;
-            border-radius: var(--border-radius);
-            padding: 30px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
-        }
-        
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .testimonial-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            justify-content: space-between;
-        }
-        
-        .testimonial-user {
-            display: flex;
-            align-items: center;
-        }
-        
-        .testimonial-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: #ddd;
+        .related-post-card {
+            border-radius: 8px;
             overflow: hidden;
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            color: #888;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
         }
         
-        .testimonial-user-info h4 {
+        .related-post-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .related-post-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        
+        .related-post-content {
+            padding: 15px;
+        }
+        
+        .related-post-title {
             font-size: 18px;
-            margin-bottom: 5px;
-            color: var(--dark);
-        }
-        
-        .testimonial-user-info p {
-            font-size: 14px;
-            color: #777;
-        }
-        
-        .testimonial-content {
-            margin-bottom: 20px;
-            font-style: italic;
-            color: #555;
-        }
-        
-        .testimonial-footer {
-            display: flex;
-            justify-content: space-between;
-            font-size: 14px;
-            color: #999;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-        }
-        
-        .testimonial-rating {
-            color: #ffc107;
-        }
-        
-        .testimonial-verified {
-            display: flex;
-            align-items: center;
-            color: var(--secondary);
-        }
-        
-        .testimonial-verified i {
-            margin-right: 5px;
-        }
-        
-        .view-more-btn {
-            text-align: center;
-            margin-top: 40px;
-        }
-        
-        /* Pricing section */
-        .pricing {
-            background-color: #fff;
-        }
-        
-        .pricing-tables {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .pricing-table {
-            background-color: var(--light);
-            border-radius: var(--border-radius);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-        
-        .pricing-table:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .pricing-header {
-            padding: 30px;
-            background-color: var(--primary);
-            color: white;
-            text-align: center;
-        }
-        
-        .pricing-header h3 {
-            font-size: 24px;
             margin-bottom: 10px;
         }
         
-        .pricing-price {
-            font-size: 36px;
-            font-weight: 700;
+        .related-post-excerpt {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
         }
         
-        .pricing-price span {
-            font-size: 16px;
-            font-weight: 400;
+        .read-more {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
         }
         
-        .pricing-features {
-            padding: 30px;
-            list-style: none;
+        .read-more:hover {
+            text-decoration: underline;
         }
         
-        .pricing-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .pricing-features li i {
-            color: var(--secondary);
-            margin-right: 10px;
-        }
-        
-        .pricing-footer {
-            padding: 30px;
-            text-align: center;
-        }
-        
-        /* FAQ section */
-        .faq {
-            background-color: var(--light);
-        }
-        
-        .faq-item {
-            background-color: #fff;
-            border-radius: var(--border-radius);
-            margin-bottom: 20px;
-            box-shadow: var(--shadow);
-            overflow: hidden;
-        }
-        
-        .faq-question {
-            padding: 20px;
-            font-weight: 600;
-            color: var(--dark);
-            cursor: pointer;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .faq-question i {
-            color: var(--primary);
-            transition: var(--transition);
-        }
-        
-        .faq-answer {
-            padding: 0 20px;
-            max-height: 0;
-            overflow: hidden;
-            transition: var(--transition);
-        }
-        
-        .faq-answer p {
-            padding-bottom: 20px;
-        }
-        
-        .faq-item.active .faq-question i {
-            transform: rotate(180deg);
-        }
-        
-        .faq-item.active .faq-answer {
-            max-height: 500px;
-        }
-        
-        /* Contact section */
-        .contact {
-            background-color: #fff;
-        }
-        
-        .contact-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 40px;
-        }
-        
-        .contact-form {
-            padding: 40px;
-            background-color: var(--light);
-            border-radius: var(--border-radius);
-            box-shadow: var(--shadow);
-        }
-        
-        .contact-form h3 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: var(--dark);
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid #ddd;
-            border-radius: var(--border-radius);
-            font-family: 'Poppins', sans-serif;
-            font-size: 16px;
-            transition: var(--transition);
-        }
-        
-        .form-control:focus {
-            border-color: var(--primary);
-            outline: none;
-        }
-        
-        textarea.form-control {
-            height: 150px;
-            resize: vertical;
-        }
-        
-        .contact-info {
-            padding: 40px;
-        }
-        
-        .contact-info h3 {
-            font-size: 24px;
-            margin-bottom: 20px;
-            color: var(--dark);
-        }
-        
-        .contact-info p {
-            margin-bottom: 20px;
-        }
-        
-        .contact-item {
-            display: flex;
-            margin-bottom: 20px;
-        }
-        
-        .contact-item i {
-            font-size: 20px;
-            color: var(--primary);
-            margin-right: 15px;
-            margin-top: 5px;
-        }
-        
-        .contact-item .content h4 {
-            font-size: 18px;
-            margin-bottom: 5px;
-            color: var(--dark);
-        }
-        
-        .social-links {
-            display: flex;
-            gap: 10px;
-            margin-top: 30px;
-        }
-        
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: var(--transition);
-        }
-        
-        .social-links a:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-3px);
-        }
-        
-        /* CTA section */
-        .cta {
-            background: linear-gradient(135deg, #2a41e8 0%, #4e6bff 100%);
-            color: white;
-            text-align: center;
-            padding: 60px 0;
-        }
-        
-        .cta h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-        
-        .cta p {
-            font-size: 18px;
-            margin-bottom: 30px;
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        /* Footer */
-        footer {
+        .footer {
             background-color: #333;
-            color: #fff;
-            padding: 60px 0 0;
+            color: white;
+            padding: 40px 0;
         }
         
-        .footer-grid {
+        .footer-content {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
         }
         
-        .footer-widget h3 {
-            font-size: 20px;
-            margin-bottom: 20px;
-            color: #fff;
-            position: relative;
-            padding-bottom: 10px;
-        }
-        
-        .footer-widget h3:after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 50px;
-            height: 2px;
-            background-color: var(--primary);
-        }
-        
-        .footer-widget p {
-            margin-bottom: 20px;
-            color: #aaa;
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
         }
         
         .footer-links {
             list-style: none;
         }
         
-        .footer-links li {
+        .footer-link {
             margin-bottom: 10px;
         }
         
-        .footer-links a {
-            color: #aaa;
-            transition: var(--transition);
+        .footer-link a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s ease;
         }
         
-        .footer-links a:hover {
-            color: var(--primary);
-            padding-left: 5px;
-        }
-        
-        .footer-links i {
-            margin-right: 10px;
-            color: var(--primary);
+        .footer-link a:hover {
+            color: white;
         }
         
         .footer-bottom {
-            padding: 20px 0;
-            border-top: 1px solid #444;
-            margin-top: 40px;
+            margin-top: 30px;
             text-align: center;
-            color: #aaa;
+            padding-top: 20px;
+            border-top: 1px solid #444;
         }
         
-        /* Responsive styles */
-        @media (max-width: 992px) {
-            .navbar {
-                padding: 15px;
+        /* Responsiveness */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 28px;
             }
             
-            .nav-links {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                width: 80%;
-                height: calc(100vh - 70px);
-                background-color: #fff;
-                flex-direction: column;
-                align-items: center;
-                justify-content: flex-start;
-                padding-top: 40px;
-                box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-                transition: var(--transition);
+            .article-title {
+                font-size: 26px;
             }
             
-            .nav-links.active {
-                left: 0;
-            }
-            
-            .nav-links li {
-                margin: 15px 0;
-            }
-            
-            .mobile-menu {
-                display: block;
-            }
-            
-            .step {
-                flex: 0 0 100%;
-                margin-bottom: 30px;
-            }
-            
-            .step:not(:last-child):after {
+            .nav-menu {
                 display: none;
             }
             
-            .hero h1 {
-                font-size: 36px;
+            .mobile-menu-button {
+                display: block;
             }
-            
-            .hero p {
-                font-size: 18px;
-            }
-            
-            .section-title h2 {
-                font-size: 30px;
-            }
-            
-            .section-title p {
-                font-size: 16px;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .hero-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .hero-buttons .btn {
-                width: 80%;
-                margin-bottom: 10px;
-            }
-            
-            .contact-container {
-                grid-template-columns: 1fr;
-            }
-        }
-        
-        @media (max-width: 576px) {
-            .section {
-                padding: 60px 0;
-            }
-            
-            .hero {
-                padding: 150px 0 80px;
-            }
-            
-            .hero h1 {
-                font-size: 30px;
-            }
-            
-            .feature-card, .testimonial-card, .pricing-table {
-                padding: 20px;
-            }
-            
-            .contact-form, .contact-info {
-                padding: 20px;
-            }
-        }
-        
-        /* Animation keyframes */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        .fade-in {
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        
-        .pagination a {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 5px;
-            border-radius: 5px;
-            background-color: #fff;
-            color: var(--dark);
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-        
-        .pagination a:hover, .pagination a.active {
-            background-color: var(--primary);
-            color: white;
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
+    <header class="header">
         <div class="container">
-            <nav class="navbar">
-                <div class="logo">
-                    <img src="/api/placeholder/200/60" alt="ProMiddleman Logo">
-                    <h1>ProMiddleman</h1>
-                </div>
-                <ul class="nav-links">
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#features">Features</a></li>
-                    <li><a href="#how-it-works">How It Works</a></li>
-                    <li><a href="#testimonials">Testimonials</a></li>
-                    <li><a href="#pricing">Pricing</a></li>
-                    <li><a href="#faq">FAQ</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-                <div class="mobile-menu">
-                    <i class="fas fa-bars"></i>
-                </div>
-            </nav>
+            <div class="header-content">
+                <a href="index.html" class="logo">YourBrand</a>
+                <nav>
+                    <ul class="nav-menu">
+                        <li class="nav-item"><a href="index.html" class="nav-link">Beranda</a></li>
+                        <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+                        <li class="nav-item"><a href="about.html" class="nav-link">Tentang</a></li>
+                        <li class="nav-item"><a href="contact.html" class="nav-link">Kontak</a></li>
+                    </ul>
+                    <button class="mobile-menu-button" aria-label="Menu" style="display: none;">
+                        <svg width="24" height="24" viewBox="0 0 24 24">
+                            <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" fill="currentColor"></path>
+                        </svg>
+                    </button>
+                </nav>
+            </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container">
-            <h1>The Most Trusted Escrow Service</h1>
-            <p>Secure your online transactions with our professional middleman service. We protect both buyers and sellers with our reliable escrow solution.</p>
-            <div class="hero-buttons">
-                <a href="#how-it-works" class="btn btn-secondary">How It Works</a>
-                <a href="#contact" class="btn btn-outline">Contact Us</a>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <h1 class="hero-title">Judul Artikel Utama Anda</h1>
+                <p class="hero-description">Deskripsi singkat untuk menarik perhatian pembaca. Pastikan deskripsi ini informatif dan relevan dengan isi konten.</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Features Section -->
-    <section id="features" class="section features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Why Choose ProMiddleman</h2>
-                <p>We offer the most secure escrow service for your online transactions</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
+        <section class="content">
+            <div class="container">
+                <article class="article">
+                    <div class="article-meta">
+                        <span class="article-date">15 Maret 2025</span> &bull; 
+                        <span class="article-author">oleh <a href="#">Nama Penulis</a></span> &bull; 
+                        <span class="article-category">dalam <a href="#">Kategori</a></span>
                     </div>
-                    <h3>Secure Transactions</h3>
-                    <p>Your money is held securely until both parties confirm the transaction is complete.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-globe"></i>
-                    </div>
-                    <h3>Worldwide Service</h3>
-                    <p>We serve clients from over 190 countries with multiple payment options.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>24/7 Support</h3>
-                    <p>Our dedicated support team is available around the clock to assist you.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-percent"></i>
-                    </div>
-                    <h3>Low Fees</h3>
-                    <p>Competitive rates starting from just 1% of the transaction value.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>Fast Processing</h3>
-                    <p>Quick verification and rapid fund transfers when conditions are met.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-user-check"></i>
-                    </div>
-                    <h3>Verified Users</h3>
-                    <p>All users undergo rigorous verification to ensure legitimacy.</p>
-                </div>
-            </div>
-        </div>
-    </section>
 
-    <!-- How It Works Section -->
-    <section id="how-it-works" class="section how-it-works">
-        <div class="container">
-            <div class="section-title">
-                <h2>How It Works</h2>
-                <p>A simple 3-step process to secure your transaction</p>
-            </div>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Buyer Deposits Funds</h3>
-                    <p>The buyer securely deposits the payment to our escrow account.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Seller Delivers Item/Service</h3>
-                    <p>Once notified of the deposit, the seller delivers the product or service.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Buyer Approves & Funds Released</h3>
-                    <p>The buyer confirms receipt and we release the funds to the seller.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="section testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>Testimonials</h2>
-                <p>What our clients say about our service</p>
-            </div>
-            <div class="testimonial-grid">
-                <!-- Testimonials will be dynamically generated by JavaScript -->
-            </div>
-            <div class="pagination">
-                <!-- Pagination will be dynamically generated by JavaScript -->
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section id="pricing" class="section pricing">
-        <div class="container">
-            <div class="section-title">
-                <h2>Our Pricing</h2>
-                <p>Affordable rates for secure transactions</p>
-            </div>
-            <div class="pricing-tables">
-                <div class="pricing-table">
-                    <div class="pricing-header">
-                        <h3>Basic</h3>
-                        <div class="pricing-price">1.5%<span> / transaction</span></div>
+                    <h1 class="article-title">Judul Artikel Utama Anda</h1>
+                    
+                    <img src="/api/placeholder/800/450" alt="Deskripsi gambar artikel" class="article-image" width="800" height="450" loading="lazy">
+                    
+                    <div class="article-content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vehicula, nunc in hendrerit efficitur, dui orci fermentum risus, at efficitur nisl nisl ut urna. Suspendisse potenti. Phasellus vestibulum enim in justo sodales, sed scelerisque magna egestas.</p>
+                        
+                        <h2>Sub Judul Pertama</h2>
+                        <p>Pellentesque varius lectus ac lectus tempor, sed convallis libero commodo. Donec sodales mauris nibh, at pretium sem tincidunt at. Etiam vel ipsum fringilla, pharetra nulla eget, posuere sem. Mauris et arcu et mauris convallis condimentum quis ac elit.</p>
+                        
+                        <p>Fusce sit amet massa ut tortor pulvinar elementum et vitae eros:</p>
+                        <ul>
+                            <li>Poin penting pertama dengan <a href="#">link relevan</a></li>
+                            <li>Poin penting kedua yang mendukung pernyataan di atas</li>
+                            <li>Poin penting ketiga dengan detail-detail pendukung</li>
+                        </ul>
+                        
+                        <h2>Sub Judul Kedua</h2>
+                        <p>Vestibulum auctor convallis lacinia. Sed euismod pharetra ante, eget fringilla nulla semper vel. Etiam eget aliquam neque. Morbi ac urna nec arcu feugiat ultrices.</p>
+                        
+                        <h3>Sub-sub Judul</h3>
+                        <p>Quisque ut augue vel velit auctor luctus. Nam ligula risus, facilisis eu imperdiet sit amet, rhoncus sit amet nisi. Donec vehicula hendrerit risus, eu vehicula eros tincidunt eget. In hac habitasse platea dictumst.</p>
+                        
+                        <p>Cras porttitor elit ac diam consequat congue:</p>
+                        <ol>
+                            <li>Langkah pertama dalam proses</li>
+                            <li>Langkah kedua yang harus diikuti</li>
+                            <li>Langkah ketiga untuk menyelesaikan proses</li>
+                        </ol>
+                        
+                        <h2>Kesimpulan</h2>
+                        <p>Aenean vel nulla vitae libero viverra dignissim. Vivamus in convallis dolor, vitae commodo elit. Cras quis mi sed justo vehicula tempor. Proin id viverra nisl, vitae interdum enim. Phasellus vulputate augue vitae elit placerat, vel posuere mi placerat.</p>
                     </div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Transactions up to $1,000</li>
-                        <li><i class="fas fa-check"></i> Email Support</li>
-                        <li><i class="fas fa-check"></i> 48-hour Processing</li>
-                        <li><i class="fas fa-check"></i> Basic Verification</li>
-                        <li><i class="fas fa-times"></i> Priority Support</li>
-                        <li><i class="fas fa-times"></i> Dispute Resolution</li>
-                    </ul>
-                    <div class="pricing-footer">
-                        <a href="#contact" class="btn btn-outline">Get Started</a>
+                    
+                    <div class="article-share">
+                        <span>Bagikan:</span>
+                        <button class="share-button" data-platform="facebook">
+                            Facebook
+                        </button>
+                        <button class="share-button" data-platform="twitter">
+                            Twitter
+                        </button>
+                        <button class="share-button" data-platform="linkedin">
+                            LinkedIn
+                        </button>
                     </div>
-                </div>
-                <div class="pricing-table">
-                    <div class="pricing-header" style="background-color: var(--secondary);">
-                        <h3>Standard</h3>
-                        <div class="pricing-price">1%<span> / transaction</span></div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Transactions up to $10,000</li>
-                        <li><i class="fas fa-check"></i> Email & Chat Support</li>
-                        <li><i class="fas fa-check"></i> 24-hour Processing</li>
-                        <li><i class="fas fa-check"></i> Advanced Verification</li>
-                        <li><i class="fas fa-check"></i> Priority Support</li>
-                        <li><i class="fas fa-times"></i> Dispute Resolution</li>
-                    </ul>
-                    <div class="pricing-footer">
-                        <a href="#contact" class="btn btn-primary">Get Started</a>
-                    </div>
-                </div>
-                <div class="pricing-table">
-                    <div class="pricing-header">
-                        <h3>Premium</h3>
-                        <div class="pricing-price">0.8%<span> / transaction</span></div>
-                    </div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Unlimited Transaction Amount</li>
-                        <li><i class="fas fa-check"></i> 24/7 Phone, Email & Chat Support</li>
-                        <li><i class="fas fa-check"></i> Express 12-hour Processing</li>
-                        <li><i class="fas fa-check"></i> Premium Verification</li>
-                        <li><i class="fas fa-check"></i> Priority Support</li>
-                        <li><i class="fas fa-check"></i> Free Dispute Resolution</li>
-                    </ul>
-                    <div class="pricing-footer">
-                        <a href="#contact" class="btn btn-outline">Get Started</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section id="faq" class="section faq">
-        <div class="container">
-            <div class="section-title">
-                <h2>Frequently Asked Questions</h2>
-                <p>Everything you need to know about our service</p>
-            </div>
-            <div class="faq-container">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        How does escrow protect me? <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Escrow protection works by holding funds in a secure account managed by a trusted third party (us) until all conditions of the transaction are met. This protects both the buyer and seller from fraud, ensuring that the buyer receives what they paid for and the seller receives their payment.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        What payment methods do you accept? <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>We accept a wide range of payment methods including credit/debit cards, bank transfers, PayPal, and major cryptocurrencies like Bitcoin, Ethereum, and more. Our flexible payment options allow you to choose what works best for you.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        How long does the escrow process take? <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>The time frame varies depending on your selected plan and the nature of the transaction. Basic plans process within 48 hours, Standard within 24 hours, and Premium within 12 hours after all verification requirements are met. The total transaction time also depends on how quickly both parties fulfill their obligations.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        What happens if there's a dispute? <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>If a dispute arises, our team steps in to mediate between the parties. We'll review all transaction details, communications, and evidence submitted by both sides to reach a fair resolution. Premium plan members receive free dispute resolution services, while other plans may incur a small fee for this service.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        Is my personal and financial information secure? <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Absolutely. We employ bank-level encryption and security measures to protect all your data. Our platform is regularly audited by independent security firms, and we never store complete payment information on our servers. We comply with all relevant data protection regulations worldwide.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        Can I use your service for international transactions? <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Yes, ProMiddleman handles international transactions between parties in different countries. We support multiple currencies and have experience managing escrow for global commerce. Be aware that international transactions may require additional verification steps to comply with regulatory requirements.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="section contact">
-        <div class="container">
-            <div class="section-title">
-                <h2>Contact Us</h2>
-                <p>Get in touch with our team</p>
-            </div>
-            <div class="contact-container">
-                <div class="contact-form">
-                    <h3>Send us a message</h3>
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Your Name" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Your Email" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Subject" required>
-                        </div>
-                        <div class="form-group">
-                            <textarea class="form-control" placeholder="Your Message" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Send Message</button>
-                    </form>
-                </div>
-                <div class="contact-info">
-                    <h3>Contact Information</h3>
-                    <p>Have questions or need assistance? Reach out to our friendly team using any of the methods below.</p>
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div class="content">
-                            <h4>Our Location</h4>
-                            <p>123 Business Avenue, Suite 500<br>New York, NY 10001</p>
+                    
+                    <div class="related-posts">
+                        <h3 class="related-posts-title">Artikel Terkait</h3>
+                        <div class="related-posts-grid">
+                            <div class="related-post-card">
+                                <img src="/api/placeholder/300/180" alt="Artikel terkait 1" class="related-post-image" width="300" height="180" loading="lazy">
+                                <div class="related-post-content">
+                                    <h4 class="related-post-title">Judul Artikel Terkait Pertama</h4>
+                                    <p class="related-post-excerpt">Ringkasan singkat dari artikel terkait untuk memberikan gambaran isi konten.</p>
+                                    <a href="#" class="read-more">Baca Selengkapnya</a>
+                                </div>
+                            </div>
+                            
+                            <div class="related-post-card">
+                                <img src="/api/placeholder/300/180" alt="Artikel terkait 2" class="related-post-image" width="300" height="180" loading="lazy">
+                                <div class="related-post-content">
+                                    <h4 class="related-post-title">Judul Artikel Terkait Kedua</h4>
+                                    <p class="related-post-excerpt">Ringkasan singkat dari artikel terkait untuk memberikan gambaran isi konten.</p>
+                                    <a href="#" class="read-more">Baca Selengkapnya</a>
+                                </div>
+                            </div>
+                            
+                            <div class="related-post-card">
+                                <img src="/api/placeholder/300/180" alt="Artikel terkait 3" class="related-post-image" width="300" height="180" loading="lazy">
+                                <div class="related-post-content">
+                                    <h4 class="related-post-title">Judul Artikel Terkait Ketiga</h4>
+                                    <p class="related-post-excerpt">Ringkasan singkat dari artikel terkait untuk memberikan gambaran isi konten.</p>
+                                    <a href="#" class="read-more">Baca Selengkapnya</a>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="contact-item">
-                        <i class="fas fa-phone-alt"></i>
-                        <div class="content">
-                            <h4>Phone Number</h4>
-                            <p>+1 (800) 123-4567<br>+1 (212) 987-6543</p>
-                        </div>
-                    </div>
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div class="content">
-                            <h4>Email Address</h4>
-                            <p>support@promiddleman.com<br>info@promiddleman.com</p>
-                        </div>
-                    </div>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
+                </article>
             </div>
-        </div>
-    </section>
+        </section>
+    </main>
 
-    <!-- CTA Section -->
-    <section class="cta">
+    <footer class="footer">
         <div class="container">
-            <h2>Ready to Secure Your Transaction?</h2>
-            <p>Join thousands of satisfied users who trust ProMiddleman for their online transactions.</p>
-            <a href="#contact" class="btn btn-secondary">Get Started Today</a>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div class="footer-widget">
-                    <h3>About ProMiddleman</h3>
-                    <p>ProMiddleman is a trusted escrow service providing secure transaction solutions for buyers and sellers worldwide since 2010.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Tentang Kami</h3>
+                    <p>Deskripsi singkat tentang website atau brand Anda. Ceritakan sesuatu yang menarik tentang nilai-nilai atau tujuan Anda.</p>
                 </div>
-                <div class="footer-widget">
-                    <h3>Quick Links</h3>
+                
+                <div class="footer-section">
+                    <h3>Tautan Cepat</h3>
                     <ul class="footer-links">
-                        <li><a href="#home"><i class="fas fa-angle-right"></i> Home</a></li>
-                        <li><a href="#features"><i class="fas fa-angle-right"></i> Features</a></li>
-                        <li><a href="#how-it-works"><i class="fas fa-angle-right"></i> How It Works</a></li>
-                        <li><a href="#testimonials"><i class="fas fa-angle-right"></i> Testimonials</a></li>
-                        <li><a href="#pricing"><i class="fas fa-angle-right"></i> Pricing</a></li>
+                        <li class="footer-link"><a href="index.html">Beranda</a></li>
+                        <li class="footer-link"><a href="blog.html">Blog</a></li>
+                        <li class="footer-link"><a href="about.html">Tentang</a></li>
+                        <li class="footer-link"><a href="contact.html">Kontak</a></li>
+                        <li class="footer-link"><a href="privacy.html">Kebijakan Privasi</a></li>
                     </ul>
                 </div>
-                <div class="footer-widget">
-                    <h3>Our Services</h3>
+                
+                <div class="footer-section">
+                    <h3>Kategori</h3>
                     <ul class="footer-links">
-                        <li><a href="#"><i class="fas fa-angle-right"></i> Digital Goods</a></li>
-                        <li><a href="#"><i class="fas fa-angle-right"></i> Physical Items</a></li>
-                        <li><a href="#"><i class="fas fa-angle-right"></i> Service Contracts</a></li>
-                        <li><a href="#"><i class="fas fa-angle-right"></i> Real Estate</a></li>
-                        <li><a href="#"><i class="fas fa-angle-right"></i> Vehicle Sales</a></li>
+                        <li class="footer-link"><a href="#">Kategori 1</a></li>
+                        <li class="footer-link"><a href="#">Kategori 2</a></li>
+                        <li class="footer-link"><a href="#">Kategori 3</a></li>
+                        <li class="footer-link"><a href="#">Kategori 4</a></li>
+                        <li class="footer-link"><a href="#">Kategori 5</a></li>
                     </ul>
                 </div>
-                <div class="footer-widget">
-                    <h3>Newsletter</h3>
-                    <p>Subscribe to our newsletter for the latest updates and offers.</p>
-                    <form class="newsletter-form">
-                        <div class="form-group">
-                            <input type="email" class="form-control" placeholder="Your Email" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Subscribe</button>
-                    </form>
+                
+                <div class="footer-section">
+                    <h3>Hubungi Kami</h3>
+                    <p>Email: info@yourbrand.com</p>
+                    <p>Telepon: +62 123 4567 890</p>
+                    <p>Alamat: Jalan Contoh No. 123, Kota, Kode Pos</p>
                 </div>
             </div>
+            
             <div class="footer-bottom">
-                <p>&copy; 2025 ProMiddleman. All Rights Reserved.</p>
+                <p>&copy; 2025 YourBrand. Hak Cipta Dilindungi.</p>
             </div>
         </div>
     </footer>
 
-    <!-- JavaScript -->
+    <!-- Deferred JavaScript -->
+    <script src="js/main.js" defer></script>
+    
     <script>
-        // Toggle mobile menu
-        document.querySelector('.mobile-menu').addEventListener('click', function() {
-            document.querySelector('.nav-links').classList.toggle('active');
-        });
-        
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-                
-                // Close mobile menu if open
-                document.querySelector('.nav-links').classList.remove('active');
-            });
-        });
-        
-        // FAQ accordion
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', function() {
-                this.parentElement.classList.toggle('active');
-            });
-        });
-        
-        // Testimonial data generation
-        const countries = [
-            "United States", "United Kingdom", "Canada", "Australia", "Germany", 
-            "France", "Japan", "China", "Brazil", "India", "Russia", "South Africa", 
-            "Mexico", "Spain", "Italy", "Netherlands", "Sweden", "Norway", "Denmark", 
-            "Finland", "Singapore", "Malaysia", "Indonesia", "Thailand", "Philippines", 
-            "Vietnam", "South Korea", "New Zealand", "United Arab Emirates", "Saudi Arabia", 
-            "Qatar", "Turkey", "Egypt", "Nigeria", "Kenya", "Morocco", "Argentina", 
-            "Chile", "Colombia", "Peru", "Venezuela", "Poland", "Ukraine", "Romania", 
-            "Hungary", "Czech Republic", "Greece", "Portugal", "Ireland", "Switzerland", 
-            "Austria", "Belgium", "Luxembourg", "Croatia", "Serbia", "Bulgaria", 
-            "Lithuania", "Latvia", "Estonia", "Iceland", "Malta", "Cyprus", "Pakistan", 
-            "Bangladesh", "Sri Lanka", "Nepal", "Myanmar", "Cambodia", "Laos", "Taiwan", 
-            "Hong Kong", "Macau", "Israel", "Lebanon", "Jordan", "Kuwait", "Bahrain", 
-            "Oman", "Kazakhstan", "Uzbekistan", "Azerbaijan", "Georgia", "Armenia", 
-            "Ghana", "Ethiopia", "Tanzania", "Uganda", "Zambia", "Zimbabwe", "Botswana", 
-            "Namibia", "Angola", "Mozambique", "Ivory Coast", "Senegal", "Tunisia", 
-            "Algeria", "Jamaica", "Trinidad and Tobago", "Costa Rica", "Panama", "Guatemala"
-        ];
-        
-        const firstNames = [
-            "James", "John", "Robert", "Michael", "William", "David", "Richard", "Joseph", 
-            "Thomas", "Charles", "Christopher", "Daniel", "Matthew", "Anthony", "Mark", 
-            "Donald", "Steven", "Paul", "Andrew", "Joshua", "Kenneth", "Kevin", "Brian", 
-            "George", "Edward", "Mary", "Patricia", "Jennifer", "Linda", "Elizabeth", 
-            "Barbara", "Susan", "Jessica", "Sarah", "Karen", "Nancy", "Lisa", "Betty", 
-            "Margaret", "Sandra", "Ashley", "Kimberly", "Emily", "Donna", "Michelle", 
-            "Emma", "Olivia", "Sophia", "Isabella", "Ava", "Mia", "Charlotte", "Amelia",
-            "Harper", "Evelyn", "Abigail", "Emily", "Elizabeth", "Sofia", "Ella", "Madison",
-            "Scarlett", "Victoria", "Aria", "Grace", "Chloe", "Camila", "Penelope", "Riley",
-            "Layla", "Lillian", "Nora", "Zoey", "Mila", "Aubrey", "Hannah", "Lily", "Samantha",
-            "Anna", "Leah", "Audrey", "Ariana", "Allison", "Savannah", "Arianna", "Gabriella",
-            "Hailey", "Katherine", "Alexis", "Zoe", "Ellie", "Isla", "Claire", "Adalyn"
-        ];
-        
-        const lastNames = [
-            "Smith", "Johnson", "Williams", "Jones", "Brown", "Davis", "Miller", "Wilson", 
-            "Moore", "Taylor", "Anderson", "Thomas", "Jackson", "White", "Harris", "Martin", 
-            "Thompson", "Garcia", "Martinez", "Robinson", "Clark", "Rodriguez", "Lewis", 
-            "Lee", "Walker", "Hall", "Allen", "Young", "Hernandez", "King", "Wright", 
-            "Lopez", "Hill", "Scott", "Green", "Adams", "Baker", "Gonzalez", "Nelson", 
-            "Carter", "Mitchell", "Perez", "Roberts", "Turner", "Phillips", "Campbell", 
-            "Parker", "Evans", "Edwards", "Collins", "Stewart", "Sanchez", "Morris", 
-            "Rogers", "Reed", "Cook", "Morgan", "Bell", "Murphy", "Bailey", "Rivera", 
-            "Cooper", "Richardson", "Cox", "Howard", "Ward", "Torres", "Peterson", "Gray", 
-            "Ramirez", "James", "Watson", "Brooks", "Kelly", "Sanders", "Price", "Bennett", 
-            "Wood", "Barnes", "Ross", "Henderson", "Coleman", "Jenkins", "Perry", "Powell", 
-            "Long", "Patterson", "Hughes", "Flores", "Washington", "Butler", "Simmons", 
-            "Foster", "Gonzales", "Bryant", "Alexander", "Russell", "Griffin", "Diaz", "Hayes"
-        ];
-        
-        const digitalItems = [
-            "graphic design", "website development", "mobile app", "software license", 
-            "online course", "e-book", "digital art", "music production", "video editing", 
-            "copywriting", "SEO services", "virtual assistant service", "social media management", 
-            "content creation", "logo design", "UI/UX design", "data analysis", "consultancy service", 
-            "podcast production", "animation work", "programming service", "translation service", 
-            "voice-over work", "domain name", "online advertising", "cloud storage", "premium membership", 
-            "stock photos", "online mentoring", "research service", "3D modeling", "API access", 
-            "game assets", "virtual real estate", "software development", "database setup", 
-            "system administration", "IT support", "cybersecurity service", "data recovery", 
-            "virtual event", "online tutoring", "remote training", "code review"
-        ];
-        
-        const physicalItems = [
-            "vintage watch", "collectible card", "antique furniture", "rare book", 
-            "limited edition sneakers", "gaming console", "smartphone", "laptop computer", 
-            "camera equipment", "musical instrument", "designer handbag", "jewelry piece", 
-            "automobile", "motorcycle", "recreational vehicle", "industrial equipment", 
-            "farm machinery", "sports memorabilia", "artwork", "rare coin", "stamp collection", 
-            "home appliance", "fitness equipment", "sailing boat", "luxury pen", "vinyl record collection", 
-            "fashion item", "outdoor gear", "custom PC", "tabletop game", "power tool set", 
-            "kitchen appliance", "drone", "telescope", "home theater system", "designer furniture", 
-            "mountain bike", "motorcycle parts", "camping equipment", "fishing gear", "golf clubs", 
-            "snowboard", "surfboard", "electronic components", "vintage clothing"
-        ];
-        
-        const testimonialContents = [
-            "Couldn't be happier with ProMiddleman's service! They made sure I received exactly what I paid for before releasing my payment. Will definitely use again for my future transactions.",
-            "As a seller, I was initially skeptical about using an escrow service, but ProMiddleman made the whole process seamless. The buyer felt secure, and I received my payment promptly once delivery was confirmed.",
-            "I've been buying and selling online for years, and ProMiddleman is by far the best escrow service I've used. Their transparent process and low fees make them my go-to for all important transactions.",
-            "The team at ProMiddleman was incredibly helpful when a dispute arose with my transaction. They carefully reviewed all the evidence and helped us reach a fair resolution. Their professionalism is unmatched.",
-            "I was nervous about making such a large purchase online, but using ProMiddleman gave me the confidence to proceed. The seller received their money only after I confirmed everything was as described. Great service!",
-            "Fast, secure, and professional! I've used many escrow services before, but ProMiddleman stands out with their exceptional customer support and user-friendly platform. Highly recommended!",
-            "ProMiddleman's verification process gave me peace of mind that I was dealing with a legitimate seller. The transaction went smoothly, and their fees were much lower than I expected for such a premium service.",
-            "When dealing with international transactions, ProMiddleman is essential. They handled all the currency conversion and ensured both parties were protected throughout the process. Worth every penny!",
-            "I sell digital products online, and ProMiddleman has become an integral part of my business. Their escrow service has helped me build trust with new clients and expand my customer base globally.",
-            "After being scammed twice before, I now exclusively use ProMiddleman for all my online purchases. Their service has literally saved me thousands of dollars and countless headaches.",
-            "The transaction was handled with utmost professionalism. I received constant updates and the funds were released promptly once I confirmed receipt of the item. Excellent service!",
-            "I was impressed by how quickly ProMiddleman processed my transaction. Within hours of making the payment, the seller was notified, and the entire process was completed within days. Will definitely use again!",
-            "As someone who frequently buys collectibles online, having a reliable escrow service is crucial. ProMiddleman has never let me down - their attention to detail and commitment to security is outstanding.",
-            "I needed to purchase expensive software licenses for my business, and ProMiddleman made sure the licenses were valid and activated before releasing payment. Their service is invaluable for digital purchases.",
-            "The level of security provided by ProMiddleman is remarkable. Their verification procedures, secure payment handling, and transparent process gave me complete confidence throughout my transaction.",
-            "I've been using ProMiddleman for over three years now, and have completed dozens of transactions through their platform. Not a single issue - that's the kind of reliability that keeps me coming back.",
-            "When I needed to sell my rare coin collection, I was worried about fraud. ProMiddleman ensured the buyer was legitimate and that I received full payment once the items were delivered. Couldn't ask for better service!",
-            "The customer support team went above and beyond to answer all my questions and guide me through my first escrow transaction. Their patience and expertise made all the difference.",
-            "As a freelancer, receiving payment for my services can sometimes be challenging. ProMiddleman has eliminated that stress entirely - now my clients and I both feel protected during our transactions.",
-            "I was hesitant to use an escrow service due to the additional fees, but ProMiddleman proved to be worth every cent. The security and peace of mind they provide is priceless."
-        ];
-        
-        // Generate random date in the past 2 years
-        function randomDate() {
-            const start = new Date(2023, 0, 1);
-            const end = new Date();
-            return new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-        }
-        
-        // Format date as DD/MM/YYYY
-        function formatDate(date) {
-            const day = date.getDate().toString().padStart(2, '0');
-            const month = (date.getMonth() + 1).toString().padStart(2, '0');
-            const year = date.getFullYear();
-            return `${day}/${month}/${year}`;
-        }
-        
-        // Generate random transaction ID
-        function generateTransactionID() {
-            const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
-            let result = 'TX-';
-            for (let i = 0; i < 8; i++) {
-                result += chars.charAt(Math.floor(Math.random() * chars.length));
-            }
-            return result;
-        }
-        
-        // Generate random transaction amount
-        function generateAmount() {
-            // Generate amount between $50 and $10,000
-            const amount = Math.floor(Math.random() * 995000) + 5000;
-            return (amount / 100).toFixed(2);
-        }
-        
-        // Generate 100 testimonials
-        const testimonials = [];
-        for (let i = 0; i < 100; i++) {
-            const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
-            const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-            const name = `${firstName} ${lastName}`;
-            const firstInitial = firstName.charAt(0);
-            const lastInitial = lastName.charAt(0);
-            
-            const country = countries[Math.floor(Math.random() * countries.length)];
-            
-            // Decide if it's a digital or physical item
-            const isDigital = Math.random() > 0.5;
-            const itemType = isDigital ? 'digital' : 'physical';
-            const items = isDigital ? digitalItems : physicalItems;
-            const item = items[Math.floor(Math.random() * items.length)];
-            
-            const testimonialBase = testimonialContents[Math.floor(Math.random() * testimonialContents.length)];
-            // Sometimes customize the testimonial to include the item
-            const includeItem = Math.random() > 0.7;
-            let testimonialContent = testimonialBase;
-            if (includeItem) {
-                const phrases = [
-                    `Used ProMiddleman for purchasing a ${item} and had a great experience.`,
-                    `My transaction for a ${item} went perfectly thanks to ProMiddleman.`,
-                    `Selling my ${item} through ProMiddleman gave me complete peace of mind.`,
-                    `I was nervous about buying a ${item} online, but ProMiddleman made it safe.`,
-                    `Thanks to ProMiddleman, I successfully sold my ${item} to a buyer in another country.`
-                ];
-                testimonialContent = phrases[Math.floor(Math.random() * phrases.length)] + ' ' + testimonialBase;
-            }
-            
-            const date = randomDate();
-            const formattedDate = formatDate(date);
-            const transactionID = generateTransactionID();
-            const amount = generateAmount();
-            
-            // Randomize rating between 4 and 5 stars (mostly 5)
-            const rating = Math.random() > 0.2 ? 5 : 4;
-            
-            testimonials.push({
-                name,
-                initials: `${firstInitial}${lastInitial}`,
-                country,
-                content: testimonialContent,
-                date: formattedDate,
-                transactionID,
-                amount,
-                itemType,
-                item,
-                rating
-            });
-        }
-        
-        // Sort testimonials by date (newest first)
-        testimonials.sort((a, b) => {
-            const dateA = new Date(a.date.split('/').reverse().join('/'));
-            const dateB = new Date(b.date.split('/').reverse().join('/'));
-            return dateB - dateA;
-        });
-        
-        // Initialize testimonials display
-        let currentPage = 1;
-        const testimonialsPerPage = 6;
-        const totalPages = Math.ceil(testimonials.length / testimonialsPerPage);
-        
-        function displayTestimonials(page) {
-            const testimonialGrid = document.querySelector('.testimonial-grid');
-            testimonialGrid.innerHTML = '';
-            
-            const start = (page - 1) * testimonialsPerPage;
-            const end = start + testimonialsPerPage;
-            const paginatedTestimonials = testimonials.slice(start, end);
-            
-            paginatedTestimonials.forEach(testimonial => {
-                const testimonialCard = document.createElement('div');
-                testimonialCard.classList.add('testimonial-card', 'fade-in');
-                
-                let stars = '';
-                for (let i = 0; i < testimonial.rating; i++) {
-                    stars += '<i class="fas fa-star"></i>';
-                }
-                
-                // Determine background color based on first letter of name
-                const colors = [
-                    '#4e6bff', '#5bbc2e', '#ff6b6b', '#ffa500', '#8a2be2', 
-                    '#20b2aa', '#ff7f50', '#da70d6', '#32cd32', '#6495ed'
-                ];
-                const colorIndex = testimonial.name.charCodeAt(0) % colors.length;
-                const bgColor = colors[colorIndex];
-                
-                testimonialCard.innerHTML = `
-                    <div class="testimonial-header">
-                        <div class="testimonial-user">
-                            <div class="testimonial-avatar" style="background-color: ${bgColor}; color: white;">
-                                ${testimonial.initials}
-                            </div>
-                            <div class="testimonial-user-info">
-                                <h4>${testimonial.name}</h4>
-                                <p>${testimonial.country}</p>
-                            </div>
-                        </div>
-                        <div class="testimonial-rating">
-                            ${stars}
-                        </div>
-                    </div>
-                    <div class="testimonial-content">
-                        "${testimonial.content}"
-                    </div>
-                    <div class="testimonial-footer">
-                        <div class="testimonial-date">
-                            <i class="far fa-calendar-alt"></i> ${testimonial.date}
-                        </div>
-                        <div class="testimonial-verified">
-                            <i class="fas fa-check-circle"></i> Verified Transaction
-                        </div>
-                    </div>
-                    <div class="testimonial-footer" style="margin-top: 5px; font-size: 12px;">
-                        <div>
-                            <strong>ID:</strong> ${testimonial.transactionID}
-                        </div>
-                        <div>
-                            <strong>Amount:</strong> $${testimonial.amount}
-                        </div>
-                    </div>
-                `;
-                
-                testimonialGrid.appendChild(testimonialCard);
-            });
-            
-            // Update pagination
-            updatePagination(page);
-        }
-        
-        function updatePagination(currentPage) {
-            const pagination = document.querySelector('.pagination');
-            pagination.innerHTML = '';
-            
-            // Previous button
-            const prevLink = document.createElement('a');
-            prevLink.href = '#testimonials';
-            prevLink.innerHTML = '<i class="fas fa-chevron-left"></i>';
-            if (currentPage === 1) {
-                prevLink.style.opacity = '0.5';
-                prevLink.style.pointerEvents = 'none';
-            } else {
-                prevLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    displayTestimonials(currentPage - 1);
-                });
-            }
-            pagination.appendChild(prevLink);
-            
-            // Page numbers
-            const maxPageButtons = 5;
-            let startPage = Math.max(1, currentPage - Math.floor(maxPageButtons / 2));
-            let endPage = Math.min(totalPages, startPage + maxPageButtons - 1);
-            
-            if (endPage - startPage + 1 < maxPageButtons) {
-                startPage = Math.max(1, endPage - maxPageButtons + 1);
-            }
-            
-            for (let i = startPage; i <= endPage; i++) {
-                const pageLink = document.createElement('a');
-                pageLink.href = '#testimonials';
-                pageLink.textContent = i;
-                if (i === currentPage) {
-                    pageLink.classList.add('active');
-                }
-                pageLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    displayTestimonials(i);
-                });
-                pagination.appendChild(pageLink);
-            }
-            
-            // Next button
-            const nextLink = document.createElement('a');
-            nextLink.href = '#testimonials';
-            nextLink.innerHTML = '<i class="fas fa-chevron-right"></i>';
-            if (currentPage === totalPages) {
-                nextLink.style.opacity = '0.5';
-                nextLink.style.pointerEvents = 'none';
-            } else {
-                nextLink.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    displayTestimonials(currentPage + 1);
-                });
-            }
-            pagination.appendChild(nextLink);
-            
-            // Update current page
-            currentPage = currentPage;
-        }
-        
-        // Initialize testimonials on page load
+        // Basic JavaScript functionality
         document.addEventListener('DOMContentLoaded', function() {
-            displayTestimonials(1);
+            // Share buttons functionality
+            const shareButtons = document.querySelectorAll('.share-button');
             
-            // Form submission prevention
-            document.querySelectorAll('form').forEach(form => {
-                form.addEventListener('submit', function(e) {
-                    e.preventDefault();
-                    alert('This is a demo page. Form submission is not active.');
+            shareButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const platform = this.dataset.platform;
+                    const url = encodeURIComponent(window.location.href);
+                    const title = encodeURIComponent(document.title);
+                    
+                    let shareUrl;
+                    
+                    switch(platform) {
+                        case 'facebook':
+                            shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                            break;
+                        case 'twitter':
+                            shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+                            break;
+                        case 'linkedin':
+                            shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                            break;
+                    }
+                    
+                    window.open(shareUrl, '_blank', 'width=600,height=400');
                 });
             });
+            
+            // Mobile menu toggle
+            const mobileMenuButton = document.querySelector('.mobile-menu-button');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            if (mobileMenuButton) {
+                mobileMenuButton.addEventListener('click', function() {
+                    navMenu.classList.toggle('show');
+                });
+            }
+            
+            // Add smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Lazy load images that are not loaded yet
+            if ('loading' in HTMLImageElement.prototype) {
+                const images = document.querySelectorAll('img[loading="lazy"]');
+                images.forEach(img => {
+                    img.src = img.dataset.src;
+                });
+            } else {
+                // Fallback for browsers that don't support lazy loading
+                const script = document.createElement('script');
+                script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lazysizes/5.3.2/lazysizes.min.js';
+                document.body.appendChild(script);
+            }
         });
     </script>
 </body>
