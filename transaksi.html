@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekber Form - Rekening Bersama</title>
+    <title>ProMiddleman Form - Escrow Service</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
@@ -858,16 +858,16 @@
         <div class="container">
             <div class="card">
                 <header>
-                    <h1 id="main-title">Form Rekening Bersama (Rekber)</h1>
+                    <h1 id="main-title">Form ProMiddleman</h1>
                     <p id="subtitle">Transaksi aman dengan jasa perantara terpercaya</p>
                 </header>
                 
                 <div class="language-selector">
                     <button id="btn-indonesia" class="language-btn indonesia active">
-                        <i class="fas fa-flag"></i> Transaksi Indonesia
+                        <i class="fas fa-flag"></i> ProMiddleman Indonesia
                     </button>
                     <button id="btn-international" class="language-btn international">
-                        <i class="fas fa-globe"></i> International Transaction
+                        <i class="fas fa-globe"></i> ProMiddleman International
                     </button>
                 </div>
                 
@@ -1120,7 +1120,7 @@
                             <span id="whatsapp-btn-text">Kirim ke WhatsApp</span>
                         </a>
                         
-                        <a href="https://www.facebook.com/rekber.admin" target="_blank" class="contact-btn facebook-btn">
+                        <a href="https://www.facebook.com/promiddleman.admin" target="_blank" class="contact-btn facebook-btn">
                             <i class="fab fa-facebook-f"></i>
                             <span id="contact-btn-text">Hubungi via Facebook</span>
                         </a>
@@ -1183,7 +1183,7 @@
         
         // Extended text elements for translation
         const elementsToTranslate = {
-            'main-title': { id: 'Form Rekening Bersama (Rekber)', en: 'Escrow Service Form' },
+            'main-title': { id: 'Form ProMiddleman', en: 'ProMiddleman Escrow Service' },
             'subtitle': { id: 'Transaksi aman dengan jasa perantara terpercaya', en: 'Secure transactions with trusted intermediary service' },
             'personal-info-title': { id: 'Informasi Pribadi', en: 'Personal Information' },
             'buyer-label': { id: 'Nama Pembeli', en: 'Buyer Name' },
@@ -1354,7 +1354,7 @@
         const generateTransactionId = () => {
             const timestamp = new Date().getTime().toString().slice(-6);
             const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-            const prefix = currentLanguage === 'id' ? 'IDN' : 'INT';
+            const prefix = currentLanguage === 'id' ? 'PMI' : 'PMG';
             return `${prefix}-${timestamp}-${random}`;
         };
         
@@ -1420,7 +1420,7 @@
             let message = '';
             
             if (currentLanguage === 'id') {
-                message = `*DETAIL TRANSAKSI REKBER*\n\n`;
+                message = `*DETAIL TRANSAKSI PROMIDDLEMAN*\n\n`;
                 message += `ID Transaksi: *${transactionId}*\n\n`;
                 message += `*INFORMASI PRIBADI*\n`;
                 message += `Pembeli: ${buyerName}\n`;
@@ -1439,7 +1439,7 @@
                     message += `\n*CATATAN*\n${notes}\n`;
                 }
             } else {
-                message = `*ESCROW TRANSACTION DETAILS*\n\n`;
+                message = `*PROMIDDLEMAN TRANSACTION DETAILS*\n\n`;
                 message += `Transaction ID: *${transactionId}*\n\n`;
                 message += `*PERSONAL INFORMATION*\n`;
                 message += `Buyer: ${buyerName}\n`;
