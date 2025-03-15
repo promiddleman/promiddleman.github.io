@@ -4,19 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rekber Form - Rekening Bersama</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #1e88e5;
-            --secondary-color: #fafafa;
+            --primary-color: #3a6df0;
+            --primary-light: #e9efff;
+            --secondary-color: #f5f7ff;
             --accent-color: #ff6d00;
-            --text-color: #333;
-            --light-gray: #e0e0e0;
-            --success-color: #4caf50;
+            --accent-hover: #e65100;
+            --text-color: #2d3748;
+            --text-light: #718096;
+            --light-gray: #e2e8f0;
+            --success-color: #38b2ac;
+            --error-color: #e53e3e;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --border-radius: 10px;
+            --transition: all 0.3s ease;
         }
         
         * {
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
         }
         
         body {
@@ -24,38 +34,68 @@
             padding: 0;
             background-color: var(--secondary-color);
             color: var(--text-color);
+            line-height: 1.6;
+            font-size: 16px;
         }
         
         .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-lg);
+            overflow: hidden;
+            transition: var(--transition);
         }
         
         header {
-            background-color: var(--primary-color);
+            background: linear-gradient(135deg, var(--primary-color), #5b8def);
             color: white;
-            padding: 20px 0;
+            padding: 30px 0;
             text-align: center;
-            border-radius: 8px 8px 0 0;
-            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            font-weight: 700;
+        }
+        
+        header p {
+            margin: 10px 0 0;
+            opacity: 0.9;
+            font-size: 1.1rem;
         }
         
         .language-selector {
             display: flex;
             justify-content: center;
-            margin-bottom: 30px;
-            gap: 20px;
+            margin: -25px auto 40px;
+            gap: 15px;
+            position: relative;
+            z-index: 10;
         }
         
         .language-btn {
             padding: 12px 24px;
             border: none;
-            border-radius: 6px;
-            font-size: 16px;
-            font-weight: bold;
+            border-radius: 30px;
+            font-size: 0.95rem;
+            font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            box-shadow: var(--shadow-md);
+        }
+        
+        .language-btn i {
+            margin-right: 8px;
         }
         
         .language-btn.indonesia {
@@ -70,62 +110,145 @@
         
         .language-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow-lg);
         }
         
         .language-btn.active {
-            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.4);
+            transform: translateY(-1px);
+        }
+        
+        .form-content {
+            padding: 30px;
+        }
+        
+        .section-title {
+            position: relative;
+            margin-bottom: 25px;
+            padding-bottom: 10px;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background-color: var(--primary-color);
+            border-radius: 4px;
         }
         
         .form-group {
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            position: relative;
         }
         
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 600;
+            font-weight: 500;
+            color: var(--text-color);
         }
         
         input, select, textarea {
             width: 100%;
-            padding: 12px;
+            padding: 12px 16px;
             border: 1px solid var(--light-gray);
-            border-radius: 6px;
+            border-radius: 8px;
             font-size: 16px;
+            transition: var(--transition);
+            background-color: white;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+        
+        input:hover, select:hover, textarea:hover {
+            border-color: #cbd5e0;
         }
         
         textarea {
-            min-height: 100px;
+            min-height: 120px;
             resize: vertical;
+            line-height: 1.5;
         }
         
         .form-row {
             display: flex;
             gap: 20px;
+            flex-wrap: wrap;
         }
         
         .form-row .form-group {
             flex: 1;
+            min-width: 250px;
+        }
+        
+        .input-icon {
+            position: relative;
+        }
+        
+        .input-icon input {
+            padding-left: 40px;
+        }
+        
+        .input-icon i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+        }
+        
+        .input-icon input:focus + i {
+            color: var(--primary-color);
         }
         
         .submit-btn {
-            background-color: var(--accent-color);
+            background: linear-gradient(135deg, var(--accent-color), #ff9f45);
             color: white;
             border: none;
-            padding: 14px 28px;
-            font-size: 18px;
-            border-radius: 6px;
+            padding: 14px 32px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 30px;
             cursor: pointer;
             display: block;
-            margin: 30px auto 0;
-            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 320px;
+            margin: 40px auto 10px;
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+            position: relative;
+            overflow: hidden;
         }
         
         .submit-btn:hover {
-            background-color: #e65100;
+            background: linear-gradient(135deg, #ff7d26, var(--accent-hover));
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .submit-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .submit-btn .spinner {
+            display: none;
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .submit-btn.loading .spinner {
+            display: block;
         }
         
         .currency-symbol {
@@ -133,71 +256,510 @@
         }
         
         .currency-symbol input {
-            padding-left: 30px;
+            padding-left: 40px;
         }
         
         .currency-symbol:before {
             content: attr(data-symbol);
             position: absolute;
-            left: 12px;
-            top: 13px;
-            font-weight: bold;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-weight: 600;
             z-index: 1;
+            color: var(--text-light);
+        }
+        
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+        
+        .reset-btn {
+            background: none;
+            border: none;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 8px 16px;
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+        
+        .reset-btn i {
+            margin-right: 6px;
+        }
+        
+        .reset-btn:hover {
+            background-color: #f3f4f6;
+            color: var(--text-color);
         }
         
         .hidden {
-            display: none;
+            display: none !important;
         }
         
-        /* Transaction Result Page Styles */
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .shake {
+            animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+        }
+        
+        @keyframes shake {
+            10%, 90% { transform: translate3d(-1px, 0, 0); }
+            20%, 80% { transform: translate3d(2px, 0, 0); }
+            30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+            40%, 60% { transform: translate3d(4px, 0, 0); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+        
+        /* Form Validation */
+        .form-group.error input,
+        .form-group.error select,
+        .form-group.error textarea {
+            border-color: var(--error-color);
+        }
+        
+        .form-group.error .error-message {
+            color: var(--error-color);
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        .form-group.success input,
+        .form-group.success select,
+        .form-group.success textarea {
+            border-color: var(--success-color);
+        }
+        
+        .form-group.success .success-icon {
+            position: absolute;
+            right: 10px;
+            top: 38px;
+            color: var(--success-color);
+        }
+        
+        /* Progress Steps */
+        .progress-container {
+            margin: 20px 0 40px;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+        
+        .progress-steps::before {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: var(--light-gray);
+            z-index: 1;
+        }
+        
+        .progress-step {
+            position: relative;
+            z-index: 2;
+            flex: 1;
+            text-align: center;
+        }
+        
+        .step-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background-color: white;
+            color: var(--text-light);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 2px solid var(--light-gray);
+            margin: 0 auto 8px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+        
+        .step-text {
+            font-size: 0.85rem;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+        
+        .progress-step.active .step-icon,
+        .progress-step.completed .step-icon {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .progress-step.active .step-text,
+        .progress-step.completed .step-text {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+        
+        .progress-step.completed .step-icon {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+        }
+        
+        /* Result Page Styles */
         .result-container {
             text-align: center;
-            padding: 30px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            padding: 40px 30px;
+        }
+        
+        .success-circle {
+            width: 100px;
+            height: 100px;
+            background-color: var(--success-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 30px;
+            font-size: 42px;
+            animation: scaleIn 0.5s ease forwards;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
         }
         
         .transaction-id {
-            font-size: 32px;
+            font-size: 1.8rem;
             color: var(--primary-color);
-            margin: 20px 0;
-            padding: 15px;
-            background-color: #f0f8ff;
-            border-radius: 6px;
+            margin: 25px 0;
+            padding: 20px;
+            background-color: var(--primary-light);
+            border-radius: 12px;
             border: 2px dashed var(--primary-color);
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 4px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .copy-btn:hover {
+            background: white;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .copy-tooltip {
+            position: absolute;
+            right: 45px;
+            top: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
         }
         
         .contact-btn {
             background-color: #4267B2;
             color: white;
             border: none;
-            padding: 12px 24px;
-            font-size: 16px;
-            border-radius: 6px;
+            padding: 14px 28px;
+            font-size: 1rem;
+            border-radius: 8px;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            margin-top: 20px;
-            transition: all 0.3s ease;
+            margin-top: 30px;
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .contact-btn i {
+            margin-right: 10px;
+            font-size: 1.2rem;
         }
         
         .contact-btn:hover {
             background-color: #365899;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: var(--shadow-lg);
         }
         
-        .contact-btn img {
-            margin-right: 8px;
-            width: 24px;
-            height: 24px;
+        .new-transaction {
+            color: var(--primary-color);
+            margin-top: 30px;
+            display: inline-block;
+            font-weight: 500;
+            transition: var(--transition);
+            text-decoration: none;
         }
         
-        .success-icon {
-            color: var(--success-color);
-            font-size: 80px;
+        .new-transaction:hover {
+            color: #2c4ba3;
+            text-decoration: underline;
+        }
+        
+        /* Form sections */
+        .form-section {
+            display: none;
+        }
+        
+        .form-section.active {
+            display: block;
+            animation: fadeIn 0.4s ease forwards;
+        }
+        
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .nav-btn {
+            padding: 12px 25px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .prev-btn {
+            background-color: #f1f5f9;
+            color: var(--text-color);
+        }
+        
+        .prev-btn:hover {
+            background-color: #e2e8f0;
+        }
+        
+        .next-btn {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .next-btn:hover {
+            background-color: #2c4ba3;
+        }
+        
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+        
+        .modal {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: var(--shadow-lg);
+            transform: translateY(20px);
+            transition: transform 0.3s;
+        }
+        
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-light);
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        
+        .modal-btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .modal-btn-cancel {
+            background-color: #f1f5f9;
+            color: var(--text-color);
+        }
+        
+        .modal-btn-confirm {
+            background-color: var(--error-color);
+            color: white;
+        }
+        
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+            display: inline-block;
+            margin-left: 5px;
+        }
+        
+        .tooltip i {
+            color: var(--text-light);
+            cursor: help;
+        }
+        
+        .tooltip-text {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #333;
+            color: white;
+            padding: 6px 10px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 10;
+        }
+        
+        .tooltip:hover .tooltip-text {
+            opacity: 1;
+        }
+        
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #333 transparent transparent transparent;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .form-row {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .form-content {
+                padding: 20px;
+            }
+            
+            .container {
+                margin: 1rem auto;
+                padding: 0 15px;
+            }
+            
+            header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .language-btn {
+                padding: 10px 18px;
+                font-size: 0.9rem;
+            }
+            
+            .transaction-id {
+                font-size: 1.4rem;
+                padding: 15px;
+            }
+            
+            .progress-step .step-text {
+                font-size: 0.75rem;
+            }
         }
     </style>
 </head>
@@ -205,114 +767,233 @@
     <!-- Form Page -->
     <div id="form-page">
         <div class="container">
-            <header>
-                <h1 id="main-title">Form Rekening Bersama (Rekber)</h1>
-                <p id="subtitle">Transaksi aman dengan jasa perantara terpercaya</p>
-            </header>
-            
-            <div class="language-selector">
-                <button id="btn-indonesia" class="language-btn indonesia active">Transaksi Indonesia</button>
-                <button id="btn-international" class="language-btn international">International Transaction</button>
+            <div class="card">
+                <header>
+                    <h1 id="main-title">Form Rekening Bersama (Rekber)</h1>
+                    <p id="subtitle">Transaksi aman dengan jasa perantara terpercaya</p>
+                </header>
+                
+                <div class="language-selector">
+                    <button id="btn-indonesia" class="language-btn indonesia active">
+                        <i class="fas fa-flag"></i> Transaksi Indonesia
+                    </button>
+                    <button id="btn-international" class="language-btn international">
+                        <i class="fas fa-globe"></i> International Transaction
+                    </button>
+                </div>
+                
+                <div class="form-content">
+                    <div class="progress-container">
+                        <div class="progress-steps">
+                            <div class="progress-step active" data-step="1">
+                                <div class="step-icon">1</div>
+                                <div class="step-text" id="step1-text">Informasi Pribadi</div>
+                            </div>
+                            <div class="progress-step" data-step="2">
+                                <div class="step-icon">2</div>
+                                <div class="step-text" id="step2-text">Detail Transaksi</div>
+                            </div>
+                            <div class="progress-step" data-step="3">
+                                <div class="step-icon">3</div>
+                                <div class="step-text" id="step3-text">Pembayaran</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form id="rekber-form">
+                        <!-- Section 1: Personal Information -->
+                        <div class="form-section active" data-section="1">
+                            <h2 class="section-title" id="personal-info-title">Informasi Pribadi</h2>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label id="buyer-label" for="buyer-name">Nama Pembeli</label>
+                                    <div class="input-icon">
+                                        <input type="text" id="buyer-name" required>
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <span class="error-message hidden">Mohon isi nama pembeli</span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label id="seller-label" for="seller-name">Nama Penjual</label>
+                                    <div class="input-icon">
+                                        <input type="text" id="seller-name" required>
+                                        <i class="fas fa-store"></i>
+                                    </div>
+                                    <span class="error-message hidden">Mohon isi nama penjual</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label id="buyer-contact-label" for="buyer-contact">Kontak Pembeli (WhatsApp)</label>
+                                    <div class="input-icon">
+                                        <input type="text" id="buyer-contact" required>
+                                        <i class="fab fa-whatsapp"></i>
+                                    </div>
+                                    <span class="error-message hidden">Mohon isi kontak pembeli</span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label id="seller-contact-label" for="seller-contact">Kontak Penjual (WhatsApp)</label>
+                                    <div class="input-icon">
+                                        <input type="text" id="seller-contact" required>
+                                        <i class="fab fa-whatsapp"></i>
+                                    </div>
+                                    <span class="error-message hidden">Mohon isi kontak penjual</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-navigation">
+                                <div></div> <!-- Spacer for alignment -->
+                                <button type="button" class="nav-btn next-btn" data-next="2">
+                                    <span id="next-btn-text">Lanjutkan</span> <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Section 2: Transaction Details -->
+                        <div class="form-section" data-section="2">
+                            <h2 class="section-title" id="transaction-info-title">Detail Transaksi</h2>
+                            
+                            <div class="form-group">
+                                <label id="item-label" for="item-description">Deskripsi Barang/Jasa</label>
+                                <textarea id="item-description" required></textarea>
+                                <span class="error-message hidden">Mohon isi deskripsi barang/jasa</span>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label id="amount-label" for="transaction-amount">Jumlah Transaksi</label>
+                                    <div class="currency-symbol" data-symbol="Rp">
+                                        <input type="number" id="transaction-amount" step="1000" required>
+                                    </div>
+                                    <span class="error-message hidden">Mohon isi jumlah transaksi</span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label id="fee-label" for="fee-amount">Biaya Layanan (5%)</label>
+                                    <div class="currency-symbol" data-symbol="Rp">
+                                        <input type="number" id="fee-amount" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-navigation">
+                                <button type="button" class="nav-btn prev-btn" data-prev="1">
+                                    <i class="fas fa-arrow-left"></i> <span id="prev-btn-text">Kembali</span>
+                                </button>
+                                <button type="button" class="nav-btn next-btn" data-next="3">
+                                    <span id="next-btn-text2">Lanjutkan</span> <i class="fas fa-arrow-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <!-- Section 3: Payment Information -->
+                        <div class="form-section" data-section="3">
+                            <h2 class="section-title" id="payment-info-title">Informasi Pembayaran</h2>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label id="payment-method-label" for="payment-method">Metode Pembayaran</label>
+                                    <select id="payment-method" required>
+                                        <option value="">-- Pilih Metode Pembayaran --</option>
+                                        <option value="bank-transfer">Transfer Bank</option>
+                                        <option value="e-wallet">E-Wallet</option>
+                                        <option value="paypal" class="international-only hidden">PayPal</option>
+                                        <option value="credit-card" class="international-only hidden">Credit Card</option>
+                                    </select>
+                                    <span class="error-message hidden">Mohon pilih metode pembayaran</span>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label id="bank-label" for="bank-name">Nama Bank/E-Wallet</label>
+                                    <input type="text" id="bank-name" required>
+                                    <span class="error-message hidden">Mohon isi nama bank/e-wallet</span>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label id="notes-label" for="transaction-notes">Catatan Tambahan (Opsional)</label>
+                                <textarea id="transaction-notes"></textarea>
+                            </div>
+                            
+                            <div class="form-navigation">
+                                <button type="button" class="nav-btn prev-btn" data-prev="2">
+                                    <i class="fas fa-arrow-left"></i> <span id="prev-btn-text2">Kembali</span>
+                                </button>
+                                <button type="submit" id="submit-btn" class="submit-btn">
+                                    <span id="submit-btn-text">Buat Transaksi</span>
+                                    <div class="spinner">
+                                        <i class="fas fa-spinner fa-spin"></i>
+                                    </div>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" id="reset-form" class="reset-btn">
+                                <i class="fas fa-redo-alt"></i> <span id="reset-btn-text">Reset Form</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
             </div>
-            
-            <form id="rekber-form">
-                <h2 id="personal-info-title">Informasi Pribadi</h2>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label id="buyer-label" for="buyer-name">Nama Pembeli</label>
-                        <input type="text" id="buyer-name" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label id="seller-label" for="seller-name">Nama Penjual</label>
-                        <input type="text" id="seller-name" required>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label id="buyer-contact-label" for="buyer-contact">Kontak Pembeli (WhatsApp)</label>
-                        <input type="text" id="buyer-contact" required>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label id="seller-contact-label" for="seller-contact">Kontak Penjual (WhatsApp)</label>
-                        <input type="text" id="seller-contact" required>
-                    </div>
-                </div>
-                
-                <h2 id="transaction-info-title">Detail Transaksi</h2>
-                
-                <div class="form-group">
-                    <label id="item-label" for="item-description">Deskripsi Barang/Jasa</label>
-                    <textarea id="item-description" required></textarea>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label id="amount-label" for="transaction-amount">Jumlah Transaksi</label>
-                        <div class="currency-symbol" data-symbol="Rp">
-                            <input type="number" id="transaction-amount" min="0" step="1000" required>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label id="fee-label" for="fee-amount">Biaya Layanan (1%)</label>
-                        <div class="currency-symbol" data-symbol="Rp">
-                            <input type="number" id="fee-amount" readonly>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label id="payment-method-label" for="payment-method">Metode Pembayaran</label>
-                        <select id="payment-method" required>
-                            <option value="">-- Pilih Metode Pembayaran --</option>
-                            <option value="bank-transfer">Transfer Bank</option>
-                            <option value="e-wallet">E-Wallet</option>
-                            <option value="paypal" class="international-only hidden">PayPal</option>
-                            <option value="credit-card" class="international-only hidden">Credit Card</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label id="bank-label" for="bank-name">Nama Bank/E-Wallet</label>
-                        <input type="text" id="bank-name" required>
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label id="notes-label" for="transaction-notes">Catatan Tambahan (Opsional)</label>
-                    <textarea id="transaction-notes"></textarea>
-                </div>
-                
-                <button type="submit" id="submit-btn" class="submit-btn">Buat Transaksi</button>
-            </form>
         </div>
     </div>
     
     <!-- Transaction Result Page (Initially Hidden) -->
     <div id="result-page" class="hidden">
         <div class="container">
-            <div class="result-container">
-                <div class="success-icon">✓</div>
-                <h2 id="success-title">Transaksi Berhasil Dibuat!</h2>
-                <p id="success-message">Silahkan simpan ID Transaksi berikut untuk verifikasi dengan admin kami.</p>
-                
-                <div class="transaction-id" id="transaction-id"></div>
-                
-                <p id="contact-info">Klik tombol di bawah untuk menghubungi admin kami untuk verifikasi:</p>
-                
-                <a href="https://www.facebook.com/rekber.admin" target="_blank" class="contact-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
-                        <path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96C15.9 21.58 18.04 20.39 19.63 18.64C21.22 16.89 22.17 14.66 22.18 12.34C22.18 6.53 17.7 2.04 12 2.04Z"/>
-                    </svg>
-                    <span id="contact-btn-text">Hubungi Admin</span>
-                </a>
-                
-                <p><a href="#" id="new-transaction" style="margin-top: 20px; display: inline-block;">Buat Transaksi Baru</a></p>
+            <div class="card">
+                <div class="result-container">
+                    <div class="success-circle">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    
+                    <h2 id="success-title">Transaksi Berhasil Dibuat!</h2>
+                    <p id="success-message">Silahkan simpan ID Transaksi berikut untuk verifikasi dengan admin kami.</p>
+                    
+                    <div class="transaction-id" id="transaction-id">
+                        <button class="copy-btn" id="copy-id">
+                            <i class="far fa-copy"></i>
+                        </button>
+                        <span class="copy-tooltip" id="copy-tooltip">Disalin!</span>
+                    </div>
+                    
+                    <p id="contact-info">Klik tombol di bawah untuk menghubungi admin kami untuk verifikasi:</p>
+                    
+                    <a href="https://www.facebook.com/rekber.admin" target="_blank" class="contact-btn">
+                        <i class="fab fa-facebook-f"></i>
+                        <span id="contact-btn-text">Hubungi Admin</span>
+                    </a>
+                    
+                    <p><a href="#" id="new-transaction" class="new-transaction">
+                        <i class="fas fa-plus-circle"></i> <span id="new-transaction-text">Buat Transaksi Baru</span>
+                    </a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Reset Confirmation Modal -->
+    <div class="modal-overlay" id="reset-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title" id="reset-modal-title">Reset Form?</h3>
+                <button class="modal-close" id="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="reset-modal-text">Apakah Anda yakin ingin mengatur ulang formulir? Semua data yang dimasukkan akan hilang.</p>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn modal-btn-cancel" id="cancel-reset">
+                    <span id="cancel-reset-text">Batal</span>
+                </button>
+                <button class="modal-btn modal-btn-confirm" id="confirm-reset">
+                    <span id="confirm-reset-text">Ya, Reset</span>
+                </button>
             </div>
         </div>
     </div>
@@ -330,8 +1011,20 @@
         const internationalOptions = document.querySelectorAll('.international-only');
         const transactionIdElement = document.getElementById('transaction-id');
         const newTransactionLink = document.getElementById('new-transaction');
+        const copyButton = document.getElementById('copy-id');
+        const copyTooltip = document.getElementById('copy-tooltip');
+        const resetFormBtn = document.getElementById('reset-form');
+        const resetModal = document.getElementById('reset-modal');
+        const modalClose = document.getElementById('modal-close');
+        const cancelReset = document.getElementById('cancel-reset');
+        const confirmReset = document.getElementById('confirm-reset');
+        const submitBtn = document.getElementById('submit-btn');
+        const formSections = document.querySelectorAll('.form-section');
+        const progressSteps = document.querySelectorAll('.progress-step');
+        const nextBtns = document.querySelectorAll('.next-btn');
+        const prevBtns = document.querySelectorAll('.prev-btn');
         
-        // Text elements for translation
+        // Extended text elements for translation
         const elementsToTranslate = {
             'main-title': { id: 'Form Rekening Bersama (Rekber)', en: 'Escrow Service Form' },
             'subtitle': { id: 'Transaksi aman dengan jasa perantara terpercaya', en: 'Secure transactions with trusted intermediary service' },
@@ -341,18 +1034,31 @@
             'buyer-contact-label': { id: 'Kontak Pembeli (WhatsApp)', en: 'Buyer Contact (WhatsApp)' },
             'seller-contact-label': { id: 'Kontak Penjual (WhatsApp)', en: 'Seller Contact (WhatsApp)' },
             'transaction-info-title': { id: 'Detail Transaksi', en: 'Transaction Details' },
+            'payment-info-title': { id: 'Informasi Pembayaran', en: 'Payment Information' },
             'item-label': { id: 'Deskripsi Barang/Jasa', en: 'Item/Service Description' },
             'amount-label': { id: 'Jumlah Transaksi', en: 'Transaction Amount' },
-            'fee-label': { id: 'Biaya Layanan (1%)', en: 'Service Fee (1%)' },
+            'fee-label': { id: 'Biaya Layanan (5%)', en: 'Service Fee (5%)' },
             'payment-method-label': { id: 'Metode Pembayaran', en: 'Payment Method' },
             'bank-label': { id: 'Nama Bank/E-Wallet', en: 'Bank/E-Wallet Name' },
             'notes-label': { id: 'Catatan Tambahan (Opsional)', en: 'Additional Notes (Optional)' },
-            'submit-btn': { id: 'Buat Transaksi', en: 'Create Transaction' },
+            'submit-btn-text': { id: 'Buat Transaksi', en: 'Create Transaction' },
             'success-title': { id: 'Transaksi Berhasil Dibuat!', en: 'Transaction Successfully Created!' },
             'success-message': { id: 'Silahkan simpan ID Transaksi berikut untuk verifikasi dengan admin kami.', en: 'Please save the following Transaction ID for verification with our admin.' },
             'contact-info': { id: 'Klik tombol di bawah untuk menghubungi admin kami untuk verifikasi:', en: 'Click the button below to contact our admin for verification:' },
             'contact-btn-text': { id: 'Hubungi Admin', en: 'Contact Admin' },
-            'new-transaction': { id: 'Buat Transaksi Baru', en: 'Create New Transaction' }
+            'new-transaction-text': { id: 'Buat Transaksi Baru', en: 'Create New Transaction' },
+            'reset-btn-text': { id: 'Reset Form', en: 'Reset Form' },
+            'reset-modal-title': { id: 'Reset Form?', en: 'Reset Form?' },
+            'reset-modal-text': { id: 'Apakah Anda yakin ingin mengatur ulang formulir? Semua data yang dimasukkan akan hilang.', en: 'Are you sure you want to reset the form? All entered data will be lost.' },
+            'cancel-reset-text': { id: 'Batal', en: 'Cancel' },
+            'confirm-reset-text': { id: 'Ya, Reset', en: 'Yes, Reset' },
+            'next-btn-text': { id: 'Lanjutkan', en: 'Continue' },
+            'next-btn-text2': { id: 'Lanjutkan', en: 'Continue' },
+            'prev-btn-text': { id: 'Kembali', en: 'Back' },
+            'prev-btn-text2': { id: 'Kembali', en: 'Back' },
+            'step1-text': { id: 'Informasi Pribadi', en: 'Personal Info' },
+            'step2-text': { id: 'Detail Transaksi', en: 'Transaction Details' },
+            'step3-text': { id: 'Pembayaran', en: 'Payment' }
         };
         
         // Set default payment method options
@@ -371,13 +1077,40 @@
             ]
         };
         
+        // Error message translations
+        const errorMessages = {
+            id: {
+                'buyer-name': 'Mohon isi nama pembeli',
+                'seller-name': 'Mohon isi nama penjual',
+                'buyer-contact': 'Mohon isi kontak pembeli',
+                'seller-contact': 'Mohon isi kontak penjual',
+                'item-description': 'Mohon isi deskripsi barang/jasa',
+                'transaction-amount': 'Mohon isi jumlah transaksi',
+                'payment-method': 'Mohon pilih metode pembayaran',
+                'bank-name': 'Mohon isi nama bank/e-wallet'
+            },
+            en: {
+                'buyer-name': 'Please enter buyer name',
+                'seller-name': 'Please enter seller name',
+                'buyer-contact': 'Please enter buyer contact',
+                'seller-contact': 'Please enter seller contact',
+                'item-description': 'Please enter item/service description',
+                'transaction-amount': 'Please enter transaction amount',
+                'payment-method': 'Please select payment method',
+                'bank-name': 'Please enter bank/e-wallet name'
+            }
+        };
+        
         // Default language
         let currentLanguage = 'id';
+        
+        // Current form section
+        let currentSection = 1;
         
         // Function to calculate fee
         const calculateFee = () => {
             const amount = parseFloat(transactionAmount.value) || 0;
-            const fee = amount * 0.01; // 1% service fee
+            const fee = amount * 0.05; // 5% service fee
             feeAmount.value = fee.toFixed(0);
         };
         
@@ -432,6 +1165,15 @@
                     element.classList.remove('hidden');
                 });
             }
+            
+            // Update error messages
+            const errorMessageElements = document.querySelectorAll('.error-message');
+            errorMessageElements.forEach(element => {
+                const inputId = element.previousElementSibling.id || element.previousElementSibling.querySelector('input, select, textarea').id;
+                if (errorMessages[language][inputId]) {
+                    element.textContent = errorMessages[language][inputId];
+                }
+            });
         };
         
         // Generate transaction ID
@@ -440,6 +1182,101 @@
             const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
             const prefix = currentLanguage === 'id' ? 'IDN' : 'INT';
             return `${prefix}-${timestamp}-${random}`;
+        };
+        
+        // Form validation
+        const validateSection = (sectionNumber) => {
+            const section = document.querySelector(`.form-section[data-section="${sectionNumber}"]`);
+            const inputs = section.querySelectorAll('input[required], select[required], textarea[required]');
+            
+            let isValid = true;
+            
+            inputs.forEach(input => {
+                const formGroup = input.closest('.form-group');
+                const errorMessage = formGroup.querySelector('.error-message');
+                
+                if (!input.value.trim()) {
+                    formGroup.classList.add('error');
+                    errorMessage.classList.remove('hidden');
+                    input.classList.add('shake');
+                    
+                    // Remove shake animation after it completes
+                    setTimeout(() => {
+                        input.classList.remove('shake');
+                    }, 500);
+                    
+                    isValid = false;
+                } else {
+                    formGroup.classList.remove('error');
+                    formGroup.classList.add('success');
+                    errorMessage.classList.add('hidden');
+                }
+            });
+            
+            return isValid;
+        };
+        
+        // Function to switch form sections
+        const switchSection = (fromSection, toSection) => {
+            if (fromSection < toSection && !validateSection(fromSection)) {
+                return;
+            }
+            
+            document.querySelector(`.form-section[data-section="${fromSection}"]`).classList.remove('active');
+            document.querySelector(`.form-section[data-section="${toSection}"]`).classList.add('active');
+            
+            // Update progress steps
+            progressSteps.forEach(step => {
+                const stepNumber = parseInt(step.getAttribute('data-step'));
+                
+                if (stepNumber < toSection) {
+                    step.classList.remove('active');
+                    step.classList.add('completed');
+                } else if (stepNumber === toSection) {
+                    step.classList.add('active');
+                    step.classList.remove('completed');
+                } else {
+                    step.classList.remove('active');
+                    step.classList.remove('completed');
+                }
+            });
+            
+            currentSection = toSection;
+        };
+        
+        // Function to show loading state
+        const showLoading = () => {
+            submitBtn.classList.add('loading');
+            submitBtn.disabled = true;
+        };
+        
+        // Function to hide loading state
+        const hideLoading = () => {
+            submitBtn.classList.remove('loading');
+            submitBtn.disabled = false;
+        };
+        
+        // Function to show modal
+        const showModal = () => {
+            resetModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        };
+        
+        // Function to hide modal
+        const hideModal = () => {
+            resetModal.classList.remove('active');
+            document.body.style.overflow = '';
+        };
+        
+        // Function to copy transaction ID
+        const copyTransactionId = () => {
+            const id = transactionIdElement.textContent;
+            navigator.clipboard.writeText(id).then(() => {
+                copyTooltip.style.opacity = '1';
+                setTimeout(() => {
+                    copyTooltip.style.opacity = '0';
+                }, 2000);
+            });
         };
         
         // Event Listeners
@@ -457,27 +1294,67 @@
         
         transactionAmount.addEventListener('input', calculateFee);
         
+        // Form section navigation
+        nextBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const next = parseInt(btn.getAttribute('data-next'));
+                switchSection(currentSection, next);
+            });
+        });
+        
+        prevBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const prev = parseInt(btn.getAttribute('data-prev'));
+                switchSection(currentSection, prev);
+            });
+        });
+        
         rekberForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
-            // Generate transaction ID
-            const transactionId = generateTransactionId();
-            transactionIdElement.textContent = transactionId;
+            if (!validateSection(3)) {
+                return;
+            }
             
-            // Show result page, hide form page
-            formPage.classList.add('hidden');
-            resultPage.classList.remove('hidden');
+            // Show loading state
+            showLoading();
             
-            // Scroll to top
-            window.scrollTo(0, 0);
+            // Simulate server call
+            setTimeout(() => {
+                // Generate transaction ID
+                const transactionId = generateTransactionId();
+                transactionIdElement.textContent = transactionId;
+                
+                // Hide loading
+                hideLoading();
+                
+                // Show result page, hide form page
+                formPage.classList.add('hidden');
+                resultPage.classList.remove('hidden');
+                
+                // Scroll to top
+                window.scrollTo(0, 0);
+            }, 1500);
         });
         
         newTransactionLink.addEventListener('click', (e) => {
             e.preventDefault();
             
-            // Reset form
+            // Reset form and show first section
             rekberForm.reset();
             calculateFee();
+            
+            // Reset form validation classes
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('error', 'success');
+            });
+            
+            document.querySelectorAll('.error-message').forEach(msg => {
+                msg.classList.add('hidden');
+            });
+            
+            // Reset to first section
+            switchSection(currentSection, 1);
             
             // Show form page, hide result page
             resultPage.classList.add('hidden');
@@ -485,6 +1362,75 @@
             
             // Scroll to top
             window.scrollTo(0, 0);
+        });
+        
+        // Copy transaction ID
+        copyButton.addEventListener('click', copyTransactionId);
+        
+        // Reset form modal
+        resetFormBtn.addEventListener('click', showModal);
+        modalClose.addEventListener('click', hideModal);
+        cancelReset.addEventListener('click', hideModal);
+        
+        confirmReset.addEventListener('click', () => {
+            rekberForm.reset();
+            calculateFee();
+            
+            // Reset form validation classes
+            document.querySelectorAll('.form-group').forEach(group => {
+                group.classList.remove('error', 'success');
+            });
+            
+            document.querySelectorAll('.error-message').forEach(msg => {
+                msg.classList.add('hidden');
+            });
+            
+            // Reset to first section
+            switchSection(currentSection, 1);
+            
+            hideModal();
+        });
+        
+        // Real-time validation
+        document.querySelectorAll('input[required], select[required], textarea[required]').forEach(input => {
+            input.addEventListener('blur', () => {
+                const formGroup = input.closest('.form-group');
+                const errorMessage = formGroup.querySelector('.error-message');
+                
+                if (!input.value.trim()) {
+                    formGroup.classList.add('error');
+                    errorMessage.classList.remove('hidden');
+                } else {
+                    formGroup.classList.remove('error');
+                    formGroup.classList.add('success');
+                    errorMessage.classList.add('hidden');
+                }
+            });
+            
+            input.addEventListener('input', () => {
+                if (input.value.trim()) {
+                    const formGroup = input.closest('.form-group');
+                    const errorMessage = formGroup.querySelector('.error-message');
+                    
+                    formGroup.classList.remove('error');
+                    errorMessage.classList.add('hidden');
+                }
+            });
+        });
+        
+        // Prevent accidental form submission on Enter
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && e.target.tagName !== 'TEXTAREA') {
+                e.preventDefault();
+                
+                if (currentSection < 3) {
+                    const nextBtn = document.querySelector(`.form-section[data-section="${currentSection}"] .next-btn`);
+                    nextBtn.click();
+                } else if (currentSection === 3) {
+                    // Only submit on last section
+                    submitBtn.click();
+                }
+            }
         });
         
         // Initialize
