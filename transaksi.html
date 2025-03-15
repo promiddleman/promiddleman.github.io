@@ -1434,302 +1434,348 @@
     </footer>
     
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('rekberForm');
-            const resultContainer = document.getElementById('resultContainer');
-            const transactionCode = document.getElementById('transactionCode');
-            const contactAdmin = document.getElementById('contactAdmin');
-            const contactWhatsApp = document.getElementById('contactWhatsApp');
-            const copyBtn = document.getElementById('copyBtn');
-            const copyTooltip = document.getElementById('copyTooltip');
-            const backBtn = document.getElementById('backBtn');
-            const submitBtn = document.getElementById('submitBtn');
-            const loadingIndicator = document.getElementById('loadingIndicator');
-            const fileUpload = document.getElementById('attachment');
-            const fileName = document.getElementById('fileName');
-            const fileUploadContainer = document.getElementById('fileUploadContainer');
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('rekberForm');
+    const resultContainer = document.getElementById('resultContainer');
+    const transactionCode = document.getElementById('transactionCode');
+    const contactAdmin = document.getElementById('contactAdmin');
+    const contactWhatsApp = document.getElementById('contactWhatsApp');
+    const copyBtn = document.getElementById('copyBtn');
+    const copyTooltip = document.getElementById('copyTooltip');
+    const backBtn = document.getElementById('backBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const loadingIndicator = document.getElementById('loadingIndicator');
+    const fileUpload = document.getElementById('attachment');
+    const fileName = document.getElementById('fileName');
+    const fileUploadContainer = document.getElementById('fileUploadContainer');
+    
+    // Form validation
+    const validateEmail = (email) => {
+        if (!email) return true; // Email is optional
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    };
+    
+    const validateAccount = (account) => {
+        return /^\d{6,15}$/.test(account);
+    };
+    
+    // Show error message
+    const showError = (inputId, errorId, isError) => {
+        const input = document.getElementById(inputId);
+        const errorMsg = document.getElementById(errorId);
+        
+        if (isError) {
+            input.classList.add('input-error');
+            errorMsg.style.display = 'block';
+        } else {
+            input.classList.remove('input-error');
+            errorMsg.style.display = 'none';
+        }
+        
+        return !isError;
+    };
+    
+    // Validate form
+    const validateForm = () => {
+        let isValid = true;
+        
+        // Validate seller name
+        isValid = showError('sellerName', 'sellerNameError', !document.getElementById('sellerName').value.trim()) && isValid;
+        
+        // Validate seller bank
+        isValid = showError('sellerBank', 'sellerBankError', !document.getElementById('sellerBank').value) && isValid;
+        
+        // Validate seller account
+        const sellerAccount = document.getElementById('sellerAccount').value.trim();
+        isValid = showError('sellerAccount', 'sellerAccountError', !validateAccount(sellerAccount)) && isValid;
+        
+        // Validate buyer name
+        isValid = showError('buyerName', 'buyerNameError', !document.getElementById('buyerName').value.trim()) && isValid;
+        
+        // Validate buyer email
+        const buyerEmail = document.getElementById('buyerEmail').value.trim();
+        isValid = showError('buyerEmail', 'buyerEmailError', !validateEmail(buyerEmail)) && isValid;
+        
+        // Validate item description
+        isValid = showError('itemDescription', 'itemDescriptionError', !document.getElementById('itemDescription').value.trim()) && isValid;
+        
+        // Validate amount
+        const amount = document.getElementById('amount').value;
+        isValid = showError('amount', 'amountError', !amount || amount < 10000) && isValid;
+        
+        // Validate payment method
+        isValid = showError('paymentMethod', 'paymentMethodError', !document.getElementById('paymentMethod').value) && isValid;
+        
+        // Validate transaction type
+        isValid = showError('transactionType', 'transactionTypeError', !document.getElementById('transactionType').value) && isValid;
+        
+        // Validate terms
+        isValid = showError('termsCheck', 'termsCheckError', !document.getElementById('termsCheck').checked) && isValid;
+        
+        return isValid;
+    };
+    
+    // Real-time validation on input
+    document.getElementById('sellerName').addEventListener('input', function() {
+        showError('sellerName', 'sellerNameError', !this.value.trim());
+    });
+    
+    document.getElementById('sellerBank').addEventListener('change', function() {
+        showError('sellerBank', 'sellerBankError', !this.value);
+    });
+    
+    document.getElementById('sellerAccount').addEventListener('input', function() {
+        showError('sellerAccount', 'sellerAccountError', this.value.trim() && !validateAccount(this.value.trim()));
+    });
+    
+    document.getElementById('buyerName').addEventListener('input', function() {
+        showError('buyerName', 'buyerNameError', !this.value.trim());
+    });
+    
+    document.getElementById('buyerEmail').addEventListener('input', function() {
+        showError('buyerEmail', 'buyerEmailError', this.value.trim() && !validateEmail(this.value.trim()));
+    });
+    
+    document.getElementById('itemDescription').addEventListener('input', function() {
+        showError('itemDescription', 'itemDescriptionError', !this.value.trim());
+    });
+    
+    document.getElementById('amount').addEventListener('input', function() {
+        showError('amount', 'amountError', this.value && this.value < 10000);
+        // Calculate prices when amount changes
+        calculatePrices();
+    });
+    
+    document.getElementById('paymentMethod').addEventListener('change', function() {
+        showError('paymentMethod', 'paymentMethodError', !this.value);
+    });
+    
+    document.getElementById('transactionType').addEventListener('change', function() {
+        showError('transactionType', 'transactionTypeError', !this.value);
+    });
+    
+    document.getElementById('termsCheck').addEventListener('change', function() {
+        showError('termsCheck', 'termsCheckError', !this.checked);
+    });
+    
+    // File upload handler
+    fileUpload.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            const file = this.files[0];
             
-            // Form validation
-            const validateEmail = (email) => {
-                if (!email) return true; // Email is optional
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                return emailRegex.test(email);
-            };
-            
-            const validateAccount = (account) => {
-                return /^\d{6,15}$/.test(account);
-            };
-            
-            // Show error message
-            const showError = (inputId, errorId, isError) => {
-                const input = document.getElementById(inputId);
-                const errorMsg = document.getElementById(errorId);
-                
-                if (isError) {
-                    input.classList.add('input-error');
-                    errorMsg.style.display = 'block';
-                } else {
-                    input.classList.remove('input-error');
-                    errorMsg.style.display = 'none';
-                }
-                
-                return !isError;
-            };
-            
-            // Validate form
-            const validateForm = () => {
-                let isValid = true;
-                
-                // Validate seller name
-                isValid = showError('sellerName', 'sellerNameError', !document.getElementById('sellerName').value.trim()) && isValid;
-                
-                // Validate seller bank
-                isValid = showError('sellerBank', 'sellerBankError', !document.getElementById('sellerBank').value) && isValid;
-                
-                // Validate seller account
-                const sellerAccount = document.getElementById('sellerAccount').value.trim();
-                isValid = showError('sellerAccount', 'sellerAccountError', !validateAccount(sellerAccount)) && isValid;
-                
-                // Validate buyer name
-                isValid = showError('buyerName', 'buyerNameError', !document.getElementById('buyerName').value.trim()) && isValid;
-                
-                // Validate buyer email
-                const buyerEmail = document.getElementById('buyerEmail').value.trim();
-                isValid = showError('buyerEmail', 'buyerEmailError', !validateEmail(buyerEmail)) && isValid;
-                
-                // Validate item description
-                isValid = showError('itemDescription', 'itemDescriptionError', !document.getElementById('itemDescription').value.trim()) && isValid;
-                
-                // Validate amount
-                const amount = document.getElementById('amount').value;
-                isValid = showError('amount', 'amountError', !amount || amount < 10000) && isValid;
-                
-                // Validate payment method
-                isValid = showError('paymentMethod', 'paymentMethodError', !document.getElementById('paymentMethod').value) && isValid;
-                
-                // Validate transaction type
-                isValid = showError('transactionType', 'transactionTypeError', !document.getElementById('transactionType').value) && isValid;
-                
-                // Validate terms
-                isValid = showError('termsCheck', 'termsCheckError', !document.getElementById('termsCheck').checked) && isValid;
-                
-                return isValid;
-            };
-            
-            // Real-time validation on input
-            document.getElementById('sellerName').addEventListener('input', function() {
-                showError('sellerName', 'sellerNameError', !this.value.trim());
-            });
-            
-            document.getElementById('sellerBank').addEventListener('change', function() {
-                showError('sellerBank', 'sellerBankError', !this.value);
-            });
-            
-            document.getElementById('sellerAccount').addEventListener('input', function() {
-                showError('sellerAccount', 'sellerAccountError', this.value.trim() && !validateAccount(this.value.trim()));
-            });
-            
-            document.getElementById('buyerName').addEventListener('input', function() {
-                showError('buyerName', 'buyerNameError', !this.value.trim());
-            });
-            
-            document.getElementById('buyerEmail').addEventListener('input', function() {
-                showError('buyerEmail', 'buyerEmailError', this.value.trim() && !validateEmail(this.value.trim()));
-            });
-            
-            document.getElementById('itemDescription').addEventListener('input', function() {
-                showError('itemDescription', 'itemDescriptionError', !this.value.trim());
-            });
-            
-            document.getElementById('amount').addEventListener('input', function() {
-                showError('amount', 'amountError', this.value && this.value < 10000);
-                // Calculate prices when amount changes
-                calculatePrices();
-            });
-            
-            document.getElementById('paymentMethod').addEventListener('change', function() {
-                showError('paymentMethod', 'paymentMethodError', !this.value);
-            });
-            
-            document.getElementById('transactionType').addEventListener('change', function() {
-                showError('transactionType', 'transactionTypeError', !this.value);
-            });
-            
-            document.getElementById('termsCheck').addEventListener('change', function() {
-                showError('termsCheck', 'termsCheckError', !this.checked);
-            });
-            
-            // File upload handler
-            fileUpload.addEventListener('change', function() {
-                if (this.files && this.files[0]) {
-                    const file = this.files[0];
-                    
-                    // Check file size (5MB max)
-                    if (file.size > 5 * 1024 * 1024) {
-                        alert('Ukuran file terlalu besar. Maksimal 5MB.');
-                        this.value = '';
-                        fileName.textContent = '';
-                        return;
-                    }
-                    
-                    // Check file type
-                    const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
-                    if (!validTypes.includes(file.type)) {
-                        alert('Format file tidak didukung. Gunakan JPG, PNG, atau PDF.');
-                        this.value = '';
-                        fileName.textContent = '';
-                        return;
-                    }
-                    
-                    fileName.textContent = file.name;
-                    fileUploadContainer.style.borderColor = 'var(--primary-color)';
-                }
-            });
-            
-            // Drag and drop for file upload
-            ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
-                fileUploadContainer.addEventListener(eventName, preventDefaults, false);
-            });
-            
-            function preventDefaults(e) {
-                e.preventDefault();
-                e.stopPropagation();
+            // Check file size (5MB max)
+            if (file.size > 5 * 1024 * 1024) {
+                alert('Ukuran file terlalu besar. Maksimal 5MB.');
+                this.value = '';
+                fileName.textContent = '';
+                return;
             }
             
-            ['dragenter', 'dragover'].forEach(eventName => {
-                fileUploadContainer.addEventListener(eventName, highlight, false);
-            });
-            
-            ['dragleave', 'drop'].forEach(eventName => {
-                fileUploadContainer.addEventListener(eventName, unhighlight, false);
-            });
-            
-            function highlight() {
-                fileUploadContainer.style.borderColor = 'var(--primary-color)';
-                fileUploadContainer.style.backgroundColor = 'var(--primary-light)';
+            // Check file type
+            const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+            if (!validTypes.includes(file.type)) {
+                alert('Format file tidak didukung. Gunakan JPG, PNG, atau PDF.');
+                this.value = '';
+                fileName.textContent = '';
+                return;
             }
             
-            function unhighlight() {
-                fileUploadContainer.style.borderColor = 'var(--gray-300)';
-                fileUploadContainer.style.backgroundColor = 'white';
+            fileName.textContent = file.name;
+            fileUploadContainer.style.borderColor = 'var(--primary-color)';
+        }
+    });
+    
+    // Drag and drop for file upload
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        fileUploadContainer.addEventListener(eventName, preventDefaults, false);
+    });
+    
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
+    ['dragenter', 'dragover'].forEach(eventName => {
+        fileUploadContainer.addEventListener(eventName, highlight, false);
+    });
+    
+    ['dragleave', 'drop'].forEach(eventName => {
+        fileUploadContainer.addEventListener(eventName, unhighlight, false);
+    });
+    
+    function highlight() {
+        fileUploadContainer.style.borderColor = 'var(--primary-color)';
+        fileUploadContainer.style.backgroundColor = 'var(--primary-light)';
+    }
+    
+    function unhighlight() {
+        fileUploadContainer.style.borderColor = 'var(--gray-300)';
+        fileUploadContainer.style.backgroundColor = 'white';
+    }
+    
+    fileUploadContainer.addEventListener('drop', handleDrop, false);
+    
+    function handleDrop(e) {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        
+        if (files && files[0]) {
+            fileUpload.files = files;
+            const event = new Event('change');
+            fileUpload.dispatchEvent(event);
+        }
+    }
+    
+    // Save transaction to database
+    function saveTransaction(transaction) {
+        // Get existing transactions from localStorage
+        let transactions = [];
+        const storedTransactions = localStorage.getItem('rekberTransactions');
+        
+        if (storedTransactions) {
+            transactions = JSON.parse(storedTransactions);
+        }
+        
+        // Add new transaction
+        transactions.push(transaction);
+        
+        // Save back to localStorage
+        localStorage.setItem('rekberTransactions', JSON.stringify(transactions));
+    }
+    
+    // Generate a random transaction code
+    function generateTransactionCode() {
+        return 'RB-' + Math.floor(Math.random() * 90000000 + 10000000);
+    }
+    
+    // Form submission
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Validate form
+        if (!validateForm()) {
+            // Scroll to first error
+            const firstError = document.querySelector('.input-error');
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
+            return;
+        }
+        
+        // Show loading indicator
+        submitBtn.querySelector('span').style.display = 'none';
+        loadingIndicator.style.display = 'flex';
+        
+        // Generate transaction code
+        const randomCode = generateTransactionCode();
+        
+        // Create transaction object
+        const transaction = {
+            transactionCode: randomCode,
+            date: new Date().toISOString(),
+            sellerName: document.getElementById('sellerName').value.trim(),
+            sellerBank: document.getElementById('sellerBank').value,
+            sellerAccount: document.getElementById('sellerAccount').value.trim(),
+            buyerName: document.getElementById('buyerName').value.trim(),
+            buyerEmail: document.getElementById('buyerEmail').value.trim(),
+            itemDescription: document.getElementById('itemDescription').value.trim(),
+            amount: parseFloat(document.getElementById('amount').value),
+            paymentMethod: document.getElementById('paymentMethod').value,
+            transactionType: document.getElementById('transactionType').value,
+            notes: document.getElementById('notes').value.trim(),
+            status: 'pending' // Default status
+        };
+        
+        // Simulate API call
+        setTimeout(function() {
+            // Save transaction to database
+            saveTransaction(transaction);
             
-            fileUploadContainer.addEventListener('drop', handleDrop, false);
+            // Set transaction code display
+            transactionCode.textContent = randomCode;
             
-            function handleDrop(e) {
-                const dt = e.dataTransfer;
-                const files = dt.files;
-                
-                if (files && files[0]) {
-                    fileUpload.files = files;
-                    const event = new Event('change');
-                    fileUpload.dispatchEvent(event);
-                }
-            }
+            // Update progress bar
+            document.querySelector('.progress-step.active').classList.add('completed');
+            document.querySelector('.progress-step.active').classList.remove('active');
+            document.querySelectorAll('.progress-step')[2].classList.add('active');
             
-            // Form submission
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                // Validate form
-                if (!validateForm()) {
-                    // Scroll to first error
-                    const firstError = document.querySelector('.input-error');
-                    if (firstError) {
-                        firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
-                    return;
-                }
-                
-                // Show loading indicator
-                submitBtn.querySelector('span').style.display = 'none';
-                loadingIndicator.style.display = 'flex';
-                
-                // Simulate API call
-                setTimeout(function() {
-                    // Generate random transaction code
-                    const randomCode = 'RB-' + Math.floor(Math.random() * 90000000 + 10000000);
-                    transactionCode.textContent = randomCode;
-                    
-                    // Update progress bar
-                    document.querySelector('.progress-step.active').classList.add('completed');
-                    document.querySelector('.progress-step.active').classList.remove('active');
-                    document.querySelectorAll('.progress-step')[2].classList.add('active');
-                    
-                    // Hide form and show result
-                    form.parentElement.style.display = 'none';
-                    resultContainer.style.display = 'block';
-                    
-                    // Scroll to result
-                    resultContainer.scrollIntoView({behavior: 'smooth'});
-                }, 1500);
-            });
+            // Hide form and show result
+            form.parentElement.style.display = 'none';
+            resultContainer.style.display = 'block';
             
-            // Copy transaction code
-            copyBtn.addEventListener('click', function() {
-                const code = transactionCode.textContent.trim();
-                navigator.clipboard.writeText(code)
-                    .then(() => {
-                        copyTooltip.textContent = 'Tersalin!';
-                        setTimeout(() => {
-                            copyTooltip.textContent = 'Salin ke clipboard';
-                        }, 2000);
-                    })
-                    .catch(err => {
-                        console.error('Gagal menyalin: ', err);
-                    });
-            });
+            // Scroll to result
+            resultContainer.scrollIntoView({behavior: 'smooth'});
             
-            // Calculate prices based on amount
-            document.getElementById('amount').addEventListener('input', calculatePrices);
-            
-            function calculatePrices() {
-                const amount = parseFloat(document.getElementById('amount').value) || 0;
-                const adminFee = amount * 0.01; // 1% admin fee
-                const total = amount + adminFee;
-                
-                // Format as Indonesian Rupiah
-                const formatter = new Intl.NumberFormat('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR',
-                    minimumFractionDigits: 0,
-                    maximumFractionDigits: 0
-                });
-                
-                document.getElementById('transactionValue').textContent = formatter.format(amount);
-                document.getElementById('adminFee').textContent = formatter.format(adminFee);
-                document.getElementById('totalPayment').textContent = formatter.format(total);
-                
-                // Show/hide price summary
-                if (amount >= 10000) {
-                    document.getElementById('priceSummary').style.display = 'block';
-                } else {
-                    document.getElementById('priceSummary').style.display = 'none';
-                }
-            }
-            
-            // Contact admin via Facebook button
-            contactAdmin.addEventListener('click', function() {
-                // Replace with your actual Facebook page URL
-                window.open('https://www.facebook.com/rekberindonesia', '_blank');
-            });
-            
-            // Contact admin via WhatsApp button
-            contactWhatsApp.addEventListener('click', function() {
-                // Replace with your actual WhatsApp number and message
-                const code = transactionCode.textContent.trim();
-                const message = `Halo Admin RekBer, saya ingin verifikasi transaksi dengan kode: ${code}`;
+            // Set up WhatsApp link with transaction code
+            const whatsappLink = function() {
+                const message = `Halo Admin RekBer, saya ingin verifikasi transaksi dengan kode: ${randomCode}`;
                 window.open(`https://wa.me/XXXXXXXXXX?text=${encodeURIComponent(message)}`, '_blank');
-            });
+            };
             
-            // Back button in result container
-            backBtn.addEventListener('click', function() {
-                window.location.href = '#';
+            if (contactWhatsApp) {
+                contactWhatsApp.addEventListener('click', whatsappLink);
+            }
+        }, 1500);
+    });
+    
+    // Copy transaction code
+    copyBtn.addEventListener('click', function() {
+        const code = transactionCode.textContent.trim();
+        navigator.clipboard.writeText(code)
+            .then(() => {
+                copyTooltip.textContent = 'Tersalin!';
+                setTimeout(() => {
+                    copyTooltip.textContent = 'Salin ke clipboard';
+                }, 2000);
+            })
+            .catch(err => {
+                console.error('Gagal menyalin: ', err);
             });
-            
-            // Initialize price calculation
-            calculatePrices();
+    });
+    
+    // Calculate prices based on amount
+    document.getElementById('amount').addEventListener('input', calculatePrices);
+    
+    function calculatePrices() {
+        const amount = parseFloat(document.getElementById('amount').value) || 0;
+        const adminFee = amount * 0.01; // 1% admin fee
+        const total = amount + adminFee;
+        
+        // Format as Indonesian Rupiah
+        const formatter = new Intl.NumberFormat('id-ID', {
+            style: 'currency',
+            currency: 'IDR',
+            minimumFractionDigits: 0,
+            maximumFractionDigits: 0
         });
+        
+        document.getElementById('transactionValue').textContent = formatter.format(amount);
+        document.getElementById('adminFee').textContent = formatter.format(adminFee);
+        document.getElementById('totalPayment').textContent = formatter.format(total);
+        
+        // Show/hide price summary
+        if (amount >= 10000) {
+            document.getElementById('priceSummary').style.display = 'block';
+        } else {
+            document.getElementById('priceSummary').style.display = 'none';
+        }
+    }
+    
+    // Contact admin via Facebook button
+    contactAdmin.addEventListener('click', function() {
+        // Replace with your actual Facebook page URL
+        window.open('https://www.facebook.com/rekberindonesia', '_blank');
+    });
+    
+    // Back button in result container
+    backBtn.addEventListener('click', function() {
+        window.location.href = 'database.html';
+    });
+    
+    // Initialize price calculation
+    calculatePrices();
+});
     </script>
 </body>
 </html>
