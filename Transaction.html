@@ -748,21 +748,10 @@
                 </div>
                 
                 <h2>Data Penjual</h2>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="sellerName" class="required">Nama Penjual</label>
-                            <input type="text" id="sellerName" required>
-                            <span class="error-message" id="sellerNameError">Nama penjual wajib diisi</span>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="sellerPhone" class="required">Nomor Telepon Penjual</label>
-                            <input type="tel" id="sellerPhone" placeholder="contoh: +62812xxxxxxxx" required>
-                            <span class="error-message" id="sellerPhoneError">Format nomor telepon tidak valid</span>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label for="sellerName" class="required">Nama Penjual</label>
+                    <input type="text" id="sellerName" required>
+                    <span class="error-message" id="sellerNameError">Nama penjual wajib diisi</span>
                 </div>
                 
                 <div class="row">
@@ -821,21 +810,10 @@
                 </div>
                 
                 <h2>Data Pembeli</h2>
-                <div class="row">
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="buyerName" class="required">Nama Pembeli</label>
-                            <input type="text" id="buyerName" required>
-                            <span class="error-message" id="buyerNameError">Nama pembeli wajib diisi</span>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="form-group">
-                            <label for="buyerPhone" class="required">Nomor Telepon Pembeli</label>
-                            <input type="tel" id="buyerPhone" placeholder="contoh: +62812xxxxxxxx atau +1234xxxxxxx" required>
-                            <span class="error-message" id="buyerPhoneError">Format nomor telepon tidak valid</span>
-                        </div>
-                    </div>
+                <div class="form-group">
+                    <label for="buyerName" class="required">Nama Pembeli</label>
+                    <input type="text" id="buyerName" required>
+                    <span class="error-message" id="buyerNameError">Nama pembeli wajib diisi</span>
                 </div>
                 
                 <div class="row">
@@ -1384,11 +1362,6 @@
             buyerCountry.addEventListener('change', checkInternationalTransaction);
             
             // Form validation
-            const validatePhone = (phone) => {
-                // International phone number regex (simplified)
-                const phoneRegex = /^\+?[0-9]{7,15}$/;
-                return phoneRegex.test(phone);
-            };
             
             const validateEmail = (email) => {
                 if (!email) return true; // Email is optional
@@ -1427,9 +1400,7 @@
                 // Validate seller name
                 isValid = showError('sellerName', 'sellerNameError', !document.getElementById('sellerName').value.trim()) && isValid;
                 
-                // Validate seller phone
-                const sellerPhone = document.getElementById('sellerPhone').value.trim();
-                isValid = showError('sellerPhone', 'sellerPhoneError', !validatePhone(sellerPhone)) && isValid;
+                // Phone number validation removed
                 
                 // Validate seller country
                 isValid = showError('sellerCountry', 'sellerCountryError', !document.getElementById('sellerCountry').value) && isValid;
@@ -1444,9 +1415,7 @@
                 // Validate buyer name
                 isValid = showError('buyerName', 'buyerNameError', !document.getElementById('buyerName').value.trim()) && isValid;
                 
-                // Validate buyer phone
-                const buyerPhone = document.getElementById('buyerPhone').value.trim();
-                isValid = showError('buyerPhone', 'buyerPhoneError', !validatePhone(buyerPhone)) && isValid;
+                // Buyer phone validation removed
                 
                 // Validate buyer country
                 isValid = showError('buyerCountry', 'buyerCountryError', !document.getElementById('buyerCountry').value) && isValid;
@@ -1971,13 +1940,7 @@
             });
             
             // Real-time input validation
-            document.getElementById('sellerPhone').addEventListener('input', function() {
-                showError('sellerPhone', 'sellerPhoneError', this.value.trim() && !validatePhone(this.value.trim()));
-            });
-            
-            document.getElementById('buyerPhone').addEventListener('input', function() {
-                showError('buyerPhone', 'buyerPhoneError', this.value.trim() && !validatePhone(this.value.trim()));
-            });
+            // Phone validation removed
             
             document.getElementById('buyerEmail').addEventListener('input', function() {
                 showError('buyerEmail', 'buyerEmailError', this.value.trim() && !validateEmail(this.value.trim()));
