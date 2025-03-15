@@ -22,7 +22,7 @@
             line-height: 1.6;
         }
         
-        /* Header styles */
+        /* Header styles - Optimized */
         header {
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
             color: white;
@@ -33,7 +33,7 @@
         .header-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 1rem;
         }
         
         .logo {
@@ -53,53 +53,55 @@
             justify-content: center;
             gap: 2rem;
             margin-top: 1.5rem;
+            flex-wrap: wrap;
         }
         
         .stat-item {
             text-align: center;
+            padding: 0.5rem;
         }
         
         .stat-number {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: 700;
             display: block;
         }
         
         .stat-label {
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 300;
         }
         
-        /* Main content styles */
+        /* Main content styles - Optimized */
         main {
             max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 2rem;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
         }
         
         .testimonial-heading {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
         
         .testimonial-heading h2 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+            font-size: 1.8rem;
+            margin-bottom: 0.8rem;
             color: #1e3c72;
         }
         
         .testimonial-heading p {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: #6c757d;
             max-width: 700px;
             margin: 0 auto;
         }
         
-        /* Filter controls */
+        /* Filter controls - Optimized */
         .filter-controls {
             display: flex;
             justify-content: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             flex-wrap: wrap;
             gap: 0.5rem;
         }
@@ -108,8 +110,8 @@
             background-color: white;
             border: 1px solid #dee2e6;
             border-radius: 30px;
-            padding: 0.5rem 1.2rem;
-            font-size: 0.9rem;
+            padding: 0.4rem 1rem;
+            font-size: 0.85rem;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -124,10 +126,10 @@
             border-color: #1e3c72;
         }
         
-        /* Search box */
+        /* Search box - Optimized */
         .search-box {
             max-width: 500px;
-            margin: 0 auto 2rem;
+            margin: 0 auto 1.5rem;
             position: relative;
         }
         
@@ -136,7 +138,7 @@
             padding: 0.8rem 1rem 0.8rem 3rem;
             border: 1px solid #dee2e6;
             border-radius: 30px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             box-shadow: 0 2px 5px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
         }
@@ -155,11 +157,11 @@
             color: #6c757d;
         }
         
-        /* Testimonial grid */
+        /* Testimonial grid - Optimized for mobile */
         .testimonial-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.5rem;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.2rem;
         }
         
         .testimonial-card {
@@ -167,7 +169,10 @@
             border-radius: 10px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             overflow: hidden;
-            transition: all 0.3s ease;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
         }
         
         .testimonial-card:hover {
@@ -178,13 +183,13 @@
         .testimonial-header {
             display: flex;
             align-items: center;
-            padding: 1.5rem;
+            padding: 1.2rem;
             border-bottom: 1px solid #f1f1f1;
         }
         
         .avatar {
-            width: 50px;
-            height: 50px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             object-fit: cover;
             margin-right: 1rem;
@@ -194,7 +199,7 @@
             justify-content: center;
             color: #1e3c72;
             font-weight: 600;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
         
         .user-info {
@@ -204,10 +209,47 @@
         .user-name {
             font-weight: 600;
             margin-bottom: 0.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+        
+        /* Badge styles */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.2rem 0.5rem;
+            border-radius: 30px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            margin-left: 0.3rem;
+            white-space: nowrap;
+        }
+        
+        .badge-verified {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .badge-top {
+            background-color: #ffc107;
+            color: #343a40;
+        }
+        
+        .badge-premium {
+            background-color: #6f42c1;
+            color: white;
+        }
+        
+        .badge-icon {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin-right: 3px;
         }
         
         .transaction-type {
-            font-size: 0.8rem;
+            font-size: 0.75rem;
             color: #6c757d;
             padding: 0.2rem 0.5rem;
             background-color: #f8f9fa;
@@ -222,12 +264,13 @@
         }
         
         .testimonial-body {
-            padding: 1.5rem;
+            padding: 1.2rem;
+            flex-grow: 1;
         }
         
         .testimonial-text {
             color: #343a40;
-            font-size: 0.95rem;
+            font-size: 0.9rem;
             margin-bottom: 1rem;
         }
         
@@ -235,8 +278,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 1.5rem 1.5rem;
-            font-size: 0.8rem;
+            padding: 0 1.2rem 1.2rem;
+            font-size: 0.75rem;
             color: #6c757d;
         }
         
@@ -244,17 +287,17 @@
             font-weight: 600;
         }
         
-        /* Pagination */
+        /* Pagination - Server-side style */
         .pagination {
             display: flex;
             justify-content: center;
-            margin: 3rem 0 2rem;
+            margin: 2.5rem 0 1.5rem;
             gap: 0.5rem;
         }
         
         .page-btn {
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -263,6 +306,7 @@
             background-color: white;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 0.9rem;
         }
         
         .page-btn:hover {
@@ -275,27 +319,47 @@
             border-color: #1e3c72;
         }
         
-        /* Call to action */
+        .loader {
+            display: none;
+            margin: 0 auto;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #1e3c72;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Enhanced CTA Section */
         .cta-section {
             background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            padding: 4rem 2rem;
+            padding: 3.5rem 1.5rem;
             text-align: center;
             color: white;
-            margin-top: 4rem;
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
         }
         
         .cta-container {
             max-width: 800px;
             margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
         
         .cta-heading {
-            font-size: 2rem;
+            font-size: 1.8rem;
             margin-bottom: 1rem;
         }
         
         .cta-text {
-            font-size: 1.1rem;
+            font-size: 1rem;
             margin-bottom: 2rem;
             opacity: 0.9;
         }
@@ -305,36 +369,90 @@
             background-color: white;
             color: #1e3c72;
             font-weight: 600;
-            padding: 1rem 2rem;
+            padding: 0.9rem 1.8rem;
             border-radius: 50px;
             text-decoration: none;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
         }
         
         .cta-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
         }
         
-        /* Footer */
+        /* Button Animation */
+        .cta-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .cta-btn:hover::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+        }
+        
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+        }
+        
+        /* Footer styles - Optimized */
         footer {
             background-color: #343a40;
             color: white;
-            padding: 3rem 2rem;
+            padding: 2.5rem 1.5rem;
         }
         
         .footer-container {
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
         }
         
         .footer-column h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            margin-bottom: 1.2rem;
             position: relative;
             padding-bottom: 0.5rem;
         }
@@ -344,14 +462,14 @@
             position: absolute;
             left: 0;
             bottom: 0;
-            width: 50px;
+            width: 40px;
             height: 2px;
             background-color: #1e3c72;
         }
         
         .footer-column p {
             margin-bottom: 1rem;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             opacity: 0.8;
         }
         
@@ -360,7 +478,7 @@
         }
         
         .footer-column li {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.7rem;
         }
         
         .footer-column a {
@@ -368,7 +486,7 @@
             text-decoration: none;
             opacity: 0.8;
             transition: all 0.3s ease;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
         }
         
         .footer-column a:hover {
@@ -378,13 +496,14 @@
         
         .social-icons {
             display: flex;
-            gap: 1rem;
+            gap: 0.8rem;
             margin-top: 1rem;
+            flex-wrap: wrap;
         }
         
         .social-icon {
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             background-color: rgba(255,255,255,0.1);
             display: flex;
@@ -398,27 +517,119 @@
         }
         
         .copyright {
-            margin-top: 3rem;
+            margin-top: 2.5rem;
             text-align: center;
-            padding-top: 1.5rem;
+            padding-top: 1.2rem;
             border-top: 1px solid rgba(255,255,255,0.1);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             opacity: 0.7;
         }
         
-        /* Responsive adjustments */
+        /* Enhanced Responsive adjustments */
+        @media (max-width: 992px) {
+            .stat-number {
+                font-size: 1.6rem;
+            }
+            
+            .testimonial-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
         @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1rem;
+            }
+            
             .stats {
                 flex-direction: column;
                 gap: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .stat-item {
+                padding: 0.5rem 0;
+            }
+            
+            .testimonial-heading h2 {
+                font-size: 1.6rem;
+            }
+            
+            .filter-controls {
+                padding: 0 0.5rem;
+            }
+            
+            .filter-btn {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+                padding: 0 0.5rem;
+            }
+            
+            .testimonial-card {
+                margin-bottom: 1rem;
+            }
+            
+            .testimonial-header, 
+            .testimonial-body, 
+            .testimonial-footer {
+                padding: 1rem;
             }
             
             .footer-container {
                 grid-template-columns: 1fr;
             }
             
-            .testimonial-grid {
-                grid-template-columns: 1fr;
+            .cta-heading {
+                font-size: 1.5rem;
+            }
+            
+            .cta-btn {
+                padding: 0.8rem 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.8rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            .testimonial-heading h2 {
+                font-size: 1.4rem;
+            }
+            
+            .testimonial-heading p {
+                font-size: 0.9rem;
+            }
+            
+            .search-input {
+                font-size: 0.85rem;
+            }
+            
+            .avatar {
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
+            }
+            
+            .user-name {
+                font-size: 0.9rem;
+            }
+            
+            .testimonial-text {
+                font-size: 0.85rem;
+            }
+            
+            .badge {
+                font-size: 0.6rem;
+                padding: 0.15rem 0.4rem;
             }
         }
     </style>
@@ -453,12 +664,12 @@
         </div>
         
         <div class="filter-controls">
-            <button class="filter-btn active">Semua</button>
-            <button class="filter-btn">Jual Beli Barang</button>
-            <button class="filter-btn">Jasa Digital</button>
-            <button class="filter-btn">Sewa Menyewa</button>
-            <button class="filter-btn">Game Item</button>
-            <button class="filter-btn">Cryptocurrency</button>
+            <button class="filter-btn active" data-filter="all">Semua</button>
+            <button class="filter-btn" data-filter="jual-beli">Jual Beli Barang</button>
+            <button class="filter-btn" data-filter="jasa">Jasa Digital</button>
+            <button class="filter-btn" data-filter="sewa">Sewa Menyewa</button>
+            <button class="filter-btn" data-filter="game">Game Item</button>
+            <button class="filter-btn" data-filter="crypto">Cryptocurrency</button>
         </div>
         
         <div class="search-box">
@@ -469,17 +680,13 @@
         </div>
         
         <div class="testimonial-grid" id="testimonial-container">
-            <!-- Testimonials will be dynamically generated here -->
+            <!-- Testimonials will be dynamically loaded here -->
         </div>
         
-        <div class="pagination">
-            <button class="page-btn">«</button>
-            <button class="page-btn active">1</button>
-            <button class="page-btn">2</button>
-            <button class="page-btn">3</button>
-            <button class="page-btn">4</button>
-            <button class="page-btn">5</button>
-            <button class="page-btn">»</button>
+        <div class="loader" id="loader"></div>
+        
+        <div class="pagination" id="pagination">
+            <!-- Pagination buttons will be dynamically generated -->
         </div>
     </main>
     
@@ -497,22 +704,22 @@
                 <h3>Tentang RekberTrust</h3>
                 <p>RekberTrust adalah jasa rekening bersama terpercaya yang telah memfasilitasi ribuan transaksi online sejak 2015 dengan komitmen untuk keamanan, kecepatan, dan kepuasan pengguna.</p>
                 <div class="social-icons">
-                    <a href="#" class="social-icon">
+                    <a href="#" class="social-icon" aria-label="Facebook">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                             <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
                         </svg>
                     </a>
-                    <a href="#" class="social-icon">
+                    <a href="#" class="social-icon" aria-label="Instagram">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                             <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
                         </svg>
                     </a>
-                    <a href="#" class="social-icon">
+                    <a href="#" class="social-icon" aria-label="Twitter">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                             <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
                         </svg>
                     </a>
-                    <a href="#" class="social-icon">
+                    <a href="#" class="social-icon" aria-label="YouTube">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                             <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
                         </svg>
@@ -552,392 +759,460 @@
         </div>
     </footer>
 
+    <!-- Schema.org structured data for reviews -->
+    <script type="application/ld+json" id="testimonial-schema">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "RekberTrust",
+      "description": "Jasa Rekening Bersama Terpercaya Sejak 2015",
+      "url": "https://www.rekbertrust.id",
+      "logo": "https://www.rekbertrust.id/logo.png",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "bestRating": "5",
+        "worstRating": "1",
+        "ratingCount": "50000"
+      },
+      "review": []
+    }
+    </script>
+
     <script>
-        // Names database for random testimonial generation
-        const firstNames = ["Andi", "Budi", "Citra", "Dewi", "Eko", "Fitri", "Galih", "Hana", "Indra", "Joko", "Kartika", "Laras", "Mawar", "Nugroho", "Oktavia", "Putri", "Rudi", "Sinta", "Tono", "Utami", "Vina", "Wawan", "Yanti", "Zaki", "Agus", "Bambang", "Clara", "Dian", "Edi", "Fani", "Gunawan", "Hesti", "Irfan", "Jessica", "Kurnia", "Linda", "Maman", "Nina", "Oscar", "Puspita", "Rahmat", "Sari", "Taufik", "Umi", "Vivi", "Wahyu", "Yudha", "Zainal", "Anisa", "Bayu"];
-        
-        const lastNames = ["Wijaya", "Susanto", "Hartono", "Gunawan", "Saputra", "Santoso", "Wibowo", "Mulya", "Setiawan", "Nugraha", "Hidayat", "Kusuma", "Putra", "Pratama", "Sulistyo", "Permadi", "Utomo", "Suharto", "Purnomo", "Agustina", "Budiman", "Wulandari", "Iskandar", "Hermawan", "Ramadhan", "Suryanto", "Haryanto", "Pranoto", "Darmawan", "Raharja", "Firmansyah", "Mulyono", "Suryadi", "Maulana", "Kusumo", "Purwanto", "Cahyono", "Adiputra", "Raharjo", "Nainggolan", "Siahaan", "Hutapea", "Siregar", "Situmorang", "Tampubolon", "Simanjuntak", "Sihombing", "Hutabarat", "Riyadi", "Widodo"];
-        
-        // Transaction types
-        const transactionTypes = [
-            "Jual Beli Barang", "Jasa Digital", "Sewa Menyewa", "Game Item", "Cryptocurrency"
-        ];
-        
-        // Transaction subtypes
-        const transactionSubtypes = {
-            "Jual Beli Barang": ["Elektronik", "Fashion", "Otomotif", "Handphone", "Komputer", "Kamera", "Jam Tangan", "Koleksi", "Sepeda", "Furniture"],
-            "Jasa Digital": ["Web Design", "Graphic Design", "Social Media", "Content Writing", "SEO Services", "Video Editing", "Voice Over", "Digital Marketing", "Programming", "Translation"],
-            "Sewa Menyewa": ["Kendaraan", "Properti", "Alat Berat", "Studio Foto", "Kamera", "Kostum", "Sound System", "Gedung", "Peralatan Camping", "Villa"],
-            "Game Item": ["Mobile Legends", "PUBG Mobile", "Free Fire", "Genshin Impact", "Valorant", "Dota 2", "Ragnarok", "Counter Strike", "Minecraft", "Roblox"],
-            "Cryptocurrency": ["Bitcoin", "Ethereum", "Dogecoin", "Cardano", "Solana", "Ripple", "Tether", "BNB", "Polygon", "Litecoin"]
-        };
-        
-        // Testimonial texts database
-        const testimonialTexts = [
-            "Transaksi berjalan lancar dan aman. Admin sangat responsif dan profesional. Sangat direkomendasikan!",
-            "Pelayanan cepat dan ramah. Ini kedua kalinya saya menggunakan jasa RekberTrust dan tidak pernah mengecewakan.",
-            "Sempat ragu awalnya, tapi ternyata proses transaksi sangat mudah dan aman. Terima kasih RekberTrust!",
-            "Transaksi pertama saya menggunakan rekber dan sangat puas dengan pelayanannya. Admin fast response dan informatif.",
-            "Sangat membantu dalam transaksi online. Fee yang dikenakan sebanding dengan keamanan yang didapatkan.",
-            "Proses cepat, aman, dan terpercaya. Akan menggunakan jasa ini lagi untuk transaksi berikutnya.",
-            "Admin ramah dan selalu siap membantu. Transaksi selesai dalam hitungan jam saja. Recommended!",
-            "Sangat membantu dalam mengamankan transaksi jual beli online. Penjual dan pembeli sama-sama terlindungi.",
-            "Sudah berkali-kali menggunakan jasa RekberTrust dan selalu konsisten memberikan pelayanan terbaik.",
-            "Awalnya takut tertipu, tapi dengan menggunakan RekberTrust jadi lebih tenang. Prosesnya transparan dan profesional.",
-            "Senang sekali bisa menemukan jasa rekber yang terpercaya seperti ini. Biaya layanan sangat worth it.",
-            "Proses verifikasi cepat dan tidak berbelit-belit. Transaksi berjalan mulus tanpa kendala apapun.",
-            "Fee yang dikenakan sangat reasonable untuk jaminan keamanan yang diberikan. Sangat merekomendasikan!",
-            "Transaksi lintas pulau berjalan lancar berkat RekberTrust. Barang sampai dengan selamat dan uang dicairkan tepat waktu.",
-            "Admin sangat kooperatif dalam menangani masalah. Ada sedikit kendala saat pengiriman namun bisa diselesaikan dengan baik.",
-            "Sudah menjadi langganan tetap RekberTrust untuk semua transaksi online. Terbukti aman dan terpercaya.",
-            "Pengalaman pertama menggunakan rekber dan tidak menyesal. Prosesnya mudah dipahami dan transparan.",
-            "RekberTrust sangat membantu dalam transaksi barang second yang nilainya cukup besar. Merasa lebih aman dan tenang.",
-            "Layanan yang sangat profesional. Semua informasi dijelaskan dengan detail dan mudah dipahami.",
-            "Transaksi cepat dan aman. Uang langsung dicairkan setelah konfirmasi barang diterima. Mantap!",
-            "Proses pencairan dana cepat, tidak sampai 10 menit setelah konfirmasi penerimaan barang. Keren!",
-            "Sempat khawatir karena nilai transaksi cukup besar, tapi ternyata prosesnya aman dan terpercaya.",
-            "Sangat membantu untuk transaksi dengan orang yang belum pernah kenal sebelumnya. No worry lagi!",
-            "CS sangat responsif dan informatif. Semua pertanyaan dijawab dengan jelas dan detail.",
-            "Sudah 5x pakai jasa RekberTrust dan selalu puas dengan pelayanannya. Top markotop!",
-            "Biaya admin terjangkau untuk jaminan keamanan yang diberikan. Worth it banget!",
-            "Proses mudah, cepat, dan aman. Tinggal ikuti instruksi dari admin dan semua beres.",
-            "Rekber terbaik yang pernah saya gunakan. Admin ramah dan profesional. Transaksi jadi tenang.",
-            "Pengalaman yang menyenangkan bertransaksi melalui RekberTrust. Aman dan terpercaya.",
-            "Transaksi digital asset jadi lebih aman dengan menggunakan jasa RekberTrust. Prosesnya cepat dan transparan.",
-            "Proses verifikasi yang ketat membuat saya semakin percaya dengan RekberTrust. Transaksi berjalan lancar.",
-            "Sangat membantu untuk transaksi lintas platform. Admin sigap dan cepat merespons.",
-            "Baru pertama kali coba, langsung puas dengan layanannya. Akan pakai lagi untuk transaksi berikutnya.",
-            "Berkat RekberTrust, transaksi online jadi lebih aman dan terpercaya. Good job!",
-            "Proses cepat, tidak lebih dari 1 jam setelah konfirmasi pembayaran. Sangat efisien.",
-            "Puas banget dengan pelayanan RekberTrust. Admin ramah dan selalu siap membantu.",
-            "Transaksi jual beli game item jadi lebih aman. Fee-nya juga masuk akal. Recommended!",
-            "Senang sekali ada layanan rekber yang bisa dipercaya seperti ini. Keep up the good work!",
-            "Selalu puas dengan pelayanan RekberTrust. Cepat, aman, dan terpercaya.",
-            "Tidak perlu khawatir lagi bertransaksi dengan orang yang baru dikenal secara online.",
-            "Layanan super cepat dan transparan. Admin selalu update progress transaksi.",
-            "Transaksi cryptocurrency jadi lebih aman dengan RekberTrust. Prosesnya simple dan cepat.",
-            "Baru kali ini nemu rekber yang bener-bener amanah. Transaksi berjalan mulus.",
-            "Admin sangat detail menjelaskan prosedur dan tahapan transaksi. Sangat profesional.",
-            "Sudah sering gunakan jasa rekber tapi RekberTrust yang terbaik. Pelayanan cepat dan ramah.",
-            "Transaksi dengan nilai puluhan juta ternyata bisa seaman ini. Thank you RekberTrust!",
-            "Puas dengan layanan RekberTrust. Fee terjangkau untuk keamanan transaksi yang dijamin.",
-            "Rekber paling recommended! Admin fast response dan transaksi berjalan lancar.",
-            "Proses verifikasi cepat meskipun di hari libur. Layanan 24/7 yang benar-benar memuaskan.",
-            "Transaksi pertama lancar, langsung percaya dan menggunakan lagi untuk transaksi berikutnya.",
-            "RekberTrust sangat membantu dalam mengamankan transaksi jual beli online saya.",
-            "Pelayanan yang sangat baik dan profesional. Akan menggunakan lagi di masa depan.",
-        ];
-        
-        // Extended testimonials for variety
-        const extendedTestimonials = [
-            "Sebagai seller yang sering bertransaksi online, RekberTrust sangat membantu dalam memastikan pembayaran aman sampai barang diterima pembeli. Prosesnya cepat dan transparan. Admin juga sangat kooperatif saat ada kendala pengiriman yang diluar dugaan. Terima kasih RekberTrust!",
-            "Awalnya ragu menggunakan jasa rekber karena takut tambah ribet, tapi ternyata prosesnya sangat simpel dan straightforward. Admin memberikan panduan step by step yang jelas. Transaksi bernilai besar jadi terasa lebih aman. Definitely will use again!",
-            "Sudah hampir 3 tahun jadi pengguna setia RekberTrust untuk semua transaksi online saya. Tidak pernah sekalipun mengecewakan. Admin selalu responsif bahkan di malam hari. Biaya layanan sangat reasonable untuk peace of mind yang didapatkan. Sangat recommended!",
-            "Transaksi lintas pulau berjalan lancar berkat RekberTrust. Sebagai pembeli, saya merasa aman karena uang tidak akan dicairkan sebelum barang sampai dan sesuai. Proses verifikasinya juga ketat tapi cepat. Pengalaman bertransaksi jadi jauh lebih menyenangkan.",
-            "RekberTrust benar-benar menyelamatkan transaksi saya. Pernah hampir tertipu dengan penjual online, tapi untungnya sempat menggunakan jasa rekber ini. Prosesnya transparan dan admin sangat profesional dalam membantu. Fee yang dibayarkan sepadan dengan keamanan yang didapat.",
-            "Saya sudah mencoba beberapa jasa rekber, tapi RekberTrust yang paling konsisten memberikan pelayanan terbaik. Proses pencairan dana cepat, tidak lebih dari 15 menit setelah konfirmasi. Admin juga sangat ramah dan informatif. Transaksi online jadi lebih tenang.",
-            "Sebagai reseller yang sering bertransaksi dengan supplier baru, RekberTrust sangat membantu dalam membangun kepercayaan. Prosesnya mudah dan tidak memakan waktu lama. Admin selalu siap membantu dan menjelaskan setiap tahapan dengan sabar. Very recommended service!",
-            "Berkat RekberTrust, saya bisa bertransaksi dengan aman untuk pembelian barang limited edition yang nilainya cukup besar. Proses verifikasi yang ketat membuat saya semakin yakin dengan keamanannya. Admin juga fast response dan professional. 5 bintang untuk pelayanannya!",
-            "Transaksi cryptocurrency pertama saya berjalan mulus dengan bantuan RekberTrust. Prosesnya clear dan transparan. Admin sangat knowledgeable dan membantu menjelaskan setiap step dengan detail. Fee yang dikenakan juga sangat reasonable. Akan menggunakan lagi untuk transaksi berikutnya.",
-            "Sempat khawatir saat harus bertransaksi dengan nilai ratusan juta, tapi RekberTrust membuktikan layanan mereka benar-benar bisa dipercaya. Proses verifikasi yang ketat dan komunikasi yang lancar membuat transaksi berjalan aman dan lancar. Admin juga sangat profesional. Highly recommended!",
-            "Sebagai gamer yang sering jual beli item, RekberTrust jadi pilihan utama untuk mengamankan setiap transaksi. Prosesnya cepat, tidak sampai 30 menit untuk verifikasi dan pencairan. Admin juga paham betul tentang item game dan value-nya. Pelayanan terbaik yang pernah saya dapatkan!",
-            "Pengalaman menggunakan RekberTrust untuk sewa menyewa property sangat memuaskan. Kontrak dan pembayaran diatur dengan jelas. Admin membantu memastikan semua persyaratan terpenuhi sebelum dana dicairkan. Proses yang transparan dan aman membuat transaksi berjalan lancar.",
-            "Sudah hampir 10 kali menggunakan jasa RekberTrust dan tidak pernah sekalipun kecewa. Pelayanan konsisten cepat dan profesional. Admin selalu responsif dan informatif. Fee yang dikenakan sangat worth it untuk keamanan transaksi yang dijamin. Tidak akan berpindah ke rekber lain!",
-            "RekberTrust memudahkan transaksi jual beli barang antik saya yang bernilai cukup tinggi. Proses verifikasi barang dilakukan dengan teliti namun tetap efisien. Admin sangat memahami value barang dan memastikan deskripsi sesuai dengan barang yang dikirim. Sangat merekomendasikan jasa ini!",
-            "Sebagai freelancer, RekberTrust sangat membantu dalam transaksi jasa digital saya. Klien merasa aman karena pembayaran dijamin, dan saya juga tenang karena fee akan dicairkan setelah pekerjaan diterima dengan baik. Prosesnya profesional dan transparan. Terima kasih RekberTrust!",
-        ];
-        
-        // Function to generate a random transaction
-        function generateRandomTransaction() {
-            const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
-            const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-            const fullName = `${firstName} ${lastName}`;
-            const transactionType = transactionTypes[Math.floor(Math.random() * transactionTypes.length)];
-            const subtypes = transactionSubtypes[transactionType];
-            const transactionSubtype = subtypes[Math.floor(Math.random() * subtypes.length)];
+        // Optimized JavaScript for performance
+        document.addEventListener('DOMContentLoaded', () => {
+            // Cache DOM elements
+            const testimonialContainer = document.getElementById('testimonial-container');
+            const loader = document.getElementById('loader');
+            const paginationContainer = document.getElementById('pagination');
+            const searchInput = document.querySelector('.search-input');
+            const filterButtons = document.querySelectorAll('.filter-btn');
             
-            // Random date within the last year
-            const today = new Date();
-            const oneYearAgo = new Date();
-            oneYearAgo.setFullYear(today.getFullYear() - 1);
-            const randomTimestamp = oneYearAgo.getTime() + Math.random() * (today.getTime() - oneYearAgo.getTime());
-            const transactionDate = new Date(randomTimestamp);
-            
-            // Format date to Indonesian format
-            const formattedDate = transactionDate.toLocaleDateString('id-ID', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-            });
-            
-            // Generate random transaction amount based on type
-            let minAmount, maxAmount;
-            switch(transactionType) {
-                case "Jual Beli Barang":
-                    minAmount = 100000;
-                    maxAmount = 10000000;
-                    break;
-                case "Jasa Digital":
-                    minAmount = 50000;
-                    maxAmount = 5000000;
-                    break;
-                case "Sewa Menyewa":
-                    minAmount = 500000;
-                    maxAmount = 20000000;
-                    break;
-                case "Game Item":
-                    minAmount = 10000;
-                    maxAmount = 2000000;
-                    break;
-                case "Cryptocurrency":
-                    minAmount = 1000000;
-                    maxAmount = 50000000;
-                    break;
-            }
-            
-            const transactionAmount = Math.floor(Math.random() * (maxAmount - minAmount + 1)) + minAmount;
-            const formattedAmount = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                maximumFractionDigits: 0
-            }).format(transactionAmount);
-            
-            // Random rating (4-5 stars)
-            const rating = Math.random() < 0.8 ? 5 : 4;
-            
-            // Generate testimonial text
-            let testimonialText;
-            // 20% chance to get an extended testimonial
-            if (Math.random() < 0.2) {
-                testimonialText = extendedTestimonials[Math.floor(Math.random() * extendedTestimonials.length)];
-            } else {
-                testimonialText = testimonialTexts[Math.floor(Math.random() * testimonialTexts.length)];
-            }
-            
-            // Add some variation with random additional phrases (30% chance)
-            if (Math.random() < 0.3) {
-                const additionalPhrases = [
-                    " Sangat merekomendasikan!",
-                    " Tidak akan ragu menggunakan jasa ini lagi.",
-                    " Transaksi jadi lebih aman dan nyaman.",
-                    " Terima kasih RekberTrust!",
-                    " Admin super helpful!",
-                    " Proses cepat dan tidak ribet.",
-                    " Pelayanan terbaik!",
-                    " Senang sekali dengan pelayanannya.",
-                ];
-                const randomPhrase = additionalPhrases[Math.floor(Math.random() * additionalPhrases.length)];
-                testimonialText += randomPhrase;
-            }
-            
-            return {
-                name: fullName,
-                type: transactionType,
-                subtype: transactionSubtype,
-                text: testimonialText,
-                date: formattedDate,
-                amount: formattedAmount,
-                rating: rating
+            // Configuration for server-side pagination simulation
+            const config = {
+                currentPage: 1,
+                itemsPerPage: 9,
+                totalPages: 10,
+                filter: 'all',
+                searchTerm: '',
+                loading: false
             };
-        }
-        
-        // Function to create a star rating display
-        function createStarRating(rating) {
-            let stars = '';
-            for (let i = 1; i <= 5; i++) {
-                if (i <= rating) {
-                    stars += '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star-fill" viewBox="0 0 16 16"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg>';
-                } else {
-                    stars += '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-star" viewBox="0 0 16 16"><path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/></svg>';
-                }
-            }
-            return stars;
-        }
-        
-        // Function to create testimonial card HTML
-        function createTestimonialCard(testimonial) {
-            const initials = testimonial.name.split(' ').map(name => name[0]).join('');
-            const starRating = createStarRating(testimonial.rating);
             
-            return `
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <div class="avatar">${initials}</div>
-                        <div class="user-info">
-                            <div class="user-name">${testimonial.name}</div>
-                            <div class="transaction-type">${testimonial.subtype}</div>
-                            <div class="rating">${starRating}</div>
+            // Badge types and their probabilities
+            const badgeTypes = [
+                { type: 'verified', label: 'Terverifikasi', icon: '✓', probability: 0.4 },
+                { type: 'top', label: 'Top Reviewer', icon: '★', probability: 0.1 },
+                { type: 'premium', label: 'Premium', icon: '✦', probability: 0.05 }
+            ];
+            
+            // Names database for testimonial generation (minimized)
+            const firstNames = ["Andi", "Budi", "Citra", "Dewi", "Eko", "Fitri", "Galih", "Hana", "Indra", "Joko", "Kartika", "Laras", "Mawar", "Nugroho", "Oktavia", "Putri", "Rudi", "Sinta", "Tono", "Utami"];
+            const lastNames = ["Wijaya", "Susanto", "Hartono", "Gunawan", "Saputra", "Santoso", "Wibowo", "Mulya", "Setiawan", "Nugraha", "Hidayat", "Kusuma", "Putra", "Pratama"];
+            
+            // Transaction types
+            const transactionTypes = [
+                "Jual Beli Barang", "Jasa Digital", "Sewa Menyewa", "Game Item", "Cryptocurrency"
+            ];
+            
+            // Transaction subtypes (minimized)
+            const transactionSubtypes = {
+                "Jual Beli Barang": ["Elektronik", "Fashion", "Otomotif", "Handphone", "Komputer"],
+                "Jasa Digital": ["Web Design", "Graphic Design", "Social Media", "Content Writing", "SEO Services"],
+                "Sewa Menyewa": ["Kendaraan", "Properti", "Alat Berat", "Studio Foto", "Kamera"],
+                "Game Item": ["Mobile Legends", "PUBG Mobile", "Free Fire", "Genshin Impact", "Valorant"],
+                "Cryptocurrency": ["Bitcoin", "Ethereum", "Dogecoin", "Cardano", "Solana"]
+            };
+            
+            // Testimonial texts database (minimized)
+            const testimonialTexts = [
+                "Transaksi berjalan lancar dan aman. Admin sangat responsif dan profesional. Sangat direkomendasikan!",
+                "Pelayanan cepat dan ramah. Ini kedua kalinya saya menggunakan jasa RekberTrust dan tidak pernah mengecewakan.",
+                "Sempat ragu awalnya, tapi ternyata proses transaksi sangat mudah dan aman. Terima kasih RekberTrust!",
+                "Transaksi pertama saya menggunakan rekber dan sangat puas dengan pelayanannya. Admin fast response dan informatif.",
+                "Sangat membantu dalam transaksi online. Fee yang dikenakan sebanding dengan keamanan yang didapatkan.",
+                "Proses cepat, aman, dan terpercaya. Akan menggunakan jasa ini lagi untuk transaksi berikutnya.",
+                "Admin ramah dan selalu siap membantu. Transaksi selesai dalam hitungan jam saja. Recommended!",
+                "Sangat membantu dalam mengamankan transaksi jual beli online. Penjual dan pembeli sama-sama terlindungi.",
+                "Sudah berkali-kali menggunakan jasa RekberTrust dan selalu konsisten memberikan pelayanan terbaik.",
+                "Awalnya takut tertipu, tapi dengan menggunakan RekberTrust jadi lebih tenang. Prosesnya transparan dan profesional."
+            ];
+            
+            // Function to generate a random transaction (optimized)
+            function generateRandomTransaction() {
+                const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+                const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+                const fullName = `${firstName} ${lastName}`;
+                const transactionType = transactionTypes[Math.floor(Math.random() * transactionTypes.length)];
+                const subtypes = transactionSubtypes[transactionType];
+                const transactionSubtype = subtypes[Math.floor(Math.random() * subtypes.length)];
+                
+                // Generate badges with probability
+                const userBadges = [];
+                badgeTypes.forEach(badge => {
+                    if (Math.random() < badge.probability) {
+                        userBadges.push(badge);
+                    }
+                });
+                
+                // Random date within the last year
+                const today = new Date();
+                const oneYearAgo = new Date(today);
+                oneYearAgo.setFullYear(today.getFullYear() - 1);
+                const randomTimestamp = oneYearAgo.getTime() + Math.random() * (today.getTime() - oneYearAgo.getTime());
+                const transactionDate = new Date(randomTimestamp);
+                
+                // Format date to Indonesian format
+                const formattedDate = transactionDate.toLocaleDateString('id-ID', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                // Generate random transaction amount based on type
+                let minAmount, maxAmount;
+                switch(transactionType) {
+                    case "Jual Beli Barang":
+                        minAmount = 100000;
+                        maxAmount = 10000000;
+                        break;
+                    case "Jasa Digital":
+                        minAmount = 50000;
+                        maxAmount = 5000000;
+                        break;
+                    case "Sewa Menyewa":
+                        minAmount = 500000;
+                        maxAmount = 20000000;
+                        break;
+                    case "Game Item":
+                        minAmount = 10000;
+                        maxAmount = 2000000;
+                        break;
+                    case "Cryptocurrency":
+                        minAmount = 1000000;
+                        maxAmount = 50000000;
+                        break;
+                    default:
+                        minAmount = 50000;
+                        maxAmount = 5000000;
+                }
+                
+                const transactionAmount = Math.floor(Math.random() * (maxAmount - minAmount + 1)) + minAmount;
+                const formattedAmount = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    maximumFractionDigits: 0
+                }).format(transactionAmount);
+                
+                // Random rating (4-5 stars)
+                const rating = Math.random() < 0.8 ? 5 : 4;
+                
+                // Generate testimonial text
+                const testimonialText = testimonialTexts[Math.floor(Math.random() * testimonialTexts.length)];
+                
+                return {
+                    name: fullName,
+                    badges: userBadges,
+                    type: transactionType,
+                    subtype: transactionSubtype,
+                    text: testimonialText,
+                    date: formattedDate,
+                    amount: formattedAmount,
+                    rating: rating,
+                    // Add filter keys for searching
+                    filterData: {
+                        'all': true,
+                        'jual-beli': transactionType === 'Jual Beli Barang',
+                        'jasa': transactionType === 'Jasa Digital',
+                        'sewa': transactionType === 'Sewa Menyewa',
+                        'game': transactionType === 'Game Item',
+                        'crypto': transactionType === 'Cryptocurrency'
+                    }
+                };
+            }
+            
+            // Function to create a star rating display (optimized)
+            function createStarRating(rating) {
+                const fullStar = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z"/></svg>';
+                const emptyStar = '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.522-3.356c.33-.314.16-.888-.282-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288L8 2.223l1.847 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.565.565 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/></svg>';
+                
+                let stars = '';
+                for (let i = 1; i <= 5; i++) {
+                    stars += i <= rating ? fullStar : emptyStar;
+                }
+                return stars;
+            }
+            
+            // Function to create badge HTML
+            function createBadges(badges) {
+                if (!badges || badges.length === 0) return '';
+                
+                let badgeHTML = '';
+                badges.forEach(badge => {
+                    badgeHTML += `<span class="badge badge-${badge.type}"><span class="badge-icon">${badge.icon}</span> ${badge.label}</span>`;
+                });
+                return badgeHTML;
+            }
+            
+            // Function to create testimonial card HTML (optimized)
+            function createTestimonialCard(testimonial) {
+                const initials = testimonial.name.split(' ').map(name => name[0]).join('');
+                const starRating = createStarRating(testimonial.rating);
+                const badgeHTML = createBadges(testimonial.badges);
+                
+                // Create the HTML with Schema.org structured data for rich snippets
+                return `
+                    <div class="testimonial-card" itemscope itemtype="https://schema.org/Review">
+                        <meta itemprop="datePublished" content="${new Date(testimonial.date).toISOString()}">
+                        <meta itemprop="reviewRating" content="${testimonial.rating}">
+                        <div class="testimonial-header">
+                            <div class="avatar">${initials}</div>
+                            <div class="user-info">
+                                <div class="user-name" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                                    <span itemprop="name">${testimonial.name}</span>
+                                    ${badgeHTML}
+                                </div>
+                                <div class="transaction-type" itemprop="about">${testimonial.subtype}</div>
+                                <div class="rating" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                                    <meta itemprop="worstRating" content="1">
+                                    <meta itemprop="bestRating" content="5">
+                                    <meta itemprop="ratingValue" content="${testimonial.rating}">
+                                    ${starRating}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-body">
+                            <div class="testimonial-text" itemprop="reviewBody">${testimonial.text}</div>
+                        </div>
+                        <div class="testimonial-footer">
+                            <div class="transaction-date">${testimonial.date}</div>
+                            <div class="transaction-amount">${testimonial.amount}</div>
                         </div>
                     </div>
-                    <div class="testimonial-body">
-                        <div class="testimonial-text">${testimonial.text}</div>
-                    </div>
-                    <div class="testimonial-footer">
-                        <div class="transaction-date">${testimonial.date}</div>
-                        <div class="transaction-amount">${testimonial.amount}</div>
-                    </div>
-                </div>
-            `;
-        }
-        
-        // Function to initialize the page with testimonials
-        function initializePage() {
-            const testimonialContainer = document.getElementById('testimonial-container');
-            const testimonials = [];
-            
-            // Generate 500 random testimonials
-            for (let i = 0; i < 500; i++) {
-                testimonials.push(generateRandomTransaction());
+                `;
             }
             
-            // Sort by date (newest first)
-            testimonials.sort((a, b) => new Date(b.date) - new Date(a.date));
-            
-            // Display only the first 12 for initial page load (pagination)
-            const displayedTestimonials = testimonials.slice(0, 12);
-            
-            // Generate HTML for displayed testimonials
-            let testimonialHTML = '';
-            displayedTestimonials.forEach(testimonial => {
-                testimonialHTML += createTestimonialCard(testimonial);
-            });
-            
-            // Set the HTML to the container
-            testimonialContainer.innerHTML = testimonialHTML;
-            
-            // Initialize filter buttons
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Remove active class from all buttons
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    // Add active class to clicked button
-                    this.classList.add('active');
-                    
-                    const filterType = this.textContent;
-                    let filteredTestimonials;
-                    
-                    if (filterType === 'Semua') {
-                        filteredTestimonials = testimonials.slice(0, 12);
-                    } else {
-                        filteredTestimonials = testimonials
-                            .filter(t => t.type === filterType)
-                            .slice(0, 12);
-                    }
-                    
-                    // Regenerate HTML for filtered testimonials
-                    let filteredHTML = '';
-                    filteredTestimonials.forEach(testimonial => {
-                        filteredHTML += createTestimonialCard(testimonial);
-                    });
-                    
-                    // Update the container
-                    testimonialContainer.innerHTML = filteredHTML;
-                });
-            });
-            
-            // Initialize search functionality
-            const searchInput = document.querySelector('.search-input');
-            searchInput.addEventListener('input', function() {
-                const searchTerm = this.value.toLowerCase();
+            // Function to generate testimonials (simulating server-side requests)
+            async function fetchTestimonials(page = 1, filter = 'all', search = '') {
+                // Show loader
+                loader.style.display = 'block';
+                testimonialContainer.innerHTML = '';
                 
-                if (searchTerm.length < 3) {
-                    // If search term is less than 3 characters, show default
-                    let defaultHTML = '';
-                    displayedTestimonials.forEach(testimonial => {
-                        defaultHTML += createTestimonialCard(testimonial);
-                    });
-                    testimonialContainer.innerHTML = defaultHTML;
-                    return;
+                // Simulate network delay
+                await new Promise(resolve => setTimeout(resolve, 300));
+                
+                // Generate random testimonials
+                const allTestimonials = [];
+                for (let i = 0; i < 100; i++) {
+                    allTestimonials.push(generateRandomTransaction());
                 }
                 
-                // Filter testimonials based on search term
-                const searchResults = testimonials.filter(testimonial => {
-                    return (
-                        testimonial.name.toLowerCase().includes(searchTerm) ||
-                        testimonial.type.toLowerCase().includes(searchTerm) ||
-                        testimonial.subtype.toLowerCase().includes(searchTerm) ||
-                        testimonial.text.toLowerCase().includes(searchTerm)
-                    );
-                }).slice(0, 12);
+                // Filter testimonials
+                let filteredTestimonials = allTestimonials;
                 
-                // Generate HTML for search results
-                let searchHTML = '';
-                if (searchResults.length > 0) {
-                    searchResults.forEach(testimonial => {
-                        searchHTML += createTestimonialCard(testimonial);
+                if (filter !== 'all') {
+                    filteredTestimonials = allTestimonials.filter(t => t.filterData[filter]);
+                }
+                
+                // Apply search if exists
+                if (search.length >= 3) {
+                    const searchLower = search.toLowerCase();
+                    filteredTestimonials = filteredTestimonials.filter(t => {
+                        return (
+                            t.name.toLowerCase().includes(searchLower) ||
+                            t.type.toLowerCase().includes(searchLower) ||
+                            t.subtype.toLowerCase().includes(searchLower) ||
+                            t.text.toLowerCase().includes(searchLower)
+                        );
+                    });
+                }
+                
+                // Update total pages
+                config.totalPages = Math.ceil(filteredTestimonials.length / config.itemsPerPage);
+                
+                // Paginate the results
+                const startIndex = (page - 1) * config.itemsPerPage;
+                const endIndex = startIndex + config.itemsPerPage;
+                const paginatedTestimonials = filteredTestimonials.slice(startIndex, endIndex);
+                
+                // Update schema.org data
+                updateSchemaData(filteredTestimonials.slice(0, 10)); // Add top 10 reviews to schema
+                
+                // Hide loader
+                loader.style.display = 'none';
+                
+                return {
+                    testimonials: paginatedTestimonials,
+                    totalPages: config.totalPages
+                };
+            }
+            
+            // Function to update Schema.org data
+            function updateSchemaData(testimonials) {
+                const schemaElement = document.getElementById('testimonial-schema');
+                const schemaData = JSON.parse(schemaElement.textContent);
+                
+                // Calculate average rating
+                const totalRating = testimonials.reduce((acc, t) => acc + t.rating, 0);
+                const averageRating = totalRating / testimonials.length;
+                
+                // Update aggregateRating
+                schemaData.aggregateRating.ratingValue = averageRating.toFixed(1);
+                schemaData.aggregateRating.ratingCount = testimonials.length.toString();
+                
+                // Add reviews
+                schemaData.review = testimonials.map(t => ({
+                    "@type": "Review",
+                    "author": {
+                        "@type": "Person",
+                        "name": t.name
+                    },
+                    "datePublished": new Date(t.date).toISOString(),
+                    "reviewRating": {
+                        "@type": "Rating",
+                        "ratingValue": t.rating,
+                        "bestRating": "5",
+                        "worstRating": "1"
+                    },
+                    "reviewBody": t.text,
+                    "about": t.subtype
+                }));
+                
+                // Update schema in DOM
+                schemaElement.textContent = JSON.stringify(schemaData, null, 2);
+            }
+            
+            // Function to render testimonials
+            async function renderTestimonials() {
+                config.loading = true;
+                
+                const { testimonials, totalPages } = await fetchTestimonials(
+                    config.currentPage,
+                    config.filter,
+                    config.searchTerm
+                );
+                
+                // Generate HTML for testimonials
+                let testimonialHTML = '';
+                if (testimonials.length > 0) {
+                    testimonials.forEach(testimonial => {
+                        testimonialHTML += createTestimonialCard(testimonial);
                     });
                 } else {
-                    searchHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">Tidak ada hasil yang cocok dengan pencarian "${this.value}"</div>`;
+                    testimonialHTML = `<div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">Tidak ada hasil yang cocok dengan kriteria pencarian Anda.</div>`;
                 }
                 
                 // Update the container
-                testimonialContainer.innerHTML = searchHTML;
-            });
+                testimonialContainer.innerHTML = testimonialHTML;
+                
+                // Update pagination
+                renderPagination(totalPages);
+                
+                config.loading = false;
+            }
             
-            // Initialize pagination buttons
-            const pageButtons = document.querySelectorAll('.page-btn');
-            pageButtons.forEach((button, index) => {
-                if (button.textContent !== '«' && button.textContent !== '»') {
-                    button.addEventListener('click', function() {
-                        // Remove active class from all buttons
-                        pageButtons.forEach(btn => btn.classList.remove('active'));
-                        // Add active class to clicked button
-                        this.classList.add('active');
-                        
-                        const page = parseInt(this.textContent);
-                        const start = (page - 1) * 12;
-                        const end = start + 12;
-                        
-                        // Get current filter
-                        const activeFilter = document.querySelector('.filter-btn.active').textContent;
-                        let pagedTestimonials;
-                        
-                        if (activeFilter === 'Semua') {
-                            pagedTestimonials = testimonials.slice(start, end);
-                        } else {
-                            pagedTestimonials = testimonials
-                                .filter(t => t.type === activeFilter)
-                                .slice(start, end);
-                        }
-                        
-                        // Generate HTML for paged testimonials
-                        let pagedHTML = '';
-                        pagedTestimonials.forEach(testimonial => {
-                            pagedHTML += createTestimonialCard(testimonial);
+            // Function to render pagination
+            function renderPagination(totalPages) {
+                if (totalPages <= 1) {
+                    paginationContainer.style.display = 'none';
+                    return;
+                }
+                
+                paginationContainer.style.display = 'flex';
+                
+                let paginationHTML = `
+                    <button class="page-btn prev-btn" ${config.currentPage === 1 ? 'disabled' : ''}>«</button>
+                `;
+                
+                const maxVisiblePages = 5;
+                let startPage = Math.max(1, config.currentPage - Math.floor(maxVisiblePages / 2));
+                let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+                
+                if (endPage - startPage + 1 < maxVisiblePages) {
+                    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                }
+                
+                for (let i = startPage; i <= endPage; i++) {
+                    paginationHTML += `
+                        <button class="page-btn ${i === config.currentPage ? 'active' : ''}" data-page="${i}">${i}</button>
+                    `;
+                }
+                
+                paginationHTML += `
+                    <button class="page-btn next-btn" ${config.currentPage === totalPages ? 'disabled' : ''}>»</button>
+                `;
+                
+                paginationContainer.innerHTML = paginationHTML;
+                
+                // Add event listeners to pagination buttons
+                document.querySelectorAll('.page-btn').forEach(button => {
+                    if (button.classList.contains('prev-btn')) {
+                        button.addEventListener('click', () => {
+                            if (config.currentPage > 1 && !config.loading) {
+                                config.currentPage--;
+                                renderTestimonials();
+                            }
                         });
-                        
-                        // Update the container
-                        testimonialContainer.innerHTML = pagedHTML;
-                    });
-                }
+                    } else if (button.classList.contains('next-btn')) {
+                        button.addEventListener('click', () => {
+                            if (config.currentPage < totalPages && !config.loading) {
+                                config.currentPage++;
+                                renderTestimonials();
+                            }
+                        });
+                    } else {
+                        button.addEventListener('click', () => {
+                            if (!config.loading) {
+                                config.currentPage = parseInt(button.dataset.page);
+                                renderTestimonials();
+                            }
+                        });
+                    }
+                });
+            }
+            
+            // Initialize filter buttons
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    if (config.loading) return;
+                    
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    // Add active class to clicked button
+                    button.classList.add('active');
+                    
+                    config.filter = button.dataset.filter;
+                    config.currentPage = 1;
+                    renderTestimonials();
+                });
             });
             
-            // Previous page button
-            const prevButton = document.querySelector('.page-btn:first-child');
-            prevButton.addEventListener('click', function() {
-                const activePage = document.querySelector('.page-btn.active');
-                const pageNumber = parseInt(activePage.textContent);
-                
-                if (pageNumber > 1) {
-                    document.querySelector(`.page-btn:nth-child(${pageNumber})`).click();
-                }
+            // Initialize search functionality with debounce
+            let searchTimeout;
+            searchInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    if (config.loading) return;
+                    
+                    config.searchTerm = searchInput.value.trim();
+                    config.currentPage = 1;
+                    renderTestimonials();
+                }, 500); // 500ms debounce
             });
             
-            // Next page button
-            const nextButton = document.querySelector('.page-btn:last-child');
-            nextButton.addEventListener('click', function() {
-                const activePage = document.querySelector('.page-btn.active');
-                const pageNumber = parseInt(activePage.textContent);
-                
-                if (pageNumber < 5) {
-                    document.querySelector(`.page-btn:nth-child(${pageNumber + 2})`).click();
-                }
+            // Initialize animation for CTA button
+            const ctaButton = document.querySelector('.cta-btn');
+            ctaButton.addEventListener('mouseover', () => {
+                ctaButton.classList.add('animate');
             });
-        }
-        
-        // Initialize the page when DOM is loaded
-        document.addEventListener('DOMContentLoaded', initializePage);
+            
+            ctaButton.addEventListener('mouseout', () => {
+                ctaButton.classList.remove('animate');
+            });
+            
+            // Load initial testimonials
+            renderTestimonials();
+        });
     </script>
 </body>
 </html>
