@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Transaksi Rekber - Rekening Bersama</title>
+    <title>Transaksi ProMiddleman - Layanan Perantara</title>
     <style>
         :root {
             --primary-color: #2563eb;
@@ -1034,15 +1034,15 @@
                     <path d="M5 16h14"></path>
                     <path d="M5 16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"></path>
                 </svg>
-                RekBer Indonesia
+                ProMiddleman
             </a>
         </div>
     </header>
     
     <div class="container">
         <div class="card">
-            <h1>Mulai Transaksi Rekening Bersama</h1>
-            <p>Rekening Bersama (RekBer) adalah layanan perantara pembayaran yang memberikan keamanan dalam bertransaksi online. Pembeli mentransfer dana ke RekBer, dan dana hanya diteruskan ke penjual setelah produk/jasa diterima dengan baik.</p>
+            <h1>Mulai Transaksi ProMiddleman</h1>
+            <p>ProMiddleman adalah layanan perantara pembayaran yang memberikan keamanan dalam bertransaksi online. Pembeli mentransfer dana ke ProMiddleman, dan dana hanya diteruskan ke penjual setelah produk/jasa diterima dengan baik.</p>
             
             <div class="info-box">
                 <p><strong>Keamanan Transaksi:</strong> Pastikan semua informasi yang dimasukkan benar dan sesuai dengan transaksi. Admin akan memverifikasi data sebelum transaksi diproses.</p>
@@ -1286,7 +1286,7 @@
                         <line x1="12" y1="16" x2="12.01" y2="16"></line>
                     </svg>
                     <div>
-                        <strong>Perhatian:</strong> Pastikan Anda hanya menggunakan rekening bersama resmi dengan admin yang telah diverifikasi. Jangan pernah mengirimkan uang tanpa verifikasi keaslian rekber.
+                        <strong>Perhatian:</strong> Pastikan Anda hanya menggunakan layanan perantara resmi dengan admin yang telah diverifikasi. Jangan pernah mengirimkan uang tanpa verifikasi keaslian ProMiddleman.
                     </div>
                 </div>
                 
@@ -1294,7 +1294,7 @@
                     <label class="custom-control">
                         <input type="checkbox" id="termsCheck" required>
                         <span class="checkmark"></span>
-                        Saya menyetujui <a href="#" target="_blank">Syarat & Ketentuan</a> dan <a href="#" target="_blank">Kebijakan Privasi</a> RekBer Indonesia
+                        Saya menyetujui <a href="#" target="_blank">Syarat & Ketentuan</a> dan <a href="#" target="_blank">Kebijakan Privasi</a> ProMiddleman
                     </label>
                     <span class="error-message" id="termsCheckError">Anda harus menyetujui Syarat & Ketentuan</span>
                 </div>
@@ -1331,7 +1331,7 @@
             <p class="text-center">Gunakan kode transaksi berikut untuk verifikasi dengan admin:</p>
             
             <div class="transaction-code" id="transactionCode">
-                RB-12345678
+                PM-12345678
             </div>
             
             <button class="copy-btn tooltip" id="copyBtn">
@@ -1363,7 +1363,7 @@
             </div>
             
             <div class="info-box">
-                <p><strong>Informasi pembayaran:</strong> Biaya layanan rekber sebesar 1% dari nilai transaksi akan ditambahkan saat pembayaran. Pembeli akan mendapatkan instruksi lengkap melalui WhatsApp.</p>
+                <p><strong>Informasi pembayaran:</strong> Biaya layanan ProMiddleman sebesar 1% dari nilai transaksi akan ditambahkan saat pembayaran. Pembeli akan mendapatkan instruksi lengkap melalui WhatsApp.</p>
             </div>
             
             <div class="guarantee-badges">
@@ -1429,7 +1429,7 @@
     
     <footer>
         <div class="container">
-            <p>&copy; 2025 RekBer Indonesia. Layanan Rekening Bersama Terpercaya.</p>
+            <p>&copy; 2025 ProMiddleman. Layanan Perantara Terpercaya.</p>
         </div>
     </footer>
     
@@ -1631,7 +1631,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function saveTransaction(transaction) {
         // Get existing transactions from localStorage
         let transactions = [];
-        const storedTransactions = localStorage.getItem('rekberTransactions');
+        const storedTransactions = localStorage.getItem('promiddlemanTransactions');
         
         if (storedTransactions) {
             transactions = JSON.parse(storedTransactions);
@@ -1641,12 +1641,12 @@ document.addEventListener('DOMContentLoaded', function() {
         transactions.push(transaction);
         
         // Save back to localStorage
-        localStorage.setItem('rekberTransactions', JSON.stringify(transactions));
+        localStorage.setItem('promiddlemanTransactions', JSON.stringify(transactions));
     }
     
     // Generate a random transaction code
     function generateTransactionCode() {
-        return 'RB-' + Math.floor(Math.random() * 90000000 + 10000000);
+        return 'PM-' + Math.floor(Math.random() * 90000000 + 10000000);
     }
     
     // Form submission
@@ -1709,7 +1709,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Set up WhatsApp link with transaction code
             const whatsappLink = function() {
-                const message = `Halo Admin RekBer, saya ingin verifikasi transaksi dengan kode: ${randomCode}`;
+                const message = `Halo Admin ProMiddleman, saya ingin verifikasi transaksi dengan kode: ${randomCode}`;
                 window.open(`https://wa.me/XXXXXXXXXX?text=${encodeURIComponent(message)}`, '_blank');
             };
             
@@ -1765,7 +1765,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Contact admin via Facebook button
     contactAdmin.addEventListener('click', function() {
         // Replace with your actual Facebook page URL
-        window.open('https://www.facebook.com/rekberindonesia', '_blank');
+        window.open('https://www.facebook.com/promiddleman', '_blank');
     });
     
     // Back button in result container
