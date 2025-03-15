@@ -1,4 +1,1440 @@
-<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Transaksi ProMiddleman - Layanan Perantara</title><style>:root{--primary-color:#2563eb;--primary-hover:#1d4ed8;--primary-light:#dbeafe;--secondary-color:#1e40af;--light-color:#f3f4f6;--dark-color:#1f2937;--success-color:#10b981;--success-light:#d1fae5;--danger-color:#ef4444;--danger-light:#fee2e2;--warning-color:#f59e0b;--warning-light:#fff7ed;--gray-50:#f9fafb;--gray-100:#f3f4f6;--gray-200:#e5e7eb;--gray-300:#d1d5db;--gray-400:#9ca3af;--gray-500:#6b7280;--gray-600:#4b5563;--gray-700:#374151;--gray-800:#1f2937;--gray-900:#111827;--border-radius:8px;--shadow-sm:0 1px 2px rgba(0, 0, 0, 0.05);--shadow:0 4px 6px -1px rgba(0, 0, 0, 0.1),0 2px 4px -1px rgba(0, 0, 0, 0.06);--shadow-md:0 10px 15px -3px rgba(0, 0, 0, 0.1),0 4px 6px -2px rgba(0, 0, 0, 0.05);--transition:all 0.3s ease}*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,'Segoe UI',Tahoma,Geneva,Verdana,sans-serif}body{background-color:var(--gray-50);color:var(--gray-700);line-height:1.6;font-size:16px}.container{max-width:900px;margin:0 auto;padding:20px}header{background-color:#fff;box-shadow:var(--shadow);padding:20px 0;margin-bottom:30px;position:sticky;top:0;z-index:100}.header-container{display:flex;justify-content:space-between;align-items:center}.logo{font-size:22px;font-weight:700;color:var(--primary-color);display:flex;align-items:center;text-decoration:none}.logo svg{margin-right:10px}nav{display:flex;gap:15px}.nav-link{text-decoration:none;color:var(--dark-color);font-weight:500;padding:8px 12px;border-radius:var(--border-radius);transition:var(--transition)}.nav-link:hover{background-color:var(--light-color)}.card{background-color:#fff;border-radius:var(--border-radius);box-shadow:var(--shadow);padding:35px;margin-bottom:30px;transition:var(--transition)}.card:hover{box-shadow:var(--shadow-md)}h1{color:var(--dark-color);margin-bottom:16px;font-size:28px;font-weight:700}h2{color:var(--dark-color);margin:30px 0 16px;font-size:20px;font-weight:600;display:flex;align-items:center;gap:8px}h2 svg{color:var(--primary-color)}p{margin-bottom:20px;color:var(--gray-600);line-height:1.7}.form-group{margin-bottom:24px}label{display:block;margin-bottom:8px;font-weight:500;color:var(--gray-700);font-size:15px}.required::after{content:" *";color:var(--danger-color)}input,select,textarea{width:100%;padding:12px 16px;border:1px solid var(--gray-300);border-radius:var(--border-radius);font-size:16px;transition:var(--transition);background-color:#fff}input:focus,select:focus,textarea:focus{outline:0;border-color:var(--primary-color);box-shadow:0 0 0 3px rgba(37,99,235,.1)}input::placeholder,textarea::placeholder{color:var(--gray-400)}.input-with-icon{position:relative}.input-with-icon input{padding-left:40px}.input-icon{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--gray-400)}.input-error{border-color:var(--danger-color)}.error-message{color:var(--danger-color);font-size:14px;margin-top:5px;display:none}textarea{min-height:120px;resize:vertical}.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;background-color:var(--primary-color);color:#fff;padding:12px 24px;border:none;border-radius:var(--border-radius);cursor:pointer;font-size:16px;font-weight:500;transition:var(--transition);text-decoration:none}.btn:hover{background-color:var(--primary-hover);transform:translateY(-1px)}.btn:active{transform:translateY(1px)}.btn-facebook{background-color:#1877f2;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px}.btn-facebook:hover{background-color:#166fe5}.btn-whatsapp{background-color:#25d366;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:10px}.btn-whatsapp:hover{background-color:#128c7e}.btn-secondary{background-color:var(--gray-500)}.btn-secondary:hover{background-color:var(--gray-600)}.btn-outline{background-color:#fff;color:var(--primary-color);border:1px solid var(--primary-color)}.btn-outline:hover{background-color:var(--primary-light)}.result-container{display:none;background-color:#f0f9ff;border:1px solid #bae6fd;border-radius:var(--border-radius);padding:30px;margin-top:30px;animation:fadeIn .6s ease-out}@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.transaction-code{font-size:28px;color:var(--primary-color);font-weight:700;text-align:center;margin:20px 0;letter-spacing:2px;background-color:#fff;padding:20px;border-radius:var(--border-radius);border:2px dashed var(--primary-color);box-shadow:var(--shadow-sm);user-select:all}.steps{margin-top:30px}.step{display:flex;margin-bottom:20px;transition:var(--transition);opacity:.8}.step:hover{opacity:1;transform:translateX(5px)}.step-number{background-color:var(--primary-color);color:#fff;width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;margin-right:15px;flex-shrink:0}.mb-20{margin-bottom:20px}.mt-20{margin-top:20px}.mt-30{margin-top:30px}.text-center{text-align:center}.alert{padding:16px;border-radius:var(--border-radius);margin-bottom:24px;display:flex;align-items:flex-start;gap:12px;animation:slideIn .3s ease-out}@keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}.alert-error{background-color:var(--danger-light);color:#b91c1c;border-left:4px solid var(--danger-color)}.alert-success{background-color:var(--success-light);color:#065f46;border-left:4px solid var(--success-color)}.alert-warning{background-color:var(--warning-light);color:#b45309;border-left:4px solid var(--warning-color)}.info-box{background-color:var(--gray-100);border-left:4px solid var(--primary-color);padding:16px;margin-bottom:24px;border-radius:0 var(--border-radius) var(--border-radius) 0}.info-box p:last-child{margin-bottom:0}.breadcrumb{display:flex;list-style:none;margin-bottom:20px;font-size:14px}.breadcrumb li:not(:last-child)::after{content:"/";margin:0 5px;color:var(--gray-400)}.breadcrumb a{color:var(--primary-color);text-decoration:none}.breadcrumb a:hover{text-decoration:underline}.progress-container{margin:40px 0}.progress-bar{display:flex;justify-content:space-between;position:relative}.progress-bar::before{content:"";position:absolute;top:15px;left:0;width:100%;height:3px;background-color:var(--gray-200);z-index:1;border-radius:3px}.progress-step{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;width:33.33%;transition:var(--transition)}.step-circle{width:34px;height:34px;border-radius:50%;background-color:#fff;border:3px solid var(--gray-300);display:flex;align-items:center;justify-content:center;margin-bottom:10px;font-weight:700;color:var(--gray-400);transition:var(--transition)}.step-label{font-size:14px;color:var(--gray-500);text-align:center;font-weight:500;transition:var(--transition)}.active .step-circle{background-color:var(--primary-color);border-color:var(--primary-color);color:#fff;box-shadow:0 0 0 5px rgba(37,99,235,.2);transform:scale(1.1)}.active .step-label{color:var(--gray-800);font-weight:600}.completed .step-circle{background-color:var(--success-color);border-color:var(--success-color);color:#fff}.completed .step-label{color:var(--gray-700)}.loading{display:none;align-items:center;justify-content:center;gap:10px}.spinner{width:20px;height:20px;border:3px solid rgba(255,255,255,.3);border-radius:50%;border-top-color:#fff;animation:spin 1s linear infinite}@keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}.copy-btn{background-color:#fff;border:1px solid var(--gray-300);color:var(--primary-color);cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center;gap:8px;margin:15px auto;padding:10px 16px;border-radius:var(--border-radius);transition:var(--transition)}.copy-btn:hover{background-color:var(--gray-100);border-color:var(--gray-400)}.tooltip{position:relative;display:inline-block}.tooltip .tooltiptext{visibility:hidden;width:140px;background-color:var(--gray-800);color:#fff;text-align:center;border-radius:6px;padding:8px;position:absolute;z-index:1;bottom:125%;left:50%;margin-left:-70px;opacity:0;transition:var(--transition);font-size:14px}.tooltip .tooltiptext::after{content:"";position:absolute;top:100%;left:50%;margin-left:-5px;border-width:5px;border-style:solid;border-color:var(--gray-800) transparent transparent transparent}.tooltip:hover .tooltiptext{visibility:visible;opacity:1;transform:translateY(-5px)}.form-row{display:flex;flex-wrap:wrap;gap:20px;margin-bottom:10px}.form-col{flex:1;min-width:250px}.form-section{padding:25px;margin-bottom:30px;background-color:var(--gray-50);border-radius:var(--border-radius);border:1px solid var(--gray-200);transition:var(--transition)}.form-section:hover{border-color:var(--gray-300);background-color:#fff;box-shadow:var(--shadow-sm)}@media (max-width:768px){.form-col{width:100%;flex:none}.header-container{flex-direction:column;gap:15px}.card{padding:25px 20px}.step-label{font-size:12px}.transaction-code{font-size:22px;padding:15px}}.file-upload{border:2px dashed var(--gray-300);border-radius:var(--border-radius);padding:30px 20px;text-align:center;cursor:pointer;transition:var(--transition);background-color:#fff}.file-upload:hover{border-color:var(--primary-color);background-color:var(--primary-light)}.file-upload input{display:none}.file-name{margin-top:12px;font-size:14px;color:var(--gray-600);padding:5px 10px;background-color:var(--gray-100);border-radius:4px;display:inline-block;max-width:90%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}footer{text-align:center;padding:30px 20px;color:var(--gray-500);font-size:14px;margin-top:60px;background-color:#fff;border-top:1px solid var(--gray-200)}.footer-links{display:flex;justify-content:center;gap:20px;margin-top:15px}.footer-links a{color:var(--gray-600);text-decoration:none;transition:var(--transition)}.footer-links a:hover{color:var(--primary-color);text-decoration:underline}.price-summary{background-color:var(--gray-50);border-radius:var(--border-radius);padding:20px;margin-top:25px;border:1px solid var(--gray-200);transition:var(--transition)}.price-summary:hover{box-shadow:var(--shadow-sm);border-color:var(--gray-300)}.price-row{display:flex;justify-content:space-between;margin-bottom:12px;font-size:15px;padding:8px 0;border-bottom:1px solid var(--gray-200)}.price-row:last-child{border-bottom:none}.price-row.total{font-weight:600;font-size:18px;color:var(--gray-900);margin-top:5px;padding-top:12px;border-top:2px solid var(--gray-300);border-bottom:none}.custom-control{position:relative;display:flex;align-items:center;padding-left:35px;margin-bottom:15px;cursor:pointer;font-weight:400}.custom-control input{position:absolute;opacity:0;cursor:pointer;height:0;width:0}.checkmark{position:absolute;top:0;left:0;height:22px;width:22px;background-color:#fff;border:2px solid var(--gray-300);border-radius:4px;transition:var(--transition)}.radio-mark{border-radius:50%}.custom-control:hover input~.checkmark{border-color:var(--gray-400);background-color:var(--gray-100)}.custom-control input:checked~.checkmark{background-color:var(--primary-color);border-color:var(--primary-color)}.checkmark:after{content:"";position:absolute;display:none}.custom-control input:checked~.checkmark:after{display:block}.custom-control .checkmark:after{left:7px;top:3px;width:5px;height:10px;border:solid #fff;border-width:0 2px 2px 0;transform:rotate(45deg)}.custom-control .radio-mark:after{top:6px;left:6px;width:6px;height:6px;border-radius:50%;background:#fff;border:none;transform:none}.guarantee-badges{display:flex;justify-content:center;flex-wrap:wrap;gap:30px;margin:30px 0}.badge{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:150px}.badge svg{margin-bottom:12px;color:var(--primary-color)}.badge span{font-size:15px;font-weight:500;color:var(--gray-700)}.card{animation:fadeIn .5s ease-out}@keyframes fadeIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.form-section{animation:slideIn .5s ease-out;animation-fill-mode:both}.form-section:nth-child(1){animation-delay:.1s}.form-section:nth-child(2){animation-delay:.2s}.form-section:nth-child(3){animation-delay:.3s}a:focus,button:focus,input:focus,select:focus,textarea:focus{outline:0;box-shadow:0 0 0 3px rgba(37,99,235,.4)}.success-checkmark{width:80px;height:80px;margin:0 auto}.check-icon{width:80px;height:80px;position:relative;border-radius:50%;box-sizing:content-box;border:4px solid var(--success-color)}.check-icon::before{top:3px;left:-2px;width:30px;transform-origin:100% 50%;border-radius:100px 0 0 100px}.check-icon::after{top:0;left:30px;width:60px;transform-origin:0 50%;border-radius:0 100px 100px 0;animation:rotate-circle 4.25s ease-in}.check-icon::after,.check-icon::before{content:'';height:100px;position:absolute;background:#fff;transform:rotate(-45deg)}.check-icon .icon-line{height:5px;background-color:var(--success-color);display:block;border-radius:2px;position:absolute;z-index:10}.check-icon .icon-line.line-tip{top:46px;left:14px;width:25px;transform:rotate(45deg);animation:icon-line-tip .75s}.check-icon .icon-line.line-long{top:38px;right:8px;width:47px;transform:rotate(-45deg);animation:icon-line-long .75s}.check-icon .icon-circle{top:-4px;left:-4px;z-index:10;width:80px;height:80px;border-radius:50%;position:absolute;box-sizing:content-box;border:4px solid rgba(76,175,80,.5)}.check-icon .icon-fix{top:8px;width:5px;left:26px;z-index:1;height:85px;position:absolute;transform:rotate(-45deg);background-color:#fff}@keyframes rotate-circle{0%{transform:rotate(-45deg)}5%{transform:rotate(-45deg)}12%{transform:rotate(-405deg)}100%{transform:rotate(-405deg)}}@keyframes icon-line-tip{0%{width:0;left:1px;top:19px}54%{width:0;left:1px;top:19px}70%{width:50px;left:-8px;top:37px}84%{width:17px;left:21px;top:48px}100%{width:25px;left:14px;top:45px}}@keyframes icon-line-long{0%{width:0;right:46px;top:54px}65%{width:0;right:46px;top:54px}84%{width:55px;right:0;top:35px}100%{width:47px;right:8px;top:38px}}</style></head><body><header><div class="container header-container"><a href="#" class="logo"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12H2"></path><path d="M5 12V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7"></path><path d="M9 21V8"></path><path d="M15 21V8"></path><path d="M5 16h14"></path><path d="M5 16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"></path></svg>ProMiddleman</a></div></header><div class="container"><div class="card"><h1>Mulai Transaksi ProMiddleman</h1><p>ProMiddleman adalah layanan perantara pembayaran yang memberikan keamanan dalam bertransaksi online. Pembeli mentransfer dana ke ProMiddleman, dan dana hanya diteruskan ke penjual setelah produk/jasa diterima dengan baik.</p><div class="info-box"><p><strong>Keamanan Transaksi:</strong>Pastikan semua informasi yang dimasukkan benar dan sesuai dengan transaksi. Admin akan memverifikasi data sebelum transaksi diproses.</p></div><div class="progress-container"><div class="progress-bar"><div class="progress-step active"><div class="step-circle">1</div><div class="step-label">Isi Data</div></div><div class="progress-step"><div class="step-circle">2</div><div class="step-label">Konfirmasi</div></div><div class="progress-step"><div class="step-circle">3</div><div class="step-label">Selesai</div></div></div></div><form id="rekberForm"><div class="form-section"><h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Data Penjual</h2><div class="form-row"><div class="form-col"><div class="form-group"><label for="sellerName" class="required">Nama Penjual</label><div class="input-with-icon"><svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><input type="text" id="sellerName" placeholder="Masukkan nama lengkap penjual" required></div><span class="error-message" id="sellerNameError">Nama penjual wajib diisi</span></div></div></div><div class="form-row"><div class="form-col"><div class="form-group"><label for="sellerBank" class="required">Bank Penjual</label><div class="input-with-icon"><svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg><select id="sellerBank" required><option value="">-- Pilih Bank --</option><option value="BCA">BCA</option><option value="Mandiri">Mandiri</option><option value="BNI">BNI</option><option value="BRI">BRI</option><option value="CIMB">CIMB Niaga</option><option value="Permata">Permata</option><option value="other">Lainnya</option></select></div><span class="error-message" id="sellerBankError">Bank penjual wajib dipilih</span></div></div><div class="form-col"><div class="form-group"><label for="sellerAccount" class="required">Nomor Rekening Penjual</label><div class="input-with-icon"><svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="12" y1="16" x2="12" y2="16.01"></line><path d="M8 12h8"></path><path d="M8 8h8"></path></svg><input type="text" id="sellerAccount" placeholder="Contoh: 1234567890" required></div><span class="error-message" id="sellerAccountError">Nomor rekening tidak valid</span></div></div></div></div><div class="form-section"><h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>Data Pembeli</h2><div class="form-row"><div class="form-col"><div class="form-group"><label for="buyerName" class="required">Nama Pembeli</label><div class="input-with-icon"><svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg><input type="text" id="buyerName" placeholder="Masukkan nama lengkap pembeli" required></div><span class="error-message" id="buyerNameError">Nama pembeli wajib diisi</span></div></div></div><div class="form-group"><label for="buyerEmail">Email Pembeli (opsional)</label><div class="input-with-icon"><svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg><input type="email" id="buyerEmail" placeholder="Contoh: nama@email.com"></div><span class="error-message" id="buyerEmailError">Format email tidak valid</span></div></div><div class="form-section"><h2><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"></rect><circle cx="12" cy="12" r="3"></circle><path d="M17.4 7.8L12 12"></path></svg>Detail Transaksi</h2><div class="form-group"><label for="itemDescription" class="required">Deskripsi Barang/Jasa</label><textarea id="itemDescription" placeholder="Jelaskan detail barang/jasa yang ditransaksikan, termasuk spesifikasi, kondisi, dan informasi penting lainnya." required></textarea><span class="error-message" id="itemDescriptionError">Deskripsi barang/jasa wajib diisi</span></div><div class="form-row"><div class="form-col"><div class="form-group"><label for="amount" class="required">Jumlah Transaksi (Rp)</label><div class="input-with-icon"><svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg><input type="number" id="amount" min="10000" placeholder="Minimal Rp10.000" required></div><span class="error-message" id="amountError">Jumlah transaksi minimal Rp10.000</span></div></div><div class="form-col"><div class="form-group"><label for="paymentMethod" class="required">Metode Pembayaran</label><div class="input-with-icon"><svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg><select id="paymentMethod" required><option value="">-- Pilih Metode --</option><option value="transfer">Transfer Bank</option><option value="ewallet">E-Wallet (OVO, GoPay, Dana)</option><option value="qris">QRIS</option></select></div><span class="error-message" id="paymentMethodError">Metode pembayaran wajib dipilih</span></div></div></div><div class="price-summary" id="priceSummary"><h3 style="margin-bottom:15px">Ringkasan Biaya</h3><div class="price-row"><span>Nilai Transaksi</span><span id="transactionValue">Rp0</span></div><div class="price-row"><span>Biaya Admin (1%)</span><span id="adminFee">Rp0</span></div><div class="price-row total"><span>Total Pembayaran</span><span id="totalPayment">Rp0</span></div></div><div class="form-group mt-20"><label for="transactionType" class="required">Jenis Transaksi</label><div class="input-with-icon"><svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><path d="M20.4 14.5L16 10 4 20"></path></svg><select id="transactionType" required><option value="">-- Pilih Jenis Transaksi --</option><option value="goods">Barang Fisik</option><option value="digital">Produk Digital</option><option value="service">Jasa</option></select></div><span class="error-message" id="transactionTypeError">Jenis transaksi wajib dipilih</span></div><div class="form-group"><label for="attachment">Lampirkan Bukti/Foto Barang (opsional)</label><div class="file-upload" id="fileUploadContainer"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg><p>Klik untuk upload atau seret file ke sini</p><p style="font-size:12px;color:#6b7280;margin-top:5px">Format: JPG, PNG, PDF (Maks. 5MB)</p><input type="file" id="attachment" accept=".jpg,.jpeg,.png,.pdf"><div class="file-name" id="fileName"></div></div></div><div class="form-group"><label for="notes">Catatan Tambahan (opsional)</label><textarea id="notes" placeholder="Informasi tambahan yang perlu diketahui admin, seperti instruksi khusus atau detail pengiriman."></textarea></div></div><div class="alert alert-warning"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><div><strong>Perhatian:</strong>Pastikan Anda hanya menggunakan layanan perantara resmi dengan admin yang telah diverifikasi. Jangan pernah mengirimkan uang tanpa verifikasi keaslian ProMiddleman.</div></div><div class="form-group"><label class="custom-control"><input type="checkbox" id="termsCheck" required><span class="checkmark"></span>Saya menyetujui<a href="#" target="_blank">Syarat & Ketentuan</a>dan<a href="#" target="_blank">Kebijakan Privasi</a>ProMiddleman</label><span class="error-message" id="termsCheckError">Anda harus menyetujui Syarat & Ketentuan</span></div><button type="submit" class="btn" id="submitBtn"><span>Buat Transaksi</span><div class="loading" id="loadingIndicator"><div class="spinner"></div><span>Memproses...</span></div></button></form></div><div class="result-container" id="resultContainer"><div class="success-checkmark"><div class="check-icon"><span class="icon-line line-tip"></span><span class="icon-line line-long"></span><div class="icon-circle"></div><div class="icon-fix"></div></div></div><div class="alert alert-success"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg><div>Transaksi berhasil dibuat! Silakan ikuti petunjuk di bawah untuk melanjutkan proses.</div></div><h2 class="text-center">Kode Transaksi</h2><p class="text-center">Gunakan kode transaksi berikut untuk verifikasi dengan admin:</p><div class="transaction-code" id="transactionCode">PM-12345678</div><button class="copy-btn tooltip" id="copyBtn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>Salin Kode<span class="tooltiptext" id="copyTooltip">Salin ke clipboard</span></button><div class="steps"><div class="step"><div class="step-number">1</div><div>Salin kode transaksi di atas</div></div><div class="step"><div class="step-number">2</div><div>Hubungi admin melalui WhatsApp atau Facebook Messenger di bawah</div></div><div class="step"><div class="step-number">3</div><div>Kirimkan kode transaksi untuk verifikasi</div></div><div class="step"><div class="step-number">4</div><div>Ikuti petunjuk admin untuk melanjutkan proses transaksi</div></div></div><div class="info-box"><p><strong>Informasi pembayaran:</strong>Biaya layanan ProMiddleman sebesar 1% dari nilai transaksi akan ditambahkan saat pembayaran. Pembeli akan mendapatkan instruksi lengkap melalui WhatsApp.</p></div><div class="guarantee-badges"><div class="badge"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M8 14s1.5 2 4 2 4-2 4-2"></path><line x1="9" y1="9" x2="9.01" y2="9"></line><line x1="15" y1="9" x2="15.01" y2="9"></line></svg><span>Keamanan Transaksi Terjamin</span></div><div class="badge"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg><span>Perlindungan 100%</span></div><div class="badge"><svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg><span>Pengiriman Aman</span></div></div><div class="form-row mb-20"><div class="form-col"><a class="btn btn-whatsapp" id="contactWhatsApp"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Hubungi Admin via WhatsApp</a></div><div class="form-col"><a class="btn btn-facebook" id="contactAdmin"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385h-3.047v-3.47h3.047v-2.642c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953h-1.514c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385c5.737-.9 10.125-5.864 10.125-11.854z"/></svg>Hubungi Admin via Facebook</a></div></div><div class="alert alert-warning"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg><div><strong>Perhatian:</strong>Transaksi hanya dianggap resmi setelah konfirmasi dari admin. Pastikan kode transaksi yang Anda terima sesuai dengan yang tercantum di atas.</div></div><button class="btn btn-secondary mt-30" id="backBtn">Kembali ke Beranda</button></div></div><footer><div class="container"><p>&copy; 2025 ProMiddleman. Layanan Perantara Terpercaya.</p></div></footer><script>document.addEventListener('DOMContentLoaded', function() {
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaksi ProMiddleman - Layanan Perantara</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-light: #dbeafe;
+            --secondary-color: #1e40af;
+            --light-color: #f3f4f6;
+            --dark-color: #1f2937;
+            --success-color: #10b981;
+            --success-light: #d1fae5;
+            --danger-color: #ef4444;
+            --danger-light: #fee2e2;
+            --warning-color: #f59e0b;
+            --warning-light: #fff7ed;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --border-radius: 8px;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--gray-50);
+            color: var(--gray-700);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            padding: 20px 0;
+            margin-bottom: 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo svg {
+            margin-right: 10px;
+        }
+        
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover {
+            background-color: var(--light-color);
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 35px;
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+        
+        .card:hover {
+            box-shadow: var(--shadow-md);
+        }
+        
+        h1 {
+            color: var(--dark-color);
+            margin-bottom: 16px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        h2 {
+            color: var(--dark-color);
+            margin: 30px 0 16px;
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        h2 svg {
+            color: var(--primary-color);
+        }
+        
+        p {
+            margin-bottom: 20px;
+            color: var(--gray-600);
+            line-height: 1.7;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--gray-700);
+            font-size: 15px;
+        }
+        
+        .required::after {
+            content: " *";
+            color: var(--danger-color);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: white;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        input::placeholder, textarea::placeholder {
+            color: var(--gray-400);
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon input {
+            padding-left: 40px;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+        }
+        
+        .input-error {
+            border-color: var(--danger-color);
+        }
+        
+        .error-message {
+            color: var(--danger-color);
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+        
+
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-facebook {
+            background-color: #1877f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .btn-facebook:hover {
+            background-color: #166fe5;
+        }
+        
+        .btn-whatsapp {
+            background-color: #25D366;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .btn-whatsapp:hover {
+            background-color: #128C7E;
+        }
+        
+        .btn-secondary {
+            background-color: var(--gray-500);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--gray-600);
+        }
+        
+        .btn-outline {
+            background-color: white;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-light);
+        }
+        
+        .result-container {
+            display: none;
+            background-color: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: var(--border-radius);
+            padding: 30px;
+            margin-top: 30px;
+            animation: fadeIn 0.6s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .transaction-code {
+            font-size: 28px;
+            color: var(--primary-color);
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            letter-spacing: 2px;
+            background-color: white;
+            padding: 20px;
+            border-radius: var(--border-radius);
+            border: 2px dashed var(--primary-color);
+            box-shadow: var(--shadow-sm);
+            user-select: all;
+        }
+        
+        .steps {
+            margin-top: 30px;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 20px;
+            transition: var(--transition);
+            opacity: 0.8;
+        }
+        
+        .step:hover {
+            opacity: 1;
+            transform: translateX(5px);
+        }
+        
+        .step-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+        
+        .mt-20 {
+            margin-top: 20px;
+        }
+        
+        .mt-30 {
+            margin-top: 30px;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .alert {
+            padding: 16px;
+            border-radius: var(--border-radius);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .alert-error {
+            background-color: var(--danger-light);
+            color: #b91c1c;
+            border-left: 4px solid var(--danger-color);
+        }
+        
+        .alert-success {
+            background-color: var(--success-light);
+            color: #065f46;
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .alert-warning {
+            background-color: var(--warning-light);
+            color: #b45309;
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .info-box {
+            background-color: var(--gray-100);
+            border-left: 4px solid var(--primary-color);
+            padding: 16px;
+            margin-bottom: 24px;
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+        
+        .info-box p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .breadcrumb {
+            display: flex;
+            list-style: none;
+            margin-bottom: 20px;
+            font-size: 14px;
+        }
+        
+        .breadcrumb li:not(:last-child)::after {
+            content: "/";
+            margin: 0 5px;
+            color: var(--gray-400);
+        }
+        
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .progress-container {
+            margin: 40px 0;
+        }
+        
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+        
+        .progress-bar::before {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: var(--gray-200);
+            z-index: 1;
+            border-radius: 3px;
+        }
+        
+        .progress-step {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 33.33%;
+            transition: var(--transition);
+        }
+        
+        .step-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background-color: white;
+            border: 3px solid var(--gray-300);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--gray-400);
+            transition: var(--transition);
+        }
+        
+        .step-label {
+            font-size: 14px;
+            color: var(--gray-500);
+            text-align: center;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+        
+        .active .step-circle {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+            box-shadow: 0 0 0 5px rgba(37, 99, 235, 0.2);
+            transform: scale(1.1);
+        }
+        
+        .active .step-label {
+            color: var(--gray-800);
+            font-weight: 600;
+        }
+        
+        .completed .step-circle {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            color: white;
+        }
+        
+        .completed .step-label {
+            color: var(--gray-700);
+        }
+        
+        .loading {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .copy-btn {
+            background-color: white;
+            border: 1px solid var(--gray-300);
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin: 15px auto;
+            padding: 10px 16px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+        
+        .copy-btn:hover {
+            background-color: var(--gray-100);
+            border-color: var(--gray-400);
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 140px;
+            background-color: var(--gray-800);
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -70px;
+            opacity: 0;
+            transition: var(--transition);
+            font-size: 14px;
+        }
+        
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: var(--gray-800) transparent transparent transparent;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(-5px);
+        }
+        
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .form-col {
+            flex: 1;
+            min-width: 250px;
+        }
+        
+        .form-section {
+            padding: 25px;
+            margin-bottom: 30px;
+            background-color: var(--gray-50);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--gray-200);
+            transition: var(--transition);
+        }
+        
+        .form-section:hover {
+            border-color: var(--gray-300);
+            background-color: white;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        @media (max-width: 768px) {
+            .form-col {
+                width: 100%;
+                flex: none;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .card {
+                padding: 25px 20px;
+            }
+            
+            .step-label {
+                font-size: 12px;
+            }
+            
+            .transaction-code {
+                font-size: 22px;
+                padding: 15px;
+            }
+        }
+        
+        .file-upload {
+            border: 2px dashed var(--gray-300);
+            border-radius: var(--border-radius);
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            background-color: white;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--primary-color);
+            background-color: var(--primary-light);
+        }
+        
+        .file-upload input {
+            display: none;
+        }
+        
+        .file-name {
+            margin-top: 12px;
+            font-size: 14px;
+            color: var(--gray-600);
+            padding: 5px 10px;
+            background-color: var(--gray-100);
+            border-radius: 4px;
+            display: inline-block;
+            max-width: 90%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--gray-500);
+            font-size: 14px;
+            margin-top: 60px;
+            background-color: white;
+            border-top: 1px solid var(--gray-200);
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        
+        .footer-links a {
+            color: var(--gray-600);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .price-summary {
+            background-color: var(--gray-50);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-top: 25px;
+            border: 1px solid var(--gray-200);
+            transition: var(--transition);
+        }
+        
+        .price-summary:hover {
+            box-shadow: var(--shadow-sm);
+            border-color: var(--gray-300);
+        }
+        
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            font-size: 15px;
+            padding: 8px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .price-row:last-child {
+            border-bottom: none;
+        }
+        
+        .price-row.total {
+            font-weight: 600;
+            font-size: 18px;
+            color: var(--gray-900);
+            margin-top: 5px;
+            padding-top: 12px;
+            border-top: 2px solid var(--gray-300);
+            border-bottom: none;
+        }
+        
+        /* Custom checkboxes & radio buttons */
+        .custom-control {
+            position: relative;
+            display: flex;
+            align-items: center;
+            padding-left: 35px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            font-weight: normal;
+        }
+        
+        .custom-control input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 22px;
+            width: 22px;
+            background-color: white;
+            border: 2px solid var(--gray-300);
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        
+        .radio-mark {
+            border-radius: 50%;
+        }
+        
+        .custom-control:hover input ~ .checkmark {
+            border-color: var(--gray-400);
+            background-color: var(--gray-100);
+        }
+        
+        .custom-control input:checked ~ .checkmark {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        .custom-control input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .custom-control .checkmark:after {
+            left: 7px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        .custom-control .radio-mark:after {
+            top: 6px;
+            left: 6px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: white;
+            border: none;
+            transform: none;
+        }
+        
+        .guarantee-badges {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .badge {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            max-width: 150px;
+        }
+        
+        .badge svg {
+            margin-bottom: 12px;
+            color: var(--primary-color);
+        }
+        
+        .badge span {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--gray-700);
+        }
+        
+        /* Animated Form Transitions */
+        .card {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-section {
+            animation: slideIn 0.5s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        .form-section:nth-child(1) { animation-delay: 0.1s; }
+        .form-section:nth-child(2) { animation-delay: 0.2s; }
+        .form-section:nth-child(3) { animation-delay: 0.3s; }
+        
+        /* Focus states for accessibility */
+        button:focus, a:focus, input:focus, select:focus, textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.4);
+        }
+        
+
+        
+        /* Success checkmark animation */
+        .success-checkmark {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto;
+        }
+        
+        .check-icon {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            border-radius: 50%;
+            box-sizing: content-box;
+            border: 4px solid var(--success-color);
+        }
+        
+        .check-icon::before {
+            top: 3px;
+            left: -2px;
+            width: 30px;
+            transform-origin: 100% 50%;
+            border-radius: 100px 0 0 100px;
+        }
+        
+        .check-icon::after {
+            top: 0;
+            left: 30px;
+            width: 60px;
+            transform-origin: 0 50%;
+            border-radius: 0 100px 100px 0;
+            animation: rotate-circle 4.25s ease-in;
+        }
+        
+        .check-icon::before, .check-icon::after {
+            content: '';
+            height: 100px;
+            position: absolute;
+            background: #FFFFFF;
+            transform: rotate(-45deg);
+        }
+        
+        .check-icon .icon-line {
+            height: 5px;
+            background-color: var(--success-color);
+            display: block;
+            border-radius: 2px;
+            position: absolute;
+            z-index: 10;
+        }
+        
+        .check-icon .icon-line.line-tip {
+            top: 46px;
+            left: 14px;
+            width: 25px;
+            transform: rotate(45deg);
+            animation: icon-line-tip 0.75s;
+        }
+        
+        .check-icon .icon-line.line-long {
+            top: 38px;
+            right: 8px;
+            width: 47px;
+            transform: rotate(-45deg);
+            animation: icon-line-long 0.75s;
+        }
+        
+        .check-icon .icon-circle {
+            top: -4px;
+            left: -4px;
+            z-index: 10;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            position: absolute;
+            box-sizing: content-box;
+            border: 4px solid rgba(76, 175, 80, .5);
+        }
+        
+        .check-icon .icon-fix {
+            top: 8px;
+            width: 5px;
+            left: 26px;
+            z-index: 1;
+            height: 85px;
+            position: absolute;
+            transform: rotate(-45deg);
+            background-color: #FFFFFF;
+        }
+        
+        @keyframes rotate-circle {
+            0% {
+                transform: rotate(-45deg);
+            }
+            5% {
+                transform: rotate(-45deg);
+            }
+            12% {
+                transform: rotate(-405deg);
+            }
+            100% {
+                transform: rotate(-405deg);
+            }
+        }
+        
+        @keyframes icon-line-tip {
+            0% {
+                width: 0;
+                left: 1px;
+                top: 19px;
+            }
+            54% {
+                width: 0;
+                left: 1px;
+                top: 19px;
+            }
+            70% {
+                width: 50px;
+                left: -8px;
+                top: 37px;
+            }
+            84% {
+                width: 17px;
+                left: 21px;
+                top: 48px;
+            }
+            100% {
+                width: 25px;
+                left: 14px;
+                top: 45px;
+            }
+        }
+        
+        @keyframes icon-line-long {
+            0% {
+                width: 0;
+                right: 46px;
+                top: 54px;
+            }
+            65% {
+                width: 0;
+                right: 46px;
+                top: 54px;
+            }
+            84% {
+                width: 55px;
+                right: 0px;
+                top: 35px;
+            }
+            100% {
+                width: 47px;
+                right: 8px;
+                top: 38px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 12H2"></path>
+                    <path d="M5 12V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7"></path>
+                    <path d="M9 21V8"></path>
+                    <path d="M15 21V8"></path>
+                    <path d="M5 16h14"></path>
+                    <path d="M5 16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"></path>
+                </svg>
+                ProMiddleman
+            </a>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="card">
+            <h1>Mulai Transaksi ProMiddleman</h1>
+            <p>ProMiddleman adalah layanan perantara pembayaran yang memberikan keamanan dalam bertransaksi online. Pembeli mentransfer dana ke ProMiddleman, dan dana hanya diteruskan ke penjual setelah produk/jasa diterima dengan baik.</p>
+            
+            <div class="info-box">
+                <p><strong>Keamanan Transaksi:</strong> Pastikan semua informasi yang dimasukkan benar dan sesuai dengan transaksi. Admin akan memverifikasi data sebelum transaksi diproses.</p>
+            </div>
+            
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div class="progress-step active">
+                        <div class="step-circle">1</div>
+                        <div class="step-label">Isi Data</div>
+                    </div>
+                    <div class="progress-step">
+                        <div class="step-circle">2</div>
+                        <div class="step-label">Konfirmasi</div>
+                    </div>
+                    <div class="progress-step">
+                        <div class="step-circle">3</div>
+                        <div class="step-label">Selesai</div>
+                    </div>
+                </div>
+            </div>
+            
+            <form id="rekberForm">
+                <div class="form-section">
+                    <h2>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Data Penjual
+                    </h2>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="sellerName" class="required">Nama Penjual</label>
+                                <div class="input-with-icon">
+                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    <input type="text" id="sellerName" placeholder="Masukkan nama lengkap penjual" required>
+                                </div>
+                                <span class="error-message" id="sellerNameError">Nama penjual wajib diisi</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="sellerBank" class="required">Bank Penjual</label>
+                                <div class="input-with-icon">
+                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                                        <line x1="2" y1="10" x2="22" y2="10"></line>
+                                    </svg>
+                                    <select id="sellerBank" required>
+                                        <option value="">-- Pilih Bank --</option>
+                                        <option value="BCA">BCA</option>
+                                        <option value="Mandiri">Mandiri</option>
+                                        <option value="BNI">BNI</option>
+                                        <option value="BRI">BRI</option>
+                                        <option value="CIMB">CIMB Niaga</option>
+                                        <option value="Permata">Permata</option>
+                                        <option value="other">Lainnya</option>
+                                    </select>
+                                </div>
+                                <span class="error-message" id="sellerBankError">Bank penjual wajib dipilih</span>
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="sellerAccount" class="required">Nomor Rekening Penjual</label>
+                                <div class="input-with-icon">
+                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                                        <line x1="12" y1="16" x2="12" y2="16.01"></line>
+                                        <path d="M8 12h8"></path>
+                                        <path d="M8 8h8"></path>
+                                    </svg>
+                                    <input type="text" id="sellerAccount" placeholder="Contoh: 1234567890" required>
+                                </div>
+                                <span class="error-message" id="sellerAccountError">Nomor rekening tidak valid</span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Data Pembeli
+                    </h2>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="buyerName" class="required">Nama Pembeli</label>
+                                <div class="input-with-icon">
+                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                        <circle cx="12" cy="7" r="4"></circle>
+                                    </svg>
+                                    <input type="text" id="buyerName" placeholder="Masukkan nama lengkap pembeli" required>
+                                </div>
+                                <span class="error-message" id="buyerNameError">Nama pembeli wajib diisi</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="buyerEmail">Email Pembeli (opsional)</label>
+                        <div class="input-with-icon">
+                            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <input type="email" id="buyerEmail" placeholder="Contoh: nama@email.com">
+                        </div>
+                        <span class="error-message" id="buyerEmailError">Format email tidak valid</span>
+
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <h2>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                            <circle cx="12" cy="12" r="3"></circle>
+                            <path d="M17.4 7.8L12 12"></path>
+                        </svg>
+                        Detail Transaksi
+                    </h2>
+                    
+                    <div class="form-group">
+                        <label for="itemDescription" class="required">Deskripsi Barang/Jasa</label>
+                        <textarea id="itemDescription" placeholder="Jelaskan detail barang/jasa yang ditransaksikan, termasuk spesifikasi, kondisi, dan informasi penting lainnya." required></textarea>
+                        <span class="error-message" id="itemDescriptionError">Deskripsi barang/jasa wajib diisi</span>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="amount" class="required">Jumlah Transaksi (Rp)</label>
+                                <div class="input-with-icon">
+                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="12" y1="1" x2="12" y2="23"></line>
+                                        <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+                                    </svg>
+                                    <input type="number" id="amount" min="10000" placeholder="Minimal Rp10.000" required>
+                                </div>
+                                <span class="error-message" id="amountError">Jumlah transaksi minimal Rp10.000</span>
+
+                            </div>
+                        </div>
+                        <div class="form-col">
+                            <div class="form-group">
+                                <label for="paymentMethod" class="required">Metode Pembayaran</label>
+                                <div class="input-with-icon">
+                                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="2" y="5" width="20" height="14" rx="2"></rect>
+                                        <line x1="2" y1="10" x2="22" y2="10"></line>
+                                    </svg>
+                                    <select id="paymentMethod" required>
+                                        <option value="">-- Pilih Metode --</option>
+                                        <option value="transfer">Transfer Bank</option>
+                                        <option value="ewallet">E-Wallet (OVO, GoPay, Dana)</option>
+                                        <option value="qris">QRIS</option>
+                                    </select>
+                                </div>
+                                <span class="error-message" id="paymentMethodError">Metode pembayaran wajib dipilih</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Price Summary -->
+                    <div class="price-summary" id="priceSummary">
+                        <h3 style="margin-bottom: 15px;">Ringkasan Biaya</h3>
+                        <div class="price-row">
+                            <span>Nilai Transaksi</span>
+                            <span id="transactionValue">Rp0</span>
+                        </div>
+                        <div class="price-row">
+                            <span>Biaya Admin (1%)</span>
+                            <span id="adminFee">Rp0</span>
+                        </div>
+                        <div class="price-row total">
+                            <span>Total Pembayaran</span>
+                            <span id="totalPayment">Rp0</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group mt-20">
+                        <label for="transactionType" class="required">Jenis Transaksi</label>
+                        <div class="input-with-icon">
+                            <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+                                <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                                <path d="M20.4 14.5L16 10 4 20"></path>
+                            </svg>
+                            <select id="transactionType" required>
+                                <option value="">-- Pilih Jenis Transaksi --</option>
+                                <option value="goods">Barang Fisik</option>
+                                <option value="digital">Produk Digital</option>
+                                <option value="service">Jasa</option>
+                            </select>
+                        </div>
+                        <span class="error-message" id="transactionTypeError">Jenis transaksi wajib dipilih</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="attachment">Lampirkan Bukti/Foto Barang (opsional)</label>
+                        <div class="file-upload" id="fileUploadContainer">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#6b7280" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <polyline points="17 8 12 3 7 8"></polyline>
+                                <line x1="12" y1="3" x2="12" y2="15"></line>
+                            </svg>
+                            <p>Klik untuk upload atau seret file ke sini</p>
+                            <p style="font-size: 12px; color: #6b7280; margin-top: 5px;">Format: JPG, PNG, PDF (Maks. 5MB)</p>
+                            <input type="file" id="attachment" accept=".jpg,.jpeg,.png,.pdf">
+                            <div class="file-name" id="fileName"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="notes">Catatan Tambahan (opsional)</label>
+                        <textarea id="notes" placeholder="Informasi tambahan yang perlu diketahui admin, seperti instruksi khusus atau detail pengiriman."></textarea>
+                    </div>
+                </div>
+                
+                <div class="alert alert-warning">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <line x1="12" y1="8" x2="12" y2="12"></line>
+                        <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                    </svg>
+                    <div>
+                        <strong>Perhatian:</strong> Pastikan Anda hanya menggunakan layanan perantara resmi dengan admin yang telah diverifikasi. Jangan pernah mengirimkan uang tanpa verifikasi keaslian ProMiddleman.
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="custom-control">
+                        <input type="checkbox" id="termsCheck" required>
+                        <span class="checkmark"></span>
+                        Saya menyetujui <a href="#" target="_blank">Syarat & Ketentuan</a> dan <a href="#" target="_blank">Kebijakan Privasi</a> ProMiddleman
+                    </label>
+                    <span class="error-message" id="termsCheckError">Anda harus menyetujui Syarat & Ketentuan</span>
+                </div>
+                
+                <button type="submit" class="btn" id="submitBtn">
+                    <span>Buat Transaksi</span>
+                    <div class="loading" id="loadingIndicator">
+                        <div class="spinner"></div>
+                        <span>Memproses...</span>
+                    </div>
+                </button>
+            </form>
+        </div>
+        
+        <div class="result-container" id="resultContainer">
+            <div class="success-checkmark">
+                <div class="check-icon">
+                    <span class="icon-line line-tip"></span>
+                    <span class="icon-line line-long"></span>
+                    <div class="icon-circle"></div>
+                    <div class="icon-fix"></div>
+                </div>
+            </div>
+            
+            <div class="alert alert-success">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                <div>Transaksi berhasil dibuat! Silakan ikuti petunjuk di bawah untuk melanjutkan proses.</div>
+            </div>
+            
+            <h2 class="text-center">Kode Transaksi</h2>
+            <p class="text-center">Gunakan kode transaksi berikut untuk verifikasi dengan admin:</p>
+            
+            <div class="transaction-code" id="transactionCode">
+                PM-12345678
+            </div>
+            
+            <button class="copy-btn tooltip" id="copyBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                Salin Kode
+                <span class="tooltiptext" id="copyTooltip">Salin ke clipboard</span>
+            </button>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>Salin kode transaksi di atas</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>Hubungi admin melalui WhatsApp atau Facebook Messenger di bawah</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>Kirimkan kode transaksi untuk verifikasi</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div>Ikuti petunjuk admin untuk melanjutkan proses transaksi</div>
+                </div>
+            </div>
+            
+            <div class="info-box">
+                <p><strong>Informasi pembayaran:</strong> Biaya layanan ProMiddleman sebesar 1% dari nilai transaksi akan ditambahkan saat pembayaran. Pembeli akan mendapatkan instruksi lengkap melalui WhatsApp.</p>
+            </div>
+            
+            <div class="guarantee-badges">
+                <div class="badge">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M8 14s1.5 2 4 2 4-2 4-2"></path>
+                        <line x1="9" y1="9" x2="9.01" y2="9"></line>
+                        <line x1="15" y1="9" x2="15.01" y2="9"></line>
+                    </svg>
+                    <span>Keamanan Transaksi Terjamin</span>
+                </div>
+                <div class="badge">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    </svg>
+                    <span>Perlindungan 100%</span>
+                </div>
+                <div class="badge">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="1" y="3" width="15" height="13"></rect>
+                        <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon>
+                        <circle cx="5.5" cy="18.5" r="2.5"></circle>
+                        <circle cx="18.5" cy="18.5" r="2.5"></circle>
+                    </svg>
+                    <span>Pengiriman Aman</span>
+                </div>
+            </div>
+            
+            <div class="form-row mb-20">
+                <div class="form-col">
+                    <a class="btn btn-whatsapp" id="contactWhatsApp">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                        </svg>
+                        Hubungi Admin via WhatsApp
+                    </a>
+                </div>
+                <div class="form-col">
+                    <a class="btn btn-facebook" id="contactAdmin">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385h-3.047v-3.47h3.047v-2.642c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953h-1.514c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385c5.737-.9 10.125-5.864 10.125-11.854z"/>
+                        </svg>
+                        Hubungi Admin via Facebook
+                    </a>
+                </div>
+            </div>
+            
+            <div class="alert alert-warning">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                </svg>
+                <div>
+                    <strong>Perhatian:</strong> Transaksi hanya dianggap resmi setelah konfirmasi dari admin. Pastikan kode transaksi yang Anda terima sesuai dengan yang tercantum di atas.
+                </div>
+            </div>
+            
+            <button class="btn btn-secondary mt-30" id="backBtn">Kembali ke Beranda</button>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 ProMiddleman. Layanan Perantara Terpercaya.</p>
+        </div>
+    </footer>
+    
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('rekberForm');
     const resultContainer = document.getElementById('resultContainer');
     const transactionCode = document.getElementById('transactionCode');
@@ -339,4 +1775,7 @@
     
     // Initialize price calculation
     calculatePrices();
-});</script></body></html>
+});
+    </script>
+</body>
+</html>
