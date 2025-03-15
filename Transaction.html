@@ -1267,23 +1267,317 @@
             
             // Language switcher
             const languageButtons = document.querySelectorAll('.language-btn');
+            const translations = {
+                'en': {
+                    'heading': 'Start Escrow Transaction',
+                    'intro': 'Fill in the form below to start a transaction with an escrow service. After filling out the form, you will receive a transaction code that can be used for verification with the admin.',
+                    'international_info': '<strong>International Transactions:</strong> We support cross-country transactions. Select your transaction currency and fill in the complete address for international shipping.',
+                    'important': '<strong>Important:</strong> Make sure all information entered is correct and in accordance with the transaction to be carried out. Admin will verify the data before the transaction is processed.',
+                    'step1': 'Fill Data',
+                    'step2': 'Confirmation',
+                    'step3': 'Complete',
+                    'currency_label': 'Transaction Currency',
+                    'seller_heading': 'Seller Information',
+                    'seller_name': 'Seller Name',
+                    'seller_name_error': 'Seller name is required',
+                    'seller_country': 'Seller Country',
+                    'seller_country_error': 'Seller country is required',
+                    'seller_bank': 'Seller Bank',
+                    'seller_bank_error': 'Seller bank is required',
+                    'seller_account': 'Seller Account Number',
+                    'seller_account_error': 'Invalid account number',
+                    'swift_code': 'SWIFT/BIC Code (for international transfer)',
+                    'swift_info': 'Required for cross-country transfers',
+                    'buyer_heading': 'Buyer Information',
+                    'buyer_name': 'Buyer Name',
+                    'buyer_name_error': 'Buyer name is required',
+                    'buyer_country': 'Buyer Country',
+                    'buyer_country_error': 'Buyer country is required',
+                    'buyer_email': 'Buyer Email (optional)',
+                    'buyer_email_error': 'Invalid email format',
+                    'transaction_heading': 'Transaction Details',
+                    'item_description': 'Item/Service Description',
+                    'item_description_error': 'Item/service description is required',
+                    'amount_label': 'Transaction Amount',
+                    'payment_method': 'Payment Method',
+                    'payment_method_error': 'Payment method is required',
+                    'summary_heading': 'Cost Summary',
+                    'transaction_value': 'Transaction Value',
+                    'admin_fee': 'Admin Fee (1.5%)',
+                    'intl_fee': 'International Transaction Fee (0.5%)',
+                    'total_payment': 'Total Payment',
+                    'transaction_type': 'Transaction Type',
+                    'transaction_type_error': 'Transaction type is required',
+                    'option_goods': 'Physical Goods',
+                    'option_digital': 'Digital Products',
+                    'option_service': 'Services',
+                    'shipping_heading': 'Shipping Information',
+                    'shipping_type': 'Shipping Type',
+                    'domestic_shipping': 'Domestic (Within Country)',
+                    'international_shipping': 'International (Between Countries)',
+                    'origin_city': 'Origin City',
+                    'destination_city': 'Destination City',
+                    'origin_country': 'Origin Country',
+                    'destination_country': 'Destination Country',
+                    'customs_description': 'Description for Customs',
+                    'customs_info': 'This information is required for customs clearance process.',
+                    'customs_value': 'Value for Customs',
+                    'hs_code': 'HS Code (if known)',
+                    'hs_code_info': 'Harmonized System code for product classification.',
+                    'weight': 'Package Weight (grams)',
+                    'calculate_shipping': 'Calculate Shipping Cost',
+                    'shipping_options': 'Select Shipping Service',
+                    'attachment': 'Attach Evidence/Item Photo (optional)',
+                    'upload_info': 'Click to upload or drag file here',
+                    'file_size': 'Maximum 5MB (JPG, PNG, PDF)',
+                    'notes': 'Additional Notes (optional)',
+                    'notes_placeholder': 'Additional information that admin needs to know',
+                    'warning': '<strong>Warning:</strong> Make sure you only use official escrow services with verified admins. Never send money without verifying the authenticity of the escrow service.',
+                    'terms': 'I agree to the <a href="#" target="_blank">Terms & Conditions</a> and <a href="#" target="_blank">Privacy Policy</a> of RekBer Indonesia',
+                    'terms_error': 'You must agree to the Terms & Conditions',
+                    'submit_button': 'Create Transaction',
+                    'processing': 'Processing...',
+                    'success_message': 'Transaction successfully created! Please follow the instructions below to continue the process.',
+                    'transaction_code': 'Transaction Code',
+                    'use_code': 'Use the following transaction code for verification with admin:',
+                    'copy_code': 'Copy Code',
+                    'tooltip': 'Copy to clipboard',
+                    'step1_instruction': 'Copy the transaction code above',
+                    'step2_instruction': 'Contact admin via WhatsApp or Facebook Messenger below',
+                    'step3_instruction': 'Send the transaction code for verification',
+                    'step4_instruction': 'Follow admin instructions to continue the transaction process',
+                    'payment_info': '<strong>Payment information:</strong> Escrow service fee of 1.5% of transaction value will be added at payment. For international transactions, an additional fee of 0.5% will be charged. Buyer will get complete instructions via WhatsApp.',
+                    'security': 'Transaction Security Guaranteed',
+                    'protection': '100% Protection',
+                    'shipping': 'International Shipping',
+                    'contact_whatsapp': 'Contact Admin via WhatsApp',
+                    'contact_facebook': 'Contact Admin via Facebook',
+                    'attention': '<strong>Attention:</strong> Transaction is only considered official after confirmation from admin. Make sure the transaction code you receive matches the one shown above.',
+                    'back_button': 'Back to Home',
+                    'copyright': '© 2025 RekBer Indonesia. Trusted Escrow Service.'
+                },
+                'id': {
+                    'heading': 'Mulai Transaksi Rekening Bersama',
+                    'intro': 'Isi formulir di bawah ini untuk memulai transaksi dengan rekening bersama. Setelah mengisi formulir, Anda akan mendapatkan kode transaksi yang dapat digunakan untuk verifikasi dengan admin.',
+                    'international_info': '<strong>Transaksi Internasional:</strong> Kami mendukung transaksi lintas negara. Pilih mata uang transaksi Anda dan isi alamat lengkap untuk pengiriman internasional.',
+                    'important': '<strong>Penting:</strong> Pastikan semua informasi yang dimasukkan benar dan sesuai dengan transaksi yang akan dilakukan. Admin akan melakukan verifikasi data sebelum transaksi diproses.',
+                    'step1': 'Isi Data',
+                    'step2': 'Konfirmasi',
+                    'step3': 'Selesai',
+                    'currency_label': 'Mata Uang Transaksi',
+                    'seller_heading': 'Data Penjual',
+                    'seller_name': 'Nama Penjual',
+                    'seller_name_error': 'Nama penjual wajib diisi',
+                    'seller_country': 'Negara Penjual',
+                    'seller_country_error': 'Negara penjual wajib dipilih',
+                    'seller_bank': 'Bank Penjual',
+                    'seller_bank_error': 'Bank penjual wajib dipilih',
+                    'seller_account': 'Nomor Rekening Penjual',
+                    'seller_account_error': 'Nomor rekening tidak valid',
+                    'swift_code': 'Kode SWIFT/BIC (untuk transfer internasional)',
+                    'swift_info': 'Diperlukan untuk transfer antar negara',
+                    'buyer_heading': 'Data Pembeli',
+                    'buyer_name': 'Nama Pembeli',
+                    'buyer_name_error': 'Nama pembeli wajib diisi',
+                    'buyer_country': 'Negara Pembeli',
+                    'buyer_country_error': 'Negara pembeli wajib dipilih',
+                    'buyer_email': 'Email Pembeli (opsional)',
+                    'buyer_email_error': 'Format email tidak valid',
+                    'transaction_heading': 'Detail Transaksi',
+                    'item_description': 'Deskripsi Barang/Jasa',
+                    'item_description_error': 'Deskripsi barang/jasa wajib diisi',
+                    'amount_label': 'Jumlah Transaksi',
+                    'payment_method': 'Metode Pembayaran',
+                    'payment_method_error': 'Metode pembayaran wajib dipilih',
+                    'summary_heading': 'Ringkasan Biaya',
+                    'transaction_value': 'Nilai Transaksi',
+                    'admin_fee': 'Biaya Admin (1.5%)',
+                    'intl_fee': 'Biaya Transaksi Internasional (0.5%)',
+                    'total_payment': 'Total Pembayaran',
+                    'transaction_type': 'Jenis Transaksi',
+                    'transaction_type_error': 'Jenis transaksi wajib dipilih',
+                    'option_goods': 'Barang Fisik',
+                    'option_digital': 'Produk Digital',
+                    'option_service': 'Jasa',
+                    'shipping_heading': 'Informasi Pengiriman',
+                    'shipping_type': 'Jenis Pengiriman',
+                    'domestic_shipping': 'Domestik (Dalam Negeri)',
+                    'international_shipping': 'Internasional (Antar Negara)',
+                    'origin_city': 'Kota Asal',
+                    'destination_city': 'Kota Tujuan',
+                    'origin_country': 'Negara Asal',
+                    'destination_country': 'Negara Tujuan',
+                    'customs_description': 'Deskripsi Barang untuk Bea Cukai',
+                    'customs_info': 'Informasi ini diperlukan untuk proses customs clearance.',
+                    'customs_value': 'Nilai Barang untuk Bea Cukai',
+                    'hs_code': 'HS Code (jika diketahui)',
+                    'hs_code_info': 'Kode Harmonized System untuk klasifikasi produk.',
+                    'weight': 'Berat Paket (gram)',
+                    'calculate_shipping': 'Hitung Ongkir',
+                    'shipping_options': 'Pilih Jasa Pengiriman',
+                    'attachment': 'Lampirkan Bukti/Foto Barang (opsional)',
+                    'upload_info': 'Klik untuk upload atau seret file ke sini',
+                    'file_size': 'Maksimal 5MB (JPG, PNG, PDF)',
+                    'notes': 'Catatan Tambahan (opsional)',
+                    'notes_placeholder': 'Informasi tambahan yang perlu diketahui admin',
+                    'warning': '<strong>Perhatian:</strong> Pastikan Anda hanya menggunakan rekening bersama resmi dengan admin yang telah diverifikasi. Jangan pernah mengirimkan uang tanpa verifikasi keaslian rekber.',
+                    'terms': 'Saya menyetujui <a href="#" target="_blank">Syarat & Ketentuan</a> dan <a href="#" target="_blank">Kebijakan Privasi</a> RekBer Indonesia',
+                    'terms_error': 'Anda harus menyetujui Syarat & Ketentuan',
+                    'submit_button': 'Buat Transaksi',
+                    'processing': 'Memproses...',
+                    'success_message': 'Transaksi berhasil dibuat! Silakan ikuti petunjuk di bawah untuk melanjutkan proses.',
+                    'transaction_code': 'Kode Transaksi',
+                    'use_code': 'Gunakan kode transaksi berikut untuk verifikasi dengan admin:',
+                    'copy_code': 'Salin Kode',
+                    'tooltip': 'Salin ke clipboard',
+                    'step1_instruction': 'Salin kode transaksi di atas',
+                    'step2_instruction': 'Hubungi admin melalui WhatsApp atau Facebook Messenger di bawah',
+                    'step3_instruction': 'Kirimkan kode transaksi untuk verifikasi',
+                    'step4_instruction': 'Ikuti petunjuk admin untuk melanjutkan proses transaksi',
+                    'payment_info': '<strong>Informasi pembayaran:</strong> Biaya layanan rekber sebesar 1.5% dari nilai transaksi akan ditambahkan saat pembayaran. Untuk transaksi internasional, biaya tambahan 0.5% akan dikenakan. Pembeli akan mendapatkan instruksi lengkap melalui WhatsApp.',
+                    'security': 'Keamanan Transaksi Terjamin',
+                    'protection': 'Perlindungan 100%',
+                    'shipping': 'Pengiriman Internasional',
+                    'contact_whatsapp': 'Hubungi Admin via WhatsApp',
+                    'contact_facebook': 'Hubungi Admin via Facebook',
+                    'attention': '<strong>Perhatian:</strong> Transaksi hanya dianggap resmi setelah konfirmasi dari admin. Pastikan kode transaksi yang Anda terima sesuai dengan yang tercantum di atas.',
+                    'back_button': 'Kembali ke Beranda',
+                    'copyright': '© 2025 RekBer Indonesia. Layanan Rekening Bersama Terpercaya.'
+                }
+            };
+            
+            // Function to update all text in the UI based on language
+            function updateLanguage(lang) {
+                const t = translations[lang];
+                if (!t) return;
+                
+                // Update main headings and text
+                document.querySelector('h1').textContent = t.heading;
+                document.querySelector('h1 + p').textContent = t.intro;
+                document.querySelector('.international-info p').innerHTML = t.international_info;
+                document.querySelector('.info-box p').innerHTML = t.important;
+                
+                // Update progress steps
+                document.querySelectorAll('.step-label')[0].textContent = t.step1;
+                document.querySelectorAll('.step-label')[1].textContent = t.step2;
+                document.querySelectorAll('.step-label')[2].textContent = t.step3;
+                
+                // Update form labels and placeholders
+                document.querySelector('label[for="currency"]').textContent = t.currency_label;
+                document.querySelector('h2:nth-of-type(1)').textContent = t.seller_heading;
+                document.querySelector('label[for="sellerName"]').textContent = t.seller_name;
+                document.getElementById('sellerNameError').textContent = t.seller_name_error;
+                document.querySelector('label[for="sellerCountry"]').textContent = t.seller_country;
+                document.getElementById('sellerCountryError').textContent = t.seller_country_error;
+                document.querySelector('label[for="sellerBank"]').textContent = t.seller_bank;
+                document.getElementById('sellerBankError').textContent = t.seller_bank_error;
+                document.querySelector('label[for="sellerAccount"]').textContent = t.seller_account;
+                document.getElementById('sellerAccountError').textContent = t.seller_account_error;
+                document.querySelector('label[for="sellerSwiftCode"]').textContent = t.swift_code;
+                document.querySelector('#sellerSwiftCode + .exchange-rate-info').textContent = t.swift_info;
+                
+                document.querySelector('h2:nth-of-type(2)').textContent = t.buyer_heading;
+                document.querySelector('label[for="buyerName"]').textContent = t.buyer_name;
+                document.getElementById('buyerNameError').textContent = t.buyer_name_error;
+                document.querySelector('label[for="buyerCountry"]').textContent = t.buyer_country;
+                document.getElementById('buyerCountryError').textContent = t.buyer_country_error;
+                document.querySelector('label[for="buyerEmail"]').textContent = t.buyer_email;
+                document.getElementById('buyerEmailError').textContent = t.buyer_email_error;
+                
+                document.querySelector('h2:nth-of-type(3)').textContent = t.transaction_heading;
+                document.querySelector('label[for="itemDescription"]').textContent = t.item_description;
+                document.getElementById('itemDescriptionError').textContent = t.item_description_error;
+                document.querySelector('label[for="amount"]').textContent = t.amount_label;
+                document.querySelector('label[for="paymentMethod"]').textContent = t.payment_method;
+                document.getElementById('paymentMethodError').textContent = t.payment_method_error;
+                
+                document.querySelector('#priceSummary h3').textContent = t.summary_heading;
+                document.querySelector('.price-row:nth-of-type(1) span:first-child').textContent = t.transaction_value;
+                document.querySelector('.price-row:nth-of-type(2) span:first-child').textContent = t.admin_fee;
+                if (document.getElementById('internationalFeeRow')) {
+                    document.querySelector('#internationalFeeRow span:first-child').textContent = t.intl_fee;
+                }
+                document.querySelector('.price-row.total span:first-child').textContent = t.total_payment;
+                
+                document.querySelector('label[for="transactionType"]').textContent = t.transaction_type;
+                document.getElementById('transactionTypeError').textContent = t.transaction_type_error;
+                document.querySelector('#transactionType option[value="goods"]').textContent = t.option_goods;
+                document.querySelector('#transactionType option[value="digital"]').textContent = t.option_digital;
+                document.querySelector('#transactionType option[value="service"]').textContent = t.option_service;
+                
+                if (document.getElementById('shippingSection')) {
+                    document.querySelector('#shippingSection h2').textContent = t.shipping_heading;
+                    document.querySelector('label[for="isInternationalShipping"]').textContent = t.shipping_type;
+                    document.querySelector('#isInternationalShipping option[value="domestic"]').textContent = t.domestic_shipping;
+                    document.querySelector('#isInternationalShipping option[value="international"]').textContent = t.international_shipping;
+                    document.querySelector('label[for="originCity"]').textContent = t.origin_city;
+                    document.querySelector('label[for="destinationCity"]').textContent = t.destination_city;
+                    document.querySelector('label[for="originCountry"]').textContent = t.origin_country;
+                    document.querySelector('label[for="destinationCountry"]').textContent = t.destination_country;
+                    document.querySelector('label[for="customsDeclaration"]').textContent = t.customs_description;
+                    document.querySelector('#customsDeclaration + .exchange-rate-info').textContent = t.customs_info;
+                    document.querySelector('label[for="customsValue"]').textContent = t.customs_value;
+                    document.querySelector('label[for="hsCode"]').textContent = t.hs_code;
+                    document.querySelector('#hsCode + .exchange-rate-info').textContent = t.hs_code_info;
+                    document.querySelector('label[for="weight"]').textContent = t.weight;
+                    document.getElementById('calculateShipping').textContent = t.calculate_shipping;
+                    document.querySelector('#shippingOptions h3').textContent = t.shipping_options;
+                }
+                
+                document.querySelector('label[for="attachment"]').textContent = t.attachment;
+                document.querySelector('.file-upload p:first-of-type').textContent = t.upload_info;
+                document.querySelector('.file-upload p:last-of-type').textContent = t.file_size;
+                
+                document.querySelector('label[for="notes"]').textContent = t.notes;
+                document.getElementById('notes').placeholder = t.notes_placeholder;
+                
+                document.querySelector('.alert-warning div').innerHTML = t.warning;
+                document.querySelector('#termsCheck').nextSibling.innerHTML = ' ' + t.terms;
+                document.getElementById('termsCheckError').textContent = t.terms_error;
+                
+                document.querySelector('#submitBtn span').textContent = t.submit_button;
+                document.querySelector('#loadingIndicator span').textContent = t.processing;
+                
+                // Result container
+                if (document.querySelector('.result-container')) {
+                    document.querySelector('.alert-success div').textContent = t.success_message;
+                    document.querySelector('.result-container h2').textContent = t.transaction_code;
+                    document.querySelector('.result-container > p').textContent = t.use_code;
+                    document.querySelector('#copyBtn').childNodes[2].textContent = t.copy_code;
+                    document.querySelector('#copyTooltip').textContent = t.tooltip;
+                    
+                    document.querySelectorAll('.step')[0].querySelector('div:last-child').textContent = t.step1_instruction;
+                    document.querySelectorAll('.step')[1].querySelector('div:last-child').textContent = t.step2_instruction;
+                    document.querySelectorAll('.step')[2].querySelector('div:last-child').textContent = t.step3_instruction;
+                    document.querySelectorAll('.step')[3].querySelector('div:last-child').textContent = t.step4_instruction;
+                    
+                    document.querySelector('.info-box p').innerHTML = t.payment_info;
+                    
+                    document.querySelectorAll('.badge span')[0].textContent = t.security;
+                    document.querySelectorAll('.badge span')[1].textContent = t.protection;
+                    document.querySelectorAll('.badge span')[2].textContent = t.shipping;
+                    
+                    document.querySelector('#contactWhatsApp').childNodes[2].textContent = t.contact_whatsapp;
+                    document.querySelector('#contactAdmin').childNodes[2].textContent = t.contact_facebook;
+                    
+                    document.querySelector('.result-container .alert-warning div').innerHTML = t.attention;
+                    document.querySelector('#backBtn').textContent = t.back_button;
+                }
+                
+                // Footer
+                document.querySelector('.container.text-center p').textContent = t.copyright;
+            }
+            
             languageButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     languageButtons.forEach(btn => btn.classList.remove('active'));
                     this.classList.add('active');
                     
                     const lang = this.getAttribute('data-lang');
-                    if (lang === 'en') {
-                        // Switch to English content
-                        document.querySelector('h1').textContent = 'Start Escrow Transaction';
-                        // ... you would add more translations here
-                    } else {
-                        // Switch to Indonesian content
-                        document.querySelector('h1').textContent = 'Mulai Transaksi Rekening Bersama';
-                        // ... you would reset to Indonesian here
-                    }
+                    updateLanguage(lang);
                 });
             });
+            
             
             // Currency handling
             const currencySelect = document.getElementById('currency');
