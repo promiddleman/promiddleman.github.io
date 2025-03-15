@@ -696,8 +696,8 @@
                 RekBer Indonesia
             </div>
             <div class="language-selector">
-                <button class="language-btn active" data-lang="id">ID</button>
-                <button class="language-btn" data-lang="en">EN</button>
+                <button type="button" class="language-btn active" id="lang-id" data-lang="id" onclick="updateLanguage('id')">ID</button>
+                <button type="button" class="language-btn" id="lang-en" data-lang="en" onclick="updateLanguage('en')">EN</button>
             </div>
             <a href="#" class="btn">Beranda</a>
         </div>
@@ -1250,6 +1250,129 @@
     </div>
     
     <script>
+        // Define updateLanguage function globally so it can be used by inline onclick handlers
+        let translations = {};
+        
+        function updateLanguage(lang) {
+            console.log("Language switching to:", lang);
+            
+            // First update active button state
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                if (btn.getAttribute('data-lang') === lang) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+            
+            // If translations not loaded yet, wait for them
+            if (!translations.en || !translations.id) {
+                console.log("Translations not loaded yet, will update when available");
+                return;
+            }
+            
+            const t = translations[lang];
+            if (!t) {
+                console.error("No translations found for language:", lang);
+                return;
+            }
+            
+            try {
+                // Update main headings and text
+                if (document.querySelector('h1')) document.querySelector('h1').textContent = t.heading;
+                if (document.querySelector('h1 + p')) document.querySelector('h1 + p').textContent = t.intro;
+                if (document.querySelector('.international-info p')) document.querySelector('.international-info p').innerHTML = t.international_info;
+                if (document.querySelector('.info-box p')) document.querySelector('.info-box p').innerHTML = t.important;
+                
+                // Update progress steps
+                const stepLabels = document.querySelectorAll('.step-label');
+                if (stepLabels.length >= 3) {
+                    stepLabels[0].textContent = t.step1;
+                    stepLabels[1].textContent = t.step2;
+                    stepLabels[2].textContent = t.step3;
+                }
+                
+                // Update form labels (only update elements that exist)
+                const labelMappings = {
+                    "currency": t.currency_label,
+                    "sellerName": t.seller_name,
+                    "sellerCountry": t.seller_country,
+                    "sellerBank": t.seller_bank,
+                    "sellerAccount": t.seller_account,
+                    "sellerSwiftCode": t.swift_code,
+                    "buyerName": t.buyer_name,
+                    "buyerCountry": t.buyer_country,
+                    "buyerEmail": t.buyer_email,
+                    "itemDescription": t.item_description,
+                    "amount": t.amount_label,
+                    "paymentMethod": t.payment_method,
+                    "transactionType": t.transaction_type,
+                    "isInternationalShipping": t.shipping_type,
+                    "originCity": t.origin_city,
+                    "destinationCity": t.destination_city,
+                    "originCountry": t.origin_country,
+                    "destinationCountry": t.destination_country,
+                    "customsDeclaration": t.customs_description,
+                    "customsValue": t.customs_value,
+                    "hsCode": t.hs_code,
+                    "weight": t.weight,
+                    "attachment": t.attachment,
+                    "notes": t.notes
+                };
+                
+                // Update labels
+                for (const [id, text] of Object.entries(labelMappings)) {
+                    const labelElement = document.querySelector(`label[for="${id}"]`);
+                    if (labelElement) labelElement.textContent = text;
+                }
+                
+                // Update headings
+                const headings = document.querySelectorAll('h2');
+                if (headings.length >= 3) {
+                    headings[0].textContent = t.seller_heading;
+                    headings[1].textContent = t.buyer_heading;
+                    headings[2].textContent = t.transaction_heading;
+                }
+                
+                // Update error messages
+                const errorMappings = {
+                    "sellerNameError": t.seller_name_error,
+                    "sellerCountryError": t.seller_country_error,
+                    "sellerBankError": t.seller_bank_error,
+                    "sellerAccountError": t.seller_account_error,
+                    "buyerNameError": t.buyer_name_error,
+                    "buyerCountryError": t.buyer_country_error,
+                    "buyerEmailError": t.buyer_email_error,
+                    "itemDescriptionError": t.item_description_error,
+                    "paymentMethodError": t.payment_method_error,
+                    "transactionTypeError": t.transaction_type_error,
+                    "termsCheckError": t.terms_error
+                };
+                
+                // Update errors
+                for (const [id, text] of Object.entries(errorMappings)) {
+                    const errorElement = document.getElementById(id);
+                    if (errorElement) errorElement.textContent = text;
+                }
+                
+                // Update buttons
+                if (document.querySelector('#submitBtn span')) document.querySelector('#submitBtn span').textContent = t.submit_button;
+                if (document.querySelector('#loadingIndicator span')) document.querySelector('#loadingIndicator span').textContent = t.processing;
+                if (document.getElementById('calculateShipping')) document.getElementById('calculateShipping').textContent = t.calculate_shipping;
+                
+                // Update warning messages
+                if (document.querySelector('.alert-warning div')) document.querySelector('.alert-warning div').innerHTML = t.warning;
+                
+                // Update terms checkbox
+                if (document.querySelector('#termsCheck').nextSibling) document.querySelector('#termsCheck').nextSibling.textContent = ' ' + t.terms;
+                
+                // More specific elements can be updated as needed
+                console.log("Language updated successfully to:", lang);
+            } catch (error) {
+                console.error("Error updating language:", error);
+            }
+        }
+        
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('rekberForm');
             const resultContainer = document.getElementById('resultContainer');
@@ -1265,9 +1388,8 @@
             const fileName = document.getElementById('fileName');
             const fileUploadContainer = document.getElementById('fileUploadContainer');
             
-            // Language switcher
-            const languageButtons = document.querySelectorAll('.language-btn');
-            const translations = {
+            // Update the global translations object
+            translations = {
                 'en': {
                     'heading': 'Start Escrow Transaction',
                     'intro': 'Fill in the form below to start a transaction with an escrow service. After filling out the form, you will receive a transaction code that can be used for verification with the admin.',
@@ -1568,15 +1690,8 @@
                 document.querySelector('.container.text-center p').textContent = t.copyright;
             }
             
-            languageButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    languageButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    const lang = this.getAttribute('data-lang');
-                    updateLanguage(lang);
-                });
-            });
+            // We'll use direct onclick handlers instead of event listeners to ensure they work
+            console.log("Language buttons found:", document.querySelectorAll('.language-btn').length);
             
             
             // Currency handling
@@ -1825,6 +1940,14 @@
             }
             
             // Form submission
+            // Additional debugging for language buttons to make sure they're working
+            setTimeout(() => {
+                console.log("Language buttons initialized:", languageButtons.length);
+                languageButtons.forEach(btn => {
+                    console.log("Button:", btn.textContent, "data-lang:", btn.getAttribute('data-lang'));
+                });
+            }, 500);
+            
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
