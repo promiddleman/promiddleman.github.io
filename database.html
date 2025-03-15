@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Database Transaksi - Rekening Bersama</title>
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --primary-light: #dbeafe;
+            --secondary-color: #1e40af;
+            --light-color: #f3f4f6;
+            --dark-color: #1f2937;
+            --success-color: #10b981;
+            --success-light: #d1fae5;
+            --danger-color: #ef4444;
+            --danger-light: #fee2e2;
+            --warning-color: #f59e0b;
+            --warning-light: #fff7ed;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --border-radius: 8px;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s ease;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--gray-50);
+            color: var(--gray-700);
+            line-height: 1.6;
+            font-size: 16px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: var(--shadow);
+            padding: 20px 0;
+            margin-bottom: 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+        }
+        
+        .logo svg {
+            margin-right: 10px;
+        }
+        
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-link {
+            text-decoration: none;
+            color: var(--dark-color);
+            font-weight: 500;
+            padding: 8px 12px;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover {
+            background-color: var(--light-color);
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 35px;
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+        
+        .card:hover {
+            box-shadow: var(--shadow-md);
+        }
+        
+        h1 {
+            color: var(--dark-color);
+            margin-bottom: 16px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        h2 {
+            color: var(--dark-color);
+            margin: 30px 0 16px;
+            font-size: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        h2 svg {
+            color: var(--primary-color);
+        }
+        
+        p {
+            margin-bottom: 20px;
+            color: var(--gray-600);
+            line-height: 1.7;
+        }
+        
+        .form-group {
+            margin-bottom: 24px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--gray-700);
+            font-size: 15px;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--gray-300);
+            border-radius: var(--border-radius);
+            font-size: 16px;
+            transition: var(--transition);
+            background-color: white;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        input::placeholder, textarea::placeholder {
+            color: var(--gray-400);
+        }
+        
+        .input-with-icon {
+            position: relative;
+        }
+        
+        .input-with-icon input {
+            padding-left: 40px;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray-400);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+        
+        .btn:active {
+            transform: translateY(1px);
+        }
+        
+        .btn-secondary {
+            background-color: var(--gray-500);
+        }
+        
+        .btn-secondary:hover {
+            background-color: var(--gray-600);
+        }
+        
+        .btn-warning {
+            background-color: var(--warning-color);
+        }
+        
+        .btn-warning:hover {
+            background-color: #e29209;
+        }
+        
+        .btn-danger {
+            background-color: var(--danger-color);
+        }
+        
+        .btn-danger:hover {
+            background-color: #dc2626;
+        }
+        
+        .btn-success {
+            background-color: var(--success-color);
+        }
+        
+        .btn-success:hover {
+            background-color: #059669;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 14px;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .alert {
+            padding: 16px;
+            border-radius: var(--border-radius);
+            margin-bottom: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        
+        .alert-error {
+            background-color: var(--danger-light);
+            color: #b91c1c;
+            border-left: 4px solid var(--danger-color);
+        }
+        
+        .alert-success {
+            background-color: var(--success-light);
+            color: #065f46;
+            border-left: 4px solid var(--success-color);
+        }
+        
+        .alert-warning {
+            background-color: var(--warning-light);
+            color: #b45309;
+            border-left: 4px solid var(--warning-color);
+        }
+        
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .search-container input {
+            flex: 1;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            border: 1px solid var(--gray-200);
+            background-color: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+        
+        th, td {
+            padding: 12px 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        th {
+            background-color: var(--gray-100);
+            font-weight: 600;
+            color: var(--gray-800);
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        tr:hover {
+            background-color: var(--gray-50);
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .pending {
+            background-color: var(--warning-light);
+            color: #b45309;
+            border: 1px solid #f59e0b;
+        }
+        
+        .completed {
+            background-color: var(--success-light);
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+        
+        .canceled {
+            background-color: var(--danger-light);
+            color: #b91c1c;
+            border: 1px solid #ef4444;
+        }
+        
+        .in-progress {
+            background-color: var(--primary-light);
+            color: #1d4ed8;
+            border: 1px solid #3b82f6;
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 30px;
+            width: 70%;
+            max-width: 800px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            animation: modalAnimation 0.3s ease-out;
+        }
+        
+        @keyframes modalAnimation {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        
+        .modal-header h2 {
+            margin: 0;
+        }
+        
+        .close-btn {
+            font-size: 28px;
+            font-weight: bold;
+            color: var(--gray-500);
+            cursor: pointer;
+            transition: color 0.2s;
+            background: none;
+            border: none;
+            padding: 0;
+            line-height: 1;
+        }
+        
+        .close-btn:hover {
+            color: var(--gray-900);
+        }
+        
+        .transaction-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+        
+        .detail-group {
+            margin-bottom: 16px;
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: var(--gray-500);
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .detail-value {
+            font-size: 16px;
+            color: var(--dark-color);
+        }
+        
+        .transaction-notes {
+            grid-column: span 2;
+            padding: 15px;
+            background-color: var(--gray-50);
+            border-radius: var(--border-radius);
+            margin-top: 10px;
+            border: 1px solid var(--gray-200);
+        }
+        
+        .modal-footer {
+            margin-top: 30px;
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin-top: 20px;
+        }
+        
+        .pagination button {
+            padding: 8px 12px;
+            border: 1px solid var(--gray-300);
+            background-color: white;
+            color: var(--gray-700);
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .pagination button:hover {
+            background-color: var(--gray-100);
+        }
+        
+        .pagination button.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+        
+        .pagination button:disabled {
+            color: var(--gray-400);
+            cursor: not-allowed;
+        }
+        
+        .filter-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        
+        .filter-label {
+            font-weight: 500;
+            white-space: nowrap;
+        }
+        
+        .filter-dropdown {
+            min-width: 150px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            color: var(--gray-500);
+            font-size: 14px;
+            margin-top: 60px;
+            background-color: white;
+            border-top: 1px solid var(--gray-200);
+        }
+        
+        @media (max-width: 768px) {
+            .transaction-details {
+                grid-template-columns: 1fr;
+            }
+            
+            .transaction-notes {
+                grid-column: 1;
+            }
+            
+            .modal-content {
+                width: 90%;
+                margin: 20% auto;
+                padding: 20px;
+            }
+            
+            .filter-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            table {
+                display: block;
+                overflow-x: auto;
+            }
+            
+            .search-container {
+                flex-direction: column;
+            }
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            background-color: var(--gray-50);
+            border-radius: var(--border-radius);
+            color: var(--gray-600);
+        }
+        
+        .loading-spinner {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="#" class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 12H2"></path>
+                    <path d="M5 12V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7"></path>
+                    <path d="M9 21V8"></path>
+                    <path d="M15 21V8"></path>
+                    <path d="M5 16h14"></path>
+                    <path d="M5 16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"></path>
+                </svg>
+                RekBer Indonesia
+            </a>
+            <nav>
+                <a href="transaksi.html" class="nav-link">Buat Transaksi</a>
+                <a href="database.html" class="nav-link">Cek Transaksi</a>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="card">
+            <h1>Database Transaksi</h1>
+            <p>Gunakan halaman ini untuk mencari dan mengelola transaksi rekening bersama.</p>
+            
+            <div class="search-container">
+                <div class="input-with-icon">
+                    <svg class="input-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <input type="text" id="searchTransaction" placeholder="Cari berdasarkan kode transaksi atau nama">
+                </div>
+                <button class="btn" id="searchBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    Cari
+                </button>
+            </div>
+            
+            <div class="filter-container">
+                <span class="filter-label">Filter:</span>
+                <select id="statusFilter" class="filter-dropdown">
+                    <option value="all">Semua Status</option>
+                    <option value="pending">Pending</option>
+                    <option value="in-progress">Dalam Proses</option>
+                    <option value="completed">Selesai</option>
+                    <option value="canceled">Dibatalkan</option>
+                </select>
+                
+                <select id="dateFilter" class="filter-dropdown">
+                    <option value="all">Semua Waktu</option>
+                    <option value="today">Hari Ini</option>
+                    <option value="week">Minggu Ini</option>
+                    <option value="month">Bulan Ini</option>
+                </select>
+            </div>
+            
+            <div id="transactionTableContainer">
+                <table id="transactionTable">
+                    <thead>
+                        <tr>
+                            <th>Kode Transaksi</th>
+                            <th>Tanggal</th>
+                            <th>Penjual</th>
+                            <th>Pembeli</th>
+                            <th>Jumlah (Rp)</th>
+                            <th>Status</th>
+                            <th>Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionTableBody">
+                        <!-- Data transaksi akan ditampilkan di sini -->
+                    </tbody>
+                </table>
+                
+                <div id="noResults" class="no-results hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 16px; color: var(--gray-400);">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                    <h3>Tidak ada transaksi ditemukan</h3>
+                    <p>Coba dengan kata kunci atau filter yang berbeda</p>
+                </div>
+            </div>
+            
+            <div class="pagination" id="pagination">
+                <!-- Pagination buttons akan ditampilkan di sini -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Detail Transaksi -->
+    <div id="transactionModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Detail Transaksi</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="transaction-details" id="modalContent">
+                <!-- Detail transaksi akan ditampilkan di sini -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="closeModalBtn">Tutup</button>
+                <button class="btn btn-warning" id="updateStatusBtn">Ubah Status</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal Update Status -->
+    <div id="updateStatusModal" class="modal">
+        <div class="modal-content" style="max-width: 500px;">
+            <div class="modal-header">
+                <h2>Update Status Transaksi</h2>
+                <button class="close-btn">&times;</button>
+            </div>
+            <div class="form-group">
+                <label for="newStatus">Status Baru</label>
+                <select id="newStatus">
+                    <option value="pending">Pending</option>
+                    <option value="in-progress">Dalam Proses</option>
+                    <option value="completed">Selesai</option>
+                    <option value="canceled">Dibatalkan</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="statusNotes">Catatan Update</label>
+                <textarea id="statusNotes" placeholder="Tambahkan catatan mengenai perubahan status ini"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelUpdateBtn">Batal</button>
+                <button class="btn btn-success" id="confirmUpdateBtn">
+                    <span id="updateBtnText">Simpan Perubahan</span>
+                    <span id="updateLoadingSpinner" class="loading-spinner hidden"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 RekBer Indonesia. Layanan Rekening Bersama Terpercaya.</p>
+        </div>
+    </footer>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const searchInput = document.getElementById('searchTransaction');
+            const searchBtn = document.getElementById('searchBtn');
+            const statusFilter = document.getElementById('statusFilter');
+            const dateFilter = document.getElementById('dateFilter');
+            const transactionTableBody = document.getElementById('transactionTableBody');
+            const noResults = document.getElementById('noResults');
+            const pagination = document.getElementById('pagination');
+            const transactionModal = document.getElementById('transactionModal');
+            const modalContent = document.getElementById('modalContent');
+            const closeModalBtn = document.getElementById('closeModalBtn');
+            const updateStatusBtn = document.getElementById('updateStatusBtn');
+            const updateStatusModal = document.getElementById('updateStatusModal');
+            const newStatus = document.getElementById('newStatus');
+            const statusNotes = document.getElementById('statusNotes');
+            const cancelUpdateBtn = document.getElementById('cancelUpdateBtn');
+            const confirmUpdateBtn = document.getElementById('confirmUpdateBtn');
+            const updateBtnText = document.getElementById('updateBtnText');
+            const updateLoadingSpinner = document.getElementById('updateLoadingSpinner');
+            
+            // Close buttons
+            const closeButtons = document.querySelectorAll('.close-btn');
+            
+            // Variables
+            let transactions = [];
+            let currentPage = 1;
+            const rowsPerPage = 10;
+            let currentTransactionId = null;
+            
+            // Initialize by loading transactions from localStorage
+            loadTransactions();
+            
+            // Event Listeners
+            searchBtn.addEventListener('click', filterTransactions);
+            searchInput.addEventListener('keyup', function(e) {
+                if (e.key === 'Enter') {
+                    filterTransactions();
+                }
+            });
+            
+            statusFilter.addEventListener('change', filterTransactions);
+            dateFilter.addEventListener('change', filterTransactions);
+            
+            closeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    transactionModal.style.display = 'none';
+                    updateStatusModal.style.display = 'none';
+                });
+            });
+            
+            closeModalBtn.addEventListener('click', function() {
+                transactionModal.style.display = 'none';
+            });
+            
+            updateStatusBtn.addEventListener('click', function() {
+                updateStatusModal.style.display = 'block';
+            });
+            
+            cancelUpdateBtn.addEventListener('click', function() {
+                updateStatusModal.style.display = 'none';
+            });
+            
+            confirmUpdateBtn.addEventListener('click', updateTransactionStatus);
+            
+            // Functions
+            function loadTransactions() {
+                // Load transactions from localStorage
+                const storedTransactions = localStorage.getItem('rekberTransactions');
+                if (storedTransactions) {
+                    transactions = JSON.parse(storedTransactions);
+                    filterTransactions();
+                } else {
+                    showNoResults();
+                }
+            }
+            
+            function filterTransactions() {
+                const searchTerm = searchInput.value.toLowerCase();
+                const statusValue = statusFilter.value;
+                const dateValue = dateFilter.value;
+                
+                let filteredTransactions = transactions.filter(transaction => {
+                    // Search filter
+                    const matchesSearch = transaction.transactionCode.toLowerCase().includes(searchTerm) || 
+                                         transaction.sellerName.toLowerCase().includes(searchTerm) ||
+                                         transaction.buyerName.toLowerCase().includes(searchTerm);
+                    
+                    // Status filter
+                    const matchesStatus = statusValue === 'all' || transaction.status === statusValue;
+                    
+                    // Date filter
+                    let matchesDate = true;
+                    if (dateValue !== 'all') {
+                        const transactionDate = new Date(transaction.date);
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+                        
+                        if (dateValue === 'today') {
+                            matchesDate = transactionDate >= today;
+                        } else if (dateValue === 'week') {
+                            const weekStart = new Date(today);
+                            weekStart.setDate(today.getDate() - today.getDay());
+                            matchesDate = transactionDate >= weekStart;
+                        } else if (dateValue === 'month') {
+                            const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+                            matchesDate = transactionDate >= monthStart;
+                        }
+                    }
+                    
+                    return matchesSearch && matchesStatus && matchesDate;
+                });
+                
+                // Sort by date (newest first)
+                filteredTransactions.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                if (filteredTransactions.length === 0) {
+                    showNoResults();
+                } else {
+                    displayTransactions(filteredTransactions);
+                    setupPagination(filteredTransactions);
+                }
+            }
+            
+            function displayTransactions(filteredTransactions) {
+                transactionTableBody.innerHTML = '';
+                noResults.classList.add('hidden');
+                document.getElementById('transactionTable').classList.remove('hidden');
+                
+                // Calculate pagination
+                const startIndex = (currentPage - 1) * rowsPerPage;
+                const endIndex = Math.min(startIndex + rowsPerPage, filteredTransactions.length);
+                const paginatedTransactions = filteredTransactions.slice(startIndex, endIndex);
+                
+                paginatedTransactions.forEach(transaction => {
+                    const row = document.createElement('tr');
+                    
+                    // Format date
+                    const date = new Date(transaction.date);
+                    const formattedDate = date.toLocaleDateString('id-ID', { 
+                        year: 'numeric', 
+                        month: 'short', 
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    // Format amount
+                    const formatter = new Intl.NumberFormat('id-ID');
+                    const formattedAmount = formatter.format(transaction.amount);
+                    
+                    // Status badge class
+                    let statusClass = '';
+                    let statusText = '';
+                    switch(transaction.status) {
+                        case 'pending':
+                            statusClass = 'pending';
+                            statusText = 'Pending';
+                            break;
+                        case 'in-progress':
+                            statusClass = 'in-progress';
+                            statusText = 'Dalam Proses';
+                            break;
+                        case 'completed':
+                            statusClass = 'completed';
+                            statusText = 'Selesai';
+                            break;
+                        case 'canceled':
+                            statusClass = 'canceled';
+                            statusText = 'Dibatalkan';
+                            break;
+                        default:
+                            statusClass = 'pending';
+                            statusText = 'Pending';
+                    }
+                    
+                    row.innerHTML = `
+                        <td>${transaction.transactionCode}</td>
+                        <td>${formattedDate}</td>
+                        <td>${transaction.sellerName}</td>
+                        <td>${transaction.buyerName}</td>
+                        <td>${formattedAmount}</td>
+                        <td><span class="status-badge ${statusClass}">${statusText}</span></td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-sm view-btn" data-id="${transaction.transactionCode}">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                </button>
+                            </div>
+                        </td>
+                    `;
+                    
+                    transactionTableBody.appendChild(row);
+                });
+                
+                // Add event listeners to view buttons
+                document.querySelectorAll('.view-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const transactionId = this.getAttribute('data-id');
+                        showTransactionDetails(transactionId);
+                    });
+                });
+            }
+            
+            function setupPagination(filteredTransactions) {
+                pagination.innerHTML = '';
+                
+                const pageCount = Math.ceil(filteredTransactions.length / rowsPerPage);
+                
+                if (pageCount <= 1) {
+                    pagination.style.display = 'none';
+                    return;
+                }
+                
+                pagination.style.display = 'flex';
+                
+                // Previous button
+                const prevButton = document.createElement('button');
+                prevButton.innerHTML = '&laquo;';
+                prevButton.disabled = currentPage === 1;
+                prevButton.addEventListener('click', () => {
+                    if (currentPage > 1) {
+                        currentPage--;
+                        displayTransactions(filteredTransactions);
+                        setupPagination(filteredTransactions);
+                    }
+                });
+                pagination.appendChild(prevButton);
+                
+                // Page buttons
+                const maxButtons = 5;
+                let startPage = Math.max(1, currentPage - Math.floor(maxButtons / 2));
+                let endPage = Math.min(pageCount, startPage + maxButtons - 1);
+                
+                if (endPage - startPage + 1 < maxButtons) {
+                    startPage = Math.max(1, endPage - maxButtons + 1);
+                }
+                
+                for (let i = startPage; i <= endPage; i++) {
+                    const pageButton = document.createElement('button');
+                    pageButton.textContent = i;
+                    
+                    if (i === currentPage) {
+                        pageButton.classList.add('active');
+                    }
+                    
+                    pageButton.addEventListener('click', () => {
+                        currentPage = i;
+                        displayTransactions(filteredTransactions);
+                        setupPagination(filteredTransactions);
+                    });
+                    
+                    pagination.appendChild(pageButton);
+                }
+                
+                // Next button
+                const nextButton = document.createElement('button');
+                nextButton.innerHTML = '&raquo;';
+                nextButton.disabled = currentPage === pageCount;
+                nextButton.addEventListener('click', () => {
+                    if (currentPage < pageCount) {
+                        currentPage++;
+                        displayTransactions(filteredTransactions);
+                        setupPagination(filteredTransactions);
+                    }
+                });
+                pagination.appendChild(nextButton);
+            }
+            
+            function showNoResults() {
+                document.getElementById('transactionTable').classList.add('hidden');
+                noResults.classList.remove('hidden');
+                pagination.style.display = 'none';
+            }
+            
+            function showTransactionDetails(transactionId) {
+                const transaction = transactions.find(t => t.transactionCode === transactionId);
+                
+                if (!transaction) {
+                    alert("Transaksi tidak ditemukan");
+                    return;
+                }
+                
+                currentTransactionId = transactionId;
+                
+                // Format date
+                const date = new Date(transaction.date);
+                const formattedDate = date.toLocaleDateString('id-ID', { 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                // Format amounts
+                const formatter = new Intl.NumberFormat('id-ID');
+                const formattedAmount = formatter.format(transaction.amount);
+                const adminFee = transaction.amount * 0.01;
+                const formattedAdminFee = formatter.format(adminFee);
+                const formattedTotal = formatter.format(transaction.amount + adminFee);
+                
+                // Status text
+                let statusText = '';
+                switch(transaction.status) {
+                    case 'pending':
+                        statusText = 'Pending';
+                        break;
+                    case 'in-progress':
+                        statusText = 'Dalam Proses';
+                        break;
+                    case 'completed':
+                        statusText = 'Selesai';
+                        break;
+                    case 'canceled':
+                        statusText = 'Dibatalkan';
+                        break;
+                    default:
+                        statusText = 'Pending';
+                }
+                
+                // Update modal content
+                modalContent.innerHTML = `
+                    <div class="detail-group">
+                        <div class="detail-label">Kode Transaksi</div>
+                        <div class="detail-value">${transaction.transactionCode}</div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Tanggal Dibuat</div>
+                        <div class="detail-value">${formattedDate}</div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Status</div>
+                        <div class="detail-value"><span class="status-badge ${transaction.status}">${statusText}</span></div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Jenis Transaksi</div>
+                        <div class="detail-value">${getTransactionTypeName(transaction.transactionType)}</div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Nama Penjual</div>
+                        <div class="detail-value">${transaction.sellerName}</div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Bank Penjual</div>
+                        <div class="detail-value">${transaction.sellerBank}</div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Nomor Rekening Penjual</div>
+                        <div class="detail-value">${transaction.sellerAccount}</div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Nama Pembeli</div>
+                        <div class="detail-value">${transaction.buyerName}</div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Email Pembeli</div>
+                        <div class="detail-value">${transaction.buyerEmail || '-'}</div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Metode Pembayaran</div>
+                        <div class="detail-value">${getPaymentMethodName(transaction.paymentMethod)}</div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Jumlah Transaksi</div>
+                        <div class="detail-value">Rp ${formattedAmount}</div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Biaya Admin (1%)</div>
+                        <div class="detail-value">Rp ${formattedAdminFee}</div>
+                    </div>
+                    <div class="detail-group">
+                        <div class="detail-label">Total Pembayaran</div>
+                        <div class="detail-value"><strong>Rp ${formattedTotal}</strong></div>
+                    </div>
+                    <div class="detail-group" style="grid-column: span 2;">
+                        <div class="detail-label">Deskripsi Barang/Jasa</div>
+                        <div class="detail-value transaction-notes">${transaction.itemDescription}</div>
+                    </div>
+                `;
+                
+                if (transaction.notes) {
+                    modalContent.innerHTML += `
+                        <div class="detail-group" style="grid-column: span 2;">
+                            <div class="detail-label">Catatan Tambahan</div>
+                            <div class="detail-value transaction-notes">${transaction.notes}</div>
+                        </div>
+                    `;
+                }
+                
+                // Set current status in the update form
+                newStatus.value = transaction.status;
+                
+                // Show modal
+                transactionModal.style.display = 'block';
+            }
+            
+            function updateTransactionStatus() {
+                // Show loading spinner
+                updateBtnText.style.display = 'none';
+                updateLoadingSpinner.classList.remove('hidden');
+                
+                // Get the transaction to update
+                const transaction = transactions.find(t => t.transactionCode === currentTransactionId);
+                
+                if (!transaction) {
+                    alert("Transaksi tidak ditemukan");
+                    return;
+                }
+                
+                // Simulate API delay
+                setTimeout(() => {
+                    // Update transaction status
+                    transaction.status = newStatus.value;
+                    
+                    // Add status note if provided
+                    if (statusNotes.value.trim()) {
+                        transaction.statusNotes = statusNotes.value.trim();
+                    }
+                    
+                    // Save to localStorage
+                    localStorage.setItem('rekberTransactions', JSON.stringify(transactions));
+                    
+                    // Hide modals
+                    updateStatusModal.style.display = 'none';
+                    transactionModal.style.display = 'none';
+                    
+                    // Reset fields
+                    statusNotes.value = '';
+                    
+                    // Hide loading spinner
+                    updateBtnText.style.display = 'inline';
+                    updateLoadingSpinner.classList.add('hidden');
+                    
+                    // Refresh table
+                    filterTransactions();
+                    
+                    // Show success message
+                    alert("Status transaksi berhasil diperbarui");
+                }, 800);
+            }
+            
+            // Helper Functions
+            function getTransactionTypeName(type) {
+                switch(type) {
+                    case 'goods': return 'Barang Fisik';
+                    case 'digital': return 'Produk Digital';
+                    case 'service': return 'Jasa';
+                    default: return type;
+                }
+            }
+            
+            function getPaymentMethodName(method) {
+                switch(method) {
+                    case 'transfer': return 'Transfer Bank';
+                    case 'ewallet': return 'E-Wallet (OVO, GoPay, Dana)';
+                    case 'qris': return 'QRIS';
+                    default: return method;
+                }
+            }
+        });
+    </script>
+</body>
+</html>
