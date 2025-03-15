@@ -992,6 +992,11 @@
                                         <option value="e-wallet">E-Wallet</option>
                                         <option value="paypal" class="international-only hidden">PayPal</option>
                                         <option value="credit-card" class="international-only hidden">Credit Card</option>
+                                        <option value="apple-pay" class="international-only hidden">Apple Pay</option>
+                                        <option value="google-pay" class="international-only hidden">Google Pay</option>
+                                        <option value="crypto" class="international-only hidden">Cryptocurrency</option>
+                                        <option value="western-union" class="international-only hidden">Western Union</option>
+                                        <option value="wire-transfer" class="international-only hidden">Wire Transfer</option>
                                     </select>
                                     <span class="error-message hidden">Mohon pilih metode pembayaran</span>
                                 </div>
@@ -999,7 +1004,7 @@
                                 <div class="form-group">
                                     <label id="bank-label" for="bank-name">Nama Bank/E-Wallet</label>
                                     <input type="text" id="bank-name" required>
-                                    <span class="error-message hidden">Mohon isi nama bank/e-wallet</span>
+                                    <span class="error-message hidden">Mohon isi nama bank/e-wallet/wallet/penerima</span>
                                 </div>
                             </div>
                             
@@ -1012,7 +1017,7 @@
                                 <button type="button" class="nav-btn prev-btn" data-prev="2">
                                     <i class="fas fa-arrow-left"></i> <span id="prev-btn-text2">Kembali</span>
                                 </button>
-                                <button type="submit" id="submit-btn" class="submit-btn">
+                                <button type="button" id="submit-btn" class="submit-btn">
                                     <span id="submit-btn-text">Buat Transaksi</span>
                                     <div class="spinner">
                                         <i class="fas fa-spinner fa-spin"></i>
@@ -1197,6 +1202,8 @@
             'fee-label': { id: 'Biaya Layanan (5%)', en: 'Service Fee (5%)' },
             'payment-method-label': { id: 'Metode Pembayaran', en: 'Payment Method' },
             'bank-label': { id: 'Nama Bank/E-Wallet', en: 'Bank/E-Wallet Name' },
+            'wallet-label': { id: 'Alamat Wallet', en: 'Wallet Address' },
+            'recipient-label': { id: 'Detail Penerima', en: 'Recipient Details' },
             'notes-label': { id: 'Catatan Tambahan (Opsional)', en: 'Additional Notes (Optional)' },
             'submit-btn-text': { id: 'Buat Transaksi', en: 'Create Transaction' },
             'success-title': { id: 'Transaksi Berhasil Dibuat!', en: 'Transaction Successfully Created!' },
@@ -1247,7 +1254,12 @@
                 { value: 'bank-transfer', text: 'Bank Transfer' },
                 { value: 'e-wallet', text: 'E-Wallet' },
                 { value: 'paypal', text: 'PayPal' },
-                { value: 'credit-card', text: 'Credit Card' }
+                { value: 'credit-card', text: 'Credit Card' },
+                { value: 'apple-pay', text: 'Apple Pay' },
+                { value: 'google-pay', text: 'Google Pay' },
+                { value: 'crypto', text: 'Cryptocurrency' },
+                { value: 'western-union', text: 'Western Union' },
+                { value: 'wire-transfer', text: 'Wire Transfer' }
             ]
         };
         
@@ -1261,7 +1273,7 @@
                 'item-description': 'Mohon isi deskripsi barang/jasa',
                 'transaction-amount': 'Mohon isi jumlah transaksi',
                 'payment-method': 'Mohon pilih metode pembayaran',
-                'bank-name': 'Mohon isi nama bank/e-wallet'
+                'bank-name': 'Mohon isi nama bank/e-wallet/wallet/penerima'
             },
             en: {
                 'buyer-name': 'Please enter buyer name',
@@ -1271,7 +1283,7 @@
                 'item-description': 'Please enter item/service description',
                 'transaction-amount': 'Please enter transaction amount',
                 'payment-method': 'Please select payment method',
-                'bank-name': 'Please enter bank/e-wallet name'
+                'bank-name': 'Please enter bank/wallet/recipient information'
             }
         };
         
@@ -1320,7 +1332,10 @@
                 const optionElement = document.createElement('option');
                 optionElement.value = option.value;
                 optionElement.textContent = option.text;
-                if (option.value === 'paypal' || option.value === 'credit-card') {
+                if (option.value === 'paypal' || option.value === 'credit-card' || 
+                    option.value === 'apple-pay' || option.value === 'google-pay' || 
+                    option.value === 'crypto' || option.value === 'western-union' || 
+                    option.value === 'wire-transfer') {
                     optionElement.classList.add('international-only');
                     if (language === 'id') {
                         optionElement.classList.add('hidden');
@@ -1348,6 +1363,29 @@
                     element.textContent = errorMessages[language][inputId];
                 }
             });
+            
+            // Update payment-related field labels if a method is already selected
+            const paymentMethodSelect = document.getElementById('payment-method');
+            if (paymentMethodSelect.value) {
+                updatePaymentRelatedFields(paymentMethodSelect.value);
+            }
+        };
+        
+        // Function to update payment-related field labels based on payment method
+        const updatePaymentRelatedFields = (paymentMethod) => {
+            const bankNameLabel = document.getElementById('bank-label');
+            const bankNameInput = document.getElementById('bank-name');
+            
+            if (paymentMethod === 'crypto') {
+                bankNameLabel.textContent = currentLanguage === 'id' ? 'Alamat Wallet' : 'Wallet Address';
+                bankNameInput.placeholder = currentLanguage === 'id' ? 'Masukkan alamat wallet crypto' : 'Enter your crypto wallet address';
+            } else if (paymentMethod === 'western-union' || paymentMethod === 'wire-transfer') {
+                bankNameLabel.textContent = currentLanguage === 'id' ? 'Detail Penerima' : 'Recipient Details';
+                bankNameInput.placeholder = currentLanguage === 'id' ? 'Masukkan nama lengkap penerima' : 'Enter recipient full name';
+            } else {
+                bankNameLabel.textContent = currentLanguage === 'id' ? 'Nama Bank/E-Wallet' : 'Bank/E-Wallet Name';
+                bankNameInput.placeholder = '';
+            }
         };
         
         // Generate transaction ID
@@ -1466,7 +1504,7 @@
         const updateWhatsAppLink = () => {
             const transactionId = document.getElementById('transaction-id').textContent;
             const whatsappMessage = createWhatsAppMessage(transactionId);
-            const whatsappNumber = '6285702402751'; // Change to your admin's WhatsApp number
+            const whatsappNumber = '628123456789'; // Change to your admin's WhatsApp number
             const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
             document.getElementById('whatsapp-btn').href = whatsappLink;
         };
@@ -1566,39 +1604,8 @@
             });
         };
         
-        // Event Listeners
-        btnIndonesia.addEventListener('click', () => {
-            btnIndonesia.classList.add('active');
-            btnInternational.classList.remove('active');
-            switchLanguage('id');
-        });
-        
-        btnInternational.addEventListener('click', () => {
-            btnInternational.classList.add('active');
-            btnIndonesia.classList.remove('active');
-            switchLanguage('en');
-        });
-        
-        transactionAmount.addEventListener('input', calculateFee);
-        
-        // Form section navigation
-        nextBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const next = parseInt(btn.getAttribute('data-next'));
-                switchSection(currentSection, next);
-            });
-        });
-        
-        prevBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const prev = parseInt(btn.getAttribute('data-prev'));
-                switchSection(currentSection, prev);
-            });
-        });
-        
-        rekberForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
+        // Process Transaction Function
+        const processTransaction = () => {
             if (!validateSection(3)) {
                 return;
             }
@@ -1625,6 +1632,52 @@
                 // Scroll to top
                 window.scrollTo(0, 0);
             }, 1500);
+        };
+        
+        // Event Listeners
+        btnIndonesia.addEventListener('click', () => {
+            btnIndonesia.classList.add('active');
+            btnInternational.classList.remove('active');
+            switchLanguage('id');
+        });
+        
+        btnInternational.addEventListener('click', () => {
+            btnInternational.classList.add('active');
+            btnIndonesia.classList.remove('active');
+            switchLanguage('en');
+        });
+        
+        transactionAmount.addEventListener('input', calculateFee);
+        
+        // Handle specific payment method changes
+        document.getElementById('payment-method').addEventListener('change', function() {
+            updatePaymentRelatedFields(this.value);
+        });
+        
+        // Form section navigation
+        nextBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const next = parseInt(btn.getAttribute('data-next'));
+                switchSection(currentSection, next);
+            });
+        });
+        
+        prevBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const prev = parseInt(btn.getAttribute('data-prev'));
+                switchSection(currentSection, prev);
+            });
+        });
+        
+        // Submit button direct event listener
+        submitBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            processTransaction();
+        });
+        
+        rekberForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            processTransaction();
         });
         
         newTransactionLink.addEventListener('click', (e) => {
@@ -1674,6 +1727,9 @@
             document.querySelectorAll('.error-message').forEach(msg => {
                 msg.classList.add('hidden');
             });
+            
+            // Reset bank label to default
+            updatePaymentRelatedFields('');
             
             // Reset to first section
             switchSection(currentSection, 1);
