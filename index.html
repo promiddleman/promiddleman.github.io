@@ -79,7 +79,27 @@
             padding: 0 1rem;
         }
         
-        .testimonial-heading {
+        .testimonial-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .testimonial-header {
+            padding: 1.2rem 1.2rem 0.5rem;
+            border-bottom: 1px solid #f1f1f1;
+        }-heading {
             text-align: center;
             margin-bottom: 2rem;
         }
@@ -164,43 +184,7 @@
             gap: 1.2rem;
         }
         
-        .testimonial-card {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .testimonial-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .testimonial-header {
-            display: flex;
-            align-items: center;
-            padding: 1.2rem;
-            border-bottom: 1px solid #f1f1f1;
-        }
-        
-        .avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            object-fit: cover;
-            margin-right: 1rem;
-            background-color: #f1f1f1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #1e3c72;
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
+        .testimonial
         
         .user-info {
             flex: 1;
@@ -208,59 +192,21 @@
         
         .user-name {
             font-weight: 600;
-            margin-bottom: 0.2rem;
-            display: flex;
-            align-items: center;
-            gap: 0.4rem;
-        }
-        
-        /* Badge styles */
-        .badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.2rem 0.5rem;
-            border-radius: 30px;
-            font-size: 0.65rem;
-            font-weight: 600;
-            margin-left: 0.3rem;
-            white-space: nowrap;
-        }
-        
-        .badge-verified {
-            background-color: #28a745;
-            color: white;
-        }
-        
-        .badge-top {
-            background-color: #ffc107;
-            color: #343a40;
-        }
-        
-        .badge-premium {
-            background-color: #6f42c1;
-            color: white;
-        }
-        
-        .badge-icon {
-            display: inline-block;
-            width: 12px;
-            height: 12px;
-            margin-right: 3px;
+            margin-bottom: 0.5rem;
+            color: #1e3c72;
         }
         
         .transaction-type {
-            font-size: 0.75rem;
-            color: #6c757d;
-            padding: 0.2rem 0.5rem;
-            background-color: #f8f9fa;
-            border-radius: 30px;
-            display: inline-block;
+            font-size: 0.8rem;
+            color: #505050;
+            margin-bottom: 0.3rem;
         }
         
         .rating {
             color: #ffc107;
             font-size: 0.8rem;
-            margin-top: 0.2rem;
+            margin-top: 0.5rem;
+            margin-bottom: 0.3rem;
         }
         
         .testimonial-body {
@@ -792,39 +738,40 @@
             // Configuration for server-side pagination simulation
             const config = {
                 currentPage: 1,
-                itemsPerPage: 9,
+                itemsPerPage: 12,
                 totalPages: 10,
                 filter: 'all',
                 searchTerm: '',
                 loading: false
             };
             
-            // Badge types and their probabilities
-            const badgeTypes = [
-                { type: 'verified', label: 'Terverifikasi', icon: '✓', probability: 0.4 },
-                { type: 'top', label: 'Top Reviewer', icon: '★', probability: 0.1 },
-                { type: 'premium', label: 'Premium', icon: '✦', probability: 0.05 }
-            ];
+            // Remove badge types that are no longer needed
+            const badgeTypes = [];
             
-            // Names database for testimonial generation (minimized)
-            const firstNames = ["Andi", "Budi", "Citra", "Dewi", "Eko", "Fitri", "Galih", "Hana", "Indra", "Joko", "Kartika", "Laras", "Mawar", "Nugroho", "Oktavia", "Putri", "Rudi", "Sinta", "Tono", "Utami"];
-            const lastNames = ["Wijaya", "Susanto", "Hartono", "Gunawan", "Saputra", "Santoso", "Wibowo", "Mulya", "Setiawan", "Nugraha", "Hidayat", "Kusuma", "Putra", "Pratama"];
+            // Names database for testimonial generation
+            const firstNames = ["Andi", "Budi", "Citra", "Dewi", "Eko", "Fitri", "Galih", "Hana", "Indra", "Joko", "Kartika", "Laras", "Mawar", "Nugroho", "Oktavia", "Putri", "Rudi", "Sinta", "Tono", "Utami", "Vina", "Wawan", "Yanti", "Zaki", "Agus", "Bambang", "Clara", "Dian", "Edi", "Fani", "Gunawan", "Hesti", "Irfan", "Jessica", "Kurnia", "Linda", "Maman", "Nina", "Oscar", "Puspita", "Rahmat", "Sari", "Taufik", "Umi", "Vivi", "Wahyu", "Yudha", "Zainal", "Anisa", "Bayu"];
+            
+            const lastNames = ["Wijaya", "Susanto", "Hartono", "Gunawan", "Saputra", "Santoso", "Wibowo", "Mulya", "Setiawan", "Nugraha", "Hidayat", "Kusuma", "Putra", "Pratama", "Sulistyo", "Permadi", "Utomo", "Suharto", "Purnomo", "Agustina", "Budiman", "Wulandari", "Iskandar", "Hermawan", "Ramadhan", "Suryanto", "Haryanto", "Pranoto", "Darmawan", "Raharja", "Firmansyah", "Mulyono", "Suryadi", "Maulana", "Kusumo", "Purwanto", "Cahyono", "Adiputra", "Raharjo", "Nainggolan", "Siahaan", "Hutapea", "Siregar", "Situmorang", "Tampubolon", "Simanjuntak", "Sihombing", "Hutabarat", "Riyadi", "Widodo"];
             
             // Transaction types
             const transactionTypes = [
                 "Jual Beli Barang", "Jasa Digital", "Sewa Menyewa", "Game Item", "Cryptocurrency"
             ];
             
-            // Transaction subtypes (minimized)
+            // Transaction subtypes
             const transactionSubtypes = {
-                "Jual Beli Barang": ["Elektronik", "Fashion", "Otomotif", "Handphone", "Komputer"],
-                "Jasa Digital": ["Web Design", "Graphic Design", "Social Media", "Content Writing", "SEO Services"],
-                "Sewa Menyewa": ["Kendaraan", "Properti", "Alat Berat", "Studio Foto", "Kamera"],
-                "Game Item": ["Mobile Legends", "PUBG Mobile", "Free Fire", "Genshin Impact", "Valorant"],
-                "Cryptocurrency": ["Bitcoin", "Ethereum", "Dogecoin", "Cardano", "Solana"]
+                "Jual Beli Barang": ["Smartphone Samsung S22", "Laptop Asus ROG", "Kamera Sony A7IV", "Sepeda Polygon MTB", "iPhone 14 Pro", "Monitor Gaming LG", "Jam Tangan Seiko", "Sepatu Nike Air Max", "Mainan LEGO Star Wars", "PlayStation 5", "Drone DJI Mini", "Helm KYT", "Headphone Sony", "Keyboard Mechanical", "Speaker JBL", "Mesin Cuci Sharp", "Kulkas LG 2 Pintu", "TV Samsung 55 inch", "Microwave Electrolux", "Kipas Angin Cosmos"],
+                
+                "Jasa Digital": ["Desain Logo Brand", "Website Toko Online", "Jasa Edit Video", "Social Media Management", "Content Writing Blog", "SEO Website", "Mobile App Development", "Jasa Translate Dokumen", "Video Marketing", "Digital Advertising", "UI/UX Design", "Fotografi Produk", "Email Marketing", "Google Ads Setup", "Pembuatan Toko Shopee", "WordPress Development", "Desain Banner Iklan", "Editing Foto Produk", "Pembuatan CV ATS", "Konsultasi Digital Marketing"],
+                
+                "Sewa Menyewa": ["Apartemen Harian Jakarta", "Mobil Toyota Innova", "Kamera Sony A7S", "Ruang Meeting Office", "Villa Bali 3 Kamar", "Sound System Event", "Alat Berat Excavator", "Motor Yamaha NMAX", "Studio Foto", "Gedung Pernikahan", "Genset 5000 watt", "Proyektor Epson", "Mobil Pengantin", "Kostum Cosplay", "Tenda Camping", "Peralatan Catering", "Stand Booth Pameran", "Panggung Acara", "Mobil Alphard", "Kapal Yacht"],
+                
+                "Game Item": ["Skin Mobile Legends", "Weapon Mythic PUBG", "Account Genshin AR 55", "Skin Valorant Premium", "Item Counter Strike Rare", "Diamond Mobile Legends", "Riot Points LOL", "UC PUBG Mobile", "Genesis Crystal Genshin", "Skin Pokemon Unite", "Valorant Points", "Steam Wallet Code", "Free Fire Diamonds", "Character Ragnarok", "Skin Fortnite", "Apex Coin", "COD Mobile CP", "Minecraft Items", "Roblox Robux", "Wild Rift Skins"],
+                
+                "Cryptocurrency": ["Bitcoin 0.01 BTC", "Ethereum 0.5 ETH", "Dogecoin 5000 DOGE", "Cardano 1000 ADA", "Solana 10 SOL", "Ripple 1000 XRP", "Binance Coin 5 BNB", "Tether 1000 USDT", "Polygon 500 MATIC", "Polkadot 100 DOT", "Shiba Inu 10M SHIB", "Litecoin 10 LTC", "Avalanche 20 AVAX", "Chainlink 50 LINK", "Tron 5000 TRX", "Uniswap 100 UNI", "Cosmos 50 ATOM", "VeChain 5000 VET", "Stellar 2000 XLM", "Aave 10 AAVE"]
             };
             
-            // Testimonial texts database (minimized)
+            // Testimonial texts database
             const testimonialTexts = [
                 "Transaksi berjalan lancar dan aman. Admin sangat responsif dan profesional. Sangat direkomendasikan!",
                 "Pelayanan cepat dan ramah. Ini kedua kalinya saya menggunakan jasa RekberTrust dan tidak pernah mengecewakan.",
@@ -835,7 +782,42 @@
                 "Admin ramah dan selalu siap membantu. Transaksi selesai dalam hitungan jam saja. Recommended!",
                 "Sangat membantu dalam mengamankan transaksi jual beli online. Penjual dan pembeli sama-sama terlindungi.",
                 "Sudah berkali-kali menggunakan jasa RekberTrust dan selalu konsisten memberikan pelayanan terbaik.",
-                "Awalnya takut tertipu, tapi dengan menggunakan RekberTrust jadi lebih tenang. Prosesnya transparan dan profesional."
+                "Awalnya takut tertipu, tapi dengan menggunakan RekberTrust jadi lebih tenang. Prosesnya transparan dan profesional.",
+                "Fee yang dikenakan sangat reasonable untuk jaminan keamanan yang diberikan. Sangat merekomendasikan!",
+                "Transaksi lintas pulau berjalan lancar berkat RekberTrust. Barang sampai dengan selamat dan uang dicairkan tepat waktu.",
+                "Admin sangat kooperatif dalam menangani masalah. Ada sedikit kendala saat pengiriman namun bisa diselesaikan dengan baik.",
+                "Sudah menjadi langganan tetap RekberTrust untuk semua transaksi online. Terbukti aman dan terpercaya.",
+                "Pengalaman pertama menggunakan rekber dan tidak menyesal. Prosesnya mudah dipahami dan transparan.",
+                "RekberTrust sangat membantu dalam transaksi barang second yang nilainya cukup besar. Merasa lebih aman dan tenang.",
+                "Layanan yang sangat profesional. Semua informasi dijelaskan dengan detail dan mudah dipahami.",
+                "Transaksi cepat dan aman. Uang langsung dicairkan setelah konfirmasi barang diterima. Mantap!",
+                "Proses pencairan dana cepat, tidak sampai 10 menit setelah konfirmasi penerimaan barang. Keren!",
+                "Sempat khawatir karena nilai transaksi cukup besar, tapi ternyata prosesnya aman dan terpercaya.",
+                "Sangat membantu untuk transaksi dengan orang yang belum pernah kenal sebelumnya. No worry lagi!",
+                "CS sangat responsif dan informatif. Semua pertanyaan dijawab dengan jelas dan detail.",
+                "Sudah 5x pakai jasa RekberTrust dan selalu puas dengan pelayanannya. Top markotop!",
+                "Biaya admin terjangkau untuk jaminan keamanan yang diberikan. Worth it banget!",
+                "Proses mudah, cepat, dan aman. Tinggal ikuti instruksi dari admin dan semua beres.",
+                "Rekber terbaik yang pernah saya gunakan. Admin ramah dan profesional. Transaksi jadi tenang.",
+                "Pengalaman yang menyenangkan bertransaksi melalui RekberTrust. Aman dan terpercaya.",
+                "Transaksi digital asset jadi lebih aman dengan menggunakan jasa RekberTrust. Prosesnya cepat dan transparan.",
+                "Proses verifikasi yang ketat membuat saya semakin percaya dengan RekberTrust. Transaksi berjalan lancar.",
+                "Sangat membantu untuk transaksi lintas platform. Admin sigap dan cepat merespons.",
+                "Baru pertama kali coba, langsung puas dengan layanannya. Akan pakai lagi untuk transaksi berikutnya.",
+                "Berkat RekberTrust, transaksi online jadi lebih aman dan terpercaya. Good job!",
+                "Proses cepat, tidak lebih dari 1 jam setelah konfirmasi pembayaran. Sangat efisien.",
+                "Puas banget dengan pelayanan RekberTrust. Admin ramah dan selalu siap membantu.",
+                "Transaksi jual beli game item jadi lebih aman. Fee-nya juga masuk akal. Recommended!",
+                "Sebagai penjual, RekberTrust membuat saya lebih percaya diri dalam bertransaksi online dengan pembeli baru.",
+                "Pencairan dana sangat cepat dan tepat waktu. Tidak ada kendala sama sekali. Terima kasih RekberTrust!",
+                "Sangat terbantu dengan adanya jasa rekber ini. Admin responsif dan selalu update status transaksi.",
+                "Pertama kali pakai dan tidak menyesal. Transaksi berjalan lancar dan aman sampai selesai.",
+                "Untuk transaksi dengan nilai besar, RekberTrust jadi solusi terbaik. Terpercaya dan profesional.",
+                "Proses verifikasi cepat meski hari libur. Layanan 24/7 yang benar-benar bisa diandalkan.",
+                "Admin sangat sabar membantu dan menjelaskan prosedur dengan detail. Sangat direkomendasikan!",
+                "Transaksi cryptocurrency jadi lebih aman dan terpercaya. Fee yang dikenakan sangat worth it.",
+                "Sebagai pembeli, saya merasa aman karena dana hanya dilepas setelah barang sampai dengan selamat.",
+                "Professionalitas RekberTrust tidak perlu diragukan lagi. Sudah 7x transaksi selalu lancar."
             ];
             
             // Function to generate a random transaction (optimized)
@@ -847,13 +829,8 @@
                 const subtypes = transactionSubtypes[transactionType];
                 const transactionSubtype = subtypes[Math.floor(Math.random() * subtypes.length)];
                 
-                // Generate badges with probability
-                const userBadges = [];
-                badgeTypes.forEach(badge => {
-                    if (Math.random() < badge.probability) {
-                        userBadges.push(badge);
-                    }
-                });
+                // Generate transaction ID
+                const transactionId = generateTransactionID();
                 
                 // Random date within the last year
                 const today = new Date();
@@ -874,19 +851,19 @@
                 switch(transactionType) {
                     case "Jual Beli Barang":
                         minAmount = 100000;
-                        maxAmount = 10000000;
+                        maxAmount = 20000000;
                         break;
                     case "Jasa Digital":
                         minAmount = 50000;
-                        maxAmount = 5000000;
+                        maxAmount = 8000000;
                         break;
                     case "Sewa Menyewa":
                         minAmount = 500000;
-                        maxAmount = 20000000;
+                        maxAmount = 30000000;
                         break;
                     case "Game Item":
                         minAmount = 10000;
-                        maxAmount = 2000000;
+                        maxAmount = 3000000;
                         break;
                     case "Cryptocurrency":
                         minAmount = 1000000;
@@ -904,15 +881,23 @@
                     maximumFractionDigits: 0
                 }).format(transactionAmount);
                 
-                // Random rating (4-5 stars)
-                const rating = Math.random() < 0.8 ? 5 : 4;
+                // Random rating (3-5 stars with most being 5 stars)
+                const ratingProbability = Math.random();
+                let rating;
+                if (ratingProbability < 0.8) { // 80% chance for 5 stars
+                    rating = 5;
+                } else if (ratingProbability < 0.95) { // 15% chance for 4 stars
+                    rating = 4;
+                } else { // 5% chance for 3 stars
+                    rating = 3;
+                }
                 
                 // Generate testimonial text
                 const testimonialText = testimonialTexts[Math.floor(Math.random() * testimonialTexts.length)];
                 
                 return {
                     name: fullName,
-                    badges: userBadges,
+                    transactionId: transactionId,
                     type: transactionType,
                     subtype: transactionSubtype,
                     text: testimonialText,
@@ -954,11 +939,17 @@
                 return badgeHTML;
             }
             
+            // Function to generate a transaction ID
+            function generateTransactionID() {
+                const prefix = "RBT";
+                const timestamp = new Date().getTime().toString().slice(-6);
+                const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+                return `${prefix}${timestamp}${random}`;
+            }
+            
             // Function to create testimonial card HTML (optimized)
             function createTestimonialCard(testimonial) {
-                const initials = testimonial.name.split(' ').map(name => name[0]).join('');
                 const starRating = createStarRating(testimonial.rating);
-                const badgeHTML = createBadges(testimonial.badges);
                 
                 // Create the HTML with Schema.org structured data for rich snippets
                 return `
@@ -966,13 +957,16 @@
                         <meta itemprop="datePublished" content="${new Date(testimonial.date).toISOString()}">
                         <meta itemprop="reviewRating" content="${testimonial.rating}">
                         <div class="testimonial-header">
-                            <div class="avatar">${initials}</div>
                             <div class="user-info">
                                 <div class="user-name" itemprop="author" itemscope itemtype="https://schema.org/Person">
                                     <span itemprop="name">${testimonial.name}</span>
-                                    ${badgeHTML}
                                 </div>
-                                <div class="transaction-type" itemprop="about">${testimonial.subtype}</div>
+                                <div class="transaction-type" itemprop="about">
+                                    <strong>ID Transaksi:</strong> ${testimonial.transactionId}
+                                </div>
+                                <div class="transaction-type" itemprop="about">
+                                    <strong>Item:</strong> ${testimonial.subtype}
+                                </div>
                                 <div class="rating" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
                                     <meta itemprop="worstRating" content="1">
                                     <meta itemprop="bestRating" content="5">
@@ -1003,9 +997,16 @@
                 
                 // Generate random testimonials
                 const allTestimonials = [];
-                for (let i = 0; i < 100; i++) {
+                for (let i = 0; i < 500; i++) {
                     allTestimonials.push(generateRandomTransaction());
                 }
+                
+                // Sort by date (newest first)
+                allTestimonials.sort((a, b) => {
+                    const dateA = new Date(a.date.split(' ').reverse().join('-'));
+                    const dateB = new Date(b.date.split(' ').reverse().join('-'));
+                    return dateB - dateA;
+                });
                 
                 // Filter testimonials
                 let filteredTestimonials = allTestimonials;
@@ -1022,7 +1023,8 @@
                             t.name.toLowerCase().includes(searchLower) ||
                             t.type.toLowerCase().includes(searchLower) ||
                             t.subtype.toLowerCase().includes(searchLower) ||
-                            t.text.toLowerCase().includes(searchLower)
+                            t.text.toLowerCase().includes(searchLower) ||
+                            t.transactionId.toLowerCase().includes(searchLower)
                         );
                     });
                 }
