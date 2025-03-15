@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rekber Admin Panel</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding-top: 100px;
+        }
+        .transaction-details {
+            display: none;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <!-- Login Panel -->
+    <div id="login-panel" class="login-container">
+        <div class="bg-white rounded-lg shadow-md overflow-hidden">
+            <div class="bg-blue-600 text-white px-6 py-4">
+                <h2 class="text-xl font-semibold">Rekber Admin Login</h2>
+                <p class="text-sm text-blue-100">Masuk untuk akses database transaksi</p>
+            </div>
+            
+            <div class="p-6">
+                <form id="login-form" class="space-y-4">
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+                        <input type="text" id="username" name="username" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <input type="password" id="password" name="password" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                    </div>
+                    
+                    <div id="login-error" class="text-red-600 text-sm hidden">
+                        Username atau password salah. Silakan coba lagi.
+                    </div>
+                    
+                    <div class="text-center mt-6">
+                        <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            Login
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-panel" class="hidden">
+        <nav class="bg-blue-600 text-white shadow-md">
+            <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+                <div class="flex items-center">
+                    <i class="fas fa-exchange-alt text-xl mr-2"></i>
+                    <span class="text-xl font-bold">REKBER ADMIN</span>
+                </div>
+                <div>
+                    <button id="logout-btn" class="bg-white text-blue-600 hover:bg-blue-50 px-3 py-1 rounded-md text-sm font-medium">
+                        <i class="fas fa-sign-out-alt mr-1"></i> Logout
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container mx-auto px-4 py-8">
+            <div class="bg-white rounded-lg shadow-md overflow-hidden mb-8">
+                <div class="bg-blue-600 text-white px-6 py-4 flex justify-between items-center">
+                    <div>
+                        <h2 class="text-xl font-semibold">Database Transaksi</h2>
+                        <p class="text-sm text-blue-100">Manajemen semua transaksi Rekber</p>
+                    </div>
+                    <div class="flex space-x-2">
+                        <button id="refresh-btn" class="bg-blue-500 hover:bg-blue-400 text-white px-3 py-1 rounded-md text-sm">
+                            <i class="fas fa-sync-alt mr-1"></i> Refresh
+                        </button>
+                        <button id="export-btn" class="bg-green-500 hover:bg-green-400 text-white px-3 py-1 rounded-md text-sm">
+                            <i class="fas fa-file-export mr-1"></i> Export CSV
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="p-6">
+                    <div class="mb-4 flex flex-wrap gap-2">
+                        <div class="w-72">
+                            <label for="search" class="block text-sm font-medium text-gray-700 mb-1">Cari Transaksi</label>
+                            <div class="relative">
+                                <input type="text" id="search" placeholder="ID Transaksi / Nama Penjual / Pembeli" class="pl-10 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-search text-gray-400"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="w-48">
+                            <label for="status-filter" class="block text-sm font-medium text-gray-700 mb-1">Filter Status</label>
+                            <select id="status-filter" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
+                                <option value="all">Semua Status</option>
+                                <option value="pending">Pending</option>
+                                <option value="verified">Terverifikasi</option>
+                                <option value="paid">Dibayar</option>
+                                <option value="shipped">Dikirim</option>
+                                <option value="completed">Selesai</option>
+                                <option value="cancelled">Dibatalkan</option>
+                            </select>
+                        </div>
+                        
+                        <div class="w-48">
+                            <label for="date-filter" class="block text-sm font-medium text-gray-700 mb-1">Filter Tanggal</label>
+                            <select id="date-filter" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
+                                <option value="all">Semua Waktu</option>
+                                <option value="today">Hari Ini</option>
+                                <option value="yesterday">Kemarin</option>
+                                <option value="week">Minggu Ini</option>
+                                <option value="month">Bulan Ini</option>
+                                <option value="custom">Kustom...</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID Transaksi</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tanggal</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Penjual</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Pembeli</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Deskripsi</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Jumlah</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                                    <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody id="transactions-table" class="bg-white divide-y divide-gray-200">
+                                <!-- Transactions will be loaded here -->
+                                <tr class="text-center">
+                                    <td colspan="8" class="px-6 py-4 text-sm text-gray-500">
+                                        Memuat data transaksi...
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-4 flex items-center justify-between">
+                        <div class="text-sm text-gray-500">
+                            Menampilkan <span id="showing-entries">0</span> dari <span id="total-entries">0</span> transaksi
+                        </div>
+                        <div class="flex space-x-2">
+                            <button id="prev-page" class="px-3 py-1 border border-gray-300 rounded-md text-sm text-gray-600 disabled:opacity-50">
+                                <i class="fas fa-chevron-left"></i> Prev
+                            </button>
+                            <span id="pagination-info" class="px-3 py-1 text-sm">
+                                Halaman <span id="current-page">1</span> dari <span id="total-pages">1</span>
+                            </span>
+                            <button id="next-page" class="px-3 py-1 border border-gray-300 rounded-md text-sm text-gray-600 disabled:opacity-50">
+                                Next <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Transaction Details Modal -->
+    <div id="transaction-details-modal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden z-50">
+        <div class="bg-white rounded-lg shadow-lg w-full max-w-4xl max-h-screen overflow-y-auto">
+            <div class="bg-blue-600 text-white px-6 py-4 flex justify-between items-center sticky top-0">
+                <h3 class="text-lg font-semibold">Detail Transaksi <span id="detail-transaction-id" class="ml-2"></span></h3>
+                <button id="close-details" class="text-white hover:text-blue-200">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="text-lg font-medium text-gray-700 mb-3 border-b pb-2">Informasi Transaksi</h4>
+                        <div class="space-y-2">
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-500">ID Transaksi:</span>
+                                <span id="detail-id" class="text-sm font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-500">Tanggal:</span>
+                                <span id="detail-date" class="text-sm"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-500">Status:</span>
+                                <span id="detail-status" class="text-sm font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-500">Jumlah:</span>
+                                <span id="detail-amount" class="text-sm font-medium"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-500">Biaya Admin:</span>
+                                <span id="detail-fee" class="text-sm"></span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-sm text-gray-500">Total:</span>
+                                <span id="detail-total" class="text-sm font-medium"></span>
+                            </div>
+                        </div>
+                        
+                        <h4 class="text-lg font-medium text-gray-700 mt-6 mb-3 border-b pb-2">Deskripsi Barang/Jasa</h4>
+                        <p id="detail-description" class="text-sm"></p>
+                    </div>
+                    
+                    <div>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <h4 class="text-lg font-medium text-gray-700 mb-3 border-b pb-2">Data Penjual</h4>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-gray-500">Nama:</span>
+                                        <span id="detail-seller-name" class="text-sm"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-gray-500">Kontak:</span>
+                                        <a id="detail-seller-contact" href="#" class="text-sm text-blue-600 hover:text-blue-800"></a>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-gray-500">Bank:</span>
+                                        <span id="detail-seller-bank" class="text-sm"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-gray-500">No. Rekening:</span>
+                                        <span id="detail-seller-account" class="text-sm"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4 class="text-lg font-medium text-gray-700 mb-3 border-b pb-2">Data Pembeli</h4>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-gray-500">Nama:</span>
+                                        <span id="detail-buyer-name" class="text-sm"></span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-gray-500">Kontak:</span>
+                                        <a id="detail-buyer-contact" href="#" class="text-sm text-blue-600 hover:text-blue-800"></a>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-sm text-gray-500">Email:</span>
+                                        <a id="detail-buyer-email" href="#" class="text-sm text-blue-600 hover:text-blue-800"></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="text-lg font-medium text-gray-700 mt-6 mb-3 border-b pb-2">Riwayat Status</h4>
+                        <div id="detail-history" class="space-y-3">
+                            <!-- Status history will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-8 border-t border-gray-200 pt-4">
+                    <h4 class="text-lg font-medium text-gray-700 mb-3">Update Status Transaksi</h4>
+                    <div class="flex space-x-2">
+                        <select id="status-update" class="block rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm">
+                            <option value="pending">Pending</option>
+                            <option value="verified">Terverifikasi</option>
+                            <option value="paid">Dibayar</option>
+                            <option value="shipped">Dikirim</option>
+                            <option value="completed">Selesai</option>
+                            <option value="cancelled">Dibatalkan</option>
+                        </select>
+                        <button id="update-status-btn" class="px-3 py-1 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700">
+                            Update Status
+                        </button>
+                    </div>
+                    
+                    <div class="mt-4 flex space-x-2">
+                        <textarea id="status-notes" placeholder="Catatan (opsional)" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border text-sm"></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const loginPanel = document.getElementById('login-panel');
+            const adminPanel = document.getElementById('admin-panel');
+            const loginForm = document.getElementById('login-form');
+            const loginError = document.getElementById('login-error');
+            const logoutBtn = document.getElementById('logout-btn');
+            const refreshBtn = document.getElementById('refresh-btn');
+            const exportBtn = document.getElementById('export-btn');
+            const searchInput = document.getElementById('search');
+            const statusFilter = document.getElementById('status-filter');
+            const dateFilter = document.getElementById('date-filter');
+            const transactionsTable = document.getElementById('transactions-table');
+            const showingEntries = document.getElementById('showing-entries');
+            const totalEntries = document.getElementById('total-entries');
+            const currentPage = document.getElementById('current-page');
+            const totalPages = document.getElementById('total-pages');
+            const prevPageBtn = document.getElementById('prev-page');
+            const nextPageBtn = document.getElementById('next-page');
+            
+            // Transaction Details Elements
+            const detailsModal = document.getElementById('transaction-details-modal');
+            const closeDetailsBtn = document.getElementById('close-details');
+            const detailTransactionId = document.getElementById('detail-transaction-id');
+            const detailId = document.getElementById('detail-id');
+            const detailDate = document.getElementById('detail-date');
+            const detailStatus = document.getElementById('detail-status');
+            const detailAmount = document.getElementById('detail-amount');
+            const detailFee = document.getElementById('detail-fee');
+            const detailTotal = document.getElementById('detail-total');
+            const detailDescription = document.getElementById('detail-description');
+            const detailSellerName = document.getElementById('detail-seller-name');
+            const detailSellerContact = document.getElementById('detail-seller-contact');
+            const detailSellerBank = document.getElementById('detail-seller-bank');
+            const detailSellerAccount = document.getElementById('detail-seller-account');
+            const detailBuyerName = document.getElementById('detail-buyer-name');
+            const detailBuyerContact = document.getElementById('detail-buyer-contact');
+            const detailBuyerEmail = document.getElementById('detail-buyer-email');
+            const detailHistory = document.getElementById('detail-history');
+            const statusUpdate = document.getElementById('status-update');
+            const statusNotes = document.getElementById('status-notes');
+            const updateStatusBtn = document.getElementById('update-status-btn');
+            
+            // Admin credentials - in a real app these would be stored server-side
+            // These are encrypted in this demo, but in a real app would use proper authentication
+            const ADMIN_USERNAME = 'admin'; // Change this
+            const ADMIN_PASSWORD = 'securepassword123'; // Change this
+            const ADMIN_PASSWORD_HASH = CryptoJS.SHA256(ADMIN_PASSWORD).toString();
+            
+            // Variables for pagination
+            let currentPageNum = 1;
+            let itemsPerPage = 10;
+            let filteredTransactions = [];
+            let currentTransactionDetail = null;
+            
+            // Check if user is already logged in
+            checkLoginStatus();
+            
+            // Handle login form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const passwordHash = CryptoJS.SHA256(password).toString();
+                
+                if (username === ADMIN_USERNAME && passwordHash === ADMIN_PASSWORD_HASH) {
+                    // Set login session
+                    localStorage.setItem('rekber_admin_session', JSON.stringify({
+                        username: username,
+                        timestamp: new Date().getTime(),
+                        // This is a simple session token for demo purposes
+                        // In a real app, use a proper server-side authentication
+                        token: CryptoJS.SHA256(username + new Date().getTime()).toString()
+                    }));
+                    
+                    // Show admin panel
+                    showAdminPanel();
+                } else {
+                    // Show error
+                    loginError.classList.remove('hidden');
+                }
+            });
+            
+            // Handle logout
+            logoutBtn.addEventListener('click', function() {
+                localStorage.removeItem('rekber_admin_session');
+                showLoginPanel();
+            });
+            
+            // Handle refresh button
+            refreshBtn.addEventListener('click', function() {
+                loadTransactions();
+            });
+            
+            // Handle export button
+            exportBtn.addEventListener('click', function() {
+                exportToCSV();
+            });
+            
+            // Handle search input
+            searchInput.addEventListener('input', function() {
+                currentPageNum = 1;
+                filterTransactions();
+            });
+            
+            // Handle status filter
+            statusFilter.addEventListener('change', function() {
+                currentPageNum = 1;
+                filterTransactions();
+            });
+            
+            // Handle date filter
+            dateFilter.addEventListener('change', function() {
+                currentPageNum = 1;
+                filterTransactions();
+            });
+            
+            // Handle pagination
+            prevPageBtn.addEventListener('click', function() {
+                if (currentPageNum > 1) {
+                    currentPageNum--;
+                    renderTransactions();
+                }
+            });
+            
+            nextPageBtn.addEventListener('click', function() {
+                if (currentPageNum < Math.ceil(filteredTransactions.length / itemsPerPage)) {
+                    currentPageNum++;
+                    renderTransactions();
+                }
+            });
+            
+            // Handle close details button
+            closeDetailsBtn.addEventListener('click', function() {
+                detailsModal.classList.add('hidden');
+                currentTransactionDetail = null;
+            });
+            
+            // Handle update status button
+            updateStatusBtn.addEventListener('click', function() {
+                if (currentTransactionDetail) {
+                    updateTransactionStatus(
+                        currentTransactionDetail.id, 
+                        statusUpdate.value, 
+                        statusNotes.value
+                    );
+                }
+            });
+            
+            // Check login status
+            function checkLoginStatus() {
+                const session = JSON.parse(localStorage.getItem('rekber_admin_session') || 'null');
+                
+                if (session && session.username === ADMIN_USERNAME) {
+                    // Check if session is not expired (24 hours)
+                    const now = new Date().getTime();
+                    const sessionTime = session.timestamp;
+                    const sessionDuration = 24 * 60 * 60 * 1000; // 24 hours
+                    
+                    if (now - sessionTime < sessionDuration) {
+                        // Valid session
+                        showAdminPanel();
+                        return;
+                    }
+                }
+                
+                // No valid session
+                showLoginPanel();
+            }
+            
+            // Show login panel
+            function showLoginPanel() {
+                loginPanel.style.display = 'block';
+                adminPanel.classList.add('hidden');
+                // Clear the form
+                loginForm.reset();
+                loginError.classList.add('hidden');
+            }
+            
+            // Show admin panel
+            function showAdminPanel() {
+                loginPanel.style.display = 'none';
+                adminPanel.classList.remove('hidden');
+                // Load transactions
+                loadTransactions();
+            }
+            
+            // Load transactions from localStorage
+            function loadTransactions() {
+                let transactions = JSON.parse(localStorage.getItem('rekber-transactions') || '[]');
+                
+                // Sort by timestamp (newest first)
+                transactions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                
+                // Apply filters
+                filterTransactions(transactions);
+            }
+            
+            // Filter transactions
+            function filterTransactions(transactions = null) {
+                if (!transactions) {
+                    transactions = JSON.parse(localStorage.getItem('rekber-transactions') || '[]');
+                    transactions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+                }
+                
+                const searchTerm = searchInput.value.toLowerCase();
+                const statusValue = statusFilter.value;
+                const dateValue = dateFilter.value;
+                
+                filteredTransactions = transactions.filter(transaction => {
+                    // Search filter
+                    const matchesSearch = !searchTerm || 
+                        transaction.id.toLowerCase().includes(searchTerm) ||
+                        transaction.sellerName.toLowerCase().includes(searchTerm) ||
+                        transaction.buyerName.toLowerCase().includes(searchTerm);
+                    
+                    // Status filter
+                    const matchesStatus = statusValue === 'all' || transaction.status === statusValue;
+                    
+                    // Date filter
+                    let matchesDate = true;
+                    if (dateValue !== 'all') {
+                        const transactionDate = new Date(transaction.timestamp);
+                        const today = new Date();
+                        today.setHours(0, 0, 0, 0);
+                        
+                        if (dateValue === 'today') {
+                            const tomorrow = new Date(today);
+                            tomorrow.setDate(tomorrow.getDate() + 1);
+                            matchesDate = transactionDate >= today && transactionDate < tomorrow;
+                        } else if (dateValue === 'yesterday') {
+                            const yesterday = new Date(today);
+                            yesterday.setDate(yesterday.getDate() - 1);
+                            matchesDate = transactionDate >= yesterday && transactionDate < today;
+                        } else if (dateValue === 'week') {
+                            const weekStart = new Date(today);
+                            weekStart.setDate(weekStart.getDate() - weekStart.getDay());
+                            matchesDate = transactionDate >= weekStart;
+                        } else if (dateValue === 'month') {
+                            const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+                            matchesDate = transactionDate >= monthStart;
+                        }
+                    }
+                    
+                    return matchesSearch && matchesStatus && matchesDate;
+                });
+                
+                // Render the filtered transactions
+                renderTransactions();
+            }
+            
+            // Render transactions
+            function renderTransactions() {
+                const startIndex = (currentPageNum - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                const displayedTransactions = filteredTransactions.slice(startIndex, endIndex);
+                
+                // Clear table
+                transactionsTable.innerHTML = '';
+                
+                if (displayedTransactions.length === 0) {
+                    transactionsTable.innerHTML = `
+                        <tr class="text-center">
+                            <td colspan="8" class="px-6 py-4 text-sm text-gray-500">
+                                Tidak ada transaksi yang ditemukan
+                            </td>
+                        </tr>
+                    `;
+                } else {
+                    // Add transactions to table
+                    displayedTransactions.forEach(transaction => {
+                        const row = document.createElement('tr');
+                        row.className = 'hover:bg-gray-50';
+                        
+                        // Format date
+                        const date = new Date(transaction.timestamp);
+                        const formattedDate = date.toLocaleDateString('id-ID', {
+                            day: '2-digit',
+                            month: '2-digit',
+                            year: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                        });
+                        
+                        // Format amount
+                        const formattedAmount = new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR',
+                            minimumFractionDigits: 0
+                        }).format(transaction.amount);
+                        
+                        // Generate status badge
+                        let statusBadge = '';
+                        switch(transaction.status) {
+                            case 'pending':
+                                statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Pending</span>';
+                                break;
+                            case 'verified':
+                                statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Terverifikasi</span>';
+                                break;
+                            case 'paid':
+                                statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Dibayar</span>';
+                                break;
+                            case 'shipped':
+                                statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">Dikirim</span>';
+                                break;
+                            case 'completed':
+                                statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Selesai</span>';
+                                break;
+                            case 'cancelled':
+                                statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Dibatalkan</span>';
+                                break;
+                            default:
+                                statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">Unknown</span>';
+                        }
+                        
+                        // Truncate description
+                        const truncatedDesc = transaction.itemDescription.length > 30 
+                            ? transaction.itemDescription.substring(0, 30) + '...'
+                            : transaction.itemDescription;
+                        
+                        row.innerHTML = `
+                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600">
+                                ${transaction.id}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                ${formattedDate}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                ${transaction.sellerName}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                ${transaction.buyerName}
+                            </td>
+                            <td class="px-6 py-4 text-sm text-gray-500">
+                                ${truncatedDesc}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                ${formattedAmount}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                ${statusBadge}
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                <button class="view-details text-blue-600 hover:text-blue-800 mr-2" data-id="${transaction.id}">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="delete-transaction text-red-600 hover:text-red-800" data-id="${transaction.id}">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </td>
+                        `;
+                        
+                        transactionsTable.appendChild(row);
+                    });
+                    
+                    // Add event listeners to view details buttons
+                    document.querySelectorAll('.view-details').forEach(button => {
+                        button.addEventListener('click', function() {
+                            const transactionId = this.getAttribute('data-id');
+                            showTransactionDetails(transactionId);
+                        });
+                    });
+                    
+                    // Add event listeners to delete buttons
+                    document.querySelectorAll('.delete-transaction').forEach(button => {
+                        button.addEventListener('click', function() {
+                            const transactionId = this.getAttribute('data-id');
+                            if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
+                                deleteTransaction(transactionId);
+                            }
+                        });
+                    });
+                }
+                
+                // Update pagination info
+                showingEntries.textContent = filteredTransactions.length > 0 
+                    ? `${startIndex + 1}-${Math.min(endIndex, filteredTransactions.length)}`
+                    : '0';
+                totalEntries.textContent = filteredTransactions.length;
+                currentPage.textContent = currentPageNum;
+                totalPages.textContent = Math.max(1, Math.ceil(filteredTransactions.length / itemsPerPage));
+                
+                // Update pagination buttons
+                prevPageBtn.disabled = currentPageNum === 1;
+                nextPageBtn.disabled = currentPageNum >= Math.ceil(filteredTransactions.length / itemsPerPage);
+            }
+            
+            // Show transaction details
+            function showTransactionDetails(transactionId) {
+                // Find transaction
+                let transactions = JSON.parse(localStorage.getItem('rekber-transactions') || '[]');
+                const transaction = transactions.find(t => t.id === transactionId);
+                
+                if (!transaction) return;
+                
+                // Store current transaction
+                currentTransactionDetail = transaction;
+                
+                // Format date
+                const date = new Date(transaction.timestamp);
+                const formattedDate = date.toLocaleDateString('id-ID', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                
+                // Format amount
+                const amount = parseInt(transaction.amount);
+                const formattedAmount = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(amount);
+                
+                // Calculate fee
+                let fee = amount * 0.01; // 1% fee
+                fee = Math.max(10000, fee); // Minimum fee: Rp 10,000
+                fee = Math.min(100000, fee); // Maximum fee: Rp 100,000
+                
+                const formattedFee = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(fee);
+                
+                // Calculate total
+                const total = amount + fee;
+                const formattedTotal = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0
+                }).format(total);
+                
+                // Format status
+                let statusText = '';
+                let statusClass = '';
+                
+                switch(transaction.status) {
+                    case 'pending':
+                        statusText = 'Pending';
+                        statusClass = 'text-yellow-600';
+                        break;
+                    case 'verified':
+                        statusText = 'Terverifikasi';
+                        statusClass = 'text-blue-600';
+                        break;
+                    case 'paid':
+                        statusText = 'Dibayar';
+                        statusClass = 'text-green-600';
+                        break;
+                    case 'shipped':
+                        statusText = 'Dikirim';
+                        statusClass = 'text-purple-600';
+                        break;
+                    case 'completed':
+                        statusText = 'Selesai';
+                        statusClass = 'text-green-600';
+                        break;
+                    case 'cancelled':
+                        statusText = 'Dibatalkan';
+                        statusClass = 'text-red-600';
+                        break;
+                    default:
+                        statusText = 'Unknown';
+                        statusClass = 'text-gray-600';
+                }
+                
+                // Fill transaction details
+                detailTransactionId.textContent = transaction.id;
+                detailId.textContent = transaction.id;
+                detailDate.textContent = formattedDate;
+                detailStatus.textContent = statusText;
+                detailStatus.className = `text-sm font-medium ${statusClass}`;
+                detailAmount.textContent = formattedAmount;
+                detailFee.textContent = formattedFee;
+                detailTotal.textContent = formattedTotal;
+                detailDescription.textContent = transaction.itemDescription;
+                
+                // Fill seller details
+                detailSellerName.textContent = transaction.sellerName;
+                detailSellerContact.textContent = '+62' + transaction.sellerContact;
+                detailSellerContact.href = `https://wa.me/62${transaction.sellerContact}`;
+                detailSellerBank.textContent = transaction.sellerBank || '-';
+                detailSellerAccount.textContent = transaction.sellerAccount || '-';
+                
+                // Fill buyer details
+                detailBuyerName.textContent = transaction.buyerName;
+                detailBuyerContact.textContent = '+62' + transaction.buyerContact;
+                detailBuyerContact.href = `https://wa.me/62${transaction.buyerContact}`;
+                detailBuyerEmail.textContent = transaction.buyerEmail || '-';
+                detailBuyerEmail.href = transaction.buyerEmail ? `mailto:${transaction.buyerEmail}` : '#';
+                
+                // Fill status history
+                detailHistory.innerHTML = '';
+                
+                // Add history entries (mock data for now)
+                const mockHistory = [
+                    { status: 'pending', date: new Date(transaction.timestamp), notes: 'Transaksi dibuat oleh sistem' }
+                ];
+                
+                // Add additional mocked history based on current status
+                const statusOrder = ['pending', 'verified', 'paid', 'shipped', 'completed'];
+                const statusIndex = statusOrder.indexOf(transaction.status);
+                
+                if (statusIndex > 0) {
+                    // Add verified status
+                    mockHistory.push({
+                        status: 'verified',
+                        date: new Date(date.getTime() + 1 * 60 * 60 * 1000), // +1 hour
+                        notes: 'Transaksi telah diverifikasi oleh admin'
+                    });
+                }
+                
+                if (statusIndex > 1) {
+                    // Add paid status
+                    mockHistory.push({
+                        status: 'paid',
+                        date: new Date(date.getTime() + 3 * 60 * 60 * 1000), // +3 hours
+                        notes: 'Pembayaran telah diterima'
+                    });
+                }
+                
+                if (statusIndex > 2) {
+                    // Add shipped status
+                    mockHistory.push({
+                        status: 'shipped',
+                        date: new Date(date.getTime() + 24 * 60 * 60 * 1000), // +1 day
+                        notes: 'Barang telah dikirim oleh penjual'
+                    });
+                }
+                
+                if (statusIndex > 3) {
+                    // Add completed status
+                    mockHistory.push({
+                        status: 'completed',
+                        date: new Date(date.getTime() + 3 * 24 * 60 * 60 * 1000), // +3 days
+                        notes: 'Transaksi selesai, dana telah dicairkan ke penjual'
+                    });
+                }
+                
+                if (transaction.status === 'cancelled') {
+                    // Add cancelled status
+                    mockHistory.push({
+                        status: 'cancelled',
+                        date: new Date(date.getTime() + 6 * 60 * 60 * 1000), // +6 hours
+                        notes: 'Transaksi dibatalkan oleh admin'
+                    });
+                }
+                
+                // Render history
+                mockHistory.forEach(history => {
+                    const historyDate = history.date.toLocaleDateString('id-ID', {
+                        day: '2-digit',
+                        month: '2-digit',
+                        year: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    });
+                    
+                    let statusColor = '';
+                    switch(history.status) {
+                        case 'pending': statusColor = 'text-yellow-600'; break;
+                        case 'verified': statusColor = 'text-blue-600'; break;
+                        case 'paid': statusColor = 'text-green-600'; break;
+                        case 'shipped': statusColor = 'text-purple-600'; break;
+                        case 'completed': statusColor = 'text-green-600'; break;
+                        case 'cancelled': statusColor = 'text-red-600'; break;
+                        default: statusColor = 'text-gray-600';
+                    }
+                    
+                    const historyItem = document.createElement('div');
+                    historyItem.className = 'flex items-start';
+                    historyItem.innerHTML = `
+                        <div class="mr-3 mt-1">
+                            <div class="w-2 h-2 rounded-full ${statusColor.replace('text-', 'bg-')}"></div>
+                        </div>
+                        <div>
+                            <div class="flex items-center">
+                                <span class="font-medium ${statusColor} mr-2">${getStatusName(history.status)}</span>
+                                <span class="text-xs text-gray-500">${historyDate}</span>
+                            </div>
+                            <p class="text-sm text-gray-600">${history.notes}</p>
+                        </div>
+                    `;
+                    
+                    detailHistory.appendChild(historyItem);
+                });
+                
+                // Set current status in select
+                statusUpdate.value = transaction.status;
+                statusNotes.value = '';
+                
+                // Show modal
+                detailsModal.classList.remove('hidden');
+            }
+            
+            // Update transaction status
+            function updateTransactionStatus(transactionId, newStatus, notes) {
+                // Find transaction
+                let transactions = JSON.parse(localStorage.getItem('rekber-transactions') || '[]');
+                const transactionIndex = transactions.findIndex(t => t.id === transactionId);
+                
+                if (transactionIndex === -1) return;
+                
+                // Update status
+                transactions[transactionIndex].status = newStatus;
+                
+                // Add status history if needed in a real app
+                
+                // Save updated transactions
+                localStorage.setItem('rekber-transactions', JSON.stringify(transactions));
+                
+                // Show success message
+                alert('Status transaksi berhasil diperbarui!');
+                
+                // Refresh transaction details
+                showTransactionDetails(transactionId);
+                
+                // Refresh transaction list
+                filterTransactions();
+            }
+            
+            // Delete transaction
+            function deleteTransaction(transactionId) {
+                // Find transaction
+                let transactions = JSON.parse(localStorage.getItem('rekber-transactions') || '[]');
+                const filteredTransactions = transactions.filter(t => t.id !== transactionId);
+                
+                // Save updated transactions
+                localStorage.setItem('rekber-transactions', JSON.stringify(filteredTransactions));
+                
+                // Show success message
+                alert('Transaksi berhasil dihapus!');
+                
+                // Refresh transaction list
+                filterTransactions();
+            }
+            
+            // Export to CSV
+            function exportToCSV() {
+                // Get filtered transactions
+                const transactions = filteredTransactions;
+                
+                if (transactions.length === 0) {
+                    alert('Tidak ada data untuk diekspor');
+                    return;
+                }
+                
+                // Define CSV header
+                const headers = [
+                    'ID Transaksi',
+                    'Tanggal',
+                    'Penjual',
+                    'Kontak Penjual',
+                    'Bank Penjual',
+                    'Rekening Penjual',
+                    'Pembeli',
+                    'Kontak Pembeli',
+                    'Email Pembeli',
+                    'Deskripsi Barang/Jasa',
+                    'Jumlah (Rp)',
+                    'Status'
+                ];
+                
+                // Create CSV rows
+                const rows = transactions.map(transaction => [
+                    transaction.id,
+                    new Date(transaction.timestamp).toLocaleString(),
+                    transaction.sellerName,
+                    '+62' + transaction.sellerContact,
+                    transaction.sellerBank || '-',
+                    transaction.sellerAccount || '-',
+                    transaction.buyerName,
+                    '+62' + transaction.buyerContact,
+                    transaction.buyerEmail || '-',
+                    transaction.itemDescription,
+                    transaction.amount,
+                    getStatusName(transaction.status)
+                ]);
+                
+                // Combine header and rows
+                const csvContent = [
+                    headers.join(','),
+                    ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+                ].join('\n');
+                
+                // Create download link
+                const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.setAttribute('href', url);
+                link.setAttribute('download', `rekber_transactions_${new Date().toISOString().slice(0, 10)}.csv`);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+            
+            // Helper function to get status name
+            function getStatusName(status) {
+                switch(status) {
+                    case 'pending': return 'Pending';
+                    case 'verified': return 'Terverifikasi';
+                    case 'paid': return 'Dibayar';
+                    case 'shipped': return 'Dikirim';
+                    case 'completed': return 'Selesai';
+                    case 'cancelled': return 'Dibatalkan';
+                    default: return 'Unknown';
+                }
+            }
+        });
+    </script>
+</body>
+</html>
