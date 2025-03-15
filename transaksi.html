@@ -434,128 +434,6 @@
             border-color: var(--success-color);
         }
         
-        /* Result Page Styles */
-        .result-container {
-            text-align: center;
-            padding: 40px 30px;
-        }
-        
-        .success-circle {
-            width: 100px;
-            height: 100px;
-            background-color: var(--success-color);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 0 auto 30px;
-            font-size: 42px;
-            animation: scaleIn 0.5s ease forwards;
-        }
-        
-        @keyframes scaleIn {
-            from {
-                transform: scale(0);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-        
-        .transaction-id {
-            font-size: 1.8rem;
-            color: var(--primary-color);
-            margin: 25px 0;
-            padding: 20px;
-            background-color: var(--primary-light);
-            border-radius: 12px;
-            border: 2px dashed var(--primary-color);
-            font-weight: 600;
-            letter-spacing: 1px;
-            position: relative;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .copy-btn {
-            position: absolute;
-            right: 10px;
-            top: 10px;
-            background: rgba(255, 255, 255, 0.8);
-            border: none;
-            border-radius: 4px;
-            width: 30px;
-            height: 30px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-        
-        .copy-btn:hover {
-            background: white;
-            box-shadow: var(--shadow-sm);
-        }
-        
-        .copy-tooltip {
-            position: absolute;
-            right: 45px;
-            top: 10px;
-            background: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            pointer-events: none;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .contact-btn {
-            background-color: #4267B2;
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            font-size: 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            margin-top: 30px;
-            transition: var(--transition);
-            box-shadow: var(--shadow-md);
-        }
-        
-        .contact-btn i {
-            margin-right: 10px;
-            font-size: 1.2rem;
-        }
-        
-        .contact-btn:hover {
-            background-color: #365899;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-        }
-        
-        .new-transaction {
-            color: var(--primary-color);
-            margin-top: 30px;
-            display: inline-block;
-            font-weight: 500;
-            transition: var(--transition);
-            text-decoration: none;
-        }
-        
-        .new-transaction:hover {
-            color: #2c4ba3;
-            text-decoration: underline;
-        }
-        
         /* Form sections */
         .form-section {
             display: none;
@@ -597,6 +475,217 @@
         
         .next-btn:hover {
             background-color: #2c4ba3;
+        }
+        
+        /* Result Page Styles */
+        .result-container {
+            text-align: center;
+            padding: 40px 30px;
+        }
+        
+        .success-circle {
+            width: 100px;
+            height: 100px;
+            background-color: var(--success-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 30px;
+            font-size: 42px;
+            animation: scaleIn 0.5s ease forwards;
+        }
+        
+        @keyframes scaleIn {
+            from {
+                transform: scale(0);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .transaction-details {
+            margin: 30px 0;
+            text-align: left;
+        }
+        
+        .detail-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: var(--shadow-sm);
+            padding: 16px 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-color);
+            animation: fadeIn 0.6s ease forwards;
+            animation-delay: calc(var(--anim-order) * 0.1s);
+            opacity: 0;
+        }
+        
+        .detail-card:nth-child(1) {
+            --anim-order: 1;
+            border-left-color: var(--primary-color);
+        }
+        
+        .detail-card:nth-child(2) {
+            --anim-order: 2;
+            border-left-color: var(--accent-color);
+        }
+        
+        .detail-card:nth-child(3) {
+            --anim-order: 3;
+            border-left-color: #9c27b0;
+        }
+        
+        .detail-card:nth-child(4) {
+            --anim-order: 4;
+            border-left-color: var(--success-color);
+        }
+        
+        .detail-card h3 {
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+            color: var(--text-color);
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .detail-row {
+            display: flex;
+            margin-bottom: 12px;
+            align-items: flex-start;
+        }
+        
+        .detail-row:last-child {
+            margin-bottom: 0;
+        }
+        
+        .detail-label {
+            flex: 0 0 35%;
+            font-weight: 500;
+            color: var(--text-light);
+            padding-right: 15px;
+        }
+        
+        .detail-value {
+            flex: 0 0 65%;
+            word-break: break-word;
+        }
+        
+        .transaction-id {
+            font-size: 1.4rem;
+            color: var(--primary-color);
+            margin: 10px 0;
+            padding: 16px;
+            background-color: var(--primary-light);
+            border-radius: 8px;
+            border: 2px dashed var(--primary-color);
+            font-weight: 600;
+            letter-spacing: 1px;
+            position: relative;
+            text-align: center;
+        }
+        
+        .copy-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border: none;
+            border-radius: 4px;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .copy-btn:hover {
+            background: white;
+            box-shadow: var(--shadow-sm);
+        }
+        
+        .copy-tooltip {
+            position: absolute;
+            right: 45px;
+            top: 10px;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .button-group {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .contact-btn {
+            background-color: #4267B2;
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow-md);
+            text-decoration: none;
+        }
+        
+        .contact-btn i {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .contact-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .whatsapp-btn {
+            background-color: #25D366;
+        }
+        
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+        }
+        
+        .facebook-btn {
+            background-color: #4267B2;
+        }
+        
+        .facebook-btn:hover {
+            background-color: #365899;
+        }
+        
+        .new-transaction {
+            color: var(--primary-color);
+            margin-top: 30px;
+            display: inline-block;
+            font-weight: 500;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+        
+        .new-transaction:hover {
+            color: #2c4ba3;
+            text-decoration: underline;
         }
         
         /* Modal */
@@ -953,21 +1042,89 @@
                     </div>
                     
                     <h2 id="success-title">Transaksi Berhasil Dibuat!</h2>
-                    <p id="success-message">Silahkan simpan ID Transaksi berikut untuk verifikasi dengan admin kami.</p>
+                    <p id="success-message">Detail transaksi Anda:</p>
                     
-                    <div class="transaction-id" id="transaction-id">
-                        <button class="copy-btn" id="copy-id">
-                            <i class="far fa-copy"></i>
-                        </button>
-                        <span class="copy-tooltip" id="copy-tooltip">Disalin!</span>
+                    <div class="transaction-details">
+                        <div class="detail-card">
+                            <h3 id="personal-details-title">Informasi Pribadi</h3>
+                            <div class="detail-row">
+                                <div class="detail-label" id="summary-buyer-label">Pembeli:</div>
+                                <div class="detail-value" id="summary-buyer-name"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label" id="summary-buyer-contact-label">Kontak Pembeli:</div>
+                                <div class="detail-value" id="summary-buyer-contact"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label" id="summary-seller-label">Penjual:</div>
+                                <div class="detail-value" id="summary-seller-name"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label" id="summary-seller-contact-label">Kontak Penjual:</div>
+                                <div class="detail-value" id="summary-seller-contact"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-card">
+                            <h3 id="transaction-details-title">Detail Transaksi</h3>
+                            <div class="detail-row">
+                                <div class="detail-label" id="summary-item-label">Deskripsi:</div>
+                                <div class="detail-value" id="summary-item-description"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label" id="summary-amount-label">Jumlah:</div>
+                                <div class="detail-value" id="summary-transaction-amount"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label" id="summary-fee-label">Biaya Layanan:</div>
+                                <div class="detail-value" id="summary-fee-amount"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label" id="summary-total-label">Total:</div>
+                                <div class="detail-value" id="summary-total-amount"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-card">
+                            <h3 id="payment-details-title">Informasi Pembayaran</h3>
+                            <div class="detail-row">
+                                <div class="detail-label" id="summary-payment-method-label">Metode:</div>
+                                <div class="detail-value" id="summary-payment-method"></div>
+                            </div>
+                            <div class="detail-row">
+                                <div class="detail-label" id="summary-bank-label">Bank/E-Wallet:</div>
+                                <div class="detail-value" id="summary-bank-name"></div>
+                            </div>
+                            <div class="detail-row" id="notes-row">
+                                <div class="detail-label" id="summary-notes-label">Catatan:</div>
+                                <div class="detail-value" id="summary-transaction-notes"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="detail-card">
+                            <h3 id="transaction-id-title">ID Transaksi</h3>
+                            <div class="transaction-id" id="transaction-id">
+                                <button class="copy-btn" id="copy-id">
+                                    <i class="far fa-copy"></i>
+                                </button>
+                                <span class="copy-tooltip" id="copy-tooltip">Disalin!</span>
+                            </div>
+                        </div>
                     </div>
                     
-                    <p id="contact-info">Klik tombol di bawah untuk menghubungi admin kami untuk verifikasi:</p>
+                    <p id="contact-info">Klik tombol di bawah untuk mengirim detail transaksi ke admin kami:</p>
                     
-                    <a href="https://www.facebook.com/rekber.admin" target="_blank" class="contact-btn">
-                        <i class="fab fa-facebook-f"></i>
-                        <span id="contact-btn-text">Hubungi Admin</span>
-                    </a>
+                    <div class="button-group">
+                        <a href="#" id="whatsapp-btn" class="contact-btn whatsapp-btn" target="_blank">
+                            <i class="fab fa-whatsapp"></i>
+                            <span id="whatsapp-btn-text">Kirim ke WhatsApp</span>
+                        </a>
+                        
+                        <a href="https://www.facebook.com/rekber.admin" target="_blank" class="contact-btn facebook-btn">
+                            <i class="fab fa-facebook-f"></i>
+                            <span id="contact-btn-text">Hubungi via Facebook</span>
+                        </a>
+                    </div>
                     
                     <p><a href="#" id="new-transaction" class="new-transaction">
                         <i class="fas fa-plus-circle"></i> <span id="new-transaction-text">Buat Transaksi Baru</span>
@@ -1043,9 +1200,10 @@
             'notes-label': { id: 'Catatan Tambahan (Opsional)', en: 'Additional Notes (Optional)' },
             'submit-btn-text': { id: 'Buat Transaksi', en: 'Create Transaction' },
             'success-title': { id: 'Transaksi Berhasil Dibuat!', en: 'Transaction Successfully Created!' },
-            'success-message': { id: 'Silahkan simpan ID Transaksi berikut untuk verifikasi dengan admin kami.', en: 'Please save the following Transaction ID for verification with our admin.' },
-            'contact-info': { id: 'Klik tombol di bawah untuk menghubungi admin kami untuk verifikasi:', en: 'Click the button below to contact our admin for verification:' },
-            'contact-btn-text': { id: 'Hubungi Admin', en: 'Contact Admin' },
+            'success-message': { id: 'Detail transaksi Anda:', en: 'Your transaction details:' },
+            'contact-info': { id: 'Klik tombol di bawah untuk mengirim detail transaksi ke admin kami:', en: 'Click the button below to send transaction details to our admin:' },
+            'contact-btn-text': { id: 'Hubungi via Facebook', en: 'Contact via Facebook' },
+            'whatsapp-btn-text': { id: 'Kirim ke WhatsApp', en: 'Send to WhatsApp' },
             'new-transaction-text': { id: 'Buat Transaksi Baru', en: 'Create New Transaction' },
             'reset-btn-text': { id: 'Reset Form', en: 'Reset Form' },
             'reset-modal-title': { id: 'Reset Form?', en: 'Reset Form?' },
@@ -1058,7 +1216,23 @@
             'prev-btn-text2': { id: 'Kembali', en: 'Back' },
             'step1-text': { id: 'Informasi Pribadi', en: 'Personal Info' },
             'step2-text': { id: 'Detail Transaksi', en: 'Transaction Details' },
-            'step3-text': { id: 'Pembayaran', en: 'Payment' }
+            'step3-text': { id: 'Pembayaran', en: 'Payment' },
+            // Summary page translations
+            'personal-details-title': { id: 'Informasi Pribadi', en: 'Personal Information' },
+            'transaction-details-title': { id: 'Detail Transaksi', en: 'Transaction Details' },
+            'payment-details-title': { id: 'Informasi Pembayaran', en: 'Payment Information' },
+            'transaction-id-title': { id: 'ID Transaksi', en: 'Transaction ID' },
+            'summary-buyer-label': { id: 'Pembeli:', en: 'Buyer:' },
+            'summary-buyer-contact-label': { id: 'Kontak Pembeli:', en: 'Buyer Contact:' },
+            'summary-seller-label': { id: 'Penjual:', en: 'Seller:' },
+            'summary-seller-contact-label': { id: 'Kontak Penjual:', en: 'Seller Contact:' },
+            'summary-item-label': { id: 'Deskripsi:', en: 'Description:' },
+            'summary-amount-label': { id: 'Jumlah:', en: 'Amount:' },
+            'summary-fee-label': { id: 'Biaya Layanan:', en: 'Service Fee:' },
+            'summary-total-label': { id: 'Total:', en: 'Total:' },
+            'summary-payment-method-label': { id: 'Metode:', en: 'Method:' },
+            'summary-bank-label': { id: 'Bank/E-Wallet:', en: 'Bank/E-Wallet:' },
+            'summary-notes-label': { id: 'Catatan:', en: 'Notes:' }
         };
         
         // Set default payment method options
@@ -1182,6 +1356,119 @@
             const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
             const prefix = currentLanguage === 'id' ? 'IDN' : 'INT';
             return `${prefix}-${timestamp}-${random}`;
+        };
+        
+        // Update transaction summary
+        const updateTransactionSummary = () => {
+            // Personal Information
+            document.getElementById('summary-buyer-name').textContent = document.getElementById('buyer-name').value;
+            document.getElementById('summary-buyer-contact').textContent = document.getElementById('buyer-contact').value;
+            document.getElementById('summary-seller-name').textContent = document.getElementById('seller-name').value;
+            document.getElementById('summary-seller-contact').textContent = document.getElementById('seller-contact').value;
+            
+            // Transaction Details
+            document.getElementById('summary-item-description').textContent = document.getElementById('item-description').value;
+            
+            const amount = parseFloat(document.getElementById('transaction-amount').value) || 0;
+            const fee = parseFloat(document.getElementById('fee-amount').value) || 0;
+            const total = amount + fee;
+            
+            const currencySymbol = currentLanguage === 'id' ? 'Rp ' : '$ ';
+            document.getElementById('summary-transaction-amount').textContent = currencySymbol + amount.toLocaleString();
+            document.getElementById('summary-fee-amount').textContent = currencySymbol + fee.toLocaleString();
+            document.getElementById('summary-total-amount').textContent = currencySymbol + total.toLocaleString();
+            
+            // Payment Information
+            const paymentMethod = document.getElementById('payment-method');
+            document.getElementById('summary-payment-method').textContent = paymentMethod.options[paymentMethod.selectedIndex].text;
+            document.getElementById('summary-bank-name').textContent = document.getElementById('bank-name').value;
+            
+            const notes = document.getElementById('transaction-notes').value;
+            if (notes) {
+                document.getElementById('summary-transaction-notes').textContent = notes;
+                document.getElementById('notes-row').classList.remove('hidden');
+            } else {
+                document.getElementById('notes-row').classList.add('hidden');
+            }
+            
+            // Update WhatsApp link
+            updateWhatsAppLink();
+        };
+        
+        // Create WhatsApp message with transaction details
+        const createWhatsAppMessage = (transactionId) => {
+            const buyerName = document.getElementById('buyer-name').value;
+            const buyerContact = document.getElementById('buyer-contact').value;
+            const sellerName = document.getElementById('seller-name').value;
+            const sellerContact = document.getElementById('seller-contact').value;
+            const itemDesc = document.getElementById('item-description').value;
+            const amount = parseFloat(document.getElementById('transaction-amount').value) || 0;
+            const fee = parseFloat(document.getElementById('fee-amount').value) || 0;
+            const total = amount + fee;
+            const paymentMethod = document.getElementById('payment-method');
+            const paymentMethodText = paymentMethod.options[paymentMethod.selectedIndex].text;
+            const bankName = document.getElementById('bank-name').value;
+            const notes = document.getElementById('transaction-notes').value;
+            
+            // Format currencies
+            const currencySymbol = currentLanguage === 'id' ? 'Rp' : '$';
+            const formattedAmount = currencySymbol + ' ' + amount.toLocaleString();
+            const formattedFee = currencySymbol + ' ' + fee.toLocaleString();
+            const formattedTotal = currencySymbol + ' ' + total.toLocaleString();
+            
+            // Create message
+            let message = '';
+            
+            if (currentLanguage === 'id') {
+                message = `*DETAIL TRANSAKSI REKBER*\n\n`;
+                message += `ID Transaksi: *${transactionId}*\n\n`;
+                message += `*INFORMASI PRIBADI*\n`;
+                message += `Pembeli: ${buyerName}\n`;
+                message += `Kontak Pembeli: ${buyerContact}\n`;
+                message += `Penjual: ${sellerName}\n`;
+                message += `Kontak Penjual: ${sellerContact}\n\n`;
+                message += `*DETAIL TRANSAKSI*\n`;
+                message += `Deskripsi: ${itemDesc}\n`;
+                message += `Jumlah: ${formattedAmount}\n`;
+                message += `Biaya Layanan: ${formattedFee}\n`;
+                message += `Total: ${formattedTotal}\n\n`;
+                message += `*INFORMASI PEMBAYARAN*\n`;
+                message += `Metode: ${paymentMethodText}\n`;
+                message += `Bank/E-Wallet: ${bankName}\n`;
+                if (notes) {
+                    message += `\n*CATATAN*\n${notes}\n`;
+                }
+            } else {
+                message = `*ESCROW TRANSACTION DETAILS*\n\n`;
+                message += `Transaction ID: *${transactionId}*\n\n`;
+                message += `*PERSONAL INFORMATION*\n`;
+                message += `Buyer: ${buyerName}\n`;
+                message += `Buyer Contact: ${buyerContact}\n`;
+                message += `Seller: ${sellerName}\n`;
+                message += `Seller Contact: ${sellerContact}\n\n`;
+                message += `*TRANSACTION DETAILS*\n`;
+                message += `Description: ${itemDesc}\n`;
+                message += `Amount: ${formattedAmount}\n`;
+                message += `Service Fee: ${formattedFee}\n`;
+                message += `Total: ${formattedTotal}\n\n`;
+                message += `*PAYMENT INFORMATION*\n`;
+                message += `Method: ${paymentMethodText}\n`;
+                message += `Bank/E-Wallet: ${bankName}\n`;
+                if (notes) {
+                    message += `\n*NOTES*\n${notes}\n`;
+                }
+            }
+            
+            return encodeURIComponent(message);
+        };
+        
+        // Update WhatsApp link
+        const updateWhatsAppLink = () => {
+            const transactionId = document.getElementById('transaction-id').textContent;
+            const whatsappMessage = createWhatsAppMessage(transactionId);
+            const whatsappNumber = '6285702402751'; // Change to your admin's WhatsApp number
+            const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
+            document.getElementById('whatsapp-btn').href = whatsappLink;
         };
         
         // Form validation
@@ -1324,6 +1611,9 @@
                 // Generate transaction ID
                 const transactionId = generateTransactionId();
                 transactionIdElement.textContent = transactionId;
+                
+                // Update transaction summary
+                updateTransactionSummary();
                 
                 // Hide loading
                 hideLoading();
