@@ -12,8 +12,6 @@
             --text-color: #333;
             --light-gray: #e0e0e0;
             --success-color: #4caf50;
-            --error-color: #f44336;
-            --section-border: #dbdbdb;
         }
         
         * {
@@ -26,7 +24,6 @@
             padding: 0;
             background-color: var(--secondary-color);
             color: var(--text-color);
-            line-height: 1.6;
         }
         
         .container {
@@ -42,29 +39,23 @@
             text-align: center;
             border-radius: 8px 8px 0 0;
             margin-bottom: 20px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
         
-        /* Language Toggle Styles */
         .language-selector {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            gap: 20px;
         }
         
         .language-btn {
-            padding: 10px 20px;
+            padding: 12px 24px;
             border: none;
-            border-radius: 30px;
+            border-radius: 6px;
+            font-size: 16px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
         }
         
         .language-btn.indonesia {
@@ -77,146 +68,23 @@
             color: white;
         }
         
-        .language-btn.active {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-        }
-        
         .language-btn:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
         
-        /* Accordion Styles */
-        .accordion {
-            background-color: white;
-            border-radius: 8px;
-            overflow: hidden;
-            margin-bottom: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        .language-btn.active {
+            box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.2);
         }
         
-        .accordion-section {
-            border-bottom: 1px solid var(--section-border);
-        }
-        
-        .accordion-section:last-child {
-            border-bottom: none;
-        }
-        
-        .accordion-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 20px;
-            background-color: white;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-        
-        .accordion-header:hover {
-            background-color: #f5f5f5;
-        }
-        
-        .accordion-header h3 {
-            margin: 0;
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--primary-color);
-            display: flex;
-            align-items: center;
-        }
-        
-        .accordion-icon {
-            height: 32px;
-            width: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            background-color: #f0f8ff;
-            color: var(--primary-color);
-            margin-right: 15px;
-            font-size: 16px;
-        }
-        
-        .accordion-toggle {
-            width: 24px;
-            height: 24px;
-            position: relative;
-            transition: transform 0.3s ease;
-            color: var(--primary-color);
-        }
-        
-        .accordion-toggle::before,
-        .accordion-toggle::after {
-            content: '';
-            position: absolute;
-            background-color: currentColor;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 2px;
-            margin-top: -1px;
-        }
-        
-        .accordion-toggle::after {
-            transform: rotate(90deg);
-            transition: transform 0.3s ease;
-        }
-        
-        .accordion-section.active .accordion-toggle::after {
-            transform: rotate(0);
-        }
-        
-        .accordion-content {
-            max-height: 0;
-            overflow: hidden;
-            transition: max-height 0.4s ease, padding 0.4s ease;
-            background-color: white;
-        }
-        
-        .accordion-section.active .accordion-content {
-            max-height: 2000px;
-            padding: 20px;
-            border-top: 1px solid var(--section-border);
-        }
-        
-        .accordion-status {
-            display: inline-block;
-            margin-left: 10px;
-            font-size: 14px;
-            font-weight: normal;
-            padding: 3px 10px;
-            border-radius: 20px;
-            background-color: #eee;
-            color: #666;
-        }
-        
-        .status-complete {
-            background-color: #e8f5e9;
-            color: #43a047;
-        }
-        
-        .status-incomplete {
-            background-color: #ffebee;
-            color: #e53935;
-        }
-        
-        /* Form Styles */
         .form-group {
             margin-bottom: 20px;
-            position: relative;
-        }
-        
-        .form-group:last-child {
-            margin-bottom: 0;
         }
         
         label {
             display: block;
             margin-bottom: 8px;
-            font-weight: 500;
+            font-weight: 600;
         }
         
         input, select, textarea {
@@ -225,24 +93,6 @@
             border: 1px solid var(--light-gray);
             border-radius: 6px;
             font-size: 16px;
-            transition: border 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px rgba(30, 136, 229, 0.2);
-        }
-        
-        .input-error {
-            border-color: var(--error-color) !important;
-        }
-        
-        .error-message {
-            color: var(--error-color);
-            font-size: 14px;
-            margin-top: 5px;
-            animation: fadeIn 0.3s ease;
         }
         
         textarea {
@@ -255,69 +105,21 @@
             gap: 20px;
         }
         
-        @media (max-width: 600px) {
-            .form-row {
-                flex-direction: column;
-                gap: 10px;
-            }
-        }
-        
         .form-row .form-group {
             flex: 1;
-        }
-        
-        /* Button Styles */
-        .btn {
-            border: none;
-            padding: 14px 28px;
-            font-size: 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            display: inline-block;
-            text-align: center;
-            text-decoration: none;
-        }
-        
-        .btn-primary {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        .btn-secondary {
-            background-color: #757575;
-            color: white;
-        }
-        
-        .btn-accent {
-            background-color: var(--accent-color);
-            color: white;
-        }
-        
-        .btn-success {
-            background-color: var(--success-color);
-            color: white;
-        }
-        
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
         
         .submit-btn {
             background-color: var(--accent-color);
             color: white;
             border: none;
-            padding: 16px 32px;
+            padding: 14px 28px;
             font-size: 18px;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             display: block;
             margin: 30px auto 0;
             transition: all 0.3s ease;
-            width: 100%;
-            max-width: 300px;
         }
         
         .submit-btn:hover {
@@ -326,7 +128,6 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
         
-        /* Currency Input Style */
         .currency-symbol {
             position: relative;
         }
@@ -339,115 +140,32 @@
             content: attr(data-symbol);
             position: absolute;
             left: 12px;
-            top: 42px;
+            top: 13px;
             font-weight: bold;
             z-index: 1;
         }
         
-        /* File Upload Styles */
-        .file-upload {
-            margin-bottom: 20px;
-        }
-        
-        .file-upload-label {
-            display: block;
-            padding: 15px;
-            text-align: center;
-            background-color: #f7f7f7;
-            border: 2px dashed var(--light-gray);
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-        
-        .file-upload-label:hover {
-            background-color: #eee;
-            border-color: var(--primary-color);
-        }
-        
-        .file-upload-input {
+        .hidden {
             display: none;
         }
         
-        .file-preview {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        
-        .preview-item {
-            position: relative;
-            width: 100px;
-            height: 100px;
-            border-radius: 6px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .preview-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .preview-item .remove-btn {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            width: 20px;
-            height: 20px;
-            background-color: rgba(0, 0, 0, 0.5);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 12px;
-            line-height: 1;
-        }
-        
-        /* Result Page Styles */
+        /* Transaction Result Page Styles */
         .result-container {
             text-align: center;
             padding: 30px;
             background-color: white;
             border-radius: 8px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-top: 20px;
-            display: none;
-            animation: fadeIn 0.5s ease;
         }
         
         .transaction-id {
-            font-size: 28px;
+            font-size: 32px;
             color: var(--primary-color);
             margin: 20px 0;
             padding: 15px;
             background-color: #f0f8ff;
             border-radius: 6px;
             border: 2px dashed var(--primary-color);
-            position: relative;
-            word-break: break-all;
-        }
-        
-        .copy-btn {
-            position: absolute;
-            right: 10px;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(0, 0, 0, 0.1);
-            border: none;
-            border-radius: 4px;
-            padding: 5px 10px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s ease;
-        }
-        
-        .copy-btn:hover {
-            background: rgba(0, 0, 0, 0.2);
         }
         
         .contact-btn {
@@ -460,7 +178,6 @@
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 8px;
             margin-top: 20px;
             transition: all 0.3s ease;
         }
@@ -471,348 +188,140 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
         
+        .contact-btn img {
+            margin-right: 8px;
+            width: 24px;
+            height: 24px;
+        }
+        
         .success-icon {
             color: var(--success-color);
-            font-size: 60px;
+            font-size: 80px;
             margin-bottom: 20px;
-        }
-        
-        /* Toast Notifications */
-        .toast-container {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-        }
-        
-        .toast {
-            padding: 12px 20px;
-            margin-bottom: 10px;
-            border-radius: 6px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            animation: slideInRight 0.3s ease, fadeOut 0.3s ease 3s forwards;
-            max-width: 350px;
-        }
-        
-        .toast-success {
-            background-color: var(--success-color);
-            color: white;
-        }
-        
-        .toast-error {
-            background-color: var(--error-color);
-            color: white;
-        }
-        
-        .toast-icon {
-            margin-right: 10px;
-        }
-        
-        /* Loading Overlay */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: rgba(255, 255, 255, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-        
-        .loading-overlay.active {
-            opacity: 1;
-            pointer-events: all;
-        }
-        
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid rgba(0, 0, 0, 0.1);
-            border-left-color: var(--primary-color);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-        }
-        
-        /* Utility Classes */
-        .hidden {
-            display: none !important;
-        }
-        
-        /* Animations */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-        
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
-        }
-        
-        @keyframes slideInRight {
-            from { 
-                opacity: 0;
-                transform: translateX(50px);
-            }
-            to { 
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <!-- Toast Container -->
-    <div class="toast-container" id="toast-container"></div>
-    
-    <!-- Loading Overlay -->
-    <div class="loading-overlay" id="loading-overlay">
-        <div class="spinner"></div>
+    <!-- Form Page -->
+    <div id="form-page">
+        <div class="container">
+            <header>
+                <h1 id="main-title">Form Rekening Bersama (Rekber)</h1>
+                <p id="subtitle">Transaksi aman dengan jasa perantara terpercaya</p>
+            </header>
+            
+            <div class="language-selector">
+                <button id="btn-indonesia" class="language-btn indonesia active">Transaksi Indonesia</button>
+                <button id="btn-international" class="language-btn international">International Transaction</button>
+            </div>
+            
+            <form id="rekber-form">
+                <h2 id="personal-info-title">Informasi Pribadi</h2>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label id="buyer-label" for="buyer-name">Nama Pembeli</label>
+                        <input type="text" id="buyer-name" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label id="seller-label" for="seller-name">Nama Penjual</label>
+                        <input type="text" id="seller-name" required>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label id="buyer-contact-label" for="buyer-contact">Kontak Pembeli (WhatsApp)</label>
+                        <input type="text" id="buyer-contact" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label id="seller-contact-label" for="seller-contact">Kontak Penjual (WhatsApp)</label>
+                        <input type="text" id="seller-contact" required>
+                    </div>
+                </div>
+                
+                <h2 id="transaction-info-title">Detail Transaksi</h2>
+                
+                <div class="form-group">
+                    <label id="item-label" for="item-description">Deskripsi Barang/Jasa</label>
+                    <textarea id="item-description" required></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label id="amount-label" for="transaction-amount">Jumlah Transaksi</label>
+                        <div class="currency-symbol" data-symbol="Rp">
+                            <input type="number" id="transaction-amount" min="0" step="1000" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label id="fee-label" for="fee-amount">Biaya Layanan (1%)</label>
+                        <div class="currency-symbol" data-symbol="Rp">
+                            <input type="number" id="fee-amount" readonly>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label id="payment-method-label" for="payment-method">Metode Pembayaran</label>
+                        <select id="payment-method" required>
+                            <option value="">-- Pilih Metode Pembayaran --</option>
+                            <option value="bank-transfer">Transfer Bank</option>
+                            <option value="e-wallet">E-Wallet</option>
+                            <option value="paypal" class="international-only hidden">PayPal</option>
+                            <option value="credit-card" class="international-only hidden">Credit Card</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label id="bank-label" for="bank-name">Nama Bank/E-Wallet</label>
+                        <input type="text" id="bank-name" required>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label id="notes-label" for="transaction-notes">Catatan Tambahan (Opsional)</label>
+                    <textarea id="transaction-notes"></textarea>
+                </div>
+                
+                <button type="submit" id="submit-btn" class="submit-btn">Buat Transaksi</button>
+            </form>
+        </div>
     </div>
     
-    <div class="container">
-        <header>
-            <h1 id="main-title">Form Rekening Bersama (Rekber)</h1>
-            <p id="subtitle">Transaksi aman dengan jasa perantara terpercaya</p>
-        </header>
-        
-        <!-- Language Selector -->
-        <div class="language-selector">
-            <button id="btn-indonesia" class="language-btn indonesia active">
-                <span>🇮🇩</span> Transaksi Indonesia
-            </button>
-            <button id="btn-international" class="language-btn international">
-                <span>🌍</span> International Transaction
-            </button>
-        </div>
-        
-        <!-- Main Form -->
-        <form id="rekber-form">
-            <div class="accordion">
-                <!-- Personal Information Section -->
-                <div class="accordion-section active" id="section-personal">
-                    <div class="accordion-header" data-section="personal">
-                        <h3>
-                            <span class="accordion-icon">1</span>
-                            <span id="personal-info-title">Informasi Pribadi</span>
-                            <span class="accordion-status status-incomplete" id="personal-status">Belum Lengkap</span>
-                        </h3>
-                        <div class="accordion-toggle"></div>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label id="buyer-label" for="buyer-name">Nama Pembeli</label>
-                                <input type="text" id="buyer-name" required>
-                                <div class="error-message" id="buyer-name-error"></div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label id="seller-label" for="seller-name">Nama Penjual</label>
-                                <input type="text" id="seller-name" required>
-                                <div class="error-message" id="seller-name-error"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label id="buyer-contact-label" for="buyer-contact">Kontak Pembeli (WhatsApp)</label>
-                                <input type="text" id="buyer-contact" required>
-                                <div class="error-message" id="buyer-contact-error"></div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label id="seller-contact-label" for="seller-contact">Kontak Penjual (WhatsApp)</label>
-                                <input type="text" id="seller-contact" required>
-                                <div class="error-message" id="seller-contact-error"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label id="email-label" for="email">Email</label>
-                            <input type="email" id="email" required>
-                            <div class="error-message" id="email-error"></div>
-                        </div>
-                        
-                        <button type="button" class="btn btn-primary next-section" data-next="transaction">
-                            <span id="next-to-transaction">Lanjut ke Detail Transaksi</span>
-                        </button>
-                    </div>
-                </div>
+    <!-- Transaction Result Page (Initially Hidden) -->
+    <div id="result-page" class="hidden">
+        <div class="container">
+            <div class="result-container">
+                <div class="success-icon">✓</div>
+                <h2 id="success-title">Transaksi Berhasil Dibuat!</h2>
+                <p id="success-message">Silahkan simpan ID Transaksi berikut untuk verifikasi dengan admin kami.</p>
                 
-                <!-- Transaction Details Section -->
-                <div class="accordion-section" id="section-transaction">
-                    <div class="accordion-header" data-section="transaction">
-                        <h3>
-                            <span class="accordion-icon">2</span>
-                            <span id="transaction-info-title">Detail Transaksi</span>
-                            <span class="accordion-status status-incomplete" id="transaction-status">Belum Lengkap</span>
-                        </h3>
-                        <div class="accordion-toggle"></div>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="form-group">
-                            <label id="item-label" for="item-description">Deskripsi Barang/Jasa</label>
-                            <textarea id="item-description" required></textarea>
-                            <div class="error-message" id="item-description-error"></div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label id="amount-label" for="transaction-amount">Jumlah Transaksi</label>
-                                <div class="currency-symbol" data-symbol="Rp">
-                                    <input type="number" id="transaction-amount" min="0" step="1000" required>
-                                </div>
-                                <div class="error-message" id="transaction-amount-error"></div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label id="fee-label" for="fee-amount">Biaya Layanan (1%)</label>
-                                <div class="currency-symbol" data-symbol="Rp">
-                                    <input type="number" id="fee-amount" readonly>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label id="payment-method-label" for="payment-method">Metode Pembayaran</label>
-                                <select id="payment-method" required>
-                                    <option value="">-- Pilih Metode Pembayaran --</option>
-                                    <option value="bank-transfer">Transfer Bank</option>
-                                    <option value="e-wallet">E-Wallet</option>
-                                    <option value="paypal" class="international-only hidden">PayPal</option>
-                                    <option value="credit-card" class="international-only hidden">Credit Card</option>
-                                </select>
-                                <div class="error-message" id="payment-method-error"></div>
-                            </div>
-                            
-                            <div class="form-group">
-                                <label id="bank-label" for="bank-name">Nama Bank/E-Wallet</label>
-                                <input type="text" id="bank-name" required>
-                                <div class="error-message" id="bank-name-error"></div>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <button type="button" class="btn btn-primary next-section" data-next="uploads">
-                                <span id="next-to-uploads">Lanjut ke Upload Dokumen</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <div class="transaction-id" id="transaction-id"></div>
                 
-                <!-- Document Upload Section -->
-                <div class="accordion-section" id="section-uploads">
-                    <div class="accordion-header" data-section="uploads">
-                        <h3>
-                            <span class="accordion-icon">3</span>
-                            <span id="uploads-title">Upload Dokumen</span>
-                            <span class="accordion-status" id="uploads-status">Opsional</span>
-                        </h3>
-                        <div class="accordion-toggle"></div>
-                    </div>
-                    <div class="accordion-content">
-                        <!-- File Upload for Item Photos -->
-                        <div class="form-group">
-                            <label id="item-photos-label">Foto Barang/Jasa (Opsional)</label>
-                            <div class="file-upload">
-                                <label class="file-upload-label" for="item-photos" id="item-photos-upload-label">
-                                    <span id="upload-item-photos-text">Klik untuk mengunggah foto (Maks. 3 foto)</span>
-                                </label>
-                                <input type="file" id="item-photos" class="file-upload-input" accept="image/*" multiple>
-                            </div>
-                            <div class="file-preview" id="item-photos-preview"></div>
-                        </div>
-                        
-                        <!-- File Upload for Payment Proof -->
-                        <div class="form-group">
-                            <label id="payment-proof-label">Bukti Pembayaran (Opsional)</label>
-                            <div class="file-upload">
-                                <label class="file-upload-label" for="payment-proof" id="payment-proof-upload-label">
-                                    <span id="upload-payment-proof-text">Klik untuk mengunggah bukti pembayaran</span>
-                                </label>
-                                <input type="file" id="payment-proof" class="file-upload-input" accept="image/*">
-                            </div>
-                            <div class="file-preview" id="payment-proof-preview"></div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <button type="button" class="btn btn-primary next-section" data-next="notes">
-                                <span id="next-to-notes">Lanjut ke Catatan Tambahan</span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
+                <p id="contact-info">Klik tombol di bawah untuk menghubungi admin kami untuk verifikasi:</p>
                 
-                <!-- Additional Notes Section -->
-                <div class="accordion-section" id="section-notes">
-                    <div class="accordion-header" data-section="notes">
-                        <h3>
-                            <span class="accordion-icon">4</span>
-                            <span id="notes-title">Catatan Tambahan</span>
-                            <span class="accordion-status" id="notes-status">Opsional</span>
-                        </h3>
-                        <div class="accordion-toggle"></div>
-                    </div>
-                    <div class="accordion-content">
-                        <div class="form-group">
-                            <label id="notes-label" for="transaction-notes">Catatan Tambahan (Opsional)</label>
-                            <textarea id="transaction-notes"></textarea>
-                        </div>
-                        
-                        <button type="submit" id="submit-btn" class="submit-btn">
-                            <span id="submit-btn-text">Buat Transaksi</span>
-                        </button>
-                    </div>
-                </div>
+                <a href="https://www.facebook.com/rekber.admin" target="_blank" class="contact-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
+                        <path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96C15.9 21.58 18.04 20.39 19.63 18.64C21.22 16.89 22.17 14.66 22.18 12.34C22.18 6.53 17.7 2.04 12 2.04Z"/>
+                    </svg>
+                    <span id="contact-btn-text">Hubungi Admin</span>
+                </a>
+                
+                <p><a href="#" id="new-transaction" style="margin-top: 20px; display: inline-block;">Buat Transaksi Baru</a></p>
             </div>
-        </form>
-        
-        <!-- Transaction Result Container (Initially Hidden) -->
-        <div class="result-container" id="result-container">
-            <div class="success-icon">✓</div>
-            <h2 id="success-title">Transaksi Berhasil Dibuat!</h2>
-            <p id="success-message">Silahkan simpan ID Transaksi berikut untuk verifikasi dengan admin kami.</p>
-            
-            <div class="transaction-id">
-                <span id="transaction-id"></span>
-                <button class="copy-btn" id="copy-transaction-id">Salin</button>
-            </div>
-            
-            <p id="contact-info">Klik tombol di bawah untuk menghubungi admin kami untuk verifikasi:</p>
-            
-            <a href="https://www.facebook.com/rekber.admin" target="_blank" class="contact-btn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white">
-                    <path d="M12 2.04C6.5 2.04 2 6.53 2 12.06C2 17.06 5.66 21.21 10.44 21.96V14.96H7.9V12.06H10.44V9.85C10.44 7.34 11.93 5.96 14.22 5.96C15.31 5.96 16.45 6.15 16.45 6.15V8.62H15.19C13.95 8.62 13.56 9.39 13.56 10.18V12.06H16.34L15.89 14.96H13.56V21.96C15.9 21.58 18.04 20.39 19.63 18.64C21.22 16.89 22.17 14.66 22.18 12.34C22.18 6.53 17.7 2.04 12 2.04Z"/>
-                </svg>
-                <span id="contact-btn-text">Hubungi Admin</span>
-            </a>
-            
-            <p><a href="#" id="new-transaction" style="margin-top: 20px; display: inline-block;">Buat Transaksi Baru</a></p>
         </div>
     </div>
     
     <script>
         // DOM Elements
+        const formPage = document.getElementById('form-page');
+        const resultPage = document.getElementById('result-page');
         const rekberForm = document.getElementById('rekber-form');
-        const resultContainer = document.getElementById('result-container');
-        const accordionSections = document.querySelectorAll('.accordion-section');
-        const accordionHeaders = document.querySelectorAll('.accordion-header');
-        const nextButtons = document.querySelectorAll('.next-section');
         const btnIndonesia = document.getElementById('btn-indonesia');
         const btnInternational = document.getElementById('btn-international');
         const transactionAmount = document.getElementById('transaction-amount');
@@ -820,150 +329,7 @@
         const currencySymbols = document.querySelectorAll('.currency-symbol');
         const internationalOptions = document.querySelectorAll('.international-only');
         const transactionIdElement = document.getElementById('transaction-id');
-        const copyTransactionIdBtn = document.getElementById('copy-transaction-id');
         const newTransactionLink = document.getElementById('new-transaction');
-        const loadingOverlay = document.getElementById('loading-overlay');
-        const toastContainer = document.getElementById('toast-container');
-        
-        // DOM Elements - File Upload
-        const itemPhotosInput = document.getElementById('item-photos');
-        const itemPhotosPreview = document.getElementById('item-photos-preview');
-        const paymentProofInput = document.getElementById('payment-proof');
-        const paymentProofPreview = document.getElementById('payment-proof-preview');
-        
-        // Section status elements
-        const personalStatus = document.getElementById('personal-status');
-        const transactionStatus = document.getElementById('transaction-status');
-        
-        // Form Validation Configuration
-        const validationRules = {
-            'buyer-name': {
-                required: true,
-                minLength: 3,
-                errorMessages: {
-                    id: {
-                        required: 'Nama pembeli wajib diisi',
-                        minLength: 'Nama pembeli minimal 3 karakter'
-                    },
-                    en: {
-                        required: 'Buyer name is required',
-                        minLength: 'Buyer name must be at least 3 characters'
-                    }
-                }
-            },
-            'seller-name': {
-                required: true,
-                minLength: 3,
-                errorMessages: {
-                    id: {
-                        required: 'Nama penjual wajib diisi',
-                        minLength: 'Nama penjual minimal 3 karakter'
-                    },
-                    en: {
-                        required: 'Seller name is required',
-                        minLength: 'Seller name must be at least 3 characters'
-                    }
-                }
-            },
-            'buyer-contact': {
-                required: true,
-                pattern: /^(\+?\d{9,15})$/,
-                errorMessages: {
-                    id: {
-                        required: 'Nomor kontak pembeli wajib diisi',
-                        pattern: 'Format nomor telepon tidak valid'
-                    },
-                    en: {
-                        required: 'Buyer contact number is required',
-                        pattern: 'Invalid phone number format'
-                    }
-                }
-            },
-            'seller-contact': {
-                required: true,
-                pattern: /^(\+?\d{9,15})$/,
-                errorMessages: {
-                    id: {
-                        required: 'Nomor kontak penjual wajib diisi',
-                        pattern: 'Format nomor telepon tidak valid'
-                    },
-                    en: {
-                        required: 'Seller contact number is required',
-                        pattern: 'Invalid phone number format'
-                    }
-                }
-            },
-            'email': {
-                required: true,
-                pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
-                errorMessages: {
-                    id: {
-                        required: 'Email wajib diisi',
-                        pattern: 'Format email tidak valid'
-                    },
-                    en: {
-                        required: 'Email is required',
-                        pattern: 'Invalid email format'
-                    }
-                }
-            },
-            'item-description': {
-                required: true,
-                minLength: 10,
-                errorMessages: {
-                    id: {
-                        required: 'Deskripsi barang/jasa wajib diisi',
-                        minLength: 'Deskripsi minimal 10 karakter'
-                    },
-                    en: {
-                        required: 'Item/service description is required',
-                        minLength: 'Description must be at least 10 characters'
-                    }
-                }
-            },
-            'transaction-amount': {
-                required: true,
-                min: 10000,
-                errorMessages: {
-                    id: {
-                        required: 'Jumlah transaksi wajib diisi',
-                        min: 'Jumlah minimal transaksi adalah Rp 10.000'
-                    },
-                    en: {
-                        required: 'Transaction amount is required',
-                        min: 'Minimum transaction amount is $1'
-                    }
-                }
-            },
-            'payment-method': {
-                required: true,
-                errorMessages: {
-                    id: {
-                        required: 'Metode pembayaran wajib dipilih'
-                    },
-                    en: {
-                        required: 'Payment method is required'
-                    }
-                }
-            },
-            'bank-name': {
-                required: true,
-                errorMessages: {
-                    id: {
-                        required: 'Nama bank/e-wallet wajib diisi'
-                    },
-                    en: {
-                        required: 'Bank/e-wallet name is required'
-                    }
-                }
-            }
-        };
-        
-        // Group fields by section
-        const sectionFields = {
-            'personal': ['buyer-name', 'seller-name', 'buyer-contact', 'seller-contact', 'email'],
-            'transaction': ['item-description', 'transaction-amount', 'payment-method', 'bank-name']
-        };
         
         // Text elements for translation
         const elementsToTranslate = {
@@ -974,7 +340,6 @@
             'seller-label': { id: 'Nama Penjual', en: 'Seller Name' },
             'buyer-contact-label': { id: 'Kontak Pembeli (WhatsApp)', en: 'Buyer Contact (WhatsApp)' },
             'seller-contact-label': { id: 'Kontak Penjual (WhatsApp)', en: 'Seller Contact (WhatsApp)' },
-            'email-label': { id: 'Email', en: 'Email' },
             'transaction-info-title': { id: 'Detail Transaksi', en: 'Transaction Details' },
             'item-label': { id: 'Deskripsi Barang/Jasa', en: 'Item/Service Description' },
             'amount-label': { id: 'Jumlah Transaksi', en: 'Transaction Amount' },
@@ -982,42 +347,12 @@
             'payment-method-label': { id: 'Metode Pembayaran', en: 'Payment Method' },
             'bank-label': { id: 'Nama Bank/E-Wallet', en: 'Bank/E-Wallet Name' },
             'notes-label': { id: 'Catatan Tambahan (Opsional)', en: 'Additional Notes (Optional)' },
-            'item-photos-label': { id: 'Foto Barang/Jasa (Opsional)', en: 'Item/Service Photos (Optional)' },
-            'payment-proof-label': { id: 'Bukti Pembayaran (Opsional)', en: 'Payment Proof (Optional)' },
-            'upload-item-photos-text': { id: 'Klik untuk mengunggah foto (Maks. 3 foto)', en: 'Click to upload photos (Max. 3 photos)' },
-            'upload-payment-proof-text': { id: 'Klik untuk mengunggah bukti pembayaran', en: 'Click to upload payment proof' },
-            'submit-btn-text': { id: 'Buat Transaksi', en: 'Create Transaction' },
+            'submit-btn': { id: 'Buat Transaksi', en: 'Create Transaction' },
             'success-title': { id: 'Transaksi Berhasil Dibuat!', en: 'Transaction Successfully Created!' },
             'success-message': { id: 'Silahkan simpan ID Transaksi berikut untuk verifikasi dengan admin kami.', en: 'Please save the following Transaction ID for verification with our admin.' },
             'contact-info': { id: 'Klik tombol di bawah untuk menghubungi admin kami untuk verifikasi:', en: 'Click the button below to contact our admin for verification:' },
             'contact-btn-text': { id: 'Hubungi Admin', en: 'Contact Admin' },
-            'new-transaction': { id: 'Buat Transaksi Baru', en: 'Create New Transaction' },
-            'uploads-title': { id: 'Upload Dokumen', en: 'Document Upload' },
-            'notes-title': { id: 'Catatan Tambahan', en: 'Additional Notes' },
-            'uploads-status': { id: 'Opsional', en: 'Optional' },
-            'notes-status': { id: 'Opsional', en: 'Optional' },
-            'personal-status': { id: 'Belum Lengkap', en: 'Incomplete' },
-            'transaction-status': { id: 'Belum Lengkap', en: 'Incomplete' },
-            'next-to-transaction': { id: 'Lanjut ke Detail Transaksi', en: 'Continue to Transaction Details' },
-            'next-to-uploads': { id: 'Lanjut ke Upload Dokumen', en: 'Continue to Document Upload' },
-            'next-to-notes': { id: 'Lanjut ke Catatan Tambahan', en: 'Continue to Additional Notes' },
-            'copy-transaction-id': { id: 'Salin', en: 'Copy' }
-        };
-        
-        // Section status texts
-        const statusTexts = {
-            complete: {
-                id: 'Lengkap',
-                en: 'Complete'
-            },
-            incomplete: {
-                id: 'Belum Lengkap',
-                en: 'Incomplete'
-            },
-            optional: {
-                id: 'Opsional',
-                en: 'Optional'
-            }
+            'new-transaction': { id: 'Buat Transaksi Baru', en: 'Create New Transaction' }
         };
         
         // Set default payment method options
@@ -1038,164 +373,6 @@
         
         // Default language
         let currentLanguage = 'id';
-        
-        // Function to toggle accordion section
-        const toggleAccordion = (sectionId) => {
-            const section = document.getElementById(`section-${sectionId}`);
-            
-            if (section) {
-                // Check if section is already active
-                const isActive = section.classList.contains('active');
-                
-                // Close all other sections
-                accordionSections.forEach(s => {
-                    s.classList.remove('active');
-                });
-                
-                // Toggle current section
-                if (!isActive) {
-                    section.classList.add('active');
-                    
-                    // Scroll to section
-                    setTimeout(() => {
-                        section.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 100);
-                }
-            }
-        };
-        
-        // Function to check section completion
-        const updateSectionStatus = (sectionId) => {
-            if (!sectionFields[sectionId]) return;
-            
-            const fields = sectionFields[sectionId];
-            let isComplete = true;
-            
-            // Check if all required fields are filled correctly
-            for (const fieldId of fields) {
-                if (!validateField(fieldId, false)) {
-                    isComplete = false;
-                    break;
-                }
-            }
-            
-            // Update status badge
-            const statusElement = document.getElementById(`${sectionId}-status`);
-            if (statusElement) {
-                if (isComplete) {
-                    statusElement.textContent = statusTexts.complete[currentLanguage];
-                    statusElement.className = 'accordion-status status-complete';
-                } else {
-                    statusElement.textContent = statusTexts.incomplete[currentLanguage];
-                    statusElement.className = 'accordion-status status-incomplete';
-                }
-            }
-            
-            return isComplete;
-        };
-        
-        // Function to show loading overlay
-        const showLoading = () => {
-            loadingOverlay.classList.add('active');
-        };
-        
-        // Function to hide loading overlay
-        const hideLoading = () => {
-            setTimeout(() => {
-                loadingOverlay.classList.remove('active');
-            }, 500);
-        };
-        
-        // Function to show toast notifications
-        const showToast = (message, type = 'info') => {
-            const toast = document.createElement('div');
-            toast.className = `toast toast-${type}`;
-            
-            let icon = '';
-            if (type === 'success') icon = '✓';
-            else if (type === 'error') icon = '✗';
-            else icon = 'ℹ';
-            
-            toast.innerHTML = `
-                <span class="toast-icon">${icon}</span>
-                <span>${message}</span>
-            `;
-            
-            toastContainer.appendChild(toast);
-            
-            // Auto-remove after 4 seconds
-            setTimeout(() => {
-                toast.remove();
-            }, 4000);
-        };
-        
-        // Function to validate a field
-        const validateField = (fieldId, showError = true) => {
-            const field = document.getElementById(fieldId);
-            const errorElement = document.getElementById(`${fieldId}-error`);
-            const rules = validationRules[fieldId];
-            
-            if (!field || !rules) return true;
-            
-            let isValid = true;
-            let errorMessage = '';
-            
-            // Check required
-            if (rules.required && !field.value.trim()) {
-                isValid = false;
-                errorMessage = rules.errorMessages[currentLanguage].required;
-            }
-            // Check min length
-            else if (rules.minLength && field.value.trim().length < rules.minLength) {
-                isValid = false;
-                errorMessage = rules.errorMessages[currentLanguage].minLength;
-            }
-            // Check pattern
-            else if (rules.pattern && !rules.pattern.test(field.value.trim())) {
-                isValid = false;
-                errorMessage = rules.errorMessages[currentLanguage].pattern;
-            }
-            // Check min value
-            else if (rules.min && parseFloat(field.value) < rules.min) {
-                isValid = false;
-                errorMessage = rules.errorMessages[currentLanguage].min;
-            }
-            
-            if (showError) {
-                if (!isValid) {
-                    field.classList.add('input-error');
-                    if (errorElement) {
-                        errorElement.textContent = errorMessage;
-                    }
-                } else {
-                    field.classList.remove('input-error');
-                    if (errorElement) {
-                        errorElement.textContent = '';
-                    }
-                }
-            }
-            
-            return isValid;
-        };
-        
-        // Function to validate all fields
-        const validateForm = () => {
-            const fieldsToValidate = [
-                'buyer-name', 'seller-name', 'buyer-contact', 'seller-contact', 
-                'email', 'item-description', 'transaction-amount', 
-                'payment-method', 'bank-name'
-            ];
-            
-            let isValid = true;
-            
-            fieldsToValidate.forEach(fieldId => {
-                if (!validateField(fieldId)) {
-                    isValid = false;
-                }
-            });
-            
-            return isValid;
-        };
         
         // Function to calculate fee
         const calculateFee = () => {
@@ -1228,13 +405,6 @@
                 }
             }
             
-            // Update min value for transaction amount
-            if (language === 'id') {
-                validationRules['transaction-amount'].min = 10000;
-            } else {
-                validationRules['transaction-amount'].min = 1;
-            }
-            
             // Update payment method options
             const paymentMethod = document.getElementById('payment-method');
             paymentMethod.innerHTML = '';
@@ -1262,83 +432,9 @@
                     element.classList.remove('hidden');
                 });
             }
-            
-            // Update section statuses
-            updateSectionStatus('personal');
-            updateSectionStatus('transaction');
         };
         
-        // Function to handle file upload
-        const handleFileUpload = (fileInput, previewContainer, maxFiles = 1) => {
-            const files = fileInput.files;
-            
-            // Clear current preview if replacing
-            if (files.length > 0) {
-                previewContainer.innerHTML = '';
-            }
-            
-            // Check if exceeding max files
-            if (files.length > maxFiles) {
-                showToast(
-                    currentLanguage === 'id' 
-                        ? `Maksimal ${maxFiles} file yang dapat diunggah` 
-                        : `Maximum ${maxFiles} files can be uploaded`, 
-                    'error'
-                );
-                fileInput.value = '';
-                return;
-            }
-            
-            // Preview each file
-            for (let i = 0; i < files.length; i++) {
-                const file = files[i];
-                
-                // Check if file is an image
-                if (!file.type.startsWith('image/')) {
-                    showToast(
-                        currentLanguage === 'id'
-                            ? 'Hanya file gambar yang diperbolehkan'
-                            : 'Only image files are allowed',
-                        'error'
-                    );
-                    continue;
-                }
-                
-                // Create preview item
-                const previewItem = document.createElement('div');
-                previewItem.className = 'preview-item';
-                
-                // Create image element
-                const img = document.createElement('img');
-                img.file = file;
-                previewItem.appendChild(img);
-                
-                // Create remove button
-                const removeBtn = document.createElement('div');
-                removeBtn.className = 'remove-btn';
-                removeBtn.innerHTML = '×';
-                removeBtn.addEventListener('click', () => {
-                    previewItem.remove();
-                    // Reset file input if all previews are removed
-                    if (previewContainer.children.length === 0) {
-                        fileInput.value = '';
-                    }
-                });
-                previewItem.appendChild(removeBtn);
-                
-                // Add preview to container
-                previewContainer.appendChild(previewItem);
-                
-                // Read and display the image
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    img.src = e.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        };
-        
-        // Function to generate transaction ID
+        // Generate transaction ID
         const generateTransactionId = () => {
             const timestamp = new Date().getTime().toString().slice(-6);
             const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
@@ -1346,41 +442,7 @@
             return `${prefix}-${timestamp}-${random}`;
         };
         
-        // Event Listeners - Accordion Headers
-        accordionHeaders.forEach(header => {
-            header.addEventListener('click', () => {
-                const sectionId = header.getAttribute('data-section');
-                toggleAccordion(sectionId);
-            });
-        });
-        
-        // Event Listeners - Next Section Buttons
-        nextButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const currentSection = button.closest('.accordion-section').id.replace('section-', '');
-                const nextSection = button.getAttribute('data-next');
-                
-                // Validate current section before proceeding
-                if (sectionFields[currentSection]) {
-                    const isValid = updateSectionStatus(currentSection);
-                    
-                    if (!isValid) {
-                        showToast(
-                            currentLanguage === 'id'
-                                ? 'Harap lengkapi semua field yang diperlukan'
-                                : 'Please complete all required fields',
-                            'error'
-                        );
-                        return;
-                    }
-                }
-                
-                // Open next section
-                toggleAccordion(nextSection);
-            });
-        });
-        
-        // Event Listeners - Language Selection
+        // Event Listeners
         btnIndonesia.addEventListener('click', () => {
             btnIndonesia.classList.add('active');
             btnInternational.classList.remove('active');
@@ -1393,130 +455,23 @@
             switchLanguage('en');
         });
         
-        // Event Listeners - Form Inputs
-        transactionAmount.addEventListener('input', () => {
-            calculateFee();
-            // Update transaction section status when amount changes
-            updateSectionStatus('transaction');
-        });
+        transactionAmount.addEventListener('input', calculateFee);
         
-        // Real-time validation for form fields
-        for (const fieldId in validationRules) {
-            const field = document.getElementById(fieldId);
-            if (field) {
-                field.addEventListener('blur', () => {
-                    validateField(fieldId);
-                    
-                    // Update section status
-                    for (const sectionId in sectionFields) {
-                        if (sectionFields[sectionId].includes(fieldId)) {
-                            updateSectionStatus(sectionId);
-                        }
-                    }
-                });
-                
-                field.addEventListener('input', () => {
-                    if (field.classList.contains('input-error')) {
-                        validateField(fieldId);
-                        
-                        // Update section status
-                        for (const sectionId in sectionFields) {
-                            if (sectionFields[sectionId].includes(fieldId)) {
-                                updateSectionStatus(sectionId);
-                            }
-                        }
-                    }
-                });
-            }
-        }
-        
-        // Event Listeners - File Uploads
-        itemPhotosInput.addEventListener('change', () => {
-            handleFileUpload(itemPhotosInput, itemPhotosPreview, 3);
-        });
-        
-        paymentProofInput.addEventListener('change', () => {
-            handleFileUpload(paymentProofInput, paymentProofPreview, 1);
-        });
-        
-        // Event Listener - Form Submission
         rekberForm.addEventListener('submit', (e) => {
             e.preventDefault();
             
-            // Final validation of all required fields
-            const isPersonalValid = updateSectionStatus('personal');
-            const isTransactionValid = updateSectionStatus('transaction');
+            // Generate transaction ID
+            const transactionId = generateTransactionId();
+            transactionIdElement.textContent = transactionId;
             
-            if (!isPersonalValid || !isTransactionValid) {
-                showToast(
-                    currentLanguage === 'id'
-                        ? 'Mohon lengkapi semua informasi yang diperlukan'
-                        : 'Please complete all required information',
-                    'error'
-                );
-                
-                // Open the first incomplete section
-                if (!isPersonalValid) {
-                    toggleAccordion('personal');
-                } else if (!isTransactionValid) {
-                    toggleAccordion('transaction');
-                }
-                
-                return;
-            }
+            // Show result page, hide form page
+            formPage.classList.add('hidden');
+            resultPage.classList.remove('hidden');
             
-            // Show loading overlay
-            showLoading();
-            
-            // Simulate processing delay
-            setTimeout(() => {
-                // Generate transaction ID
-                const transactionId = generateTransactionId();
-                transactionIdElement.textContent = transactionId;
-                
-                // Hide form and show result
-                rekberForm.style.display = 'none';
-                resultContainer.style.display = 'block';
-                
-                // Hide loading overlay
-                hideLoading();
-                
-                // Show success toast
-                showToast(
-                    currentLanguage === 'id'
-                        ? 'Transaksi berhasil dibuat!'
-                        : 'Transaction successfully created!',
-                    'success'
-                );
-                
-                // Scroll to top
-                window.scrollTo(0, 0);
-            }, 1500);
+            // Scroll to top
+            window.scrollTo(0, 0);
         });
         
-        // Event Listener - Copy Transaction ID
-        copyTransactionIdBtn.addEventListener('click', () => {
-            const transactionId = transactionIdElement.textContent;
-            navigator.clipboard.writeText(transactionId)
-                .then(() => {
-                    showToast(
-                        currentLanguage === 'id'
-                            ? 'ID Transaksi berhasil disalin'
-                            : 'Transaction ID copied to clipboard',
-                        'success'
-                    );
-                })
-                .catch(() => {
-                    showToast(
-                        currentLanguage === 'id'
-                            ? 'Gagal menyalin ID Transaksi'
-                            : 'Failed to copy Transaction ID',
-                        'error'
-                    );
-                });
-        });
-        
-        // Event Listener - New Transaction
         newTransactionLink.addEventListener('click', (e) => {
             e.preventDefault();
             
@@ -1524,35 +479,9 @@
             rekberForm.reset();
             calculateFee();
             
-            // Clear file previews
-            itemPhotosPreview.innerHTML = '';
-            paymentProofPreview.innerHTML = '';
-            
-            // Reset error messages
-            document.querySelectorAll('.error-message').forEach(element => {
-                element.textContent = '';
-            });
-            
-            document.querySelectorAll('.input-error').forEach(element => {
-                element.classList.remove('input-error');
-            });
-            
-            // Reset section statuses
-            updateSectionStatus('personal');
-            updateSectionStatus('transaction');
-            
-            // Open only the first section
-            accordionSections.forEach((section, index) => {
-                if (index === 0) {
-                    section.classList.add('active');
-                } else {
-                    section.classList.remove('active');
-                }
-            });
-            
-            // Show form and hide result
-            rekberForm.style.display = 'block';
-            resultContainer.style.display = 'none';
+            // Show form page, hide result page
+            resultPage.classList.add('hidden');
+            formPage.classList.remove('hidden');
             
             // Scroll to top
             window.scrollTo(0, 0);
@@ -1561,8 +490,6 @@
         // Initialize
         calculateFee();
         switchLanguage('id');
-        updateSectionStatus('personal');
-        updateSectionStatus('transaction');
     </script>
 </body>
 </html>
