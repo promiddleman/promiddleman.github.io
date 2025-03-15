@@ -11,6 +11,8 @@
             --light-color: #f3f4f6;
             --dark-color: #1f2937;
             --success-color: #10b981;
+            --border-color: #d1d5db;
+            --transition-time: 0.4s;
         }
         
         * {
@@ -57,6 +59,8 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             padding: 30px;
             margin-bottom: 30px;
+            min-height: 480px;
+            position: relative;
         }
         
         h1 {
@@ -90,9 +94,16 @@
         input, select, textarea {
             width: 100%;
             padding: 12px;
-            border: 1px solid #d1d5db;
+            border: 1px solid var(--border-color);
             border-radius: 4px;
             font-size: 16px;
+            transition: border-color var(--transition-time);
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.2);
         }
         
         textarea {
@@ -110,11 +121,16 @@
             cursor: pointer;
             font-size: 16px;
             font-weight: 500;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s, transform 0.2s;
         }
         
         .btn:hover {
             background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
         }
         
         .btn-facebook {
@@ -130,6 +146,14 @@
             background-color: #166fe5;
         }
         
+        .btn-secondary {
+            background-color: #9ca3af;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #6b7280;
+        }
+        
         .result-container {
             display: none;
             background-color: #f0f9ff;
@@ -137,6 +161,7 @@
             border-radius: 8px;
             padding: 20px;
             margin-top: 30px;
+            animation: fadeIn 0.5s ease-out;
         }
         
         .transaction-code {
@@ -201,6 +226,109 @@
             font-size: 14px;
             margin-top: 40px;
         }
+        
+        /* Progress bar styling */
+        .progress-container {
+            margin-bottom: 30px;
+        }
+        
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+            margin-bottom: 30px;
+        }
+        
+        .progress-steps::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--border-color);
+            z-index: 1;
+        }
+        
+        .progress-step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: white;
+            border: 4px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+            font-weight: bold;
+            color: var(--dark-color);
+            transition: all var(--transition-time);
+        }
+        
+        .progress-step.active {
+            border-color: var(--primary-color);
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .progress-step.completed {
+            border-color: var(--success-color);
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .progress-step-label {
+            position: absolute;
+            top: 35px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--dark-color);
+            width: max-content;
+        }
+        
+        .progress-bar {
+            height: 4px;
+            background-color: var(--primary-color);
+            position: absolute;
+            top: 15px;
+            left: 0;
+            z-index: 1;
+            transition: width var(--transition-time);
+        }
+        
+        /* Form step styling */
+        .form-step {
+            display: none;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .form-step.active {
+            display: block;
+        }
+        
+        .form-navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.5); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
     </style>
 </head>
 <body>
@@ -216,71 +344,150 @@
     <div class="container">
         <div class="card">
             <h1>Mulai Transaksi Rekening Bersama</h1>
-            <p>Isi formulir di bawah ini untuk memulai transaksi dengan rekening bersama. Setelah mengisi formulir, Anda akan mendapatkan kode transaksi yang dapat digunakan untuk verifikasi dengan admin.</p>
             
-            <div class="info-box">
-                <p><strong>Penting:</strong> Pastikan semua informasi yang dimasukkan benar dan sesuai dengan transaksi yang akan dilakukan. Admin akan melakukan verifikasi data sebelum transaksi diproses.</p>
+            <div class="progress-container">
+                <div class="progress-steps">
+                    <div class="progress-bar" id="progressBar"></div>
+                    <div class="progress-step active" id="step1Indicator">
+                        1
+                        <span class="progress-step-label">Informasi</span>
+                    </div>
+                    <div class="progress-step" id="step2Indicator">
+                        2
+                        <span class="progress-step-label">Data Penjual</span>
+                    </div>
+                    <div class="progress-step" id="step3Indicator">
+                        3
+                        <span class="progress-step-label">Data Pembeli</span>
+                    </div>
+                    <div class="progress-step" id="step4Indicator">
+                        4
+                        <span class="progress-step-label">Detail Transaksi</span>
+                    </div>
+                </div>
             </div>
             
             <form id="rekberForm">
-                <h2>Data Penjual</h2>
-                <div class="form-group">
-                    <label for="sellerName">Nama Penjual</label>
-                    <input type="text" id="sellerName" required>
+                <!-- Step 1: Introduction -->
+                <div class="form-step active" id="step1">
+                    <h2>Informasi Rekening Bersama</h2>
+                    <p>Rekening Bersama (Rekber) adalah layanan pihak ketiga yang menjamin keamanan transaksi online Anda. Kami menjadi perantara untuk memastikan barang/jasa diterima dengan baik sebelum dana diteruskan ke penjual.</p>
+                    
+                    <div class="info-box">
+                        <p><strong>Penting:</strong> Pastikan semua informasi yang dimasukkan benar dan sesuai dengan transaksi yang akan dilakukan. Admin akan melakukan verifikasi data sebelum transaksi diproses.</p>
+                    </div>
+                    
+                    <h2>Cara Kerja Rekber:</h2>
+                    <div class="steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div>Pembeli mentransfer dana ke rekening bersama</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div>Penjual mengirimkan barang/jasa ke pembeli</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div>Pembeli mengkonfirmasi penerimaan barang/jasa</div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div>Dana diteruskan ke penjual</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <div></div> <!-- Empty div to maintain flex layout -->
+                        <button type="button" class="btn next-btn" data-next="step2">Lanjutkan</button>
+                    </div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="sellerPhone">Nomor Telepon Penjual</label>
-                    <input type="tel" id="sellerPhone" required>
+                <!-- Step 2: Seller Data -->
+                <div class="form-step" id="step2">
+                    <h2>Data Penjual</h2>
+                    <div class="form-group">
+                        <label for="sellerName">Nama Penjual</label>
+                        <input type="text" id="sellerName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sellerPhone">Nomor Telepon Penjual</label>
+                        <input type="tel" id="sellerPhone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sellerBank">Bank Penjual</label>
+                        <select id="sellerBank" required>
+                            <option value="">-- Pilih Bank --</option>
+                            <option value="BCA">BCA</option>
+                            <option value="Mandiri">Mandiri</option>
+                            <option value="BNI">BNI</option>
+                            <option value="BRI">BRI</option>
+                            <option value="CIMB">CIMB Niaga</option>
+                            <option value="Permata">Permata</option>
+                            <option value="other">Lainnya</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="sellerAccount">Nomor Rekening Penjual</label>
+                        <input type="text" id="sellerAccount" required>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="btn btn-secondary prev-btn" data-prev="step1">Kembali</button>
+                        <button type="button" class="btn next-btn" data-next="step3">Lanjutkan</button>
+                    </div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="sellerBank">Bank Penjual</label>
-                    <select id="sellerBank" required>
-                        <option value="">-- Pilih Bank --</option>
-                        <option value="BCA">BCA</option>
-                        <option value="Mandiri">Mandiri</option>
-                        <option value="BNI">BNI</option>
-                        <option value="BRI">BRI</option>
-                        <option value="CIMB">CIMB Niaga</option>
-                        <option value="Permata">Permata</option>
-                        <option value="other">Lainnya</option>
-                    </select>
+                <!-- Step 3: Buyer Data -->
+                <div class="form-step" id="step3">
+                    <h2>Data Pembeli</h2>
+                    <div class="form-group">
+                        <label for="buyerName">Nama Pembeli</label>
+                        <input type="text" id="buyerName" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="buyerPhone">Nomor Telepon Pembeli</label>
+                        <input type="tel" id="buyerPhone" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="buyerEmail">Email Pembeli</label>
+                        <input type="email" id="buyerEmail" required>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="btn btn-secondary prev-btn" data-prev="step2">Kembali</button>
+                        <button type="button" class="btn next-btn" data-next="step4">Lanjutkan</button>
+                    </div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="sellerAccount">Nomor Rekening Penjual</label>
-                    <input type="text" id="sellerAccount" required>
+                <!-- Step 4: Transaction Details -->
+                <div class="form-step" id="step4">
+                    <h2>Detail Transaksi</h2>
+                    <div class="form-group">
+                        <label for="itemDescription">Deskripsi Barang/Jasa</label>
+                        <textarea id="itemDescription" required></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="amount">Jumlah Transaksi (Rp)</label>
+                        <input type="number" id="amount" min="1000" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="notes">Catatan Tambahan (opsional)</label>
+                        <textarea id="notes"></textarea>
+                    </div>
+                    
+                    <div class="form-navigation">
+                        <button type="button" class="btn btn-secondary prev-btn" data-prev="step3">Kembali</button>
+                        <button type="submit" class="btn pulse" id="submitBtn">Buat Transaksi</button>
+                    </div>
                 </div>
-                
-                <h2>Data Pembeli</h2>
-                <div class="form-group">
-                    <label for="buyerName">Nama Pembeli</label>
-                    <input type="text" id="buyerName" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="buyerPhone">Nomor Telepon Pembeli</label>
-                    <input type="tel" id="buyerPhone" required>
-                </div>
-                
-                <h2>Detail Transaksi</h2>
-                <div class="form-group">
-                    <label for="itemDescription">Deskripsi Barang/Jasa</label>
-                    <textarea id="itemDescription" required></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label for="amount">Jumlah Transaksi (Rp)</label>
-                    <input type="number" id="amount" min="1000" required>
-                </div>
-                
-                <div class="form-group">
-                    <label for="notes">Catatan Tambahan (opsional)</label>
-                    <textarea id="notes"></textarea>
-                </div>
-                
-                <button type="submit" class="btn" id="submitBtn">Buat Transaksi</button>
             </form>
         </div>
         
@@ -330,20 +537,112 @@
             const resultContainer = document.getElementById('resultContainer');
             const transactionCode = document.getElementById('transactionCode');
             const contactAdmin = document.getElementById('contactAdmin');
+            const progressBar = document.getElementById('progressBar');
             
+            // Progress tracking
+            let currentStep = 1;
+            const totalSteps = 4;
+            
+            // Update progress bar
+            function updateProgressBar() {
+                const progressPercent = ((currentStep - 1) / (totalSteps - 1)) * 100;
+                progressBar.style.width = progressPercent + '%';
+            }
+            
+            // Navigate to specific step
+            function goToStep(stepNumber) {
+                // Hide all steps
+                document.querySelectorAll('.form-step').forEach(step => {
+                    step.classList.remove('active');
+                });
+                
+                // Show target step
+                document.getElementById('step' + stepNumber).classList.add('active');
+                
+                // Update step indicators
+                document.querySelectorAll('.progress-step').forEach((step, index) => {
+                    const stepNum = index + 1;
+                    step.classList.remove('active', 'completed');
+                    
+                    if (stepNum === stepNumber) {
+                        step.classList.add('active');
+                    } else if (stepNum < stepNumber) {
+                        step.classList.add('completed');
+                    }
+                });
+                
+                // Update current step
+                currentStep = stepNumber;
+                
+                // Update progress bar
+                updateProgressBar();
+            }
+            
+            // Next button event listeners
+            document.querySelectorAll('.next-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const nextStep = this.getAttribute('data-next').replace('step', '');
+                    goToStep(parseInt(nextStep));
+                });
+            });
+            
+            // Previous button event listeners
+            document.querySelectorAll('.prev-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const prevStep = this.getAttribute('data-prev').replace('step', '');
+                    goToStep(parseInt(prevStep));
+                });
+            });
+            
+            // Form submission
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                // Generate random transaction code
-                const randomCode = 'RB-' + Math.floor(Math.random() * 90000000 + 10000000);
-                transactionCode.textContent = randomCode;
+                // Simulate form validation
+                const isValid = validateForm();
                 
-                // Hide form and show result
-                form.parentElement.style.display = 'none';
-                resultContainer.style.display = 'block';
+                if (isValid) {
+                    // Generate random transaction code
+                    const randomCode = 'RB-' + Math.floor(Math.random() * 90000000 + 10000000);
+                    transactionCode.textContent = randomCode;
+                    
+                    // Hide form card and show result
+                    form.closest('.card').style.display = 'none';
+                    resultContainer.style.display = 'block';
+                    
+                    // Scroll to result
+                    resultContainer.scrollIntoView({behavior: 'smooth'});
+                }
+            });
+            
+            // Simple form validation
+            function validateForm() {
+                // In a real implementation, you would check each required field
+                // This is a simplified version
+                const requiredFields = document.querySelectorAll('#step' + currentStep + ' [required]');
+                let isValid = true;
                 
-                // Scroll to result
-                resultContainer.scrollIntoView({behavior: 'smooth'});
+                requiredFields.forEach(field => {
+                    if (!field.value) {
+                        field.style.borderColor = '#ef4444';
+                        isValid = false;
+                    } else {
+                        field.style.borderColor = var(--border-color);
+                    }
+                });
+                
+                return isValid;
+            }
+            
+            // Format currency input
+            const amountInput = document.getElementById('amount');
+            amountInput.addEventListener('input', function() {
+                // Remove non-numeric characters
+                let value = this.value.replace(/\D/g, '');
+                // Format with thousand separator
+                if (value) {
+                    this.value = parseInt(value).toLocaleString('id-ID');
+                }
             });
             
             // Contact admin via Facebook button
@@ -351,6 +650,9 @@
                 // Replace with your actual Facebook page URL
                 window.open('https://www.facebook.com/rekberindonesia', '_blank');
             });
+            
+            // Initialize progress bar
+            updateProgressBar();
         });
     </script>
 </body>
