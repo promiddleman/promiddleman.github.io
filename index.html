@@ -805,6 +805,40 @@
                 font-size: 0.85rem;
             }
         }
+        
+        /* Language Switcher */
+        .language-switcher {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            padding: 5px;
+            z-index: 1000;
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        
+        .language-btn {
+            background: transparent;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+        
+        .language-btn.active {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+        }
+        
+        .language-btn:hover:not(.active) {
+            background-color: rgba(30, 60, 114, 0.1);
+        }
     </style>
 </head>
 <body>
@@ -914,6 +948,12 @@
         </a>
     </footer>
 
+    <!-- Language Switcher -->
+    <div class="language-switcher" id="languageSwitcher">
+        <button class="language-btn active" data-lang="id">ID</button>
+        <button class="language-btn" data-lang="en">EN</button>
+    </div>
+
     <!-- Script untuk menghasilkan dan menampilkan testimoni secara statis -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -948,7 +988,8 @@
                 itemsPerPage: 12,
                 totalItems: 500,
                 filter: 'all',
-                searchTerm: ''
+                searchTerm: '',
+                language: 'id' // Default language
             };
             
             // Data nama
@@ -1217,29 +1258,288 @@
                 return dateB - dateA;
             });
             
+            // Dictionary for translations
+            const translations = {
+                id: {
+                    // Header
+                    'logoText': 'ProMiddleman',
+                    'tagline': 'Jasa Rekening Bersama Terpercaya Sejak 2015',
+                    'stat1': 'Transaksi Sukses',
+                    'stat2': 'Total Nilai Transaksi',
+                    'stat3': 'Tingkat Kepuasan',
+                    
+                    // Main Content
+                    'testimonialHeading': 'Apa Kata Mereka Tentang ProMiddleman?',
+                    'testimonialSubheading': 'Ribuan pengguna telah mempercayakan transaksi online mereka kepada kami. Berikut ini testimoni nyata dari para pengguna ProMiddleman yang telah merasakan keamanan bertransaksi bersama kami.',
+                    
+                    // Filter Buttons
+                    'filterAll': 'Semua Kategori',
+                    'filterProducts': 'Jual Beli Barang',
+                    'filterServices': 'Jasa Digital',
+                    'filterRentals': 'Sewa Menyewa',
+                    'filterGameItems': 'Game Item',
+                    'filterCrypto': 'Cryptocurrency',
+                    
+                    // Search
+                    'searchPlaceholder': 'Cari berdasarkan nama, ID transaksi, atau kata kunci...',
+                    
+                    // Testimonial Card
+                    'transactionID': 'ID Transaksi:',
+                    'item': 'Item:',
+                    
+                    // Category labels
+                    'categoryJualBeli': 'Jual Beli',
+                    'categoryJasa': 'Jasa Digital',
+                    'categorySewa': 'Sewa Menyewa',
+                    'categoryGame': 'Game Item',
+                    'categoryCrypto': 'Crypto',
+                    
+                    // No results message
+                    'noResults': 'Tidak ada testimoni yang sesuai dengan kriteria pencarian Anda.',
+                    
+                    // Loader
+                    'loading': 'Memuat testimoni...',
+                    
+                    // CTA Section
+                    'ctaHeading': 'Siap Bertransaksi dengan Aman?',
+                    'ctaText': 'Bergabunglah dengan ribuan pengguna yang telah mempercayai ProMiddleman sebagai pihak ketiga dalam transaksi online mereka.',
+                    'ctaButton': 'Mulai Transaksi Sekarang',
+                    
+                    // Footer
+                    'aboutHeading': 'Tentang ProMiddleman',
+                    'aboutText1': 'ProMiddleman adalah jasa rekening bersama terpercaya yang telah memfasilitasi ribuan transaksi online sejak 2015 dengan komitmen untuk keamanan, kecepatan, dan kepuasan pengguna.',
+                    'aboutText2': 'Kami hadir untuk memberikan solusi aman dalam setiap transaksi online Anda, dengan layanan profesional yang mengutamakan transparansi dan kepercayaan.',
+                    
+                    'infoHeading': 'Informasi Penting',
+                    'infoLink1': 'Cara Kerja',
+                    'infoLink2': 'Biaya Layanan',
+                    'infoLink3': 'FAQ',
+                    'infoLink4': 'Syarat & Ketentuan',
+                    'infoLink5': 'Kebijakan Privasi',
+                    'infoLink6': 'Keamanan Transaksi',
+                    'infoLink7': 'Tutorial Pengguna',
+                    
+                    'transactionHeading': 'Transaksi Online',
+                    'transactionLink1': 'Mulai Transaksi',
+                    'transactionLink2': 'Verifikasi Akun',
+                    'transactionLink3': 'Status Transaksi',
+                    'transactionLink4': 'Lacak Pengiriman',
+                    'transactionLink5': 'Resolusi Masalah',
+                    
+                    'copyright': '© 2025 ProMiddleman. Hak Cipta Dilindungi. Platform Rekening Bersama #1 di Indonesia.'
+                },
+                en: {
+                    // Header
+                    'logoText': 'ProMiddleman',
+                    'tagline': 'Trusted Escrow Service Since 2015',
+                    'stat1': 'Successful Transactions',
+                    'stat2': 'Total Transaction Value',
+                    'stat3': 'Satisfaction Rate',
+                    
+                    // Main Content
+                    'testimonialHeading': 'What They Say About ProMiddleman?',
+                    'testimonialSubheading': 'Thousands of users have trusted their online transactions to us. Here are real testimonials from ProMiddleman users who have experienced the security of transacting with us.',
+                    
+                    // Filter Buttons
+                    'filterAll': 'All Categories',
+                    'filterProducts': 'Product Purchase',
+                    'filterServices': 'Digital Services',
+                    'filterRentals': 'Rentals',
+                    'filterGameItems': 'Game Items',
+                    'filterCrypto': 'Cryptocurrency',
+                    
+                    // Search
+                    'searchPlaceholder': 'Search by name, transaction ID, or keywords...',
+                    
+                    // Testimonial Card
+                    'transactionID': 'Transaction ID:',
+                    'item': 'Item:',
+                    
+                    // Category labels
+                    'categoryJualBeli': 'Products',
+                    'categoryJasa': 'Digital Services',
+                    'categorySewa': 'Rentals',
+                    'categoryGame': 'Game Items',
+                    'categoryCrypto': 'Crypto',
+                    
+                    // No results message
+                    'noResults': 'No testimonials match your search criteria.',
+                    
+                    // Loader
+                    'loading': 'Loading testimonials...',
+                    
+                    // CTA Section
+                    'ctaHeading': 'Ready to Transact Safely?',
+                    'ctaText': 'Join thousands of users who have trusted ProMiddleman as a third party in their online transactions.',
+                    'ctaButton': 'Start Transaction Now',
+                    
+                    // Footer
+                    'aboutHeading': 'About ProMiddleman',
+                    'aboutText1': 'ProMiddleman is a trusted escrow service that has facilitated thousands of online transactions since 2015 with a commitment to security, speed, and user satisfaction.',
+                    'aboutText2': 'We are here to provide secure solutions for all your online transactions, with professional services that prioritize transparency and trust.',
+                    
+                    'infoHeading': 'Important Information',
+                    'infoLink1': 'How It Works',
+                    'infoLink2': 'Service Fees',
+                    'infoLink3': 'FAQ',
+                    'infoLink4': 'Terms & Conditions',
+                    'infoLink5': 'Privacy Policy',
+                    'infoLink6': 'Transaction Security',
+                    'infoLink7': 'User Tutorial',
+                    
+                    'transactionHeading': 'Online Transactions',
+                    'transactionLink1': 'Start Transaction',
+                    'transactionLink2': 'Account Verification',
+                    'transactionLink3': 'Transaction Status',
+                    'transactionLink4': 'Shipment Tracking',
+                    'transactionLink5': 'Problem Resolution',
+                    
+                    'copyright': '© 2025 ProMiddleman. All Rights Reserved. #1 Escrow Platform in Indonesia.'
+                }
+            };
+
+            // Product type translations
+            const transactionTypeTranslations = {
+                id: {
+                    "Jual Beli Barang": "Jual Beli Barang",
+                    "Jasa Digital": "Jasa Digital",
+                    "Sewa Menyewa": "Sewa Menyewa",
+                    "Game Item": "Game Item",
+                    "Cryptocurrency": "Cryptocurrency"
+                },
+                en: {
+                    "Jual Beli Barang": "Product Purchase",
+                    "Jasa Digital": "Digital Services",
+                    "Sewa Menyewa": "Rentals",
+                    "Game Item": "Game Items",
+                    "Cryptocurrency": "Cryptocurrency"
+                }
+            };
+
+            // Testimonial text translations (simplified mapping for common phrases)
+            const testimonialPhrases = {
+                "Transaksi berjalan lancar": "Transaction went smoothly",
+                "Admin cepat tanggap": "Admin responded quickly",
+                "barang sampai tepat waktu": "item arrived on time",
+                "layanan rekber yang terpercaya": "trustworthy escrow service",
+                "Awalnya takut": "Initially I was afraid",
+                "pertama kali pakai rekber": "first time using an escrow service",
+                "prosesnya gampang banget": "the process was very easy",
+                "Penjual juga langsung terima dana": "Seller immediately received the funds",
+                "begitu barang sampai ke tangan saya": "once the item reached my hands",
+                "Recommended": "Recommended",
+                "selalu puas dengan pelayanannya": "always satisfied with the service",
+                "Admin fast response": "Admin responded quickly",
+                "jelas menjelaskan tahapan-tahapannya": "clearly explained the process steps",
+                "Terima kasih": "Thank you",
+                "berkat kalian transaksi": "thanks to you my transaction",
+                "aman tanpa was-was": "secure without worries",
+                "Fee-nya worth it": "The fee is worth it",
+                "untuk keamanan yang didapat": "for the security provided",
+                "Mantap": "Excellent",
+                "Barang sampai dengan kondisi sesuai deskripsi": "Item arrived in condition as described",
+                "cuma 1 hari": "only 1 day",
+                "CS-nya helpful banget": "Customer service was very helpful",
+                "Sempat panik": "I panicked a bit",
+                "pengiriman delay": "shipping was delayed",
+                "tapi admin ProMiddleman sigap": "but the ProMiddleman admin was quick",
+                "bantu follow up ke kurir": "to help follow up with the courier",
+                "Akhirnya barang sampai dengan selamat": "Finally the item arrived safely",
+                "Best service": "Best service",
+                "Bisa nego fee": "Could negotiate the fee",
+                "untuk transaksi nominal gede": "for large transactions",
+                "udah jadi penengah yang bisa dipercaya": "have become a trusted mediator"
+            };
+
+            // Function to translate testimonial text to English
+            function translateTestimonialText(text) {
+                let translatedText = text;
+                
+                // Replace common phrases
+                Object.keys(testimonialPhrases).forEach(phrase => {
+                    translatedText = translatedText.replace(
+                        new RegExp(phrase, 'gi'), 
+                        testimonialPhrases[phrase]
+                    );
+                });
+                
+                return translatedText;
+            }
+            
+            // Function to translate item names
+            function translateItem(item, lang) {
+                if (lang === 'id') return item;
+                
+                // Simple word replacement for common terms
+                const wordMap = {
+                    "Kamera": "Camera",
+                    "Sepeda": "Bicycle",
+                    "Jam Tangan": "Watch",
+                    "Desain Logo": "Logo Design",
+                    "Toko Online": "Online Store",
+                    "Jasa Edit": "Editing Service",
+                    "Jasa Translate": "Translation Service",
+                    "Apartemen Harian": "Daily Apartment",
+                    "Mobil": "Car",
+                    "Ruang Meeting": "Meeting Room",
+                    "Kamar": "Bedroom",
+                    "Alat Berat": "Heavy Equipment",
+                    "Motor": "Motorcycle",
+                    "Studio Foto": "Photo Studio", 
+                    "Gedung Pernikahan": "Wedding Venue"
+                };
+                
+                let translatedItem = item;
+                Object.keys(wordMap).forEach(word => {
+                    translatedItem = translatedItem.replace(word, wordMap[word]);
+                });
+                
+                return translatedItem;
+            }
+            
             // Fungsi untuk membuat HTML kartu testimoni dengan efek animasi
             function createTestimonialCard(testimonial) {
                 // Generate random colors for card accent from blue palette
                 const blueHues = ['#1e3c72', '#2a5298', '#3a6fc9', '#2c5eaa', '#1d3d7d', '#274f94'];
                 const randomBlue = blueHues[Math.floor(Math.random() * blueHues.length)];
                 
+                // Get current language
+                const lang = config.language;
+                
+                // Determine transaction type translated
+                const translatedType = transactionTypeTranslations[lang][testimonial.type];
+                
+                // Format amount based on language
+                let formattedAmount = testimonial.amount;
+                if (lang === 'en') {
+                    // Convert from IDR to USD (rough estimate for display purposes)
+                    // Extract numeric value from formatted string
+                    const numericValue = parseInt(testimonial.amount.replace(/[^\d]/g, ""));
+                    const usdValue = numericValue / 15000; // Assuming 1 USD = 15,000 IDR
+                    formattedAmount = new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        maximumFractionDigits: 0
+                    }).format(usdValue);
+                }
+                
                 // Menentukan badge kategori transaksi
                 let categoryBadge = '';
                 switch(testimonial.type) {
                     case 'Jual Beli Barang':
-                        categoryBadge = `<span class="category-badge" style="background-color: rgba(30, 60, 114, 0.1); color: #1e3c72;">Jual Beli</span>`;
+                        categoryBadge = `<span class="category-badge" style="background-color: rgba(30, 60, 114, 0.1); color: #1e3c72;">${translations[lang].categoryJualBeli}</span>`;
                         break;
                     case 'Jasa Digital':
-                        categoryBadge = `<span class="category-badge" style="background-color: rgba(76, 175, 80, 0.1); color: #4CAF50;">Jasa Digital</span>`;
+                        categoryBadge = `<span class="category-badge" style="background-color: rgba(76, 175, 80, 0.1); color: #4CAF50;">${translations[lang].categoryJasa}</span>`;
                         break;
                     case 'Sewa Menyewa':
-                        categoryBadge = `<span class="category-badge" style="background-color: rgba(156, 39, 176, 0.1); color: #9C27B0;">Sewa Menyewa</span>`;
+                        categoryBadge = `<span class="category-badge" style="background-color: rgba(156, 39, 176, 0.1); color: #9C27B0;">${translations[lang].categorySewa}</span>`;
                         break;
                     case 'Game Item':
-                        categoryBadge = `<span class="category-badge" style="background-color: rgba(255, 152, 0, 0.1); color: #FF9800;">Game Item</span>`;
+                        categoryBadge = `<span class="category-badge" style="background-color: rgba(255, 152, 0, 0.1); color: #FF9800;">${translations[lang].categoryGame}</span>`;
                         break;
                     case 'Cryptocurrency':
-                        categoryBadge = `<span class="category-badge" style="background-color: rgba(255, 87, 34, 0.1); color: #FF5722;">Crypto</span>`;
+                        categoryBadge = `<span class="category-badge" style="background-color: rgba(255, 87, 34, 0.1); color: #FF5722;">${translations[lang].categoryCrypto}</span>`;
                         break;
                 }
                 
@@ -1252,10 +1552,10 @@
                                     ${categoryBadge}
                                 </div>
                                 <div class="transaction-type">
-                                    <strong>ID Transaksi:</strong> ${testimonial.transactionId}
+                                    <strong>${translations[lang].transactionID}</strong> ${testimonial.transactionId}
                                 </div>
                                 <div class="transaction-type">
-                                    <strong>Item:</strong> ${testimonial.item}
+                                    <strong>${translations[lang].item}</strong> ${lang === 'id' ? testimonial.item : translateItem(testimonial.item, lang)}
                                 </div>
                                 <div class="rating">
                                     ${createStarRating(testimonial.rating)}
@@ -1263,11 +1563,11 @@
                             </div>
                         </div>
                         <div class="testimonial-body">
-                            <div class="testimonial-text">${testimonial.text}</div>
+                            <div class="testimonial-text">${lang === 'id' ? testimonial.text : translateTestimonialText(testimonial.text)}</div>
                         </div>
                         <div class="testimonial-footer">
                             <div class="transaction-date">${testimonial.date}</div>
-                            <div class="transaction-amount">${testimonial.amount}</div>
+                            <div class="transaction-amount">${formattedAmount}</div>
                         </div>
                     </div>
                 `;
@@ -1317,7 +1617,7 @@
                 if (currentPageItems.length === 0) {
                     testimonialContainer.innerHTML = `
                         <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
-                            Tidak ada testimoni yang sesuai dengan kriteria pencarian Anda.
+                            ${translations[config.language].noResults}
                         </div>
                     `;
                 } else {
@@ -1401,6 +1701,98 @@
                 });
             }
             
+            // Add a function to switch the language of the interface
+            function switchLanguage(lang) {
+                // Set active button
+                document.querySelectorAll('.language-btn').forEach(btn => {
+                    if (btn.getAttribute('data-lang') === lang) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+                
+                // Update text elements
+                
+                // Header
+                document.querySelector('.logo').textContent = translations[lang].logoText;
+                document.querySelector('.tagline').textContent = translations[lang].tagline;
+                document.querySelectorAll('.stat-label')[0].textContent = translations[lang].stat1;
+                document.querySelectorAll('.stat-label')[1].textContent = translations[lang].stat2;
+                document.querySelectorAll('.stat-label')[2].textContent = translations[lang].stat3;
+                
+                // Main Content
+                document.querySelector('.testimonial-heading h2').textContent = translations[lang].testimonialHeading;
+                document.querySelector('.testimonial-heading p').textContent = translations[lang].testimonialSubheading;
+                
+                // Filter Buttons
+                document.querySelectorAll('.filter-btn')[0].textContent = translations[lang].filterAll;
+                document.querySelectorAll('.filter-btn')[1].textContent = translations[lang].filterProducts;
+                document.querySelectorAll('.filter-btn')[2].textContent = translations[lang].filterServices;
+                document.querySelectorAll('.filter-btn')[3].textContent = translations[lang].filterRentals;
+                document.querySelectorAll('.filter-btn')[4].textContent = translations[lang].filterGameItems;
+                document.querySelectorAll('.filter-btn')[5].textContent = translations[lang].filterCrypto;
+                
+                // Search
+                document.querySelector('.search-input').placeholder = translations[lang].searchPlaceholder;
+                
+                // CTA Section
+                document.querySelector('.cta-heading').textContent = translations[lang].ctaHeading;
+                document.querySelector('.cta-text').textContent = translations[lang].ctaText;
+                document.querySelector('.cta-btn').textContent = translations[lang].ctaButton;
+                
+                // Footer
+                document.querySelectorAll('.footer-column h3')[0].textContent = translations[lang].aboutHeading;
+                document.querySelectorAll('.footer-column p')[0].textContent = translations[lang].aboutText1;
+                document.querySelectorAll('.footer-column p')[1].textContent = translations[lang].aboutText2;
+                
+                document.querySelectorAll('.footer-column h3')[1].textContent = translations[lang].infoHeading;
+                
+                const footerLinks = document.querySelectorAll('.footer-column li a');
+                if (footerLinks.length >= 12) {
+                    footerLinks[0].textContent = translations[lang].infoLink1;
+                    footerLinks[1].textContent = translations[lang].infoLink2;
+                    footerLinks[2].textContent = translations[lang].infoLink3;
+                    footerLinks[3].textContent = translations[lang].infoLink4;
+                    footerLinks[4].textContent = translations[lang].infoLink5;
+                    footerLinks[5].textContent = translations[lang].infoLink6;
+                    footerLinks[6].textContent = translations[lang].infoLink7;
+                    
+                    document.querySelectorAll('.footer-column h3')[2].textContent = translations[lang].transactionHeading;
+                    footerLinks[7].textContent = translations[lang].transactionLink1;
+                    footerLinks[8].textContent = translations[lang].transactionLink2;
+                    footerLinks[9].textContent = translations[lang].transactionLink3;
+                    footerLinks[10].textContent = translations[lang].transactionLink4;
+                    footerLinks[11].textContent = translations[lang].transactionLink5;
+                }
+                
+                document.querySelector('.copyright').textContent = translations[lang].copyright;
+                
+                // Store the selected language in localStorage
+                localStorage.setItem('preferredLanguage', lang);
+                
+                // Update the config and redisplay testimonials
+                config.language = lang;
+                displayTestimonials();
+                
+                // For Stat number (Rp value) in header - convert to USD if English
+                if (lang === 'en') {
+                    // Find the total value stat which starts with "Rp"
+                    const totalValueStat = document.querySelectorAll('.stat-number')[1];
+                    if (totalValueStat && totalValueStat.textContent.includes('Rp')) {
+                        const numericValue = parseInt(totalValueStat.textContent.replace(/[^\d]/g, ""));
+                        const usdValue = numericValue / 15000; // Assuming 1 USD = 15,000 IDR
+                        totalValueStat.textContent = '$' + (usdValue).toLocaleString() + 'M+';
+                    }
+                } else {
+                    // Reset to IDR if already changed
+                    const totalValueStat = document.querySelectorAll('.stat-number')[1];
+                    if (totalValueStat && totalValueStat.textContent.includes('$')) {
+                        totalValueStat.textContent = 'Rp 120M+';
+                    }
+                }
+            }
+            
             // Inisialisasi tombol filter
             filterButtons.forEach(button => {
                 button.addEventListener('click', function() {
@@ -1435,6 +1827,21 @@
                 ctaButton.style.transform = '';
                 ctaButton.style.boxShadow = '';
             });
+            
+            // Initialize language switcher
+            document.querySelectorAll('.language-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const lang = this.getAttribute('data-lang');
+                    switchLanguage(lang);
+                });
+            });
+            
+            // Check localStorage for saved language preference
+            const savedLanguage = localStorage.getItem('preferredLanguage');
+            if (savedLanguage) {
+                config.language = savedLanguage;
+                switchLanguage(savedLanguage);
+            }
             
             // Tampilkan testimoni saat halaman dimuat
             displayTestimonials();
