@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Database Transaksi - Rekening Bersama</title>
+    <title>Database Transaksi - ProMiddleman</title>
     <style>
         :root {
             --primary-color: #2563eb;
@@ -589,7 +589,7 @@
                     <path d="M5 16h14"></path>
                     <path d="M5 16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"></path>
                 </svg>
-                RekBer Indonesia
+                ProMiddleman
             </a>
             <nav>
                 <a href="transaksi.html" class="nav-link">Buat Transaksi</a>
@@ -721,7 +721,7 @@
     
     <footer>
         <div class="container">
-            <p>&copy; 2025 RekBer Indonesia. Layanan Rekening Bersama Terpercaya.</p>
+            <p>&copy; 2025 ProMiddleman. Layanan Rekening Bersama Terpercaya.</p>
         </div>
     </footer>
     
@@ -794,7 +794,7 @@
             // Functions
             function loadTransactions() {
                 // Load transactions from localStorage
-                const storedTransactions = localStorage.getItem('rekberTransactions');
+                const storedTransactions = localStorage.getItem('promiddlemanTransactions');
                 if (storedTransactions) {
                     transactions = JSON.parse(storedTransactions);
                     filterTransactions();
@@ -1150,7 +1150,7 @@
                     }
                     
                     // Save to localStorage
-                    localStorage.setItem('rekberTransactions', JSON.stringify(transactions));
+                    localStorage.setItem('promiddlemanTransactions', JSON.stringify(transactions));
                     
                     // Hide modals
                     updateStatusModal.style.display = 'none';
