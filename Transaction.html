@@ -1,4 +1,129 @@
-<!DOCTYPE html>
+<!-- Add the toast notification element for language switching -->
+    <div id="language-toast" class="language-toast">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <span>Bahasa berhasil diubah</span>
+    </div>    <script>
+        // Simple, robust language switching function
+        function switchLanguage(lang) {
+            console.log('Switching to language:', lang);
+            
+            // Update active state of buttons
+            document.querySelectorAll('.language-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            document.getElementById('lang-' + lang).classList.add('active');
+            
+            // Store the selected language in localStorage for persistence
+            localStorage.setItem('preferredLanguage', lang);
+            
+            // Get all elements that need translation
+            const elementsToTranslate = document.querySelectorAll('[data-i18n]');
+            
+            // Load translations
+            fetch('translations.json')
+                .then(response => {
+                    // For demo purposes, we'll use hardcoded translations
+                    const translations = {
+                        "id": {
+                            "heading": "Mulai Transaksi Rekening Bersama",
+                            "intro": "Isi formulir di bawah ini untuk memulai transaksi dengan rekening bersama. Setelah mengisi formulir, Anda akan mendapatkan kode transaksi yang dapat digunakan untuk verifikasi dengan admin.",
+                            "btn_home": "Beranda",
+                            "international_info": "<strong>Transaksi Internasional:</strong> Kami mendukung transaksi lintas negara. Pilih mata uang transaksi Anda dan isi alamat lengkap untuk pengiriman internasional.",
+                            "important": "<strong>Penting:</strong> Pastikan semua informasi yang dimasukkan benar dan sesuai dengan transaksi yang akan dilakukan. Admin akan melakukan verifikasi data sebelum transaksi diproses."
+                        },
+                        "en": {
+                            "heading": "Start Escrow Transaction",
+                            "intro": "Fill out the form below to start a transaction with an escrow account. After completing the form, you will receive a transaction code that can be used for verification with the admin.",
+                            "btn_home": "Home",
+                            "international_info": "<strong>International Transactions:</strong> We support cross-country transactions. Select your transaction currency and fill in complete address details for international shipping.",
+                            "important": "<strong>Important:</strong> Make sure all information entered is correct and in accordance with the transaction to be carried out. Admin will verify the data before the transaction is processed."
+                        }
+                    };
+                    
+                    // Update UI with translations
+                    document.querySelector('h1').textContent = translations[lang].heading;
+                    document.querySelector('h1 + p').textContent = translations[lang].intro;
+                    document.querySelector('.international-info p').innerHTML = translations[lang].international_info;
+                    document.querySelector('.info-box p').innerHTML = translations[lang].important;
+                    document.querySelector('.btn').textContent = translations[lang].btn_home;
+                    
+                    // Additional elements would be translated here in a real implementation
+                    
+                    // Show a confirmation toast
+                    showLanguageChangeToast(lang);
+                })
+                .catch(error => {
+                    console.error('Error loading translations:', error);
+                });
+        }
+        
+        // Show a temporary toast notification when language changes
+        function showLanguageChangeToast(lang) {
+            // Create toast if it doesn't exist
+            let toast = document.getElementById('language-toast');
+            if (!toast) {
+                toast = document.createElement('div');
+                toast.id = 'language-toast';
+                toast.style.zIndex = '9999';
+                toast.style.transition = 'opacity 0.3s ease-in-out';
+                toast.style.display = 'flex';
+                toast.style.alignItems = 'center';
+                toast.style.gap = '10px';
+                document.body.appendChild(toast);
+            }
+            
+            // Show message based on language
+            const message = lang === 'id' ? 
+                'Bahasa diubah ke Bahasa Indonesia' : 
+                'Language changed to English';
+            
+            // Create icon 
+            const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>`;
+            
+            // Update toast content and show it
+            toast.innerHTML = iconSvg + message;
+            toast.style.opacity = '1';
+            
+            // Hide after 3 seconds
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 300);
+            }, 3000);
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user has a preferred language saved
+            const savedLanguage = localStorage.getItem('preferredLanguage');
+            if (savedLanguage) {
+                switchLanguage(savedLanguage);
+            }
+            
+            const form = document.getElementById('rekberForm');
+            const resultContainer = document.getElementById('resultContainer');
+            const transactionCode = document.getElementById('transactionCode');
+            const contactAdmin = document.getElementById('contactAdmin');
+            const contactWhatsApp = document.getElementById('contactWhatsApp');
+            const copyBtn = document.getElementById('copyBtn');
+            const copyTooltip = document.getElementById('copyTooltip');
+            const backBtn = document.getElementById('backBtn');
+            const submitBtn = document.getElementById('submitBtn');
+            const loadingIndicator = document.getElementById('loadingIndicator');
+            const fileUpload = document.getElementById('attachment');
+            const fileName = document.getElementById('fileName');
+            const fileUploadContainer = document.getElementById('fileUploadContainer');position = 'fixed';
+                toast.style.bottom = '20px';
+                toast.style.right = '20px';
+                toast.style.backgroundColor = '#2563eb';
+                toast.style.color = 'white';
+                toast.style.padding = '12px 20px';
+                toast.style.borderRadius = '4px';
+                toast.style.boxShadow = '0 2px 8px rgba(0,0,0,0.2)';
+                toast.style.<!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
@@ -638,23 +763,457 @@
             display: flex;
             justify-content: flex-end;
             margin-bottom: 20px;
+            gap: 5px;
         }
         
         .language-btn {
             background: none;
             border: 1px solid #d1d5db;
             border-radius: 4px;
-            padding: 5px 10px;
-            margin-left: 10px;
+            padding: 8px 15px;
             cursor: pointer;
-            font-size: 14px;
-            transition: all 0.2s;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         
-        .language-btn:hover, .language-btn.active {
+        .language-btn:hover {
+            background-color: #f3f4f6;
+            border-color: #9ca3af;
+        }
+        
+        .language-btn.active {
             background-color: var(--primary-color);
             color: white;
             border-color: var(--primary-color);
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+        }
+        
+        .language-btn img {
+            width: 20px;
+            height: 15px;
+            border-radius: 2px;
+        }
+        
+        /* Toast notification for language change */
+        .language-toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            z-index: 9999;
+            transition: opacity 0.3s, transform 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+        }
+        
+        .language-toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .currency-selector {
+            margin-bottom: 15px;
+        }
+        
+        .currency-selector select {
+            width: auto;
+            padding: 8px 12px;
+        }
+        
+        .international-info {
+            background-color: #e8f4ff;
+            border-left: 4px solid #3b82f6;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .exchange-rate-info {
+            font-size: 14px;
+            color: #4b5563;
+            margin-top: 5px;
+            font-style: italic;
+        }
+    </style>5px;
+            color: #9ca3af;
+        }
+        
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+        
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+        
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .progress-bar::before {
+            content: "";
+            position: absolute;
+            top: 15px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #e5e7eb;
+            z-index: 1;
+        }
+        
+        .progress-step {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 33.33%;
+        }
+        
+        .step-circle {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background-color: white;
+            border: 2px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #9ca3af;
+        }
+        
+        .step-label {
+            font-size: 14px;
+            color: #6b7280;
+            text-align: center;
+        }
+        
+        .active .step-circle {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+            color: white;
+        }
+        
+        .active .step-label {
+            color: var(--dark-color);
+            font-weight: 500;
+        }
+        
+        .completed .step-circle {
+            background-color: var(--success-color);
+            border-color: var(--success-color);
+            color: white;
+        }
+        
+        .loading {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .copy-btn {
+            background-color: transparent;
+            border: none;
+            color: var(--primary-color);
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin: 0 auto;
+        }
+        
+        .copy-btn:hover {
+            text-decoration: underline;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 140px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 150%;
+            left: 50%;
+            margin-left: -70px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .tooltip .tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+        
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+        
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            margin: 0 -10px;
+        }
+        
+        .col {
+            flex: 1;
+            padding: 0 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .row {
+                flex-direction: column;
+            }
+            
+            .col {
+                margin-bottom: 20px;
+            }
+            
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .step-label {
+                font-size: 12px;
+            }
+        }
+        
+        .file-upload {
+            border: 2px dashed #d1d5db;
+            border-radius: 4px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: border-color 0.3s;
+        }
+        
+        .file-upload:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .file-upload input {
+            display: none;
+        }
+        
+        .file-name {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #6b7280;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #6b7280;
+            font-size: 14px;
+            margin-top: 40px;
+            background-color: white;
+            border-top: 1px solid #e5e7eb;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+        
+        .footer-links a {
+            color: #6b7280;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary-color);
+            text-decoration: underline;
+        }
+        
+        .verification-badges {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .badge-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .badge-item img {
+            max-height: 40px;
+            max-width: 100px;
+        }
+        
+        .shipping-calculator {
+            background-color: #f9fafb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .shipping-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 8px;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .shipping-option:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .shipping-option.selected {
+            border-color: var(--primary-color);
+            background-color: #f0f9ff;
+        }
+        
+        .shipping-option input {
+            margin-right: 10px;
+            width: auto;
+        }
+        
+        .shipping-logo {
+            width: 50px;
+            margin-right: 15px;
+        }
+        
+        .shipping-info {
+            flex-grow: 1;
+        }
+        
+        .shipping-name {
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        
+        .shipping-estimate {
+            font-size: 12px;
+            color: #6b7280;
+        }
+        
+        .shipping-price {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .price-summary {
+            background-color: #f9fafb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .price-row.total {
+            font-weight: 600;
+            font-size: 16px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+        
+        /* International Transaction Styles */
+        .language-selector {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 20px;
+            gap: 5px;
+        }
+        
+        .language-btn {
+            background: none;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .language-btn:hover {
+            background-color: #f3f4f6;
+            border-color: #9ca3af;
+        }
+        
+        .language-btn.active {
+            background-color: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+        }
+        
+        .language-btn img {
+            width: 20px;
+            height: 15px;
+            border-radius: 2px;
         }
         
         .currency-selector {
@@ -696,8 +1255,14 @@
                 RekBer Indonesia
             </div>
             <div class="language-selector">
-                <button type="button" class="language-btn active" id="lang-id" data-lang="id" onclick="updateLanguage('id')">ID</button>
-                <button type="button" class="language-btn" id="lang-en" data-lang="en" onclick="updateLanguage('en')">EN</button>
+                <button type="button" class="language-btn active" id="lang-id" onclick="switchLanguage('id')">
+                    <img src="data:image/png;base64,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" alt="Indonesia">
+                    Indonesia
+                </button>
+                <button type="button" class="language-btn" id="lang-en" onclick="switchLanguage('en')">
+                    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAUCAYAAACaq43EAAAACXBIWXMAAAsTAAALEwEAmpwYAAAKT2lDQ1BQaG90b3Nob3AgSUNDIHByb2ZpbGUAAHjanVNnVFPpFj333vRCS4iAlEtvUhUIIFJCi4AUkSYqIQkQSoghodkVUcERRUUEG8igiAOOjoCMFVEsDIoK2AfkIaKOg6OIisr74Xuja9a89+bN/rXXPues852zzwfACAyWSDNRNYAMqUIeEeCDx8TG4eQuQIEKJHAAEAizZCFz/SMBAPh+PDwrIsAHvgABeNMLCADATZvAMByH/w/qQplcAYCEAcB0kThLCIAUAEB6jkKmAEBGAYCdmCZTAKAEAGDLY2LjAFAtAGAnf+bTAICd+Jl7AQBblCEVAaCRACATZYhEAGg7AKzPVopFAFgwABRmS8Q5ANgtADBJV2ZIALC3AMDOEAuyAAgMADBRiIUpAAR7AGDIIyN4AISZABRG8lc88SuuEOcqAAB4mbI8uSQ5RYFbCC1xB1dXLh4ozkkXKxQ2YQJhmkAuwnmZGTKBNA/g88wAAKCRFRHgg/P9eM4Ors7ONo62Dl8t6r8G/yJiYuP+5c+rcEAAAOF0ftH+LC+zGoA7BoBt/qIl7gRoXgugdfeLZrIPQLUAoOnaV/Nw+H48PEWhkLnZ2eXk5NhKxEJbYcpXff5nwl/AV/1s+X48/Pf14L7iJIEyXYFHBPjgwsz0TKUcz5IJhGLc5o9H/LcL//wd0yLESWK5WCoU41EScY5EmozzMqUiiUKSKcUl0v9k4t8s+wM+3zUAsGo+AXuRLahdYwP2SycQWHTA4vcAAPK7b8HUKAgDgGiD4c93/+8//UegJQCAZkmScQAAXkQkLlTKsz/HCAAARKCBKrBBG/TBGCzABhzBBdzBC/xgNoRCJMTCQhBCCmSAHHJgKayCQiiGzbAdKmAv1EAdNMBRaIaTcA4uwlW4Dj1wD/phCJ7BKLyBCQRByAgTYSHaiAFiilgjjggXmYX4IcFIBBKLJCDJiBRRIkuRNUgxUopUIFVIHfI9cgI5h1xGupE7yAAygvyGvEcxlIGyUT3UDLVDuag3GoRGogvQZHQxmo8WoJvQcrQaPYw2oefQq2gP2o8+Q8cwwOgYBzPEbDAuxsNCsTgsCZNjy7EirAyrxhqwVqwDu4n1Y8+xdwQSgUXACTYEd0IgYR5BSFhMWE7YSKggHCQ0EdoJNwkDhFHCJyKTqEu0JroR+cQYYjIxh1hILCPWEo8TLxB7iEPENyQSiUMyJ7mQAkmxpFTSEtJG0m5SI+ksqZs0SBojk8naZGuyBzmULCAryIXkneTD5DPkG+Qh8lsKnWJAcaT4U+IoUspqShnlEOU05QZlmDJBVaOaUt2ooVQRNY9aQq2htlKvUYeoEzR1mjnNgxZJS6WtopXTGmgXaPdpr+h0uhHdlR5Ol9BX0svpR+iX6AP0dwwNhhWDx4hnKBmbGAcYZxl3GK+YTKYZ04sZx1QwNzHrmOeZD5lvVVgqtip8FZHKCpVKlSaVGyovVKmqpqreqgtV81XLVI+pXlN9rkZVM1PjqQnUlqtVqp1Q61MbU2epO6iHqmeob1Q/pH5Z/YkGWcNMw09DpFGgsV/jvMYgC2MZs3gsIWsNq4Z1gTXEJrHN2Xx2KruY/R27iz2qqaE5QzNKM1ezUvOUZj8H45hx+Jx0TgnnKKeX836K3hTvKeIpG6Y0TLkxZVxrqpaXllirSKtRq0frvTau7aedpr1Fu1n7gQ5Bx0onXCdHZ4/OBZ3nU9lT3acKpxZNPTr1ri6qa6UbobtEd79up+6Ynr5egJ5Mb6feeb3n+hx9L/1U/W36p/VHDFgGswwkBtsMzhg8xTVxbzwdL8fb8VFDXcNAQ6VhlWGX4YSRudE8o9VGjUYPjGnGXOMk423GbcajJgYmISZLTepN7ppSTbmmKaY7TDtMx83MzaLN1pk1mz0x1zLnm+eb15vft2BaeFostqi2uGVJsuRaplnutrxuhVo5WaVYVVpds0atna0l1rutu6cRp7lOk06rntZnw7Dxtsm2qbcZsOXYBtuutm22fWFnYhdnt8Wuw+6TvZN9un2N/T0HDYfZDqsdWh1+c7RyFDpWOt6azpzuP33F9JbpL2dYzxDP2DPjthPLKcRpnVOb00dnF2e5c4PziIuJS4LLLpc+Lpsbxt3IveRKdPVxXeF60vWdm7Obwu2o26/uNu5p7ofcn8w0nymeWTNz0MPIQ+BR5dE/C5+VMGvfrH5PQ0+BZ7XnIy9jL5FXrdewt6V3qvdh7xc+9j5yn+M+4zw33jLeWV/MN8C3yLfLT8Nvnl+F30N/I/9k/3r/0QCngCUBZwOJgUGBWwL7+Hp8Ib+OPzrbZfay2e1BjKC5QRVBj4KtguXBrSFoyOyQrSH355jOkc5pDoVQfujW0Jnjr0YfWSNImqVqlSLKj4Rn6CfkM+lEyltwkLBQ2F/spbFSaoSpaJVa0qvQrGKvGg8KnpOXupROtm+9Tptdpbpm9CRDKn9L9UDt/dlzmfcl9Z4+Sbnz9Ne5jzjPscy4M0+ZUBm3LpfZmVW81bU1tt3WLfLt9W3n7q1bvO/h14cf/Hgk+GH8yPh95qfpj/FP9T89/zr9ef/DAWsD6wdeDnxZUVrRXNFTMVfxVPGt4qPip8VfCv9qftr8e/1P02/bf4SfDv9e/rukraNbRLaWtDe0J7T/2Dyyc7Bzce7j3uePzN88nvnY8LnqS8qXxK8pX3u/RX/b/nX0W/u34W/n7yLfp36v+0H6Qfqj+FP0t/bv2T/zH4uf0J+uf+b/Sv+9/rr+x/xv049fPw569P3r9JPxj2MPLz1c/bj08e7T5GfVz6uf7z4Vfqn8ov4z7v/yl8tf9X91f7v8FfhV+vvo1+ov3T9LP9d/SP+Z/Kf7X83/VV8V/4r8ufJX8k/lP2f+HP/j769Lv0z+tv1d+Yf0j/u/+n9r/+P+d/t/AgAqzA0K8kUuAAAAIGNIUk0AAHomAACAhAAA+gAAAIDoAAB1MAAA6mAAADqYAAAXcJy6UTwAAAHnSURBVHja7JU/aJNREMc/l/xaQ9AwmEVsFyclOHeRqK3cQaSDyaCb1N0tIriIrn9QIYLg4pQ/OKRbUVwSIYIg2EVaXMXioHZxE+ogYk3TmvzeO4d7TdImJa0OLnrw+L53x7vv/e67d7zoJSv+p5CJQTYGeSXnGaVnC5C1kK1CVsC0Ah+AnwpMgHgDbBpmA6QAhK84LeBNHzENdCGdQDoDegC0JVkFPQQ9CLoKMgNmB3SXsY4hO4S8Bb2Ksg+RFyDL6HQPkW2kh0jfIHmNGMEYB5kHfQ/aQDqJ9BP0A9JLIIt0dwUxCvod+LO7v4pMHnQF6QeUdQb5Ff5+6QK0D8SdH4OOAYdAGjA0sFILXQCuA0eAXYcSAMDWB63TQNnhY+A1OdxTnN2J76a7YSDRZxeQtSNvMqDjQyR2HGSdBFcdLgh0XdD2ZeIvmEPAlMMZGCLxnMPpnmZJZAK0OkRiZR3O+sQZB+2CFpZBlpHNgrZALTcWYGMU2QST16jT4tN+uIXkpEt2sFz/HZ4U0gzKFpEUdyzKW8gFUA7x17Mks7ucqvJOoZOV7oI+BTF+ULN0Pgvl7SZSRnIdmQIiGfQpMP/88yULpZeIuQFj55Dbg7RO9fk//f/1q/4NAAD//wMAjbHHlWKFf6QAAAAASUVORK5CYII=" alt="English">
+                    English
+                </button>
             </div>
             <a href="#" class="btn">Beranda</a>
         </div>
