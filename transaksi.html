@@ -3,929 +3,355 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rekber - Rekening Bersama</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <title>Transaksi Rekber - Rekening Bersama</title>
     <style>
-        .transaction-success {
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --light-color: #f3f4f6;
+            --dark-color: #1f2937;
+            --success-color: #10b981;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f9fafb;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px 0;
+            margin-bottom: 30px;
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            font-size: 28px;
+        }
+        
+        h2 {
+            color: var(--dark-color);
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        p {
+            margin-bottom: 20px;
+            color: #4b5563;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark-color);
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            transition: background-color 0.3s;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        .btn-facebook {
+            background-color: #1877f2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        .btn-facebook:hover {
+            background-color: #166fe5;
+        }
+        
+        .result-container {
             display: none;
+            background-color: #f0f9ff;
+            border: 1px solid #bae6fd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .transaction-code {
+            font-size: 24px;
+            color: var(--primary-color);
+            font-weight: bold;
+            text-align: center;
+            margin: 15px 0;
+            letter-spacing: 2px;
+        }
+        
+        .steps {
+            margin-top: 20px;
+        }
+        
+        .step {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .step-number {
+            background-color: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .mb-20 {
+            margin-bottom: 20px;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .alert {
+            padding: 15px;
+            background-color: #fee2e2;
+            color: #b91c1c;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+        
+        .info-box {
+            background-color: #f3f4f6;
+            border-left: 4px solid var(--primary-color);
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #6b7280;
+            font-size: 14px;
+            margin-top: 40px;
         }
     </style>
 </head>
-<body class="bg-gray-100 font-sans">
-    <div class="container mx-auto px-4 py-8">
-        <header class="text-center mb-10">
-            <h1 class="text-3xl font-bold text-blue-600">REKBER</h1>
-            <p class="text-lg text-gray-600">Sistem Rekening Bersama Aman dan Terpercaya</p>
-        </header>
-
-        <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md p-6">
-            <!-- Transaction Form -->
-            <div id="transaction-form">
-                <h2 class="text-xl font-semibold mb-4 text-center">Form Transaksi Baru</h2>
-                <form id="rekber-form" class="space-y-4">
-                    <div>
-                        <label for="seller-name" class="block text-sm font-medium text-gray-700">Nama Penjual</label>
-                        <input type="text" id="seller-name" name="seller-name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    
-                    <div>
-                        <label for="seller-contact" class="block text-sm font-medium text-gray-700">Kontak Penjual (WhatsApp/Telp)</label>
-                        <input type="text" id="seller-contact" name="seller-contact" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    
-                    <div>
-                        <label for="buyer-name" class="block text-sm font-medium text-gray-700">Nama Pembeli</label>
-                        <input type="text" id="buyer-name" name="buyer-name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    
-                    <div>
-                        <label for="buyer-contact" class="block text-sm font-medium text-gray-700">Kontak Pembeli (WhatsApp/Telp)</label>
-                        <input type="text" id="buyer-contact" name="buyer-contact" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    
-                    <div>
-                        <label for="item-description" class="block text-sm font-medium text-gray-700">Deskripsi Barang/Jasa</label>
-                        <textarea id="item-description" name="item-description" rows="3" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"></textarea>
-                    </div>
-                    
-                    <div>
-                        <label for="amount" class="block text-sm font-medium text-gray-700">Jumlah Transaksi (Rp)</label>
-                        <input type="number" id="amount" name="amount" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    
-                    <div class="text-center">
-                        <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            Buat Transaksi
-                        </button>
-                    </div>
-                </form>
+<body>
+    <header>
+        <div class="container header-container">
+            <div class="logo">RekBer Indonesia</div>
+            <nav>
+                <a href="#" class="btn">Beranda</a>
+            </nav>
+        </div>
+    </header>
+    
+    <div class="container">
+        <div class="card">
+            <h1>Mulai Transaksi Rekening Bersama</h1>
+            <p>Isi formulir di bawah ini untuk memulai transaksi dengan rekening bersama. Setelah mengisi formulir, Anda akan mendapatkan kode transaksi yang dapat digunakan untuk verifikasi dengan admin.</p>
+            
+            <div class="info-box">
+                <p><strong>Penting:</strong> Pastikan semua informasi yang dimasukkan benar dan sesuai dengan transaksi yang akan dilakukan. Admin akan melakukan verifikasi data sebelum transaksi diproses.</p>
             </div>
             
-            <!-- Transaction Success -->
-            <div id="transaction-success" class="transaction-success text-center space-y-4">
-                <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
-                    <p class="font-bold">Transaksi Berhasil Dibuat!</p>
-                    <p>Silahkan simpan kode transaksi Anda.</p>
+            <form id="rekberForm">
+                <h2>Data Penjual</h2>
+                <div class="form-group">
+                    <label for="sellerName">Nama Penjual</label>
+                    <input type="text" id="sellerName" required>
                 </div>
                 
-                <div class="p-4 border-2 border-dashed border-gray-300 rounded-md">
-                    <p class="text-sm text-gray-600 mb-1">Kode Transaksi:</p>
-                    <p id="transaction-id" class="text-xl font-bold text-blue-600"></p>
-                    <button id="copy-btn" class="mt-2 text-sm text-blue-600 hover:text-blue-800">
-                        Salin Kode
-                    </button>
+                <div class="form-group">
+                    <label for="sellerPhone">Nomor Telepon Penjual</label>
+                    <input type="tel" id="sellerPhone" required>
                 </div>
                 
-                <div class="mt-6">
-                    <p class="text-sm text-gray-600 mb-3">Silahkan hubungi admin untuk verifikasi transaksi:</p>
-                    <a href="https://facebook.com/rekberadmin" target="_blank" id="contact-admin-btn" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        Hubungi Admin di Facebook
-                    </a>
+                <div class="form-group">
+                    <label for="sellerBank">Bank Penjual</label>
+                    <select id="sellerBank" required>
+                        <option value="">-- Pilih Bank --</option>
+                        <option value="BCA">BCA</option>
+                        <option value="Mandiri">Mandiri</option>
+                        <option value="BNI">BNI</option>
+                        <option value="BRI">BRI</option>
+                        <option value="CIMB">CIMB Niaga</option>
+                        <option value="Permata">Permata</option>
+                        <option value="other">Lainnya</option>
+                    </select>
                 </div>
                 
-                <div class="mt-6">
-                    <button id="new-transaction-btn" class="text-sm text-gray-600 hover:text-gray-800">
-                        Buat Transaksi Baru
-                    </button>
+                <div class="form-group">
+                    <label for="sellerAccount">Nomor Rekening Penjual</label>
+                    <input type="text" id="sellerAccount" required>
+                </div>
+                
+                <h2>Data Pembeli</h2>
+                <div class="form-group">
+                    <label for="buyerName">Nama Pembeli</label>
+                    <input type="text" id="buyerName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="buyerPhone">Nomor Telepon Pembeli</label>
+                    <input type="tel" id="buyerPhone" required>
+                </div>
+                
+                <h2>Detail Transaksi</h2>
+                <div class="form-group">
+                    <label for="itemDescription">Deskripsi Barang/Jasa</label>
+                    <textarea id="itemDescription" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="amount">Jumlah Transaksi (Rp)</label>
+                    <input type="number" id="amount" min="1000" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="notes">Catatan Tambahan (opsional)</label>
+                    <textarea id="notes"></textarea>
+                </div>
+                
+                <button type="submit" class="btn" id="submitBtn">Buat Transaksi</button>
+            </form>
+        </div>
+        
+        <div class="result-container" id="resultContainer">
+            <h2 class="text-center">Transaksi Berhasil Dibuat!</h2>
+            <p class="text-center">Gunakan kode transaksi berikut untuk verifikasi dengan admin:</p>
+            
+            <div class="transaction-code" id="transactionCode">
+                RB-12345678
+            </div>
+            
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>Salin kode transaksi di atas</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>Hubungi admin melalui tombol Facebook di bawah</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>Kirimkan kode transaksi untuk verifikasi</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div>Ikuti petunjuk admin untuk melanjutkan proses transaksi</div>
                 </div>
             </div>
+            
+            <button class="btn btn-facebook" id="contactAdmin">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="white">
+                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385h-3.047v-3.47h3.047v-2.642c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953h-1.514c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385c5.737-.9 10.125-5.864 10.125-11.854z"/>
+                </svg>
+                Hubungi Admin via Facebook
+            </button>
         </div>
     </div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
-// Script lengkap Rekber dengan integrasi database
-document.addEventListener('DOMContentLoaded', function() {
-    // === ELEMEN DOM FORMULIR TRANSAKSI ===
-    const form = document.getElementById('rekber-form');
-    const transactionForm = document.getElementById('transaction-form');
-    const transactionSuccess = document.getElementById('transaction-success');
-    const transactionIdElement = document.getElementById('transaction-id');
-    const copyBtn = document.getElementById('copy-btn');
-    const newTransactionBtn = document.getElementById('new-transaction-btn');
-    const contactAdminBtn = document.getElementById('contact-admin-btn');
-    const submitText = document.getElementById('submit-text');
-    const loading = document.getElementById('loading');
-    const amountInput = document.getElementById('amount');
-    const adminFeeElement = document.getElementById('admin-fee');
-    const totalPaymentElement = document.getElementById('total-payment');
     
-    // === ELEMEN DOM PANEL ADMIN (jika ada) ===
-    const loginPanel = document.getElementById('login-panel');
-    const adminPanel = document.getElementById('admin-panel');
-    const loginForm = document.getElementById('login-form');
-    const loginError = document.getElementById('login-error');
-    const logoutBtn = document.getElementById('logout-btn');
-    const refreshBtn = document.getElementById('refresh-btn');
-    const transactionsTable = document.getElementById('transactions-table');
+    <footer class="container">
+        <p>&copy; 2025 RekBer Indonesia. Layanan Rekening Bersama Terpercaya.</p>
+    </footer>
     
-    // === VARIABEL ADMIN ===
-    // Credentials admin - dalam aplikasi nyata ini disimpan di server
-    const ADMIN_USERNAME = 'admin'; // Ganti username admin
-    const ADMIN_PASSWORD = 'securepassword123'; // Ganti password admin
-    
-    // Konfigurasi pagination
-    let currentPageNum = 1;
-    let itemsPerPage = 10;
-    let filteredTransactions = [];
-    let currentTransactionDetail = null;
-    
-    // === FUNGSI UMUM ===
-    
-    // Format angka dengan pemisah ribuan
-    function formatNumber(number) {
-        return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    }
-    
-    // Generate ID Transaksi
-    function generateTransactionId() {
-        return 'RB-' + Math.random().toString(36).substring(2, 6).toUpperCase() + 
-               Math.random().toString(36).substring(2, 6).toUpperCase();
-    }
-    
-    // Simpan transaksi ke localStorage (database)
-    function saveTransaction(data) {
-        // Ambil transaksi yang sudah ada
-        let transactions = JSON.parse(localStorage.getItem('rekber-transactions') || '[]');
-        
-        // Tambahkan transaksi baru
-        transactions.push(data);
-        
-        // Simpan kembali ke localStorage
-        localStorage.setItem('rekber-transactions', JSON.stringify(transactions));
-        
-        console.log('Transaksi berhasil disimpan:', data);
-        console.log('Total transaksi dalam database:', transactions.length);
-    }
-    
-    // Hitung biaya admin
-    function calculateAdminFee(amount) {
-        let fee = amount * 0.01; // 1% dari jumlah transaksi
-        fee = Math.max(10000, fee); // Minimum fee: Rp 10,000
-        fee = Math.min(100000, fee); // Maximum fee: Rp 100,000
-        return fee;
-    }
-    
-    // Format tanggal
-    function formatDate(dateString) {
-        const date = new Date(dateString);
-        return date.toLocaleDateString('id-ID', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        });
-    }
-    
-    // Dapatkan nama status
-    function getStatusName(status) {
-        switch(status) {
-            case 'pending': return 'Pending';
-            case 'verified': return 'Terverifikasi';
-            case 'paid': return 'Dibayar';
-            case 'shipped': return 'Dikirim';
-            case 'completed': return 'Selesai';
-            case 'cancelled': return 'Dibatalkan';
-            default: return 'Unknown';
-        }
-    }
-    
-    // === FUNGSI FORMULIR TRANSAKSI ===
-    
-    // Kalkulasi biaya admin & total
-    if (amountInput && adminFeeElement && totalPaymentElement) {
-        amountInput.addEventListener('input', function() {
-            const amount = parseInt(amountInput.value) || 0;
-            const adminFee = calculateAdminFee(amount);
-            const totalPayment = amount + adminFee;
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('rekberForm');
+            const resultContainer = document.getElementById('resultContainer');
+            const transactionCode = document.getElementById('transactionCode');
+            const contactAdmin = document.getElementById('contactAdmin');
             
-            adminFeeElement.textContent = 'Rp ' + formatNumber(adminFee);
-            totalPaymentElement.textContent = 'Rp ' + formatNumber(totalPayment);
-        });
-        
-        // Initialize fee calculation
-        const initialAmount = parseInt(amountInput.value) || 0;
-        const initialFee = calculateAdminFee(initialAmount);
-        const initialTotal = initialAmount + initialFee;
-        
-        adminFeeElement.textContent = 'Rp ' + formatNumber(initialFee);
-        totalPaymentElement.textContent = 'Rp ' + formatNumber(initialTotal);
-    }
-    
-    // Event listener untuk form submit
-    if (form) {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Tampilkan loading
-            if (submitText && loading) {
-                submitText.style.display = 'none';
-                loading.style.display = 'inline-block';
-            }
-            
-            // Tunda untuk efek loading
-            setTimeout(() => {
-                // Buat ID transaksi baru
-                const transactionId = generateTransactionId();
-                
-                // Ambil nilai form
-                const amount = parseInt(document.getElementById('amount').value) || 0;
-                const adminFee = calculateAdminFee(amount);
-                const timestamp = new Date().toISOString();
-                
-                // Buat objek data transaksi
-                const transactionData = {
-                    id: transactionId,
-                    timestamp: timestamp,
-                    sellerName: document.getElementById('seller-name').value,
-                    sellerContact: document.getElementById('seller-contact').value,
-                    sellerBank: document.getElementById('seller-bank')?.value || '',
-                    sellerAccount: document.getElementById('seller-account')?.value || '',
-                    buyerName: document.getElementById('buyer-name').value,
-                    buyerContact: document.getElementById('buyer-contact').value,
-                    buyerEmail: document.getElementById('buyer-email')?.value || '',
-                    itemDescription: document.getElementById('item-description').value,
-                    amount: amount,
-                    adminFee: adminFee,
-                    totalAmount: amount + adminFee,
-                    status: 'pending',
-                    statusHistory: [
-                        {
-                            status: 'pending',
-                            timestamp: timestamp,
-                            notes: 'Transaksi dibuat oleh sistem'
-                        }
-                    ]
-                };
-                
-                // Simpan ke database (localStorage)
-                saveTransaction(transactionData);
-                
-                // Tampilkan halaman sukses
-                if (transactionForm && transactionSuccess) {
-                    transactionForm.parentElement.style.display = 'none';
-                    transactionSuccess.style.display = 'block';
-                }
-                
-                // Tampilkan ID transaksi
-                if (transactionIdElement) {
-                    transactionIdElement.textContent = transactionId;
-                }
-                
-                // Update link kontak admin
-                if (contactAdminBtn) {
-                    const baseUrl = 'https://facebook.com/rekberadmin';
-                    contactAdminBtn.href = `${baseUrl}?msg=Verifikasi transaksi: ${transactionId}`;
-                }
-                
-                // Reset loading
-                if (submitText && loading) {
-                    submitText.style.display = 'inline-block';
-                    loading.style.display = 'none';
-                }
-            }, 1500);
-        });
-    }
-    
-    // Event listener untuk tombol salin kode
-    if (copyBtn && transactionIdElement) {
-        copyBtn.addEventListener('click', function() {
-            const transactionId = transactionIdElement.textContent;
-            navigator.clipboard.writeText(transactionId).then(function() {
-                copyBtn.innerHTML = '<i class="fas fa-check mr-1"></i> Kode Disalin!';
-                setTimeout(() => {
-                    copyBtn.innerHTML = '<i class="far fa-copy mr-1"></i> Salin Kode';
-                }, 2000);
-            });
-        });
-    }
-    
-    // Event listener untuk tombol transaksi baru
-    if (newTransactionBtn && form && transactionSuccess && transactionForm) {
-        newTransactionBtn.addEventListener('click', function() {
-            form.reset();
-            transactionSuccess.style.display = 'none';
-            transactionForm.parentElement.style.display = 'block';
-            
-            // Reset kalkulasi biaya
-            const amount = parseInt(amountInput.value) || 0;
-            const adminFee = calculateAdminFee(amount);
-            const totalPayment = amount + adminFee;
-            
-            adminFeeElement.textContent = 'Rp ' + formatNumber(adminFee);
-            totalPaymentElement.textContent = 'Rp ' + formatNumber(totalPayment);
-        });
-    }
-    
-    // === FUNGSI ADMIN PANEL ===
-    
-    // Check jika kita berada di halaman admin
-    if (loginPanel && adminPanel) {
-        // === AUTENTIKASI ADMIN ===
-        
-        // Periksa status login
-        checkLoginStatus();
-        
-        // Event login
-        if (loginForm) {
-            loginForm.addEventListener('submit', function(e) {
+            form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
+                // Generate random transaction code
+                const randomCode = 'RB-' + Math.floor(Math.random() * 90000000 + 10000000);
+                transactionCode.textContent = randomCode;
                 
-                if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-                    // Set session admin
-                    localStorage.setItem('rekber_admin_session', JSON.stringify({
-                        username: username,
-                        timestamp: new Date().getTime(),
-                        token: btoa(username + new Date().getTime())
-                    }));
-                    
-                    // Tampilkan panel admin
-                    showAdminPanel();
-                } else {
-                    // Tampilkan error
-                    loginError.classList.remove('hidden');
-                }
-            });
-        }
-        
-        // Event logout
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', function() {
-                localStorage.removeItem('rekber_admin_session');
-                showLoginPanel();
-            });
-        }
-        
-        // Event refresh data
-        if (refreshBtn) {
-            refreshBtn.addEventListener('click', function() {
-                loadTransactions();
-            });
-        }
-        
-        // Fungsi-fungsi admin
-        
-        // Cek status login
-        function checkLoginStatus() {
-            const session = JSON.parse(localStorage.getItem('rekber_admin_session') || 'null');
-            
-            if (session && session.username === ADMIN_USERNAME) {
-                // Cek apakah session belum expired (24 jam)
-                const now = new Date().getTime();
-                const sessionTime = session.timestamp;
-                const sessionDuration = 24 * 60 * 60 * 1000; // 24 jam
+                // Hide form and show result
+                form.parentElement.style.display = 'none';
+                resultContainer.style.display = 'block';
                 
-                if (now - sessionTime < sessionDuration) {
-                    // Session valid
-                    showAdminPanel();
-                    return;
-                }
-            }
-            
-            // Tidak ada session valid
-            showLoginPanel();
-        }
-        
-        // Tampilkan panel login
-        function showLoginPanel() {
-            loginPanel.style.display = 'block';
-            adminPanel.classList.add('hidden');
-            
-            // Reset form
-            if (loginForm) {
-                loginForm.reset();
-                loginError.classList.add('hidden');
-            }
-        }
-        
-        // Tampilkan panel admin
-        function showAdminPanel() {
-            loginPanel.style.display = 'none';
-            adminPanel.classList.remove('hidden');
-            
-            // Load data transaksi
-            loadTransactions();
-        }
-        
-        // Load data transaksi
-        function loadTransactions() {
-            let transactions = JSON.parse(localStorage.getItem('rekber-transactions') || '[]');
-            
-            // Urutkan berdasarkan timestamp (terbaru dulu)
-            transactions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            
-            // Terapkan filter
-            filterTransactions(transactions);
-        }
-        
-        // Filter transaksi
-        function filterTransactions(transactions = null) {
-            if (!transactions) {
-                transactions = JSON.parse(localStorage.getItem('rekber-transactions') || '[]');
-                transactions.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
-            }
-            
-            const searchTerm = document.getElementById('search')?.value.toLowerCase() || '';
-            const statusValue = document.getElementById('status-filter')?.value || 'all';
-            const dateValue = document.getElementById('date-filter')?.value || 'all';
-            
-            filteredTransactions = transactions.filter(transaction => {
-                // Filter pencarian
-                const matchesSearch = !searchTerm || 
-                    transaction.id.toLowerCase().includes(searchTerm) ||
-                    transaction.sellerName.toLowerCase().includes(searchTerm) ||
-                    transaction.buyerName.toLowerCase().includes(searchTerm);
-                
-                // Filter status
-                const matchesStatus = statusValue === 'all' || transaction.status === statusValue;
-                
-                // Filter tanggal
-                let matchesDate = true;
-                if (dateValue !== 'all') {
-                    const transactionDate = new Date(transaction.timestamp);
-                    const today = new Date();
-                    today.setHours(0, 0, 0, 0);
-                    
-                    if (dateValue === 'today') {
-                        const tomorrow = new Date(today);
-                        tomorrow.setDate(tomorrow.getDate() + 1);
-                        matchesDate = transactionDate >= today && transactionDate < tomorrow;
-                    } else if (dateValue === 'yesterday') {
-                        const yesterday = new Date(today);
-                        yesterday.setDate(yesterday.getDate() - 1);
-                        matchesDate = transactionDate >= yesterday && transactionDate < today;
-                    } else if (dateValue === 'week') {
-                        const weekStart = new Date(today);
-                        weekStart.setDate(weekStart.getDate() - weekStart.getDay());
-                        matchesDate = transactionDate >= weekStart;
-                    } else if (dateValue === 'month') {
-                        const monthStart = new Date(today.getFullYear(), today.getMonth(), 1);
-                        matchesDate = transactionDate >= monthStart;
-                    }
-                }
-                
-                return matchesSearch && matchesStatus && matchesDate;
+                // Scroll to result
+                resultContainer.scrollIntoView({behavior: 'smooth'});
             });
             
-            // Render transaksi yang sudah difilter
-            renderTransactions();
-        }
-        
-        // Render transaksi ke tabel
-        function renderTransactions() {
-            if (!transactionsTable) return;
-            
-            const startIndex = (currentPageNum - 1) * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            const displayedTransactions = filteredTransactions.slice(startIndex, endIndex);
-            
-            // Bersihkan tabel
-            transactionsTable.innerHTML = '';
-            
-            if (displayedTransactions.length === 0) {
-                transactionsTable.innerHTML = `
-                    <tr class="text-center">
-                        <td colspan="8" class="px-6 py-4 text-sm text-gray-500">
-                            Tidak ada transaksi yang ditemukan
-                        </td>
-                    </tr>
-                `;
-            } else {
-                // Tambahkan transaksi ke tabel
-                displayedTransactions.forEach(transaction => {
-                    const row = document.createElement('tr');
-                    row.className = 'hover:bg-gray-50';
-                    
-                    // Format tanggal
-                    const formattedDate = formatDate(transaction.timestamp);
-                    
-                    // Format jumlah
-                    const formattedAmount = new Intl.NumberFormat('id-ID', {
-                        style: 'currency',
-                        currency: 'IDR',
-                        minimumFractionDigits: 0
-                    }).format(transaction.amount);
-                    
-                    // Generate badge status
-                    let statusBadge = '';
-                    switch(transaction.status) {
-                        case 'pending':
-                            statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Pending</span>';
-                            break;
-                        case 'verified':
-                            statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Terverifikasi</span>';
-                            break;
-                        case 'paid':
-                            statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Dibayar</span>';
-                            break;
-                        case 'shipped':
-                            statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-purple-100 text-purple-800">Dikirim</span>';
-                            break;
-                        case 'completed':
-                            statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">Selesai</span>';
-                            break;
-                        case 'cancelled':
-                            statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">Dibatalkan</span>';
-                            break;
-                        default:
-                            statusBadge = '<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">Unknown</span>';
-                    }
-                    
-                    // Potong deskripsi
-                    const truncatedDesc = transaction.itemDescription.length > 30 
-                        ? transaction.itemDescription.substring(0, 30) + '...'
-                        : transaction.itemDescription;
-                    
-                    // Buat baris tabel
-                    row.innerHTML = `
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-blue-600">
-                            ${transaction.id}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            ${formattedDate}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            ${transaction.sellerName}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            ${transaction.buyerName}
-                        </td>
-                        <td class="px-6 py-4 text-sm text-gray-500">
-                            ${truncatedDesc}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                            ${formattedAmount}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            ${statusBadge}
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                            <button class="view-details text-blue-600 hover:text-blue-800 mr-2" data-id="${transaction.id}">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="delete-transaction text-red-600 hover:text-red-800" data-id="${transaction.id}">
-                                <i class="fas fa-trash"></i>
-                            </button>
-                        </td>
-                    `;
-                    
-                    transactionsTable.appendChild(row);
-                });
-                
-                // Tambahkan event listeners ke tombol detail
-                document.querySelectorAll('.view-details').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const transactionId = this.getAttribute('data-id');
-                        showTransactionDetails(transactionId);
-                    });
-                });
-                
-                // Tambahkan event listeners ke tombol hapus
-                document.querySelectorAll('.delete-transaction').forEach(button => {
-                    button.addEventListener('click', function() {
-                        const transactionId = this.getAttribute('data-id');
-                        if (confirm('Apakah Anda yakin ingin menghapus transaksi ini?')) {
-                            deleteTransaction(transactionId);
-                        }
-                    });
-                });
-            }
-            
-            // Update informasi pagination
-            document.getElementById('showing-entries').textContent = filteredTransactions.length > 0 
-                ? `${startIndex + 1}-${Math.min(endIndex, filteredTransactions.length)}`
-                : '0';
-            document.getElementById('total-entries').textContent = filteredTransactions.length;
-            document.getElementById('current-page').textContent = currentPageNum;
-            document.getElementById('total-pages').textContent = Math.max(1, Math.ceil(filteredTransactions.length / itemsPerPage));
-            
-            // Update tombol pagination
-            document.getElementById('prev-page').disabled = currentPageNum === 1;
-            document.getElementById('next-page').disabled = currentPageNum >= Math.ceil(filteredTransactions.length / itemsPerPage);
-        }
-        
-        // Tampilkan detail transaksi
-        function showTransactionDetails(transactionId) {
-            // Cari transaksi
-            let transactions = JSON.parse(localStorage.getItem('rekber-transactions') || '[]');
-            const transaction = transactions.find(t => t.id === transactionId);
-            
-            if (!transaction) return;
-            
-            // Simpan transaksi saat ini
-            currentTransactionDetail = transaction;
-            
-            // Format tanggal
-            const formattedDate = formatDate(transaction.timestamp);
-            
-            // Format jumlah
-            const formattedAmount = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0
-            }).format(transaction.amount);
-            
-            // Hitung & format biaya admin
-            const adminFee = transaction.adminFee || calculateAdminFee(transaction.amount);
-            const formattedFee = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0
-            }).format(adminFee);
-            
-            // Hitung & format total
-            const total = transaction.totalAmount || (transaction.amount + adminFee);
-            const formattedTotal = new Intl.NumberFormat('id-ID', {
-                style: 'currency',
-                currency: 'IDR',
-                minimumFractionDigits: 0
-            }).format(total);
-            
-            // Format status
-            let statusText = getStatusName(transaction.status);
-            let statusClass = '';
-            
-            switch(transaction.status) {
-                case 'pending': statusClass = 'text-yellow-600'; break;
-                case 'verified': statusClass = 'text-blue-600'; break;
-                case 'paid': statusClass = 'text-green-600'; break;
-                case 'shipped': statusClass = 'text-purple-600'; break;
-                case 'completed': statusClass = 'text-green-600'; break;
-                case 'cancelled': statusClass = 'text-red-600'; break;
-                default: statusClass = 'text-gray-600';
-            }
-            
-            // Isi detail transaksi
-            document.getElementById('detail-transaction-id').textContent = transaction.id;
-            document.getElementById('detail-id').textContent = transaction.id;
-            document.getElementById('detail-date').textContent = formattedDate;
-            document.getElementById('detail-status').textContent = statusText;
-            document.getElementById('detail-status').className = `text-sm font-medium ${statusClass}`;
-            document.getElementById('detail-amount').textContent = formattedAmount;
-            document.getElementById('detail-fee').textContent = formattedFee;
-            document.getElementById('detail-total').textContent = formattedTotal;
-            document.getElementById('detail-description').textContent = transaction.itemDescription;
-            
-            // Isi detail penjual
-            document.getElementById('detail-seller-name').textContent = transaction.sellerName;
-            document.getElementById('detail-seller-contact').textContent = '+62' + transaction.sellerContact;
-            document.getElementById('detail-seller-contact').href = `https://wa.me/62${transaction.sellerContact}`;
-            document.getElementById('detail-seller-bank').textContent = transaction.sellerBank || '-';
-            document.getElementById('detail-seller-account').textContent = transaction.sellerAccount || '-';
-            
-            // Isi detail pembeli
-            document.getElementById('detail-buyer-name').textContent = transaction.buyerName;
-            document.getElementById('detail-buyer-contact').textContent = '+62' + transaction.buyerContact;
-            document.getElementById('detail-buyer-contact').href = `https://wa.me/62${transaction.buyerContact}`;
-            document.getElementById('detail-buyer-email').textContent = transaction.buyerEmail || '-';
-            document.getElementById('detail-buyer-email').href = transaction.buyerEmail ? `mailto:${transaction.buyerEmail}` : '#';
-            
-            // Isi riwayat status
-            const historyContainer = document.getElementById('detail-history');
-            historyContainer.innerHTML = '';
-            
-            // Gunakan histori status dari database jika ada
-            const history = transaction.statusHistory || [
-                { status: 'pending', timestamp: transaction.timestamp, notes: 'Transaksi dibuat oleh sistem' }
-            ];
-            
-            // Render riwayat
-            history.forEach(historyItem => {
-                const historyDate = formatDate(historyItem.timestamp);
-                
-                let statusColor = '';
-                switch(historyItem.status) {
-                    case 'pending': statusColor = 'text-yellow-600'; break;
-                    case 'verified': statusColor = 'text-blue-600'; break;
-                    case 'paid': statusColor = 'text-green-600'; break;
-                    case 'shipped': statusColor = 'text-purple-600'; break;
-                    case 'completed': statusColor = 'text-green-600'; break;
-                    case 'cancelled': statusColor = 'text-red-600'; break;
-                    default: statusColor = 'text-gray-600';
-                }
-                
-                const historyElement = document.createElement('div');
-                historyElement.className = 'flex items-start';
-                historyElement.innerHTML = `
-                    <div class="mr-3 mt-1">
-                        <div class="w-2 h-2 rounded-full ${statusColor.replace('text-', 'bg-')}"></div>
-                    </div>
-                    <div>
-                        <div class="flex items-center">
-                            <span class="font-medium ${statusColor} mr-2">${getStatusName(historyItem.status)}</span>
-                            <span class="text-xs text-gray-500">${historyDate}</span>
-                        </div>
-                        <p class="text-sm text-gray-600">${historyItem.notes}</p>
-                    </div>
-                `;
-                
-                historyContainer.appendChild(historyElement);
+            // Contact admin via Facebook button
+            contactAdmin.addEventListener('click', function() {
+                // Replace with your actual Facebook page URL
+                window.open('https://www.facebook.com/rekberindonesia', '_blank');
             });
-            
-            // Set status saat ini di select
-            document.getElementById('status-update').value = transaction.status;
-            document.getElementById('status-notes').value = '';
-            
-            // Tampilkan modal
-            document.getElementById('transaction-details-modal').classList.remove('hidden');
-            
-            // Event listener untuk update status
-            document.getElementById('update-status-btn').onclick = function() {
-                const newStatus = document.getElementById('status-update').value;
-                const statusNotes = document.getElementById('status-notes').value;
-                updateTransactionStatus(transaction.id, newStatus, statusNotes);
-            };
-        }
-        
-        // Update status transaksi
-        function updateTransactionStatus(transactionId, newStatus, notes) {
-            // Cari transaksi
-            let transactions = JSON.parse(localStorage.getItem('rekber-transactions') || '[]');
-            const transactionIndex = transactions.findIndex(t => t.id === transactionId);
-            
-            if (transactionIndex === -1) return;
-            
-            // Update status
-            transactions[transactionIndex].status = newStatus;
-            
-            // Tambahkan ke riwayat status
-            if (!transactions[transactionIndex].statusHistory) {
-                transactions[transactionIndex].statusHistory = [
-                    {
-                        status: 'pending',
-                        timestamp: transactions[transactionIndex].timestamp,
-                        notes: 'Transaksi dibuat oleh sistem'
-                    }
-                ];
-            }
-            
-            // Tambahkan entry riwayat baru
-            transactions[transactionIndex].statusHistory.push({
-                status: newStatus,
-                timestamp: new Date().toISOString(),
-                notes: notes || `Status diubah menjadi ${getStatusName(newStatus)}`
-            });
-            
-            // Simpan transaksi yang diupdate
-            localStorage.setItem('rekber-transactions', JSON.stringify(transactions));
-            
-            // Tampilkan pesan sukses
-            alert('Status transaksi berhasil diperbarui!');
-            
-            // Refresh detail transaksi
-            showTransactionDetails(transactionId);
-            
-            // Refresh daftar transaksi
-            filterTransactions();
-        }
-        
-        // Hapus transaksi
-        function deleteTransaction(transactionId) {
-            // Cari transaksi
-            let transactions = JSON.parse(localStorage.getItem('rekber-transactions') || '[]');
-            const filteredTransactions = transactions.filter(t => t.id !== transactionId);
-            
-            // Simpan transaksi yang diupdate
-            localStorage.setItem('rekber-transactions', JSON.stringify(filteredTransactions));
-            
-            // Tampilkan pesan sukses
-            alert('Transaksi berhasil dihapus!');
-            
-            // Tutup modal detail jika terbuka
-            if (document.getElementById('transaction-details-modal').classList.contains('hidden') === false) {
-                document.getElementById('transaction-details-modal').classList.add('hidden');
-                currentTransactionDetail = null;
-            }
-            
-            // Refresh daftar transaksi
-            filterTransactions();
-        }
-        
-        // Event listener untuk pagination
-        if (document.getElementById('prev-page')) {
-            document.getElementById('prev-page').addEventListener('click', function() {
-                if (currentPageNum > 1) {
-                    currentPageNum--;
-                    renderTransactions();
-                }
-            });
-        }
-        
-        if (document.getElementById('next-page')) {
-            document.getElementById('next-page').addEventListener('click', function() {
-                if (currentPageNum < Math.ceil(filteredTransactions.length / itemsPerPage)) {
-                    currentPageNum++;
-                    renderTransactions();
-                }
-            });
-        }
-        
-        // Event listener untuk tutup modal detail
-        if (document.getElementById('close-details')) {
-            document.getElementById('close-details').addEventListener('click', function() {
-                document.getElementById('transaction-details-modal').classList.add('hidden');
-                currentTransactionDetail = null;
-            });
-        }
-        
-        // Event listener untuk pencarian
-        if (document.getElementById('search')) {
-            document.getElementById('search').addEventListener('input', function() {
-                currentPageNum = 1;
-                filterTransactions();
-            });
-        }
-        
-        // Event listener untuk filter status
-        if (document.getElementById('status-filter')) {
-            document.getElementById('status-filter').addEventListener('change', function() {
-                currentPageNum = 1;
-                filterTransactions();
-            });
-        }
-        
-        // Event listener untuk filter tanggal
-        if (document.getElementById('date-filter')) {
-            document.getElementById('date-filter').addEventListener('change', function() {
-                currentPageNum = 1;
-                filterTransactions();
-            });
-        }
-        
-        // Export to CSV
-        if (document.getElementById('export-btn')) {
-            document.getElementById('export-btn').addEventListener('click', function() {
-                exportToCSV();
-            });
-        }
-        
-        // Fungsi ekspor ke CSV
-        function exportToCSV() {
-            // Dapatkan transaksi yang terfilter
-            const transactions = filteredTransactions;
-            
-            if (transactions.length === 0) {
-                alert('Tidak ada data untuk diekspor');
-                return;
-            }
-            
-            // Definisikan header CSV
-            const headers = [
-                'ID Transaksi',
-                'Tanggal',
-                'Penjual',
-                'Kontak Penjual',
-                'Bank Penjual',
-                'Rekening Penjual',
-                'Pembeli',
-                'Kontak Pembeli',
-                'Email Pembeli',
-                'Deskripsi Barang/Jasa',
-                'Jumlah (Rp)',
-                'Biaya Admin (Rp)',
-                'Total (Rp)',
-                'Status'
-            ];
-            
-            // Buat baris CSV
-            const rows = transactions.map(transaction => [
-                transaction.id,
-                formatDate(transaction.timestamp),
-                transaction.sellerName,
-                '+62' + transaction.sellerContact,
-                transaction.sellerBank || '-',
-                transaction.sellerAccount || '-',
-                transaction.buyerName,
-                '+62' + transaction.buyerContact,
-                transaction.buyerEmail || '-',
-                transaction.itemDescription,
-                transaction.amount,
-                transaction.adminFee || calculateAdminFee(transaction.amount),
-                transaction.totalAmount || (transaction.amount + (transaction.adminFee || calculateAdminFee(transaction.amount))),
-                getStatusName(transaction.status)
-            ]);
-            
-            // Gabungkan header dan baris
-            const csvContent = [
-                headers.join(','),
-                ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
-            ].join('\n');
-            
-            // Buat link download
-            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.setAttribute('href', url);
-            link.setAttribute('download', `rekber_transactions_${new Date().toISOString().slice(0, 10)}.csv`);
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-    }
-});
+        });
+    </script>
 </body>
 </html>
