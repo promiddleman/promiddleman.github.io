@@ -5,6 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transaksi ProMiddleman - Layanan Perantara</title>
     <style>
+    	/* Language Switcher */
+.language-switcher {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: white;
+    border-radius: 50px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    display: flex;
+    padding: 5px;
+    z-index: 1000;
+    border: 1px solid rgba(0,0,0,0.1);
+}
+
+.language-btn {
+    background: transparent;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: var(--transition);
+}
+
+.language-btn.active {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+}
+
+.language-btn:hover:not(.active) {
+    background-color: var(--gray-100);
+}
         :root {
             --primary-color: #2563eb;
             --primary-hover: #1d4ed8;
@@ -1776,6 +1809,668 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize price calculation
     calculatePrices();
 });
+// Dictionary for translations
+const translations = {
+    id: {
+        // Header
+        'logoText': 'ProMiddleman',
+        
+        // Page title and description
+        'pageTitle': 'Mulai Transaksi ProMiddleman',
+        'pageDescription': 'ProMiddleman adalah layanan perantara pembayaran yang memberikan keamanan dalam bertransaksi online. Pembeli mentransfer dana ke ProMiddleman, dan dana hanya diteruskan ke penjual setelah produk/jasa diterima dengan baik.',
+        'securityInfo': 'Pastikan semua informasi yang dimasukkan benar dan sesuai dengan transaksi. Admin akan memverifikasi data sebelum transaksi diproses.',
+        
+        // Progress steps
+        'step1': 'Isi Data',
+        'step2': 'Konfirmasi',
+        'step3': 'Selesai',
+        
+        // Seller information
+        'sellerTitle': 'Data Penjual',
+        'sellerName': 'Nama Penjual',
+        'sellerNamePlaceholder': 'Masukkan nama lengkap penjual',
+        'sellerNameError': 'Nama penjual wajib diisi',
+        'sellerBank': 'Bank Penjual',
+        'selectBank': '-- Pilih Bank --',
+        'sellerBankError': 'Bank penjual wajib dipilih',
+        'sellerAccount': 'Nomor Rekening Penjual',
+        'sellerAccountPlaceholder': 'Contoh: 1234567890',
+        'sellerAccountError': 'Nomor rekening tidak valid',
+        'otherBank': 'Lainnya',
+        
+        // Buyer information
+        'buyerTitle': 'Data Pembeli',
+        'buyerName': 'Nama Pembeli',
+        'buyerNamePlaceholder': 'Masukkan nama lengkap pembeli',
+        'buyerNameError': 'Nama pembeli wajib diisi',
+        'buyerEmail': 'Email Pembeli (opsional)',
+        'buyerEmailPlaceholder': 'Contoh: nama@email.com',
+        'buyerEmailError': 'Format email tidak valid',
+        
+        // Transaction details
+        'transactionTitle': 'Detail Transaksi',
+        'itemDescription': 'Deskripsi Barang/Jasa',
+        'itemDescriptionPlaceholder': 'Jelaskan detail barang/jasa yang ditransaksikan, termasuk spesifikasi, kondisi, dan informasi penting lainnya.',
+        'itemDescriptionError': 'Deskripsi barang/jasa wajib diisi',
+        'transactionAmount': 'Jumlah Transaksi (Rp)',
+        'amountPlaceholder': 'Minimal Rp10.000',
+        'amountError': 'Jumlah transaksi minimal Rp10.000',
+        'paymentMethod': 'Metode Pembayaran',
+        'selectPayment': '-- Pilih Metode --',
+        'paymentMethodError': 'Metode pembayaran wajib dipilih',
+        'transfer': 'Transfer Bank',
+        'ewallet': 'E-Wallet (OVO, GoPay, Dana)',
+        'qris': 'QRIS',
+        
+        // Price summary
+        'priceSummary': 'Ringkasan Biaya',
+        'transactionValue': 'Nilai Transaksi',
+        'adminFee': 'Biaya Admin (1%)',
+        'totalPayment': 'Total Pembayaran',
+        
+        // Transaction type
+        'transactionType': 'Jenis Transaksi',
+        'selectTransactionType': '-- Pilih Jenis Transaksi --',
+        'transactionTypeError': 'Jenis transaksi wajib dipilih',
+        'goods': 'Barang Fisik',
+        'digital': 'Produk Digital',
+        'service': 'Jasa',
+        
+        // File upload
+        'attachmentLabel': 'Lampirkan Bukti/Foto Barang (opsional)',
+        'uploadText': 'Klik untuk upload atau seret file ke sini',
+        'uploadFormats': 'Format: JPG, PNG, PDF (Maks. 5MB)',
+        'notes': 'Catatan Tambahan (opsional)',
+        'notesPlaceholder': 'Informasi tambahan yang perlu diketahui admin, seperti instruksi khusus atau detail pengiriman.',
+        
+        // Warning and terms
+        'attentionTitle': 'Perhatian:',
+        'attentionText': 'Pastikan Anda hanya menggunakan layanan perantara resmi dengan admin yang telah diverifikasi. Jangan pernah mengirimkan uang tanpa verifikasi keaslian ProMiddleman.',
+        'termsCheck': 'Saya menyetujui',
+        'termsLink': 'Syarat & Ketentuan',
+        'privacyLink': 'Kebijakan Privasi',
+        'termsAnd': 'dan',
+        'termsCheckError': 'Anda harus menyetujui Syarat & Ketentuan',
+        
+        // Submit button
+        'createTransaction': 'Buat Transaksi',
+        'processing': 'Memproses...',
+        
+        // Success message
+        'transactionSuccess': 'Transaksi berhasil dibuat! Silakan ikuti petunjuk di bawah untuk melanjutkan proses.',
+        'transactionCode': 'Kode Transaksi',
+        'transactionCodeText': 'Gunakan kode transaksi berikut untuk verifikasi dengan admin:',
+        'copyCode': 'Salin Kode',
+        'copyTooltip': 'Salin ke clipboard',
+        'copied': 'Tersalin!',
+        
+        // Steps after transaction
+        'step1After': 'Salin kode transaksi di atas',
+        'step2After': 'Hubungi admin melalui WhatsApp atau Facebook Messenger di bawah',
+        'step3After': 'Kirimkan kode transaksi untuk verifikasi',
+        'step4After': 'Ikuti petunjuk admin untuk melanjutkan proses transaksi',
+        
+        // Payment info
+        'paymentInfo': 'Informasi pembayaran:',
+        'paymentInfoText': 'Biaya layanan ProMiddleman sebesar 1% dari nilai transaksi akan ditambahkan saat pembayaran. Pembeli akan mendapatkan instruksi lengkap melalui WhatsApp.',
+        
+        // Guarantee badges
+        'securityGuarantee': 'Keamanan Transaksi Terjamin',
+        'fullProtection': 'Perlindungan 100%',
+        'safeDelivery': 'Pengiriman Aman',
+        
+        // Contact buttons
+        'contactWhatsapp': 'Hubungi Admin via WhatsApp',
+        'contactFacebook': 'Hubungi Admin via Facebook',
+        
+        // Final warning
+        'finalAttention': 'Perhatian:',
+        'finalAttentionText': 'Transaksi hanya dianggap resmi setelah konfirmasi dari admin. Pastikan kode transaksi yang Anda terima sesuai dengan yang tercantum di atas.',
+        
+        // Back button
+        'backToHome': 'Kembali ke Beranda',
+        
+        // Footer
+        'footerText': '© 2025 ProMiddleman. Layanan Perantara Terpercaya.',
+        
+        // File upload errors
+        'fileTooLarge': 'Ukuran file terlalu besar. Maksimal 5MB.',
+        'fileTypeError': 'Format file tidak didukung. Gunakan JPG, PNG, atau PDF.'
+    },
+    en: {
+        // Header
+        'logoText': 'ProMiddleman',
+        
+        // Page title and description
+        'pageTitle': 'Start ProMiddleman Transaction',
+        'pageDescription': 'ProMiddleman is a payment escrow service that provides security in online transactions. The buyer transfers funds to ProMiddleman, and the funds are only forwarded to the seller after the product/service has been received properly.',
+        'securityInfo': 'Make sure all information entered is correct and corresponds to the transaction. Admin will verify the data before the transaction is processed.',
+        
+        // Progress steps
+        'step1': 'Fill Data',
+        'step2': 'Confirmation',
+        'step3': 'Complete',
+        
+        // Seller information
+        'sellerTitle': 'Seller Information',
+        'sellerName': 'Seller Name',
+        'sellerNamePlaceholder': 'Enter seller\'s full name',
+        'sellerNameError': 'Seller name is required',
+        'sellerBank': 'Seller\'s Bank',
+        'selectBank': '-- Select Bank --',
+        'sellerBankError': 'Seller\'s bank must be selected',
+        'sellerAccount': 'Seller\'s Account Number',
+        'sellerAccountPlaceholder': 'Example: 1234567890',
+        'sellerAccountError': 'Invalid account number',
+        'otherBank': 'Other',
+        
+        // Buyer information
+        'buyerTitle': 'Buyer Information',
+        'buyerName': 'Buyer Name',
+        'buyerNamePlaceholder': 'Enter buyer\'s full name',
+        'buyerNameError': 'Buyer name is required',
+        'buyerEmail': 'Buyer Email (optional)',
+        'buyerEmailPlaceholder': 'Example: name@email.com',
+        'buyerEmailError': 'Invalid email format',
+        
+        // Transaction details
+        'transactionTitle': 'Transaction Details',
+        'itemDescription': 'Item/Service Description',
+        'itemDescriptionPlaceholder': 'Explain details of the item/service being transacted, including specifications, condition, and other important information.',
+        'itemDescriptionError': 'Item/service description is required',
+        'transactionAmount': 'Transaction Amount ($)',
+        'amountPlaceholder': 'Minimum $0.67',
+        'amountError': 'Transaction amount must be at least $0.67',
+        'paymentMethod': 'Payment Method',
+        'selectPayment': '-- Select Method --',
+        'paymentMethodError': 'Payment method must be selected',
+        'transfer': 'Bank Transfer',
+        'ewallet': 'E-Wallet (OVO, GoPay, Dana)',
+        'qris': 'QRIS',
+        
+        // Price summary
+        'priceSummary': 'Price Summary',
+        'transactionValue': 'Transaction Value',
+        'adminFee': 'Admin Fee (1%)',
+        'totalPayment': 'Total Payment',
+        
+        // Transaction type
+        'transactionType': 'Transaction Type',
+        'selectTransactionType': '-- Select Transaction Type --',
+        'transactionTypeError': 'Transaction type must be selected',
+        'goods': 'Physical Goods',
+        'digital': 'Digital Products',
+        'service': 'Services',
+        
+        // File upload
+        'attachmentLabel': 'Attach Proof/Item Photos (optional)',
+        'uploadText': 'Click to upload or drag files here',
+        'uploadFormats': 'Formats: JPG, PNG, PDF (Max. 5MB)',
+        'notes': 'Additional Notes (optional)',
+        'notesPlaceholder': 'Additional information that admin needs to know, such as special instructions or shipping details.',
+        
+        // Warning and terms
+        'attentionTitle': 'Warning:',
+        'attentionText': 'Make sure you only use official escrow services with verified admins. Never send money without verifying the authenticity of ProMiddleman.',
+        'termsCheck': 'I agree to the',
+        'termsLink': 'Terms & Conditions',
+        'privacyLink': 'Privacy Policy',
+        'termsAnd': 'and',
+        'termsCheckError': 'You must agree to the Terms & Conditions',
+        
+        // Submit button
+        'createTransaction': 'Create Transaction',
+        'processing': 'Processing...',
+        
+        // Success message
+        'transactionSuccess': 'Transaction successfully created! Please follow the instructions below to continue the process.',
+        'transactionCode': 'Transaction Code',
+        'transactionCodeText': 'Use the following transaction code for verification with admin:',
+        'copyCode': 'Copy Code',
+        'copyTooltip': 'Copy to clipboard',
+        'copied': 'Copied!',
+        
+        // Steps after transaction
+        'step1After': 'Copy the transaction code above',
+        'step2After': 'Contact admin via WhatsApp or Facebook Messenger below',
+        'step3After': 'Send the transaction code for verification',
+        'step4After': 'Follow admin instructions to continue the transaction process',
+        
+        // Payment info
+        'paymentInfo': 'Payment information:',
+        'paymentInfoText': 'ProMiddleman service fee of 1% of the transaction value will be added during payment. The buyer will receive complete instructions via WhatsApp.',
+        
+        // Guarantee badges
+        'securityGuarantee': 'Transaction Security Guaranteed',
+        'fullProtection': '100% Protection',
+        'safeDelivery': 'Safe Delivery',
+        
+        // Contact buttons
+        'contactWhatsapp': 'Contact Admin via WhatsApp',
+        'contactFacebook': 'Contact Admin via Facebook',
+        
+        // Final warning
+        'finalAttention': 'Warning:',
+        'finalAttentionText': 'Transactions are only considered official after confirmation from the admin. Make sure the transaction code you receive matches the one listed above.',
+        
+        // Back button
+        'backToHome': 'Back to Home',
+        
+        // Footer
+        'footerText': '© 2025 ProMiddleman. Trusted Escrow Service.',
+        
+        // File upload errors
+        'fileTooLarge': 'File size is too large. Maximum 5MB.',
+        'fileTypeError': 'File format not supported. Use JPG, PNG, or PDF.'
+    }
+};
+
+// Add language switcher functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Add config object if it doesn't exist
+    if (typeof window.config === 'undefined') {
+        window.config = {
+            language: 'id', // Default language
+            exchangeRate: 15000 // 1 USD = 15,000 IDR
+        };
+    } else {
+        config.language = 'id';
+        config.exchangeRate = 15000;
+    }
+    
+    // Function to switch the language of the interface
+    function switchLanguage(lang) {
+        // Set active button
+        document.querySelectorAll('.language-btn').forEach(btn => {
+            if (btn.getAttribute('data-lang') === lang) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        
+        // Update config
+        config.language = lang;
+        
+        // Update text elements
+        
+        // Header
+        document.querySelector('.logo').innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 12H2"></path>
+                <path d="M5 12V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v7"></path>
+                <path d="M9 21V8"></path>
+                <path d="M15 21V8"></path>
+                <path d="M5 16h14"></path>
+                <path d="M5 16a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-4"></path>
+            </svg>
+            ${translations[lang].logoText}
+        `;
+        
+        // Page title and description
+        document.querySelector('h1').textContent = translations[lang].pageTitle;
+        document.querySelector('.card > p').textContent = translations[lang].pageDescription;
+        document.querySelector('.info-box p strong').textContent = translations[lang].securityInfo.split(':')[0] + ':';
+        document.querySelector('.info-box p').innerHTML = `<strong>${translations[lang].securityInfo.split(':')[0]}:</strong> ${translations[lang].securityInfo.split(':')[1] || translations[lang].securityInfo}`;
+        
+        // Progress steps
+        document.querySelectorAll('.step-label')[0].textContent = translations[lang].step1;
+        document.querySelectorAll('.step-label')[1].textContent = translations[lang].step2;
+        document.querySelectorAll('.step-label')[2].textContent = translations[lang].step3;
+        
+        // Seller information
+        document.querySelectorAll('h2')[0].innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            ${translations[lang].sellerTitle}
+        `;
+        document.querySelector('label[for="sellerName"]').textContent = translations[lang].sellerName;
+        document.getElementById('sellerName').placeholder = translations[lang].sellerNamePlaceholder;
+        document.getElementById('sellerNameError').textContent = translations[lang].sellerNameError;
+        
+        document.querySelector('label[for="sellerBank"]').textContent = translations[lang].sellerBank;
+        const sellerBankOptions = document.getElementById('sellerBank').options;
+        sellerBankOptions[0].textContent = translations[lang].selectBank;
+        sellerBankOptions[sellerBankOptions.length-1].textContent = translations[lang].otherBank;
+        document.getElementById('sellerBankError').textContent = translations[lang].sellerBankError;
+        
+        document.querySelector('label[for="sellerAccount"]').textContent = translations[lang].sellerAccount;
+        document.getElementById('sellerAccount').placeholder = translations[lang].sellerAccountPlaceholder;
+        document.getElementById('sellerAccountError').textContent = translations[lang].sellerAccountError;
+        
+        // Buyer information
+        document.querySelectorAll('h2')[1].innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            ${translations[lang].buyerTitle}
+        `;
+        document.querySelector('label[for="buyerName"]').textContent = translations[lang].buyerName;
+        document.getElementById('buyerName').placeholder = translations[lang].buyerNamePlaceholder;
+        document.getElementById('buyerNameError').textContent = translations[lang].buyerNameError;
+        
+        document.querySelector('label[for="buyerEmail"]').textContent = translations[lang].buyerEmail;
+        document.getElementById('buyerEmail').placeholder = translations[lang].buyerEmailPlaceholder;
+        document.getElementById('buyerEmailError').textContent = translations[lang].buyerEmailError;
+        
+        // Transaction details
+        document.querySelectorAll('h2')[2].innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                <circle cx="12" cy="12" r="3"></circle>
+                <path d="M17.4 7.8L12 12"></path>
+            </svg>
+            ${translations[lang].transactionTitle}
+        `;
+        document.querySelector('label[for="itemDescription"]').textContent = translations[lang].itemDescription;
+        document.getElementById('itemDescription').placeholder = translations[lang].itemDescriptionPlaceholder;
+        document.getElementById('itemDescriptionError').textContent = translations[lang].itemDescriptionError;
+        
+        document.querySelector('label[for="amount"]').textContent = translations[lang].transactionAmount;
+        document.getElementById('amount').placeholder = translations[lang].amountPlaceholder;
+        document.getElementById('amountError').textContent = translations[lang].amountError;
+        
+        document.querySelector('label[for="paymentMethod"]').textContent = translations[lang].paymentMethod;
+        const paymentMethodOptions = document.getElementById('paymentMethod').options;
+        paymentMethodOptions[0].textContent = translations[lang].selectPayment;
+        paymentMethodOptions[1].textContent = translations[lang].transfer;
+        paymentMethodOptions[2].textContent = translations[lang].ewallet;
+        paymentMethodOptions[3].textContent = translations[lang].qris;
+        document.getElementById('paymentMethodError').textContent = translations[lang].paymentMethodError;
+        
+        // Price summary
+        document.querySelector('.price-summary h3').textContent = translations[lang].priceSummary;
+        document.querySelectorAll('.price-row span')[0].textContent = translations[lang].transactionValue;
+        document.querySelectorAll('.price-row span')[2].textContent = translations[lang].adminFee;
+        document.querySelectorAll('.price-row.total span')[0].textContent = translations[lang].totalPayment;
+        
+        // Transaction type
+        document.querySelector('label[for="transactionType"]').textContent = translations[lang].transactionType;
+        const transactionTypeOptions = document.getElementById('transactionType').options;
+        transactionTypeOptions[0].textContent = translations[lang].selectTransactionType;
+        transactionTypeOptions[1].textContent = translations[lang].goods;
+        transactionTypeOptions[2].textContent = translations[lang].digital;
+        transactionTypeOptions[3].textContent = translations[lang].service;
+        document.getElementById('transactionTypeError').textContent = translations[lang].transactionTypeError;
+        
+        // File upload
+        document.querySelector('label[for="attachment"]').textContent = translations[lang].attachmentLabel;
+        document.querySelector('#fileUploadContainer p:first-of-type').textContent = translations[lang].uploadText;
+        document.querySelector('#fileUploadContainer p:last-of-type').textContent = translations[lang].uploadFormats;
+        
+        document.querySelector('label[for="notes"]').textContent = translations[lang].notes;
+        document.getElementById('notes').placeholder = translations[lang].notesPlaceholder;
+        
+        // Warning and terms
+        document.querySelector('.alert-warning strong').textContent = translations[lang].attentionTitle;
+        document.querySelector('.alert-warning div').innerHTML = `
+            <strong>${translations[lang].attentionTitle}</strong> ${translations[lang].attentionText}
+        `;
+        
+        // Terms check
+        const termsLabel = document.querySelector('.custom-control');
+        const termsLinks = termsLabel.querySelectorAll('a');
+        termsLabel.innerHTML = `
+            <input type="checkbox" id="termsCheck" required>
+            <span class="checkmark"></span>
+            ${translations[lang].termsCheck} <a href="#" target="_blank">${translations[lang].termsLink}</a> ${translations[lang].termsAnd} <a href="#" target="_blank">${translations[lang].privacyLink}</a> ProMiddleman
+        `;
+        document.getElementById('termsCheckError').textContent = translations[lang].termsCheckError;
+        
+        // Submit button
+        document.querySelector('#submitBtn span').textContent = translations[lang].createTransaction;
+        document.querySelector('#loadingIndicator span').textContent = translations[lang].processing;
+        
+        // Result container
+        if (document.querySelector('.alert-success')) {
+            document.querySelector('.alert-success div').textContent = translations[lang].transactionSuccess;
+        }
+        if (document.querySelector('#resultContainer h2')) {
+            document.querySelector('#resultContainer h2').textContent = translations[lang].transactionCode;
+        }
+        if (document.querySelector('#resultContainer p')) {
+            document.querySelector('#resultContainer p').textContent = translations[lang].transactionCodeText;
+        }
+        
+        if (document.querySelector('#copyBtn')) {
+            document.querySelector('#copyBtn').innerHTML = `
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                ${translations[lang].copyCode}
+                <span class="tooltiptext" id="copyTooltip">${translations[lang].copyTooltip}</span>
+            `;
+        }
+        
+        // Steps after transaction
+        if (document.querySelectorAll('.step')[0]) {
+            document.querySelectorAll('.step')[0].querySelector('div:last-child').textContent = translations[lang].step1After;
+            document.querySelectorAll('.step')[1].querySelector('div:last-child').textContent = translations[lang].step2After;
+            document.querySelectorAll('.step')[2].querySelector('div:last-child').textContent = translations[lang].step3After;
+            document.querySelectorAll('.step')[3].querySelector('div:last-child').textContent = translations[lang].step4After;
+        }
+        
+        // Payment info
+        if (document.querySelector('#resultContainer .info-box')) {
+            document.querySelector('#resultContainer .info-box p strong').textContent = translations[lang].paymentInfo;
+            document.querySelector('#resultContainer .info-box p').innerHTML = `<strong>${translations[lang].paymentInfo}</strong> ${translations[lang].paymentInfoText}`;
+        }
+        
+        // Guarantee badges
+        if (document.querySelectorAll('.badge')) {
+            const badges = document.querySelectorAll('.badge');
+            if (badges.length >= 3) {
+                badges[0].querySelector('span').textContent = translations[lang].securityGuarantee;
+                badges[1].querySelector('span').textContent = translations[lang].fullProtection;
+                badges[2].querySelector('span').textContent = translations[lang].safeDelivery;
+            }
+        }
+        
+        // Contact buttons
+        if (document.querySelector('#contactWhatsApp')) {
+            document.querySelector('#contactWhatsApp').textContent = translations[lang].contactWhatsapp;
+        }
+        if (document.querySelector('#contactAdmin')) {
+            document.querySelector('#contactAdmin').textContent = translations[lang].contactFacebook;
+        }
+        
+        // Final warning
+        if (document.querySelector('#resultContainer .alert-warning')) {
+            document.querySelector('#resultContainer .alert-warning strong').textContent = translations[lang].finalAttention;
+            document.querySelector('#resultContainer .alert-warning div').innerHTML = `
+                <strong>${translations[lang].finalAttention}</strong> ${translations[lang].finalAttentionText}
+            `;
+        }
+        
+        // Back button
+        if (document.querySelector('#backBtn')) {
+            document.querySelector('#backBtn').textContent = translations[lang].backToHome;
+        }
+        
+        // Footer
+        document.querySelector('footer p').textContent = translations[lang].footerText;
+        
+        // Store the selected language in localStorage
+        localStorage.setItem('preferredLanguage', lang);
+        
+        // Update currency format in amount field and price calculation
+        updateCurrencyFormat();
+    }
+    
+    // Update currency format based on language
+    function updateCurrencyFormat() {
+        const lang = config.language;
+        const amountLabel = document.querySelector('label[for="amount"]');
+        const amountField = document.getElementById('amount');
+        
+        if (lang === 'id') {
+            amountLabel.textContent = translations[lang].transactionAmount;
+            amountField.placeholder = translations[lang].amountPlaceholder;
+            document.getElementById('amountError').textContent = translations[lang].amountError;
+            
+            // Recalculate prices to show in IDR
+            calculatePrices();
+        } else {
+            amountLabel.textContent = translations[lang].transactionAmount;
+            amountField.placeholder = translations[lang].amountPlaceholder;
+            document.getElementById('amountError').textContent = translations[lang].amountError;
+            
+            // Recalculate prices to show in USD
+            calculatePrices();
+        }
+    }
+    
+    // Override price calculation function
+    const originalCalculatePrices = window.calculatePrices;
+    
+    window.calculatePrices = function() {
+        const amount = parseFloat(document.getElementById('amount').value) || 0;
+        const adminFee = amount * 0.01; // 1% admin fee
+        const total = amount + adminFee;
+        
+        let formatter;
+        
+        if (config.language === 'id') {
+            // Format as Indonesian Rupiah
+            formatter = new Intl.NumberFormat('id-ID', {
+                style: 'currency',
+                currency: 'IDR',
+                minimumFractionDigits: 0,
+                maximumFractionDigits: 0
+            });
+        } else {
+            // Format as USD (assuming 1 USD = 15,000 IDR)
+            formatter = new Intl.NumberFormat('en-US', {
+                style: 'currency',
+                currency: 'USD',
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+            
+            // When showing in USD, adjust validation for USD
+            const minAmountInUSD = 10000 / config.exchangeRate;
+            
+            // Update error message for amount validation
+            document.getElementById('amountError').textContent = translations[config.language].amountError;
+        }
+        
+        document.getElementById('transactionValue').textContent = formatter.format(amount);
+        document.getElementById('adminFee').textContent = formatter.format(adminFee);
+        document.getElementById('totalPayment').textContent = formatter.format(total);
+        
+        // Show/hide price summary
+        const minAmount = config.language === 'id' ? 10000 : (10000 / config.exchangeRate);
+        if (amount >= minAmount) {
+            document.getElementById('priceSummary').style.display = 'block';
+        } else {
+            document.getElementById('priceSummary').style.display = 'none';
+        }
+    };
+    
+    // Initialize language switcher
+    document.querySelectorAll('.language-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const lang = this.getAttribute('data-lang');
+            switchLanguage(lang);
+        });
+    });
+    
+    // Check localStorage for saved language preference
+    const savedLanguage = localStorage.getItem('preferredLanguage');
+    if (savedLanguage) {
+        switchLanguage(savedLanguage);
+    }
+    
+    // Override file upload error messages
+    const fileUpload = document.getElementById('attachment');
+    const fileName = document.getElementById('fileName');
+    const fileUploadContainer = document.getElementById('fileUploadContainer');
+    
+    if (fileUpload) {
+        const originalFileUploadHandler = fileUpload.onchange;
+        fileUpload.onchange = function() {
+            if (this.files && this.files[0]) {
+                const file = this.files[0];
+                
+                // Check file size (5MB max)
+                if (file.size > 5 * 1024 * 1024) {
+                    alert(translations[config.language].fileTooLarge);
+                    this.value = '';
+                    fileName.textContent = '';
+                    return;
+                }
+                
+                // Check file type
+                const validTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+                if (!validTypes.includes(file.type)) {
+                    alert(translations[config.language].fileTypeError);
+                    this.value = '';
+                    fileName.textContent = '';
+                    return;
+                }
+                
+                fileName.textContent = file.name;
+                fileUploadContainer.style.borderColor = 'var(--primary-color)';
+            }
+        };
+    }
+    
+    // Override copy function to use translated tooltips
+    const copyBtn = document.getElementById('copyBtn');
+    const copyTooltip = document.getElementById('copyTooltip');
+    const transactionCode = document.getElementById('transactionCode');
+    
+    if (copyBtn && copyTooltip && transactionCode) {
+        copyBtn.onclick = function() {
+            const code = transactionCode.textContent.trim();
+            navigator.clipboard.writeText(code)
+                .then(() => {
+                    copyTooltip.textContent = translations[config.language].copied;
+                    setTimeout(() => {
+                        copyTooltip.textContent = translations[config.language].copyTooltip;
+                    }, 2000);
+                })
+                .catch(err => {
+                    console.error('Failed to copy: ', err);
+                });
+        };
+    }
+    
+    // Override WhatsApp message to use translated text
+    const contactWhatsApp = document.getElementById('contactWhatsApp');
+    
+    if (contactWhatsApp) {
+        const updateWhatsAppLink = function() {
+            contactWhatsApp.onclick = function() {
+                const code = document.getElementById('transactionCode').textContent.trim();
+                let message;
+                if (config.language === 'id') {
+                    message = `Halo Admin ProMiddleman, saya ingin verifikasi transaksi dengan kode: ${code}`;
+                } else {
+                    message = `Hello ProMiddleman Admin, I would like to verify a transaction with code: ${code}`;
+                }
+                window.open(`https://wa.me/XXXXXXXXXX?text=${encodeURIComponent(message)}`, '_blank');
+                return false;
+            };
+        };
+        
+        // Call the function when language changes
+        document.querySelectorAll('.language-btn').forEach(button => {
+            button.addEventListener('click', updateWhatsAppLink);
+        });
+        
+        // Call initially
+        updateWhatsAppLink();
+    }
+});
     </script>
+    <div class="language-switcher" id="languageSwitcher">
+    <button class="language-btn active" data-lang="id">ID</button>
+    <button class="language-btn" data-lang="en">EN</button>
+</div>
 </body>
 </html>
