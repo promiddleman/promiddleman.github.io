@@ -534,25 +534,103 @@
             text-decoration: underline;
         }
         
-        .guarantee-badges {
+        .verification-badges {
             display: flex;
             justify-content: center;
-            gap: 20px;
-            margin: 20px 0;
+            gap: 15px;
+            margin-top: 10px;
         }
         
-        .badge {
+        .badge-item {
             display: flex;
-            flex-direction: column;
             align-items: center;
-            text-align: center;
-            max-width: 120px;
+            justify-content: center;
+        }
+        
+        .badge-item img {
+            max-height: 40px;
+            max-width: 100px;
+        }
+        
+        .shipping-calculator {
+            background-color: #f9fafb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .shipping-option {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            margin-bottom: 8px;
+            border: 1px solid #e5e7eb;
+            border-radius: 4px;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .shipping-option:hover {
+            border-color: var(--primary-color);
+        }
+        
+        .shipping-option.selected {
+            border-color: var(--primary-color);
+            background-color: #f0f9ff;
+        }
+        
+        .shipping-option input {
+            margin-right: 10px;
+            width: auto;
+        }
+        
+        .shipping-logo {
+            width: 50px;
+            margin-right: 15px;
+        }
+        
+        .shipping-info {
+            flex-grow: 1;
+        }
+        
+        .shipping-name {
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        
+        .shipping-estimate {
+            font-size: 12px;
+            color: #6b7280;
+        }
+        
+        .shipping-price {
+            font-weight: 600;
+            color: var(--dark-color);
+        }
+        
+        .price-summary {
+            background-color: #f9fafb;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+            border: 1px solid #e5e7eb;
+        }
+        
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
             font-size: 14px;
         }
         
-        .badge svg {
-            margin-bottom: 10px;
-            color: var(--primary-color);
+        .price-row.total {
+            font-weight: 600;
+            font-size: 16px;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 10px;
+            margin-top: 10px;
         }
     </style>
 </head>
@@ -570,27 +648,30 @@
                 </svg>
                 RekBer Indonesia
             </div>
-            <nav>
-                <a href="#" class="nav-link">Beranda</a>
-                <a href="#" class="nav-link">Tentang Kami</a>
-                <a href="#" class="nav-link">FAQ</a>
-                <a href="#" class="btn">Mulai Transaksi</a>
-            </nav>
+            <a href="#" class="btn">Beranda</a>
         </div>
     </header>
     
     <div class="container">
-        <ul class="breadcrumb">
-            <li><a href="#">Beranda</a></li>
-            <li>Mulai Transaksi</li>
-        </ul>
         
         <div class="card">
             <h1>Mulai Transaksi Rekening Bersama</h1>
             <p>Isi formulir di bawah ini untuk memulai transaksi dengan rekening bersama. Setelah mengisi formulir, Anda akan mendapatkan kode transaksi yang dapat digunakan untuk verifikasi dengan admin.</p>
             
-            <div class="info-box">
+                            <div class="info-box">
                 <p><strong>Penting:</strong> Pastikan semua informasi yang dimasukkan benar dan sesuai dengan transaksi yang akan dilakukan. Admin akan melakukan verifikasi data sebelum transaksi diproses.</p>
+                
+                <div class="verification-badges">
+                    <div class="badge-item">
+                        <img src="https://placekitten.com/100/40" alt="PSE Terdaftar Kominfo" title="Platform terdaftar dalam PSE Kominfo" />
+                    </div>
+                    <div class="badge-item">
+                        <img src="https://placekitten.com/100/40" alt="Verified Business" title="Bisnis terverifikasi" />
+                    </div>
+                    <div class="badge-item">
+                        <img src="https://placekitten.com/100/40" alt="SSL Secured" title="Transaksi Aman dengan SSL" />
+                    </div>
+                </div>
             </div>
             
             <div class="progress-bar">
@@ -702,6 +783,109 @@
                                 <option value="qris">QRIS</option>
                             </select>
                             <span class="error-message" id="paymentMethodError">Metode pembayaran wajib dipilih</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Price Summary -->
+                <div class="price-summary" id="priceSummary">
+                    <h3 style="margin-bottom: 10px;">Ringkasan Biaya</h3>
+                    <div class="price-row">
+                        <span>Nilai Transaksi</span>
+                        <span id="transactionValue">Rp0</span>
+                    </div>
+                    <div class="price-row">
+                        <span>Biaya Admin (1%)</span>
+                        <span id="adminFee">Rp0</span>
+                    </div>
+                    <div class="price-row total">
+                        <span>Total Pembayaran</span>
+                        <span id="totalPayment">Rp0</span>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="transactionType" class="required">Jenis Transaksi</label>
+                    <select id="transactionType" required>
+                        <option value="">-- Pilih Jenis Transaksi --</option>
+                        <option value="goods">Barang Fisik</option>
+                        <option value="digital">Produk Digital</option>
+                        <option value="service">Jasa</option>
+                    </select>
+                    <span class="error-message" id="transactionTypeError">Jenis transaksi wajib dipilih</span>
+                </div>
+                
+                <!-- Shipping Section (Only for physical goods) -->
+                <div id="shippingSection" style="display: none;">
+                    <h2 style="margin-top: 30px;">Informasi Pengiriman</h2>
+                    
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="originCity">Kota Asal</label>
+                                <select id="originCity">
+                                    <option value="">-- Pilih Kota --</option>
+                                    <option value="JKT">Jakarta</option>
+                                    <option value="BDG">Bandung</option>
+                                    <option value="SBY">Surabaya</option>
+                                    <option value="SMG">Semarang</option>
+                                    <option value="MDN">Medan</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="destinationCity">Kota Tujuan</label>
+                                <select id="destinationCity">
+                                    <option value="">-- Pilih Kota --</option>
+                                    <option value="JKT">Jakarta</option>
+                                    <option value="BDG">Bandung</option>
+                                    <option value="SBY">Surabaya</option>
+                                    <option value="SMG">Semarang</option>
+                                    <option value="MDN">Medan</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="weight">Berat Paket (gram)</label>
+                        <input type="number" id="weight" min="100" placeholder="Contoh: 1000 untuk 1kg">
+                    </div>
+                    
+                    <button type="button" id="calculateShipping" class="btn" style="margin-bottom: 20px;">Hitung Ongkir</button>
+                    
+                    <div class="shipping-calculator" id="shippingOptions" style="display: none;">
+                        <h3 style="margin-bottom: 15px;">Pilih Jasa Pengiriman</h3>
+                        
+                        <div class="shipping-option">
+                            <input type="radio" name="shipping" id="shipping1" value="jne">
+                            <img src="https://placekitten.com/50/25" alt="JNE" class="shipping-logo">
+                            <div class="shipping-info">
+                                <div class="shipping-name">JNE Reguler</div>
+                                <div class="shipping-estimate">Estimasi 2-3 hari</div>
+                            </div>
+                            <div class="shipping-price">Rp18.000</div>
+                        </div>
+                        
+                        <div class="shipping-option">
+                            <input type="radio" name="shipping" id="shipping2" value="jnt">
+                            <img src="https://placekitten.com/50/25" alt="J&T" class="shipping-logo">
+                            <div class="shipping-info">
+                                <div class="shipping-name">J&T Express</div>
+                                <div class="shipping-estimate">Estimasi 1-2 hari</div>
+                            </div>
+                            <div class="shipping-price">Rp20.000</div>
+                        </div>
+                        
+                        <div class="shipping-option">
+                            <input type="radio" name="shipping" id="shipping3" value="sicepat">
+                            <img src="https://placekitten.com/50/25" alt="SiCepat" class="shipping-logo">
+                            <div class="shipping-info">
+                                <div class="shipping-name">SiCepat HALU</div>
+                                <div class="shipping-estimate">Estimasi 1 hari</div>
+                            </div>
+                            <div class="shipping-price">Rp22.000</div>
                         </div>
                     </div>
                 </div>
@@ -864,18 +1048,9 @@
         </div>
     </div>
     
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 RekBer Indonesia. Layanan Rekening Bersama Terpercaya.</p>
-            <div class="footer-links">
-                <a href="#">Tentang Kami</a>
-                <a href="#">Syarat & Ketentuan</a>
-                <a href="#">Kebijakan Privasi</a>
-                <a href="#">FAQ</a>
-                <a href="#">Kontak</a>
-            </div>
-        </div>
-    </footer>
+    <div class="container text-center" style="margin-top: 40px; margin-bottom: 20px;">
+        <p>&copy; 2025 RekBer Indonesia. Layanan Rekening Bersama Terpercaya.</p>
+    </div>
     
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -1086,6 +1261,187 @@
                     });
             });
             
+            // Calculate prices based on amount
+            document.getElementById('amount').addEventListener('input', calculatePrices);
+            
+            function calculatePrices() {
+                const amount = parseFloat(document.getElementById('amount').value) || 0;
+                const adminFee = amount * 0.01; // 1% admin fee
+                const total = amount + adminFee;
+                
+                // Format as Indonesian Rupiah
+                const formatter = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                });
+                
+                document.getElementById('transactionValue').textContent = formatter.format(amount);
+                document.getElementById('adminFee').textContent = formatter.format(adminFee);
+                document.getElementById('totalPayment').textContent = formatter.format(total);
+                
+                // Show/hide price summary
+                if (amount >= 10000) {
+                    document.getElementById('priceSummary').style.display = 'block';
+                } else {
+                    document.getElementById('priceSummary').style.display = 'none';
+                }
+            }
+            
+            // Show/hide shipping section based on transaction type
+            document.getElementById('transactionType').addEventListener('change', function() {
+                const transactionType = this.value;
+                const shippingSection = document.getElementById('shippingSection');
+                
+                if (transactionType === 'goods') {
+                    shippingSection.style.display = 'block';
+                } else {
+                    shippingSection.style.display = 'none';
+                    
+                    // Reset shipping calculations if transaction type is changed
+                    const shippingCostRow = document.getElementById('shippingCostRow');
+                    if (shippingCostRow) {
+                        shippingCostRow.remove();
+                        calculatePrices(); // Recalculate without shipping
+                    }
+                    
+                    // Hide shipping options
+                    document.getElementById('shippingOptions').style.display = 'none';
+                    
+                    // Unselect all shipping options
+                    document.querySelectorAll('.shipping-option').forEach(opt => {
+                        opt.classList.remove('selected');
+                        opt.querySelector('input[type="radio"]').checked = false;
+                    });
+                }
+            });
+            
+            // Shipping calculator
+            document.getElementById('calculateShipping').addEventListener('click', function() {
+                const origin = document.getElementById('originCity').value;
+                const destination = document.getElementById('destinationCity').value;
+                const weight = document.getElementById('weight').value;
+                
+                if (!origin || !destination || !weight) {
+                    alert('Silakan isi kota asal, kota tujuan, dan berat paket terlebih dahulu.');
+                    return;
+                }
+                
+                // Show shipping options with simulated API response
+                document.getElementById('shippingOptions').style.display = 'block';
+                
+                // In a real implementation, this would be an API call to JNE/J&T
+                // For demonstration, we'll use static data
+                simulateShippingApiCall(origin, destination, weight);
+            });
+            
+            function simulateShippingApiCall(origin, destination, weight) {
+                // This simulates the API response from shipping providers
+                
+                // Calculate base prices based on weight and distance
+                const weightKg = parseFloat(weight) / 1000;
+                let basePrice = 15000; // Base price
+                
+                // Adjust price based on cities (simple simulation)
+                const cities = {
+                    'JKT': 0,    // Jakarta as base
+                    'BDG': 1,    // Bandung (close)
+                    'SMG': 2,    // Semarang (medium)
+                    'SBY': 3,    // Surabaya (far)
+                    'MDN': 4     // Medan (very far)
+                };
+                
+                // Calculate "distance" between cities
+                const distance = Math.abs(cities[origin] - cities[destination]);
+                const distanceMultiplier = 1 + (distance * 0.2); // 20% increase per "distance unit"
+                
+                // Final price calculations for each courier
+                const jnePrice = Math.round((basePrice * distanceMultiplier * weightKg) / 1000) * 1000;
+                const jntPrice = Math.round((basePrice * 1.1 * distanceMultiplier * weightKg) / 1000) * 1000; // J&T is 10% more expensive
+                const sicepatPrice = Math.round((basePrice * 1.2 * distanceMultiplier * weightKg) / 1000) * 1000; // SiCepat is 20% more expensive
+                
+                // Format prices
+                const formatter = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                });
+                
+                // Update the shipping options with calculated prices
+                document.querySelector('#shipping1').closest('.shipping-option').querySelector('.shipping-price').textContent = formatter.format(jnePrice);
+                document.querySelector('#shipping2').closest('.shipping-option').querySelector('.shipping-price').textContent = formatter.format(jntPrice);
+                document.querySelector('#shipping3').closest('.shipping-option').querySelector('.shipping-price').textContent = formatter.format(sicepatPrice);
+                
+                // Update estimated delivery times based on distance
+                const jneEstimate = 1 + distance + ' hari';
+                const jntEstimate = 1 + Math.floor(distance * 0.7) + ' hari'; // J&T slightly faster
+                const sicepatEstimate = 1 + Math.floor(distance * 0.5) + ' hari'; // SiCepat fastest
+                
+                document.querySelector('#shipping1').closest('.shipping-option').querySelector('.shipping-estimate').textContent = 'Estimasi ' + jneEstimate;
+                document.querySelector('#shipping2').closest('.shipping-option').querySelector('.shipping-estimate').textContent = 'Estimasi ' + jntEstimate;
+                document.querySelector('#shipping3').closest('.shipping-option').querySelector('.shipping-estimate').textContent = 'Estimasi ' + sicepatEstimate;
+            }
+            
+            // Handle shipping option selection
+            const shippingOptions = document.querySelectorAll('.shipping-option');
+            shippingOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    // Deselect all options
+                    shippingOptions.forEach(opt => opt.classList.remove('selected'));
+                    
+                    // Select clicked option and check radio button
+                    this.classList.add('selected');
+                    this.querySelector('input[type="radio"]').checked = true;
+                    
+                    // Update price summary with shipping cost
+                    const shippingPrice = this.querySelector('.shipping-price').textContent;
+                    const shippingPriceNumeric = parseFloat(shippingPrice.replace(/[^\d]/g, ''));
+                    
+                    // Recalculate total with shipping
+                    calculatePricesWithShipping(shippingPriceNumeric);
+                });
+            });
+            
+            function calculatePricesWithShipping(shippingCost) {
+                const amount = parseFloat(document.getElementById('amount').value) || 0;
+                const adminFee = amount * 0.01; // 1% admin fee
+                const total = amount + adminFee + shippingCost;
+                
+                // Format as Indonesian Rupiah
+                const formatter = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    minimumFractionDigits: 0,
+                    maximumFractionDigits: 0
+                });
+                
+                // Add or update shipping row in price summary
+                let shippingRow = document.getElementById('shippingCostRow');
+                if (!shippingRow) {
+                    shippingRow = document.createElement('div');
+                    shippingRow.id = 'shippingCostRow';
+                    shippingRow.className = 'price-row';
+                    
+                    const labelSpan = document.createElement('span');
+                    labelSpan.textContent = 'Biaya Pengiriman';
+                    
+                    const valueSpan = document.createElement('span');
+                    valueSpan.id = 'shippingCost';
+                    
+                    shippingRow.appendChild(labelSpan);
+                    shippingRow.appendChild(valueSpan);
+                    
+                    // Insert before total row
+                    const totalRow = document.querySelector('.price-row.total');
+                    totalRow.parentNode.insertBefore(shippingRow, totalRow);
+                }
+                
+                document.getElementById('shippingCost').textContent = formatter.format(shippingCost);
+                document.getElementById('totalPayment').textContent = formatter.format(total);
+            }
+            
             // Contact admin via Facebook button
             contactAdmin.addEventListener('click', function() {
                 // Replace with your actual Facebook page URL
@@ -1098,11 +1454,6 @@
                 const code = transactionCode.textContent.trim();
                 const message = `Halo Admin RekBer, saya ingin verifikasi transaksi dengan kode: ${code}`;
                 window.open(`https://wa.me/628123456789?text=${encodeURIComponent(message)}`, '_blank');
-            });
-            
-            // Back button
-            backBtn.addEventListener('click', function() {
-                window.location.href = 'index.html';
             });
             
             // Real-time input validation
@@ -1124,6 +1475,8 @@
             
             document.getElementById('amount').addEventListener('input', function() {
                 showError('amount', 'amountError', this.value && this.value < 10000);
+                // Calculate prices when amount changes
+                calculatePrices();
             });
         });
     </script>
