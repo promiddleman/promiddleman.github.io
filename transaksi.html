@@ -5,92 +5,493 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rekber - Rekening Bersama</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
     <style>
         .transaction-success {
             display: none;
         }
+        
+        .loading {
+            display: none;
+        }
+        
+        .steps-container {
+            position: relative;
+        }
+        
+        .steps-container::before {
+            content: '';
+            position: absolute;
+            top: 24px;
+            left: calc(50% - 1px);
+            height: calc(100% - 48px);
+            width: 2px;
+            background-color: #e5e7eb;
+            z-index: 0;
+        }
+        
+        .step-circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1;
+            position: relative;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+            }
+            50% {
+                box-shadow: 0 0 0 10px rgba(59, 130, 246, 0);
+            }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
     </style>
 </head>
-<body class="bg-gray-100 font-sans">
+<body class="bg-gray-50 font-sans">
+    <nav class="bg-blue-600 text-white shadow-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <i class="fas fa-exchange-alt text-xl mr-2"></i>
+                <span class="text-xl font-bold">REKBER</span>
+            </div>
+            <div>
+                <a href="#about" class="text-white hover:text-blue-100 mr-4 text-sm">Tentang Kami</a>
+                <a href="#faq" class="text-white hover:text-blue-100 mr-4 text-sm">FAQ</a>
+                <a href="#contact" class="bg-white text-blue-600 hover:bg-blue-50 px-3 py-1 rounded-md text-sm font-medium">Hubungi Admin</a>
+            </div>
+        </div>
+    </nav>
+
     <div class="container mx-auto px-4 py-8">
-        <header class="text-center mb-10">
-            <h1 class="text-3xl font-bold text-blue-600">REKBER</h1>
-            <p class="text-lg text-gray-600">Sistem Rekening Bersama Aman dan Terpercaya</p>
+        <header class="text-center mb-6">
+            <h1 class="text-3xl font-bold text-blue-600">Rekening Bersama</h1>
+            <p class="text-lg text-gray-600">Sistem Transaksi Online Aman dan Terpercaya</p>
         </header>
 
-        <div class="max-w-lg mx-auto bg-white rounded-lg shadow-md p-6">
+        <div class="max-w-4xl mx-auto mb-10">
+            <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                <div class="flex mb-6">
+                    <div class="w-1/3 text-center">
+                        <div class="mx-auto bg-blue-100 text-blue-600 rounded-full p-3 w-16 h-16 flex items-center justify-center mb-2">
+                            <i class="fas fa-file-alt text-2xl"></i>
+                        </div>
+                        <h3 class="font-medium">Daftar Transaksi</h3>
+                    </div>
+                    <div class="w-1/3 text-center">
+                        <div class="mx-auto bg-blue-100 text-blue-600 rounded-full p-3 w-16 h-16 flex items-center justify-center mb-2">
+                            <i class="fas fa-money-bill-wave text-2xl"></i>
+                        </div>
+                        <h3 class="font-medium">Bayar ke Rekber</h3>
+                    </div>
+                    <div class="w-1/3 text-center">
+                        <div class="mx-auto bg-blue-100 text-blue-600 rounded-full p-3 w-16 h-16 flex items-center justify-center mb-2">
+                            <i class="fas fa-check-circle text-2xl"></i>
+                        </div>
+                        <h3 class="font-medium">Terima Barang</h3>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-200 pt-4">
+                    <p class="text-center text-gray-600">Rekber membantu transaksi online Anda lebih aman dengan sistem escrow. Lindungi pembeli dan penjual dari penipuan.</p>
+                </div>
+            </div>
+
             <!-- Transaction Form -->
-            <div id="transaction-form">
-                <h2 class="text-xl font-semibold mb-4 text-center">Form Transaksi Baru</h2>
-                <form id="rekber-form" class="space-y-4">
-                    <div>
-                        <label for="seller-name" class="block text-sm font-medium text-gray-700">Nama Penjual</label>
-                        <input type="text" id="seller-name" name="seller-name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+            <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-blue-600 text-white px-6 py-4">
+                    <h2 class="text-xl font-semibold">Form Transaksi Baru</h2>
+                    <p class="text-sm text-blue-100">Isi data dengan lengkap untuk membuat transaksi baru</p>
+                </div>
+                
+                <div id="transaction-form" class="p-6">
+                    <form id="rekber-form" class="space-y-4">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-700 mb-3">Data Penjual</h3>
+                                <div class="space-y-3">
+                                    <div>
+                                        <label for="seller-name" class="block text-sm font-medium text-gray-700">Nama Penjual <span class="text-red-600">*</span></label>
+                                        <input type="text" id="seller-name" name="seller-name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                    </div>
+                                    
+                                    <div>
+                                        <label for="seller-contact" class="block text-sm font-medium text-gray-700">Kontak Penjual (WhatsApp) <span class="text-red-600">*</span></label>
+                                        <div class="mt-1 flex rounded-md shadow-sm">
+                                            <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">+62</span>
+                                            <input type="text" id="seller-contact" name="seller-contact" required class="block w-full rounded-none rounded-r-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 p-2 border" placeholder="8123456789">
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label for="seller-bank" class="block text-sm font-medium text-gray-700">Bank Penjual <span class="text-red-600">*</span></label>
+                                        <select id="seller-bank" name="seller-bank" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                            <option value="">Pilih Bank</option>
+                                            <option value="bca">BCA</option>
+                                            <option value="mandiri">Mandiri</option>
+                                            <option value="bni">BNI</option>
+                                            <option value="bri">BRI</option>
+                                            <option value="cimb">CIMB Niaga</option>
+                                            <option value="other">Bank Lainnya</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label for="seller-account" class="block text-sm font-medium text-gray-700">No. Rekening Penjual <span class="text-red-600">*</span></label>
+                                        <input type="text" id="seller-account" name="seller-account" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h3 class="text-lg font-medium text-gray-700 mb-3">Data Pembeli</h3>
+                                <div class="space-y-3">
+                                    <div>
+                                        <label for="buyer-name" class="block text-sm font-medium text-gray-700">Nama Pembeli <span class="text-red-600">*</span></label>
+                                        <input type="text" id="buyer-name" name="buyer-name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                    </div>
+                                    
+                                    <div>
+                                        <label for="buyer-contact" class="block text-sm font-medium text-gray-700">Kontak Pembeli (WhatsApp) <span class="text-red-600">*</span></label>
+                                        <div class="mt-1 flex rounded-md shadow-sm">
+                                            <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">+62</span>
+                                            <input type="text" id="buyer-contact" name="buyer-contact" required class="block w-full rounded-none rounded-r-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 p-2 border" placeholder="8123456789">
+                                        </div>
+                                    </div>
+                                    
+                                    <div>
+                                        <label for="buyer-email" class="block text-sm font-medium text-gray-700">Email Pembeli</label>
+                                        <input type="email" id="buyer-email" name="buyer-email" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="border-t border-gray-200 pt-4 mt-6">
+                            <h3 class="text-lg font-medium text-gray-700 mb-3">Detail Transaksi</h3>
+                            <div class="space-y-3">
+                                <div>
+                                    <label for="item-description" class="block text-sm font-medium text-gray-700">Deskripsi Barang/Jasa <span class="text-red-600">*</span></label>
+                                    <textarea id="item-description" name="item-description" rows="3" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"></textarea>
+                                </div>
+                                
+                                <div>
+                                    <label for="amount" class="block text-sm font-medium text-gray-700">Jumlah Transaksi (Rp) <span class="text-red-600">*</span></label>
+                                    <div class="mt-1 flex rounded-md shadow-sm">
+                                        <span class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 text-sm">Rp</span>
+                                        <input type="number" id="amount" name="amount" required class="block w-full rounded-none rounded-r-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 p-2 border" placeholder="1000000">
+                                    </div>
+                                </div>
+                                
+                                <div>
+                                    <label for="fee-calculator" class="block text-sm font-medium text-gray-700">Biaya Layanan</label>
+                                    <div class="mt-1 p-3 bg-gray-50 rounded-md border border-gray-200">
+                                        <div class="flex justify-between">
+                                            <span>Biaya Admin (1%):</span>
+                                            <span id="admin-fee">Rp 0</span>
+                                        </div>
+                                        <div class="flex justify-between mt-1">
+                                            <span>Total Pembayaran:</span>
+                                            <span id="total-payment" class="font-semibold">Rp 0</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <div class="flex items-start">
+                                <div class="flex items-center h-5">
+                                    <input id="terms" name="terms" type="checkbox" required class="focus:ring-blue-500 h-4 w-4 text-blue-600 border-gray-300 rounded">
+                                </div>
+                                <div class="ml-3 text-sm">
+                                    <label for="terms" class="font-medium text-gray-700">Saya menyetujui <a href="#" class="text-blue-600 hover:text-blue-800">syarat dan ketentuan</a> layanan Rekber</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="text-center mt-6">
+                            <button type="submit" class="w-full py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 flex items-center justify-center">
+                                <div id="submit-text">Buat Transaksi</div>
+                                <div id="loading" class="loading">
+                                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                                    </svg>
+                                </div>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Transaction Success -->
+            <div id="transaction-success" class="transaction-success bg-white rounded-lg shadow-md overflow-hidden">
+                <div class="bg-green-600 text-white px-6 py-4">
+                    <h2 class="text-xl font-semibold">Transaksi Berhasil Dibuat!</h2>
+                    <p class="text-sm text-green-100">Transaksi Anda telah berhasil dibuat dan menunggu verifikasi</p>
+                </div>
+                
+                <div class="p-6 text-center space-y-4">
+                    <div class="w-20 h-20 mx-auto bg-green-100 rounded-full flex items-center justify-center">
+                        <i class="fas fa-check-circle text-green-600 text-4xl"></i>
                     </div>
                     
-                    <div>
-                        <label for="seller-contact" class="block text-sm font-medium text-gray-700">Kontak Penjual (WhatsApp/Telp)</label>
-                        <input type="text" id="seller-contact" name="seller-contact" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    
-                    <div>
-                        <label for="buyer-name" class="block text-sm font-medium text-gray-700">Nama Pembeli</label>
-                        <input type="text" id="buyer-name" name="buyer-name" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    
-                    <div>
-                        <label for="buyer-contact" class="block text-sm font-medium text-gray-700">Kontak Pembeli (WhatsApp/Telp)</label>
-                        <input type="text" id="buyer-contact" name="buyer-contact" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    
-                    <div>
-                        <label for="item-description" class="block text-sm font-medium text-gray-700">Deskripsi Barang/Jasa</label>
-                        <textarea id="item-description" name="item-description" rows="3" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border"></textarea>
-                    </div>
-                    
-                    <div>
-                        <label for="amount" class="block text-sm font-medium text-gray-700">Jumlah Transaksi (Rp)</label>
-                        <input type="number" id="amount" name="amount" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 p-2 border">
-                    </div>
-                    
-                    <div class="text-center">
-                        <button type="submit" class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                            Buat Transaksi
+                    <div class="p-4 border-2 border-dashed border-gray-300 rounded-md bg-gray-50">
+                        <p class="text-sm text-gray-600 mb-1">Kode Transaksi:</p>
+                        <p id="transaction-id" class="text-2xl font-bold text-blue-600"></p>
+                        <button id="copy-btn" class="mt-2 text-sm text-blue-600 hover:text-blue-800 flex items-center justify-center mx-auto">
+                            <i class="far fa-copy mr-1"></i> Salin Kode
                         </button>
                     </div>
-                </form>
+                    
+                    <div class="my-6 text-left">
+                        <h3 class="font-medium text-gray-800 mb-3">Langkah Selanjutnya:</h3>
+                        <div class="steps-container">
+                            <div class="flex mb-6">
+                                <div class="step-circle bg-blue-600 text-white pulse-animation">
+                                    <i class="fas fa-bell"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-medium text-gray-800">Hubungi Admin untuk Verifikasi</h4>
+                                    <p class="text-sm text-gray-600">Kirimkan kode transaksi ke admin untuk verifikasi.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex mb-6">
+                                <div class="step-circle bg-gray-200 text-gray-500">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-medium text-gray-800">Pembayaran ke Rekber</h4>
+                                    <p class="text-sm text-gray-600">Setelah verifikasi, admin akan mengirimkan instruksi pembayaran.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex mb-6">
+                                <div class="step-circle bg-gray-200 text-gray-500">
+                                    <i class="fas fa-box"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-medium text-gray-800">Pengiriman Barang</h4>
+                                    <p class="text-sm text-gray-600">Penjual mengirimkan barang setelah pembayaran dikonfirmasi.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex">
+                                <div class="step-circle bg-gray-200 text-gray-500">
+                                    <i class="fas fa-check-double"></i>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="font-medium text-gray-800">Konfirmasi & Pencairan</h4>
+                                    <p class="text-sm text-gray-600">Pembeli mengonfirmasi penerimaan, dana dicairkan ke penjual.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6">
+                        <p class="text-sm text-gray-600 mb-3">Silahkan hubungi admin untuk memulai proses verifikasi:</p>
+                        <a href="https://facebook.com/rekberadmin" target="_blank" id="contact-admin-btn" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                            <i class="fab fa-facebook-messenger mr-2"></i> Hubungi Admin di Facebook
+                        </a>
+                    </div>
+                    
+                    <div class="mt-6 pt-4 border-t border-gray-200">
+                        <button id="new-transaction-btn" class="text-sm text-gray-600 hover:text-gray-800 flex items-center mx-auto">
+                            <i class="fas fa-plus-circle mr-1"></i> Buat Transaksi Baru
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- About -->
+        <div id="about" class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Tentang Rekber</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="text-center p-4">
+                    <div class="mx-auto bg-blue-100 text-blue-600 rounded-full p-3 w-16 h-16 flex items-center justify-center mb-3">
+                        <i class="fas fa-shield-alt text-2xl"></i>
+                    </div>
+                    <h3 class="font-medium text-lg mb-2">Aman</h3>
+                    <p class="text-gray-600 text-sm">Perlindungan transaksi dengan sistem escrow yang terpercaya</p>
+                </div>
+                
+                <div class="text-center p-4">
+                    <div class="mx-auto bg-blue-100 text-blue-600 rounded-full p-3 w-16 h-16 flex items-center justify-center mb-3">
+                        <i class="fas fa-bolt text-2xl"></i>
+                    </div>
+                    <h3 class="font-medium text-lg mb-2">Cepat</h3>
+                    <p class="text-gray-600 text-sm">Proses verifikasi dan pencairan dana yang cepat dalam 1x24 jam</p>
+                </div>
+                
+                <div class="text-center p-4">
+                    <div class="mx-auto bg-blue-100 text-blue-600 rounded-full p-3 w-16 h-16 flex items-center justify-center mb-3">
+                        <i class="fas fa-hand-holding-usd text-2xl"></i>
+                    </div>
+                    <h3 class="font-medium text-lg mb-2">Terjangkau</h3>
+                    <p class="text-gray-600 text-sm">Biaya layanan yang kompetitif hanya 1% dari nilai transaksi</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- FAQ -->
+        <div id="faq" class="max-w-4xl mx-auto bg-white rounded-lg shadow-md p-6 mb-8">
+            <h2 class="text-2xl font-bold text-gray-800 mb-4">Pertanyaan Umum</h2>
+            
+            <div class="space-y-4">
+                <div class="border-b border-gray-200 pb-4">
+                    <button class="flex justify-between items-center w-full text-left focus:outline-none">
+                        <span class="font-medium text-gray-800">Apa itu Rekening Bersama (Rekber)?</span>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
+                    </button>
+                    <div class="mt-2">
+                        <p class="text-gray-600">Rekber adalah layanan pihak ketiga yang menjamin keamanan transaksi online antara penjual dan pembeli. Rekber akan menahan dana pembeli hingga barang sampai dengan selamat ke pembeli, baru kemudian dana akan diteruskan ke penjual.</p>
+                    </div>
+                </div>
+                
+                <div class="border-b border-gray-200 pb-4">
+                    <button class="flex justify-between items-center w-full text-left focus:outline-none">
+                        <span class="font-medium text-gray-800">Bagaimana cara kerja Rekber?</span>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
+                    </button>
+                    <div class="mt-2">
+                        <p class="text-gray-600">1. Buat transaksi dan dapatkan kode unik. 2. Pembeli mentransfer dana ke rekening Rekber. 3. Penjual mengirim barang setelah pembayaran dikonfirmasi. 4. Pembeli menerima barang dan mengonfirmasi. 5. Dana diteruskan ke penjual.</p>
+                    </div>
+                </div>
+                
+                <div class="border-b border-gray-200 pb-4">
+                    <button class="flex justify-between items-center w-full text-left focus:outline-none">
+                        <span class="font-medium text-gray-800">Berapa biaya menggunakan Rekber?</span>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
+                    </button>
+                    <div class="mt-2">
+                        <p class="text-gray-600">Biaya layanan Rekber adalah 1% dari nilai transaksi, dengan minimal Rp10.000 dan maksimal Rp100.000.</p>
+                    </div>
+                </div>
+                
+                <div class="border-b border-gray-200 pb-4">
+                    <button class="flex justify-between items-center w-full text-left focus:outline-none">
+                        <span class="font-medium text-gray-800">Berapa lama proses pencairan dana?</span>
+                        <i class="fas fa-chevron-down text-gray-500"></i>
+                    </button>
+                    <div class="mt-2">
+                        <p class="text-gray-600">Setelah pembeli mengonfirmasi penerimaan barang, dana akan dicairkan ke rekening penjual dalam waktu 1x24 jam hari kerja.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contact -->
+        <div id="contact" class="max-w-4xl mx-auto bg-white rounded-lg shadow-md overflow-hidden mb-8">
+            <div class="bg-blue-600 text-white px-6 py-4">
+                <h2 class="text-xl font-semibold">Hubungi Kami</h2>
+                <p class="text-sm text-blue-100">Tim kami siap membantu Anda</p>
             </div>
             
-            <!-- Transaction Success -->
-            <div id="transaction-success" class="transaction-success text-center space-y-4">
-                <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4" role="alert">
-                    <p class="font-bold">Transaksi Berhasil Dibuat!</p>
-                    <p>Silahkan simpan kode transaksi Anda.</p>
-                </div>
-                
-                <div class="p-4 border-2 border-dashed border-gray-300 rounded-md">
-                    <p class="text-sm text-gray-600 mb-1">Kode Transaksi:</p>
-                    <p id="transaction-id" class="text-xl font-bold text-blue-600"></p>
-                    <button id="copy-btn" class="mt-2 text-sm text-blue-600 hover:text-blue-800">
-                        Salin Kode
-                    </button>
-                </div>
-                
-                <div class="mt-6">
-                    <p class="text-sm text-gray-600 mb-3">Silahkan hubungi admin untuk verifikasi transaksi:</p>
-                    <a href="https://facebook.com/rekberadmin" target="_blank" id="contact-admin-btn" class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-                        Hubungi Admin di Facebook
-                    </a>
-                </div>
-                
-                <div class="mt-6">
-                    <button id="new-transaction-btn" class="text-sm text-gray-600 hover:text-gray-800">
-                        Buat Transaksi Baru
-                    </button>
+            <div class="p-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="font-medium text-lg mb-3">Kontak Admin</h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center">
+                                <div class="bg-blue-100 text-blue-600 rounded-full p-2 mr-3">
+                                    <i class="fab fa-facebook-messenger"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium">Facebook</p>
+                                    <a href="https://facebook.com/rekberadmin" class="text-blue-600 hover:text-blue-800 text-sm">@rekberadmin</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="bg-blue-100 text-blue-600 rounded-full p-2 mr-3">
+                                    <i class="fab fa-whatsapp"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium">WhatsApp</p>
+                                    <a href="https://wa.me/628123456789" class="text-blue-600 hover:text-blue-800 text-sm">+62 812-3456-789</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="bg-blue-100 text-blue-600 rounded-full p-2 mr-3">
+                                    <i class="far fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium">Email</p>
+                                    <a href="mailto:admin@rekber.id" class="text-blue-600 hover:text-blue-800 text-sm">admin@rekber.id</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h3 class="font-medium text-lg mb-3">Jam Operasional</h3>
+                        <p class="text-sm text-gray-600 mb-3">Kami siap melayani Anda:</p>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span>Senin - Jumat</span>
+                                <span>09:00 - 18:00 WIB</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Sabtu</span>
+                                <span>09:00 - 15:00 WIB</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span>Minggu & Hari Libur</span>
+                                <span>Tutup</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <footer class="bg-gray-800 text-white py-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div>
+                    <h3 class="text-lg font-bold mb-3">REKBER</h3>
+                    <p class="text-sm text-gray-400">Rekber adalah layanan rekening bersama yang membantu mengamankan transaksi online Anda. Kami hadir sejak 2015 dan telah membantu ribuan transaksi online.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-3">Link</h3>
+                    <ul class="space-y-2 text-sm text-gray-400">
+                        <li><a href="#" class="hover:text-white">Beranda</a></li>
+                        <li><a href="#about" class="hover:text-white">Tentang Kami</a></li>
+                        <li><a href="#faq" class="hover:text-white">FAQ</a></li>
+                        <li><a href="#contact" class="hover:text-white">Kontak</a></li>
+                        <li><a href="#" class="hover:text-white">Syarat & Ketentuan</a></li>
+                        <li><a href="#" class="hover:text-white">Kebijakan Privasi</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-3">Newsletter</h3>
+                    <p class="text-sm text-gray-400 mb-3">Dapatkan info dan promo terbaru dari kami.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Email Anda" class="px-3 py-2 text-gray-800 rounded-l-md focus:outline-none flex-grow text-sm">
+                        <button type="submit" class="bg-blue-600 text-white px-3 py-2 rounded-r-md hover:bg-blue-700 text-sm">Daftar</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-6 border-t border-gray-700 text-center text-sm text-gray-400">
+                <p>&copy; 2025 Rekber. Hak Cipta Dilindungi.</p>
+            </div>
+        </div>
+    </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/uuid/8.3.2/uuid.min.js"></script>
     <script>
@@ -102,35 +503,79 @@
             const copyBtn = document.getElementById('copy-btn');
             const newTransactionBtn = document.getElementById('new-transaction-btn');
             const contactAdminBtn = document.getElementById('contact-admin-btn');
+            const submitText = document.getElementById('submit-text');
+            const loading = document.getElementById('loading');
+            const amountInput = document.getElementById('amount');
+            const adminFeeElement = document.getElementById('admin-fee');
+            const totalPaymentElement = document.getElementById('total-payment');
+            
+            // Calculate fee on amount change
+            amountInput.addEventListener('input', function() {
+                calculateFee();
+            });
+            
+            // Calculate fee function
+            function calculateFee() {
+                const amount = parseInt(amountInput.value) || 0;
+                let adminFee = amount * 0.01; // 1% fee
+                
+                // Apply minimum and maximum fee
+                adminFee = Math.max(10000, adminFee); // Minimum fee: Rp 10,000
+                adminFee = Math.min(100000, adminFee); // Maximum fee: Rp 100,000
+                
+                const totalPayment = amount + adminFee;
+                
+                adminFeeElement.textContent = 'Rp ' + formatNumber(adminFee);
+                totalPaymentElement.textContent = 'Rp ' + formatNumber(totalPayment);
+            }
+            
+            // Format number with thousand separator
+            function formatNumber(number) {
+                return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+            }
             
             // Handle form submission
             form.addEventListener('submit', function(e) {
                 e.preventDefault();
                 
-                // Generate transaction ID
-                const transactionId = generateTransactionId();
+                // Show loading state
+                submitText.style.display = 'none';
+                loading.style.display = 'inline-block';
                 
-                // Collect form data
-                const transactionData = {
-                    id: transactionId,
-                    sellerName: document.getElementById('seller-name').value,
-                    sellerContact: document.getElementById('seller-contact').value,
-                    buyerName: document.getElementById('buyer-name').value,
-                    buyerContact: document.getElementById('buyer-contact').value,
-                    itemDescription: document.getElementById('item-description').value,
-                    amount: document.getElementById('amount').value,
-                    timestamp: new Date().toISOString(),
-                    status: 'pending'
-                };
-                
-                // Save to localStorage (in a real implementation, this would be sent to a server)
-                saveTransaction(transactionData);
-                
-                // Display transaction success
-                displayTransactionSuccess(transactionId);
-                
-                // Update Facebook link with transaction ID
-                updateContactLink(transactionId);
+                // Simulate API call delay
+                setTimeout(() => {
+                    // Generate transaction ID
+                    const transactionId = generateTransactionId();
+                    
+                    // Collect form data
+                    const transactionData = {
+                        id: transactionId,
+                        sellerName: document.getElementById('seller-name').value,
+                        sellerContact: document.getElementById('seller-contact').value,
+                        sellerBank: document.getElementById('seller-bank').value,
+                        sellerAccount: document.getElementById('seller-account').value,
+                        buyerName: document.getElementById('buyer-name').value,
+                        buyerContact: document.getElementById('buyer-contact').value,
+                        buyerEmail: document.getElementById('buyer-email').value,
+                        itemDescription: document.getElementById('item-description').value,
+                        amount: document.getElementById('amount').value,
+                        timestamp: new Date().toISOString(),
+                        status: 'pending'
+                    };
+                    
+                    // Save to localStorage (in a real implementation, this would be sent to a server)
+                    saveTransaction(transactionData);
+                    
+                    // Display transaction success
+                    displayTransactionSuccess(transactionId);
+                    
+                    // Update Facebook link with transaction ID
+                    updateContactLink(transactionId);
+                    
+                    // Reset loading state
+                    submitText.style.display = 'inline-block';
+                    loading.style.display = 'none';
+                }, 1500);
             });
             
             // Generate Transaction ID
@@ -147,7 +592,7 @@
             
             // Display transaction success
             function displayTransactionSuccess(transactionId) {
-                transactionForm.style.display = 'none';
+                transactionForm.parentElement.style.display = 'none';
                 transactionSuccess.style.display = 'block';
                 transactionIdElement.textContent = transactionId;
             }
@@ -162,9 +607,9 @@
             copyBtn.addEventListener('click', function() {
                 const transactionId = transactionIdElement.textContent;
                 navigator.clipboard.writeText(transactionId).then(function() {
-                    copyBtn.textContent = 'Kode Disalin!';
+                    copyBtn.innerHTML = '<i class="fas fa-check mr-1"></i> Kode Disalin!';
                     setTimeout(() => {
-                        copyBtn.textContent = 'Salin Kode';
+                        copyBtn.innerHTML = '<i class="far fa-copy mr-1"></i> Salin Kode';
                     }, 2000);
                 });
             });
@@ -173,7 +618,30 @@
             newTransactionBtn.addEventListener('click', function() {
                 form.reset();
                 transactionSuccess.style.display = 'none';
-                transactionForm.style.display = 'block';
+                transactionForm.parentElement.style.display = 'block';
+                calculateFee(); // Reset fee calculation
+            });
+            
+            // Initialize fee calculation
+            calculateFee();
+            
+            // FAQ accordion toggle
+            const faqButtons = document.querySelectorAll('#faq button');
+            faqButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('i');
+                    
+                    if (content.style.maxHeight) {
+                        content.style.maxHeight = null;
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    }
+                });
             });
         });
     </script>
