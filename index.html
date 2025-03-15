@@ -5,8 +5,806 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Testimoni Pengguna RekberTrust | Jasa Rekening Bersama Terpercaya</title>
     <style>
+        /* Font imports */
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Poppins',sans-serif;background-color:#f8f9fa;color:#343a40;line-height:1.6}header{background:linear-gradient(135deg,#1e3c72 0%,#2a5298 100%);color:white;padding:2rem 0;text-align:center}.header-container{max-width:1200px;margin:0 auto;padding:0 1rem}.logo{font-size:2rem;font-weight:700;margin-bottom:.5rem}.tagline{font-weight:300;font-size:1.2rem;margin-bottom:.5rem}.stats{display:flex;justify-content:center;gap:2rem;margin-top:1.5rem;flex-wrap:wrap}.stat-item{text-align:center;padding:.5rem}.stat-number{font-size:1.8rem;font-weight:700;display:block}.stat-label{font-size:.85rem;font-weight:300}main{max-width:1200px;margin:1.5rem auto;padding:0 1rem}.testimonial-heading{text-align:center;margin-bottom:2rem}.testimonial-heading h2{font-size:1.8rem;margin-bottom:.8rem;color:#1e3c72}.testimonial-heading p{font-size:1rem;color:#6c757d;max-width:700px;margin:0 auto}.filter-controls{display:flex;justify-content:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:.5rem}.filter-btn{background-color:white;border:1px solid #dee2e6;border-radius:30px;padding:.4rem 1rem;font-size:.85rem;cursor:pointer;transition:all .3s ease}.filter-btn:hover{background-color:#f8f9fa}.filter-btn.active{background-color:#1e3c72;color:white;border-color:#1e3c72}.search-box{max-width:500px;margin:0 auto 1.5rem;position:relative}.search-input{width:100%;padding:.8rem 1rem .8rem 3rem;border:1px solid #dee2e6;border-radius:30px;font-size:.9rem;box-shadow:0 2px 5px rgba(0,0,0,0.05);transition:all .3s ease}.search-input:focus{outline:0;border-color:#1e3c72;box-shadow:0 2px 10px rgba(30,60,114,0.1)}.search-icon{position:absolute;left:1rem;top:50%;transform:translateY(-50%);color:#6c757d}.testimonial-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.2rem}.testimonial-card{background-color:white;border-radius:10px;box-shadow:0 2px 10px rgba(0,0,0,0.05);overflow:hidden;transition:transform .3s ease,box-shadow .3s ease;height:100%;display:flex;flex-direction:column;margin-bottom:.8rem}.testimonial-card:hover{transform:translateY(-3px);box-shadow:0 5px 15px rgba(0,0,0,0.1)}.testimonial-header{padding:1.2rem 1.2rem .5rem}.user-info{flex:1}.user-name{font-weight:600;margin-bottom:.5rem;color:#1e3c72}.transaction-type{font-size:.8rem;color:#505050;margin-bottom:.3rem}.rating{color:#ffc107;font-size:.9rem;margin:.5rem 0}.testimonial-body{padding:.5rem 1.2rem;flex-grow:1;border-top:1px solid #f1f1f1;border-bottom:1px solid #f1f1f1}.testimonial-text{color:#343a40;font-size:.9rem}.testimonial-footer{display:flex;justify-content:space-between;align-items:center;padding:.8rem 1.2rem;font-size:.75rem;color:#6c757d}.transaction-amount{font-weight:600}.pagination{display:flex;justify-content:center;margin:2.5rem 0 1.5rem;gap:.5rem}.page-btn{width:38px;height:38px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:1px solid #dee2e6;background-color:white;cursor:pointer;transition:all .3s ease;font-size:.9rem}.page-btn:hover{background-color:#f8f9fa}.page-btn.active{background-color:#1e3c72;color:white;border-color:#1e3c72}.loader{display:none;margin:1rem auto;border:3px solid #f3f3f3;border-top:3px solid #1e3c72;border-radius:50%;width:24px;height:24px;animation:spin 1s linear infinite}@keyframes spin{0%{transform:rotate(0deg)}100%{transform:rotate(360deg)}}.cta-section{background:linear-gradient(135deg,#1e3c72 0%,#2a5298 100%);padding:3.5rem 1.5rem;text-align:center;color:white;margin-top:3rem;position:relative;overflow:hidden}.cta-container{max-width:800px;margin:0 auto;position:relative;z-index:2}.cta-heading{font-size:1.8rem;margin-bottom:1rem}.cta-text{font-size:1rem;margin-bottom:2rem;opacity:.9}.cta-btn{display:inline-block;background-color:white;color:#1e3c72;font-weight:600;padding:.9rem 1.8rem;border-radius:50px;text-decoration:none;transition:all .4s ease;box-shadow:0 5px 15px rgba(0,0,0,0.1);position:relative;overflow:hidden}.cta-btn:hover{transform:translateY(-5px);box-shadow:0 8px 25px rgba(0,0,0,0.2)}.cta-btn::after{content:'';position:absolute;top:50%;left:50%;width:5px;height:5px;background:rgba(255,255,255,0.5);opacity:0;border-radius:100%;transform:scale(1,1) translate(-50%);transform-origin:50% 50%}.cta-btn:hover::after{animation:ripple 1s ease-out}@keyframes ripple{0%{transform:scale(0,0);opacity:.5}100%{transform:scale(20,20);opacity:0}}.cta-section::before{content:'';position:absolute;top:-50px;right:-50px;background:radial-gradient(ellipse at center,rgba(255,255,255,0.2) 0%,rgba(255,255,255,0) 70%);width:200px;height:200px;border-radius:50%}.cta-section::after{content:'';position:absolute;bottom:-80px;left:-80px;background:radial-gradient(ellipse at center,rgba(255,255,255,0.1) 0%,rgba(255,255,255,0) 70%);width:300px;height:300px;border-radius:50%}footer{background-color:#343a40;color:white;padding:2.5rem 1.5rem}.footer-container{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.5rem}.footer-column h3{font-size:1.1rem;margin-bottom:1.2rem;position:relative;padding-bottom:.5rem}.footer-column h3:after{content:'';position:absolute;left:0;bottom:0;width:40px;height:2px;background-color:#1e3c72}.footer-column p{margin-bottom:1rem;font-size:.85rem;opacity:.8}.footer-column ul{list-style:none}.footer-column li{margin-bottom:.7rem}.footer-column a{color:white;text-decoration:none;opacity:.8;transition:all .3s ease;font-size:.85rem}.footer-column a:hover{opacity:1;color:#1e3c72}.social-icons{display:flex;gap:.8rem;margin-top:1rem;flex-wrap:wrap}.social-icon{width:36px;height:36px;border-radius:50%;background-color:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;transition:all .3s ease}.social-icon:hover{background-color:#1e3c72}.copyright{margin-top:2.5rem;text-align:center;padding-top:1.2rem;border-top:1px solid rgba(255,255,255,0.1);font-size:.85rem;opacity:.7}@media(max-width:992px){.stat-number{font-size:1.6rem}.testimonial-grid{grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}}@media(max-width:768px){.header-container{padding:0 1rem}.stats{flex-direction:column;gap:1rem;padding:0 1rem}.stat-item{padding:.5rem 0}.testimonial-heading h2{font-size:1.6rem}.filter-controls{padding:0 .5rem}.filter-btn{padding:.3rem .8rem;font-size:.8rem}.testimonial-grid{grid-template-columns:1fr;padding:0 .5rem}.testimonial-card{margin-bottom:1rem}.testimonial-header,.testimonial-body,.testimonial-footer{padding:1rem}.footer-container{grid-template-columns:1fr}.cta-heading{font-size:1.5rem}.cta-btn{padding:.8rem 1.5rem}}@media(max-width:480px){.logo{font-size:1.8rem}.tagline{font-size:1rem}.testimonial-heading h2{font-size:1.4rem}.testimonial-heading p{font-size:.9rem}.search-input{font-size:.85rem}.user-name{font-size:.9rem}.testimonial-text{font-size:.85rem}}
+        
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f8f9fa;
+            color: #343a40;
+            line-height: 1.6;
+        }
+        
+        /* Header styles */
+        header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .tagline {
+            font-weight: 300;
+            font-size: 1.2rem;
+            margin-bottom:.5rem;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 0.5rem;
+        }
+        
+        .stat-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: block;
+        }
+        
+        .stat-label {
+            font-size: 0.85rem;
+            font-weight: 300;
+        }
+        
+        /* Main content styles */
+        main {
+            max-width: 1200px;
+            margin: 1.5rem auto;
+            padding: 0 1rem;
+        }
+        
+        .testimonial-heading {
+            text-align: center;
+            margin-bottom: 3.5rem;
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+        
+        .testimonial-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #1e3c72, transparent);
+            border-radius: 3px;
+        }
+        
+        .testimonial-heading h2 {
+            font-size: 2.2rem;
+            margin-bottom: 1.2rem;
+            color: #1e3c72;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .testimonial-heading h2::before,
+        .testimonial-heading h2::after {
+            content: """;
+            position: absolute;
+            font-family: Georgia, serif;
+            color: rgba(30, 60, 114, 0.1);
+            font-size: 4rem;
+            line-height: 0;
+        }
+        
+        .testimonial-heading h2::before {
+            left: -2rem;
+            top: 0.5rem;
+        }
+        
+        .testimonial-heading h2::after {
+            content: """;
+            right: -2rem;
+            bottom: -0.6rem;
+        }
+        
+        .testimonial-heading p {
+            font-size: 1.1rem;
+            color: #6c757d;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+        
+        /* Enhanced Filter controls */
+        .filter-controls {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2.5rem;
+            flex-wrap: wrap;
+            gap: 0.7rem;
+            position: relative;
+            z-index: 5;
+        }
+        
+        .filter-btn {
+            background-color: white;
+            border: 1px solid #e0e5ec;
+            border-radius: 30px;
+            padding: 0.6rem 1.4rem;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 3px 6px rgba(0,0,0,0.01), 
+                        0 1px 3px rgba(0,0,0,0.03);
+            position: relative;
+            overflow: hidden;
+            font-weight: 500;
+        }
+        
+        .filter-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                        rgba(255,255,255,0.1), 
+                        rgba(255,255,255,0.4), 
+                        rgba(255,255,255,0.1));
+            transition: all 0.5s ease;
+        }
+        
+        .filter-btn:hover {
+            background-color: #f5f7fa;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .filter-btn:hover::before {
+            left: 100%;
+        }
+        
+        .filter-btn.active {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 6px 15px rgba(30,60,114,0.2);
+            transform: translateY(-2px);
+        }
+        
+        /* Enhanced Search box */
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto 2.5rem;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 1rem 1.5rem 1rem 3.5rem;
+            border: 1px solid #e0e5ec;
+            border-radius: 40px;
+            font-size: 0.95rem;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.03);
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: #2a5298;
+            box-shadow: 0 8px 25px rgba(30,60,114,0.12);
+            background-color: white;
+            transform: translateY(-2px);
+        }
+        
+        .search-icon {
+            position: absolute;
+            left: 1.4rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #1e3c72;
+            opacity: 0.7;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus + .search-icon {
+            opacity: 1;
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        /* Enhanced Testimonial grid */
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.8rem;
+            padding: 0.5rem;
+        }
+        
+        .testimonial-card {
+            background: linear-gradient(145deg, #ffffff, #f8f9fa);
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.04), 
+                        0 6px 10px rgba(0,0,0,0.02);
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 0.8rem;
+            border: 1px solid rgba(0,0,0,0.03);
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: """;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 80px;
+            color: rgba(30, 60, 114, 0.05);
+            font-family: Georgia, serif;
+            line-height: 1;
+            z-index: 0;
+        }
+        
+        .testimonial-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.06), 
+                        0 10px 15px rgba(0,0,0,0.03);
+        }
+        
+        .testimonial-header {
+            padding: 1.5rem 1.5rem 0.8rem;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .user-info {
+            flex: 1;
+            position: relative;
+        }
+        
+        .user-name {
+            font-weight: 700;
+            margin-bottom: 0.6rem;
+            color: #1e3c72;
+            font-size: 1.1rem;
+            letter-spacing: -0.3px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .user-name::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 40px;
+            height: 2px;
+            background: linear-gradient(90deg, #1e3c72, transparent);
+            border-radius: 2px;
+        }
+        
+        .transaction-type {
+            font-size: 0.85rem;
+            color: #505050;
+            margin-bottom: 0.4rem;
+            display: flex;
+            align-items: center;
+            font-weight: 500;
+        }
+        
+        .transaction-type strong {
+            margin-right: 0.3rem;
+            color: #333;
+        }
+        
+        .rating {
+            color: #ffc107;
+            font-size: 1rem;
+            margin: 0.8rem 0;
+            letter-spacing: 2px;
+        }
+        
+        .testimonial-body {
+            padding: 0.8rem 1.5rem;
+            flex-grow: 1;
+            border-top: 1px solid rgba(0,0,0,0.04);
+            border-bottom: 1px solid rgba(0,0,0,0.04);
+            position: relative;
+            z-index: 1;
+            background-color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .testimonial-text {
+            color: #343a40;
+            font-size: 0.95rem;
+            line-height: 1.65;
+            font-weight: 400;
+            position: relative;
+        }
+        
+        .testimonial-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            font-size: 0.8rem;
+            color: #6c757d;
+            background-color: rgba(248, 249, 250, 0.7);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .transaction-date {
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .transaction-date::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 12px;
+            height: 12px;
+            background-color: rgba(30, 60, 114, 0.1);
+            border-radius: 50%;
+        }
+        
+        .transaction-amount {
+            font-weight: 700;
+            color: #1e3c72;
+            background: rgba(30, 60, 114, 0.07);
+            padding: 0.3rem 0.7rem;
+            border-radius: 30px;
+            font-size: 0.85rem;
+        }
+        
+        /* Enhanced Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin: 3.5rem 0 2.5rem;
+            gap: 0.7rem;
+        }
+        
+        .page-btn {
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 1px solid #e0e5ec;
+            background-color: white;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            font-size: 0.95rem;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.02);
+            position: relative;
+            overflow: hidden;
+            font-weight: 500;
+        }
+        
+        .page-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .page-btn:hover {
+            background-color: #f5f7fa;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+        }
+        
+        .page-btn:hover::before {
+            opacity: 1;
+        }
+        
+        .page-btn.active {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border-color: transparent;
+            box-shadow: 0 6px 15px rgba(30,60,114,0.2);
+            transform: scale(1.1);
+            font-weight: 600;
+        }
+        
+        .page-btn.prev-btn,
+        .page-btn.next-btn {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .loader {
+            display: none;
+            margin: 2rem auto;
+            position: relative;
+            width: 50px;
+            height: 50px;
+        }
+        
+        .loader::before,
+        .loader::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background-color: #1e3c72;
+            opacity: 0.6;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .loader::after {
+            animation-delay: 1s;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(0);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Enhanced CTA Section */
+        .cta-section {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            padding: 3.5rem 1.5rem;
+            text-align: center;
+            color: white;
+            margin-top: 3rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-container {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .cta-heading {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta-text {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            background-color: white;
+            color: #1e3c72;
+            font-weight: 600;
+            padding: 0.9rem 1.8rem;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.4s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        /* Button Animation */
+        .cta-btn::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 5px;
+            height: 5px;
+            background: rgba(255, 255, 255, 0.5);
+            opacity: 0;
+            border-radius: 100%;
+            transform: scale(1, 1) translate(-50%);
+            transform-origin: 50% 50%;
+        }
+        
+        .cta-btn:hover::after {
+            animation: ripple 1s ease-out;
+        }
+        
+        @keyframes ripple {
+            0% {
+                transform: scale(0, 0);
+                opacity: 0.5;
+            }
+            100% {
+                transform: scale(20, 20);
+                opacity: 0;
+            }
+        }
+        
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+        }
+        
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            bottom: -80px;
+            left: -80px;
+            background: radial-gradient(ellipse at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+        }
+        
+        /* Enhanced Footer styles */
+        footer {
+            background: linear-gradient(135deg, #2b3035 0%, #1a1d20 100%);
+            color: white;
+            padding: 4rem 1.5rem 2.5rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 -10px 25px rgba(0,0,0,0.05);
+        }
+        
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #1e3c72, #2a5298, #1e3c72);
+        }
+        
+        .footer-wave {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%232b3035' opacity='0.2'%3E%3C/path%3E%3C/svg%3E");
+            background-size: cover;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            position: relative;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: #ffffff;
+        }
+        
+        .footer-column h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 3px;
+            background: linear-gradient(90deg, #1e3c72, #2a5298);
+            border-radius: 3px;
+        }
+        
+        .footer-column p {
+            margin-bottom: 1.2rem;
+            font-size: 0.9rem;
+            opacity: 0.9;
+            line-height: 1.7;
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column li {
+            margin-bottom: 0.9rem;
+            position: relative;
+            padding-left: 1.2rem;
+        }
+        
+        .footer-column li:before {
+            content: '›';
+            position: absolute;
+            left: 0;
+            color: #2a5298;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+        
+        .footer-column a {
+            color: #e6e6e6;
+            text-decoration: none;
+            opacity: 0.9;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            position: relative;
+            padding-bottom: 2px;
+        }
+        
+        .footer-column a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 1px;
+            bottom: 0;
+            left: 0;
+            background-color: #2a5298;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-column a:hover {
+            opacity: 1;
+            color: #2a5298;
+        }
+        
+        .footer-column a:hover::after {
+            width: 100%;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 992px) {
+            .stat-number {
+                font-size: 1.6rem;
+            }
+            
+            .testimonial-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 1rem;
+                padding: 0 1rem;
+            }
+            
+            .stat-item {
+                padding: 0.5rem 0;
+            }
+            
+            .testimonial-heading h2 {
+                font-size: 1.6rem;
+            }
+            
+            .filter-controls {
+                padding: 0 0.5rem;
+            }
+            
+            .filter-btn {
+                padding: 0.3rem 0.8rem;
+                font-size: 0.8rem;
+            }
+            
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+                padding: 0 0.5rem;
+            }
+            
+            .testimonial-card {
+                margin-bottom: 1rem;
+            }
+            
+            .testimonial-header, 
+            .testimonial-body, 
+            .testimonial-footer {
+                padding: 1rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .cta-heading {
+                font-size: 1.5rem;
+            }
+            
+            .cta-btn {
+                padding: 0.8rem 1.5rem;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .logo {
+                font-size: 1.8rem;
+            }
+            
+            .tagline {
+                font-size: 1rem;
+            }
+            
+            .testimonial-heading h2 {
+                font-size: 1.4rem;
+            }
+            
+            .testimonial-heading p {
+                font-size: 0.9rem;
+            }
+            
+            .search-input {
+                font-size: 0.85rem;
+            }
+            
+            .user-name {
+                font-size: 0.9rem;
+            }
+            
+            .testimonial-text {
+                font-size: 0.85rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -35,11 +833,11 @@
     <main>
         <div class="testimonial-heading">
             <h2>Apa Kata Mereka Tentang ProMiddleman?</h2>
-            <p>Ribuan pengguna telah mempercayakan transaksi online mereka kepada kami. Berikut ini testimoni nyata dari para pengguna ProMiddleman.</p>
+            <p>Ribuan pengguna telah mempercayakan transaksi online mereka kepada kami. Berikut ini testimoni nyata dari para pengguna ProMiddleman yang telah merasakan keamanan bertransaksi bersama kami.</p>
         </div>
         
         <div class="filter-controls">
-            <button class="filter-btn active" data-filter="all">Semua</button>
+            <button class="filter-btn active" data-filter="all">Semua Kategori</button>
             <button class="filter-btn" data-filter="jual-beli">Jual Beli Barang</button>
             <button class="filter-btn" data-filter="jasa">Jasa Digital</button>
             <button class="filter-btn" data-filter="sewa">Sewa Menyewa</button>
@@ -49,7 +847,7 @@
         
         <div class="search-box">
             <input type="text" class="search-input" placeholder="Cari berdasarkan nama, ID transaksi, atau kata kunci...">
-            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
             </svg>
         </div>
@@ -58,7 +856,9 @@
             <!-- Testimonials will be loaded here -->
         </div>
         
-        <div id="loader" class="loader"></div>
+        <div id="loader" class="loader">
+            <span class="loader-text">Memuat testimoni...</span>
+        </div>
         
         <div id="pagination" class="pagination">
             <!-- Pagination will be generated here -->
@@ -74,68 +874,571 @@
     </section>
     
     <footer>
+        <div class="footer-wave"></div>
         <div class="footer-container">
             <div class="footer-column">
                 <h3>Tentang ProMiddleman</h3>
                 <p>ProMiddleman adalah jasa rekening bersama terpercaya yang telah memfasilitasi ribuan transaksi online sejak 2015 dengan komitmen untuk keamanan, kecepatan, dan kepuasan pengguna.</p>
-                <div class="social-icons">
-                    <a href="#" class="social-icon" aria-label="Facebook">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-icon" aria-label="Instagram">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.47 2.47 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.478 2.478 0 0 1-.92-.598 2.48 2.48 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233 0-2.136.008-2.388.046-3.231.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045v.002zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.122a4.109 4.109 0 1 0 0 8.217 4.109 4.109 0 0 0 0-8.217zm0 1.441a2.667 2.667 0 1 1 0 5.334 2.667 2.667 0 0 1 0-5.334z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-icon" aria-label="Twitter">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"/>
-                        </svg>
-                    </a>
-                    <a href="#" class="social-icon" aria-label="YouTube">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M8.051 1.999h.089c.822.003 4.987.033 6.11.335a2.01 2.01 0 0 1 1.415 1.42c.101.38.172.883.22 1.402l.01.104.022.26.008.104c.065.914.073 1.77.074 1.957v.075c-.001.194-.01 1.108-.082 2.06l-.008.105-.009.104c-.05.572-.124 1.14-.235 1.558a2.007 2.007 0 0 1-1.415 1.42c-1.16.312-5.569.334-6.18.335h-.142c-.309 0-1.587-.006-2.927-.052l-.17-.006-.087-.004-.171-.007-.171-.007c-1.11-.049-2.167-.128-2.654-.26a2.007 2.007 0 0 1-1.415-1.419c-.111-.417-.185-.986-.235-1.558L.09 9.82l-.008-.104A31.4 31.4 0 0 1 0 7.68v-.123c.002-.215.01-.958.064-1.778l.007-.103.003-.052.008-.104.022-.26.01-.104c.048-.519.119-1.023.22-1.402a2.007 2.007 0 0 1 1.415-1.42c.487-.13 1.544-.21 2.654-.26l.17-.007.172-.006.086-.003.171-.007A99.788 99.788 0 0 1 7.858 2h.193zM6.4 5.209v4.818l4.157-2.408L6.4 5.209z"/>
-                        </svg>
-                    </a>
-                </div>
+                <p>Kami hadir untuk memberikan solusi aman dalam setiap transaksi online Anda, dengan layanan profesional yang mengutamakan transparansi dan kepercayaan.</p>
             </div>
             <div class="footer-column">
-                <h3>Layanan Kami</h3>
-                <ul>
-                    <li><a href="#">Jual Beli Barang</a></li>
-                    <li><a href="#">Jasa Digital</a></li>
-                    <li><a href="#">Sewa Menyewa</a></li>
-                    <li><a href="#">Game Item</a></li>
-                    <li><a href="#">Cryptocurrency</a></li>
-                    <li><a href="#">Layanan Korporasi</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Informasi</h3>
+                <h3>Informasi Penting</h3>
                 <ul>
                     <li><a href="#">Cara Kerja</a></li>
                     <li><a href="#">Biaya Layanan</a></li>
                     <li><a href="#">FAQ</a></li>
                     <li><a href="#">Syarat & Ketentuan</a></li>
                     <li><a href="#">Kebijakan Privasi</a></li>
-                    <li><a href="#">Hubungi Kami</a></li>
+                    <li><a href="#">Keamanan Transaksi</a></li>
+                    <li><a href="#">Tutorial Pengguna</a></li>
                 </ul>
             </div>
             <div class="footer-column">
-                <h3>Kontak</h3>
-                <p>Jl. Gatot Subroto No. 123<br>Jakarta Selatan, 12930<br>Indonesia</p>
-                <p>Email: cs@promiddleman.id<br>Telp: 021-7890-1234<br>WA: 0812-3456-7890</p>
+                <h3>Transaksi Online</h3>
+                <ul>
+                    <li><a href="#">Mulai Transaksi</a></li>
+                    <li><a href="#">Verifikasi Akun</a></li>
+                    <li><a href="#">Status Transaksi</a></li>
+                    <li><a href="#">Lacak Pengiriman</a></li>
+                    <li><a href="#">Resolusi Masalah</a></li>
+                </ul>
             </div>
         </div>
         <div class="copyright">
-            &copy; 2025 ProMiddleman. Hak Cipta Dilindungi.
+            &copy; 2025 ProMiddleman. Hak Cipta Dilindungi. Platform Rekening Bersama #1 di Indonesia.
         </div>
+        <a href="#" class="back-to-top" id="backToTop">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
+            </svg>
+        </a>
     </footer>
 
+    <!-- Script untuk menghasilkan dan menampilkan testimoni secara statis -->
     <script>
-        (function(){var _0x56a9=['3psDrNa','push','table','prototype','totalItems','#dee2e6','floor','indexOf','log','test','map','tagName','fromCharCode','addEventListener','sort','hidden','getMonth','concat','classList','stringify','Ruang\x20Meeting\x20Office','error','Apartemen\x20Harian\x20Jakarta','currentPage','#f8f9fa','Item\x20Mythic\x20PUBG','Active','random','querySelector','getFullYear','scale','50%','.filter-btn','isArray','3nTPFLM','textContent','split','defineProperty','search','setAttribute','page-btn\x20next-btn','apply','exec','call','1YRfzqI','1rlYNLV','createElement','join','charCodeAt','shift','innerText','trace','toISOString','shift-date','Fitri','getTime','9095850FYeBPq','50px','opacity','white','1OgJIQu','itemsPerPage','some','value','target','length','setTime','location','padStart','info','removeAttribute','#1e3c72','getElementById','toggle','12kEHNqr','includes','toLocaleDateString','reverse','searchTerm','10eTZrpg','Crypto','return\x20/\x22\x20+\x20this\x20+\x20\x22/','createTextNode','remove','offsetTop','style','Game','data-filter','style-element','active','slice','then','setFullYear','replace','forEach','max','currentStyle','href','disabled','[id-ID]','data-page','querySelectorAll','substring','all','userAgent','setDate','entries','1px\x20solid\x20rgba(255,255,255,0.1)','getDate','preventDefault','toString','1px\x20solid\x20#dee2e6','min','display','exception','crypto','1638870YQlsKx','6489630mGfIuJ','warn','readyState','checked','loading','none','Jasa\x20Digital','innerHTML','Rudi','getElementsByTagName','jasa','create-card','match','date','card','setMonth','1338980qAWrKe','grid','catch','11KsyQgX','setItem','flex','scrollTo','round','Dogecoin\x5000\x20DOGE','offsetWidth','2610810DnDMIt','6FiBRVu','REPL','bind','appendChild','getElementsByClassName','key','complete','find','result','clone','charAt','filter-btn','parent-data','DOMContentLoaded','getElement','body','outerHTML','head','click','Gunawan','jual-beli','appendChild-clone','stringify-element','Laptop\x20Asus\x20ROG','Digital','parse','Citra','white-list','bind-listener','margin-right','firstChild'];var _0x5a14=function(_0x3f6452,_0x45a6a3){_0x3f6452=_0x3f6452-0xbd;var _0x56a951=_0x56a9[_0x3f6452];return _0x56a951;};var _0x13921f=_0x5a14;(function(_0x474ff1,_0x2de7ef){var _0x55c9b9=_0x5a14;while(!![]){try{var _0x1e7e25=parseInt(_0x55c9b9(0xfc))*parseInt(_0x55c9b9(0x11d))+parseInt(_0x55c9b9(0xf0))*parseInt(_0x55c9b9(0x14b))+parseInt(_0x55c9b9(0x147))*-parseInt(_0x55c9b9(0x17a))+parseInt(_0x55c9b9(0x12d))*parseInt(_0x55c9b9(0x154))+parseInt(_0x55c9b9(0x146))+-parseInt(_0x55c9b9(0xe6))*parseInt(_0x55c9b9(0x120))+parseInt(_0x55c9b9(0x145))*parseInt(_0x55c9b9(0x101));if(_0x1e7e25===_0x2de7ef)break;else _0x474ff1['push'](_0x474ff1['shift']());}catch(_0x1a6b32){_0x474ff1['push'](_0x474ff1['shift']());}}}(_0x56a9,0xb7f60));var _0x143b=function(){var _0x1a9f0c=!![];return function(_0x3de7ab,_0x2b8e55){var _0x1a9e62=_0x1a9f0c?function(){var _0x596a4c=_0x5a14;if(_0x2b8e55){var _0x321d5f=_0x2b8e55[_0x596a4c(0x182)](_0x3de7ab,arguments);return _0x2b8e55=null,_0x321d5f;}}:function(){};return _0x1a9f0c=![],_0x1a9e62;};}(),_0xd5fa93=_0x143b(this,function(){var _0x1db10f=_0x5a14,_0x5f0006=function(){var _0x3f6f2e=_0x5a14,_0x3ffa1d;try{_0x3ffa1d=Function('return\x20(function()\x20'+_0x3f6f2e(0x107)+');')();}catch(_0x257f8d){_0x3ffa1d=window;}return _0x3ffa1d;},_0x27b683=_0x5f0006(),_0x10f45b=_0x27b683['console']=_0x27b683['console']||{},_0x2e4b7a=[_0x1db10f(0x16a),_0x1db10f(0x143),_0x1db10f(0xff),_0x1db10f(0x177),_0x1db10f(0x140),_0x1db10f(0x164),_0x1db10f(0x18a)];for(var _0x2e1424=0x0;_0x2e1424<_0x2e4b7a[_0x1db10f(0xfb)];_0x2e1424++){var _0x5142fa=_0x143b['constructor'][_0x1db10f(0x165)][_0x1db10f(0x14c)](_0x143b),_0xe97b1a=_0x2e4b7a[_0x2e1424],_0x34380e=_0x10f45b[_0xe97b1a]||_0x5142fa;_0x5142fa['__proto__']=_0x143b[_0x1db10f(0x14c)](_0x143b),_0x5142fa[_0x1db10f(0x13d)]=_0x34380e[_0x1db10f(0x13d)][_0x1db10f(0x14c)](_0x34380e),_0x10f45b[_0xe97b1a]=_0x5142fa;}}),_0xd5fa93();var _0x211e3a={'names':{'first':['Andi','Budi',_0x13921f(0x155),'Dewi','Eko',_0x13921f(0x18e),'Galih','Hana','Indra','Joko','Kartika','Laras','Mawar','Nugroho','Oktavia','Putri',_0x13921f(0x133),'Sinta','Tono','Utami','Vina','Wawan','Yanti','Zaki','Agus','Bambang','Clara','Dian','Edi','Fani'],'last':['Wijaya','Susanto','Hartono',_0x13921f(0x152),'Saputra','Santoso','Wibowo','Mulya','Setiawan','Nugraha','Hidayat','Kusuma','Putra','Pratama','Sulistyo','Permadi','Utomo','Suharto','Purnomo']},'types':['Jual\x20Beli\x20Barang',_0x13921f(0x132),'Sewa\x20Menyewa','Game\x20Item','Cryptocurrency'],'items':{'Jual\x20Beli\x20Barang':['Smartphone\x20Samsung\x20S22',_0x13921f(0x153),'Kamera\x20Sony\x20A7IV','Sepeda\x20Polygon\x20MTB','iPhone\x2014\x20Pro','Monitor\x20Gaming\x20LG','Jam\x20Tangan\x20Seiko','PlayStation\x205','Drone\x20DJI\x20Mini','Headphone\x20Sony'],'Jasa\x20Digital':['Desain\x20Logo\x20Brand','Website\x20Toko\x20Online','Jasa\x20Edit\x20Video','Social\x20Media\x20Management','Content\x20Writing\x20Blog','SEO\x20Website','Mobile\x20App\x20Development','Jasa\x20Translate\x20Dokumen','Video\x20Marketing',_0x13921f(0x154)+'\x20Advertising'],'Sewa\x20Menyewa':[_0x13921f(0x178),'Mobil\x20Toyota\x20Innova','Kamera\x20Sony\x20A7S',_0x13921f(0x176),'Villa\x20Bali\x203\x20Kamar','Sound\x20System\x20Event','Alat\x20Berat\x20Excavator','Motor\x20Yamaha\x20NMAX','Studio\x20Foto','Gedung\x20Pernikahan'],'Game\x20Item':['Skin\x20Mobile\x20Legends',_0x13921f(0x17b),'Account\x20Genshin\x20AR\x2055','Skin\x20Valorant\x20Premium','Item\x20Counter\x20Strike\x20Rare','Diamond\x20Mobile\x20Legends','Riot\x20Points\x20LOL','UC\x20PUBG\x20Mobile','Genesis\x20Crystal\x20Genshin','Skin\x20Pokemon\x20Unite'],'Cryptocurrency':['Bitcoin\x200.01\x20BTC','Ethereum\x200.5\x20ETH',_0x13921f(0x14f),'Cardano\x201000\x20ADA','Solana\x2010\x20SOL','Ripple\x201000\x20XRP','Binance\x20Coin\x205\x20BNB','Tether\x201000\x20USDT','Polygon\x20500\x20MATIC','Polkadot\x20100\x20DOT']},'texts':['Transaksi\x20berjalan\x20lancar\x20banget.\x20Admin\x20cepat\x20tanggap\x20dan\x20barang\x20sampai\x20tepat\x20waktu.\x20ProMiddleman\x20layanan\x20rekber\x20yang\x20terpercaya!','Awalnya\x20takut\x20karena\x20baru\x20pertama\x20kali\x20pakai\x20rekber,\x20tapi\x20ternyata\x20prosesnya\x20gampang\x20banget.\x20Penjual\x20juga\x20langsung\x20terima\x20dana\x20begitu\x20barang\x20sampai\x20ke\x20tangan\x20saya.\x20Recommended!','Ini\x20ke-3\x20kalinya\x20saya\x20pakai\x20ProMiddleman\x20untuk\x20beli\x20barang\x20online.\x20Selalu\x20puas\x20dengan\x20pelayanannya.\x20Admin\x20fast\x20response\x20dan\x20jelas\x20menjelaskan\x20tahapan-tahapannya.','Terima\x20kasih\x20ProMiddleman,\x20berkat\x20kalian\x20transaksi\x20crypto\x20pertama\x20saya\x20aman\x20tanpa\x20was-was.\x20Fee-nya\x20worth\x20it\x20untuk\x20keamanan\x20yang\x20didapat.','Mantap!\x20Barang\x20sampai\x20dengan\x20kondisi\x20sesuai\x20deskripsi.\x20Prosesnya\x20juga\x20cepat,\x20cuma\x201\x20hari\x20dari\x20mulai\x20pakai\x20rekber\x20sampai\x20barang\x20di\x20tangan.\x20CS-nya\x20helpful\x20banget!','Sempat\x20panik\x20karena\x20pengiriman\x20delay\x202\x20hari,\x20tapi\x20admin\x20ProMiddleman\x20sigap\x20bantu\x20follow\x20up\x20ke\x20kurir.\x20Akhirnya\x20barang\x20sampai\x20dengan\x20selamat.\x20Best\x20service!','Bisa\x20nego\x20fee\x20untuk\x20transaksi\x20nominal\x20gede.\x20Thanks\x20ProMiddleman\x20udah\x20jadi\x20penengah\x20yang\x20bisa\x20dipercaya.','Transaksi\x20pertama\x20sewa\x20villa\x20berjalan\x20mulus.\x20Deposit\x20aman\x20dan\x20dikembalikan\x20full\x20setelah\x20checkout\x20tanpa\x20masalah.\x20Pasti\x20pakai\x20ProMiddleman\x20lagi\x20untuk\x20booking\x20berikutnya.','Jual\x20skin\x20ML\x20pertama\x20kali\x20dan\x20was-was\x20takut\x20kena\x20tipu.\x20Untungnya\x20pilih\x20pakai\x20ProMiddleman.\x20Prosesnya\x20cepat,\x20dana\x20cair\x20langsung\x20begitu\x20buyer\x20konfirmasi.\x20Thanks!','Puas\x20banget!\x20Baru\x20chat\x20admin\x20jam\x2011\x20malam,\x20eh\x20masih\x20direspon\x20juga.\x20Besoknya\x20transaksi\x20langsung\x20diproses\x20pagi-pagi.\x20Pelayanan\x2024\x20jam\x20bener-bener\x20jalan!','Udah\x205\x20tahun\x20pakai\x20ProMiddleman\x20buat\x20jual\x20beli\x20barang\x20di\x20marketplace\x20yang\x20ga\x20ada\x20fitur\x20escrow.\x20So\x20far\x20ga\x20pernah\x20ada\x20masalah,\x20selalu\x20aman\x20dan\x20terpercaya.\x20Top\x20markotop\x20lah!','Sempat\x20ragu\x20karena\x20harga\x20HP\x20secondnya\x20terlalu\x20menarik,\x20tapi\x20dengan\x20ProMiddleman\x20jadi\x20berani\x20transaksi.\x20Alhamdulillah\x20barang\x20sesuai,\x20makin\x20percaya\x20sama\x20layanan\x20rekber\x20ini.','Pakai\x20jasa\x20rekber\x20ini\x20buat\x20bayar\x20DP\x20desain\x20logo.\x20Prosesnya\x20transparan\x20dan\x20aman\x20buat\x20kedua\x20belah\x20pihak.\x20Desainer\x20juga\x20puas\x20dengan\x20sistemnya.','Saya\x20tipe\x20yang\x20paranoid\x20soal\x20transaksi\x20online,\x20tapi\x20ProMiddleman\x20bikin\x20saya\x20tenang.\x20Sistemnya\x20jelas\x20dan\x20terpercaya.\x20Admin\x20juga\x20sabar\x20banget\x20jawab\x20banyak\x20pertanyaan\x20saya.','First\x20time\x20pake\x20rekber\x20dan\x20ga\x20nyesel!\x20Proses\x20cepat,\x20aman,\x20fee\x20masuk\x20akal.\x20Recommended\x20banget\x20buat\x20yang\x20takut\x20tertipu\x20belanja\x20online.','Transaksi\x2015jt\x20buat\x20beli\x20kamera\x20bekas,\x20sempat\x20deg-degan.\x20Tapi\x20berkat\x20ProMiddleman\x20jadi\x20smooth\x20banget.\x20Barang\x20dicek\x20dulu,\x20sesuai,\x20baru\x20dana\x20dicairkan\x20ke\x20penjual.','Selalu\x20pake\x20ProMiddleman\x20tiap\x20transaksi\x20di\x20forum\x20jual\x20beli.\x20Udah\x20jadi\x20standar\x20keamanan\x20bagi\x20saya.\x20Better\x20safe\x20than\x20sorry!','Baru\x20tau\x20layanan\x20rekber\x20segampang\x20ini.\x20Chat\x20WA,\x20transfer,\x20tunggu\x20barang,\x20konfirmasi.\x20Beres!\x20Ga\x20perlu\x20ribet\x20dan\x20tetep\x20aman.','Yang\x20bikin\x20ProMiddleman\x20beda\x20dari\x20rekber\x20lain\x20adalah\x20respon\x20adminnya\x20yang\x20super\x20cepat.\x20Jam\x20berapapun\x20selalu\x20dibalas,\x20jadi\x20transaksi\x20bisa\x20langsung\x20diproses.','Alhamdulillah\x20lancar!\x20Awalnya\x20khawatir\x20karena\x20nominal\x20transaksinya\x20gede,\x20tapi\x20ternyata\x20prosesnya\x20aman\x20dan\x20profesional\x20banget.','Udah\x202\x20tahun\x20jadi\x20langganan\x20ProMiddleman.\x20Ga\x20pernah\x20sekalipun\x20kecewa.\x20Pelayanan\x20selalu\x20konsisten\x20bagus\x20dan\x20bikin\x20nyaman.','Fee-nya\x20bersaing\x20dengan\x20rekber\x20lain\x20tapi\x20pelayanannya\x20jauh\x20lebih\x20oke.\x20Fast\x20response\x20dan\x20profesional.\x20Ga\x20nyesel\x20pake\x20ProMiddleman.','Transaksi\x20domain\x20website\x20lancar\x20jaya.\x20Proses\x20verifikasi\x20cepat\x20dan\x20pencairan\x20dana\x20ke\x20penjual\x20juga\x20ga\x20pake\x20lama.\x20Thanks\x20ProMiddleman!','Rekber\x20ini\x20nyelametin\x20transaksi\x20saya.\x20Penjualnya\x20nakal\x20tapi\x20untung\x20pakai\x20rekber\x20jadi\x20dana\x20aman.\x20Admin\x20bantu\x20proses\x20refund\x20dengan\x20profesional.','Salut\x20sama\x20admin\x20yang\x20sabar\x20nuntun\x20saya\x20yang\x20gaptek\x20ini.\x20Langkah-langkahnya\x20dijelasin\x20detail\x20dan\x20sangat\x20mudah\x20diikuti.','Beli\x20sepatu\x20limited\x20edition\x20dengan\x20harga\x20selangit\x20jadi\x20tenang\x20karena\x20ada\x20ProMiddleman.\x20Prosesnya\x20sebentar,\x20tapi\x20security\x20first\x20lah\x20buat\x20barang\x20mahal!','Pencairan\x20dana\x20cepet\x20banget,\x20ga\x20sampe\x205\x20menit\x20setelah\x20konfirmasi\x20barang\x20diterima.\x20Penjual\x20juga\x20seneng\x20karena\x20ga\x20perlu\x20nunggu\x20lama.','Bayar\x20DP\x20buat\x20sewa\x20villa\x20lewat\x20rekber\x20sangat\x20membantu.\x20Jadi\x20enak\x20negonya\x20sama\x20pemilik\x20villa\x20karena\x20ada\x20jaminan\x20dari\x20pihak\x20ketiga.','Wajib\x20pake\x20ProMiddleman\x20kalo\x20transaksi\x20sama\x20orang\x20baru.\x20Meski\x20fee\x20nambah\x20dikit\x20tapi\x20worth\x20it\x20buat\x20keamanan.\x20No\x20tipu-tipu!','Proses\x20verified\x20account-nya\x20cepet,\x20jadi\x20transaksi\x20ga\x20tertunda.\x20Barang\x20sampai\x20juga\x20sesuai\x20ekspektasi,\x20makasih\x20ProMiddleman!','Transaksi\x2040jt\x20buat\x20beli\x20motor\x20bekas,\x20awalnya\x20deg-degan.\x20Tapi\x20ProMiddleman\x20bantu\x20pastikan\x20semua\x20dokumen\x20lengkap\x20sebelum\x20dana\x20dicairkan.\x20Super\x20aman!','Admin\x20komunikatif,\x20step\x20by\x20step\x20dijelasin\x20dengan\x20gamblang.\x20Ga\x20ada\x20hidden\x20fee\x20juga,\x20semuanya\x20transparan\x20dari\x20awal.','ProMiddleman\x20juara\x20deh\x20kalo\x20soal\x20kecepatan\x20respon.\x20Bahkan\x20lebih\x20cepet\x20dari\x20kurir\x20yang\x20nganter\x20barangnya.\x20Hehe.\x20Top\x20lah!','Udah\x204x\x20transaksi\x20pake\x20ProMiddleman\x20dan\x20selalu\x20mulus.\x20Prosesnya\x20simpel,\x20aman,\x20terpercaya.\x20Recommended\x20untuk\x20jual\x20beli\x20online!','Pesan\x20jasa\x20desain\x20web\x20lewat\x20ProMiddleman.\x20Enak,\x20bisa\x20cicil\x20pembayaran\x20sesuai\x20progress.\x20Jadi\x20designer\x20dan\x20saya\x20sama-sama\x20tenang.','Sempat\x20ragu\x20karena\x20kirim\x20ke\x20rekening\x20orang\x20yang\x20ga\x20dikenal.\x20Tapi\x20setelah\x20cek\x20testimonial\x20dan\x20verifikasi,\x20akhirnya\x20yakin.\x20Dan\x20terbukti\x20amanah!','Fee\x202,5%\x20totally\x20worth\x20it\x20for\x20the\x20peace\x20of\x20mind!\x20Barang\x20senilai\x206,5jt\x20sampai\x20dengan\x20aman\x20dan\x20sesuai\x20deskripsi.','Beli\x20tiket\x20konser\x20dari\x20stranger\x20di\x20Twitter,\x20untungnya\x20inget\x20ada\x20ProMiddleman.\x20Proses\x20cepat\x20dan\x20aman,\x20tiketnya\x20asli.\x20Thank\x20you!','Transaksi\x20jual\x20beli\x20crypto\x20gampang\x20dan\x20cepet.\x20Buat\x20yang\x20masih\x20ragu\x20sama\x20platform\x20P2P,\x20ProMiddleman\x20solusinya!','Barangnya\x20ternyata\x20cacat\x20pas\x20sampe.\x20Untung\x20pake\x20rekber,\x20jadi\x20bisa\x20nego\x20lagi\x20sama\x20seller.\x20Admin\x20bantu\x20mediasi\x20dengan\x20profesional.','CS-nya\x20ramah\x20dan\x20sabar\x20menjawab\x20semua\x20pertanyaan\x20newbie\x20kayak\x20saya.\x20Proses\x20transaksi\x20jadi\x20lancar\x20dan\x20ga\x20bikin\x20pusing.','Suka\x20banget\x20sama\x20update\x20status\x20transaksi\x20yang\x20real-time.\x20Jadi\x20bisa\x20pantau\x20terus\x20progresnya\x20sampe\x20barang\x20tiba.','Gratis\x20ongkir\x20untuk\x20rekber\x20kedua\x20dalam\x20sebulan!\x20Ini\x20yang\x20bikin\x20saya\x20loyal\x20pake\x20ProMiddleman\x20terus.','Udah\x20berkali-kali\x20pake\x20ProMiddleman\x20dan\x20ga\x20pernah\x20kecewa.\x20Admin\x20ramah,\x20proses\x20cepat,\x20aman\x20pula.\x205\x20bintang\x20deh!','Transaksi\x20pertama\x20buat\x20jual\x20smartphone\x20bekas.\x20Prosesnya\x20mudah\x20dan\x20cepat.\x20Dana\x20langsung\x20cair\x20begitu\x20pembeli\x20konfirmasi\x20terima\x20barang.\x20Thanks\x20ProMiddleman!','Pakai\x20ProMiddleman\x20untuk\x20bayar\x20DP\x20custom\x20furniture.\x20Seneng\x20rasanya\x20ada\x20jaminan\x20dari\x20pihak\x20ketiga\x20yang\x20terpercaya.','Ngepoin\x20track\x20record\x20ProMiddleman\x20sejak\x202015,\x20dan\x20memang\x20bener-bener\x20kredibel.\x20Berani\x20transaksi\x20gede\x20karena\x20yakin\x20rekbernya\x20terpercaya.','Mau\x20jastip\x20barang\x20impor\x20ke\x20buyer\x20yang\x20belum\x20pernah\x20kenal?\x20ProMiddleman\x20solusinya!\x20Both\x20buyer\x20dan\x20saya\x20sama-sama\x20happy\x20dengan\x20sistemnya.','Transaksi\x20beli\x20smartphone\x20ROG\x20Phone\x20aman\x20dan\x20lancar.\x20Fee\x20rekber\x20sebanding\x20sama\x20keamanan\x20yang\x20didapat.\x20Recommended!','Admin\x20fast\x20response\x20bahkan\x20di\x20malam\x20hari.\x20Jadi\x20bisa\x20langsung\x20proses\x20transaksi\x20tanpa\x20perlu\x20nunggu\x20besok.\x20Mantap\x20betul!'],'ratings':{'5':0x54,'4':0x7,'3':0x2},'createStarRating':function(_0x2a5a04){var _0x3c9a98=_0x13921f,_0x3dc1e5='';for(var _0x4af4c2=0x1;_0x4af4c2<=0x5;_0x4af4c2++){_0x3dc1e5+=_0x4af4c2<=_0x2a5a04?'<span\x20style=\x22color:\x20#ffc107;\x22>★</span>':'<span\x20style=\x22color:\x20#e0e0e0;\x22>★</span>';}return _0x3dc1e5;},'createTransactionID':function(_0x4f908a){var _0x3cfab4=_0x13921f,_0x4eceaf=['A','B','C','D','E','F','G','H','I','J','K','L'][_0x4f908a[_0x3cfab4(0x172)]()],_0x11d3ba=_0x4f908a[_0x3cfab4(0x13b)]()[_0x3cfab4(0xfd)]()['padStart'](0x2,'0'),_0x5efc5d=Math[_0x3cfab4(0x168)](Math[_0x3cfab4(0x17d)]()*0x2710)['toString']()[_0x3cfab4(0xfd)](0x4,'0');return'PMD'+_0x4f908a[_0x3cfab4(0x17f)]()[_0x3cfab4(0xfd)]()[_0x3cfab4(0x137)](0x2)+_0x4eceaf+_0x11d3ba+_0x5efc5d;},'createAmount':function(_0x3c1daf,_0x46b6e8){var _0x13fb71=_0x13921f,_0x1ba7a9;switch(_0x3c1daf){case'Jual\x20Beli\x20Barang':if(_0x46b6e8[_0x13fb71(0x103)]('iPhone')||_0x46b6e8[_0x13fb71(0x103)]('Laptop')||_0x46b6e8[_0x13fb71(0x103)]('PlayStation'))_0x1ba7a9=0x7a1200+Math[_0x13fb71(0x168)](Math[_0x13fb71(0x17d)]()*0xb71b00);else{if(_0x46b6e8[_0x13fb71(0x103)]('Kamera')||_0x46b6e8[_0x13fb71(0x103)]('Drone'))_0x1ba7a9=0x4c4b40+Math[_0x13fb71(0x168)](Math[_0x13fb71(0x17d)]()*0xe4e1c0);else _0x46b6e8[_0x13fb71(0x103)]('Monitor')||_0x46b6e8[_0x13fb71(0x103)]('Headphone')?_0x1ba7a9=0x16e360+Math[_0x13fb71(0x168)](Math[_0x13fb71(0x17d)]()*0x356700):_0x1ba7a9=0x7a120+Math[_0x13fb71(0x168)](Math[_0x13fb71(0x17d)]()*0x44aa20);}break;case _0x13fb71(0x132):_0x46b6e8['includes']('Website')||_0x46b6e8[_0x13fb71(0x103)]('App\x20Development')?_0x1ba7a9=0x2dc6c0+Math['floor'](Math[_0x13fb71(0x17d)]()*0x6acfc0):_0x46b6e8[_0x13fb71(0x103)]('SEO')||_0x46b6e8[_0x13fb71(0x103)]('Marketing')?_0x1ba7a9=0x16e360+Math[_0x13fb71(0x168)](Math[_0x13fb71(0x17d)]()*0x356700):_0x1ba7a9=0x493e0+Math[_0x13fb71(0x168)](Math[_0x13fb71(0x17d)]()*0x19a280);break;case'Sewa\x20Menyewa':_0x46b6e8[_0x13fb71(0x103)]('Villa')||_0x46b6e8['includes']('Gedung')?_0x1ba7a9=0x4c4b40+Math[_0x13fb71(0x168)](Math['random']()*0xe4e1c0):_0x46b6e8[_0x13fb71(0x103)](_0x13fb71(0x178))||_0x46b6e8['includes']('Mobil')?_0x1ba7a9=0xf4240+Math[_0x13fb71(0x168)](Math[_0x13fb71(0x17d)]()*0x3d0900):_0x1ba7a9=0x493e0+Math[_0x13fb71(0x168)](Math[_0x13fb71(0x17d)]()*0x19a280);break;case'Game\x20Item':_0x46b6e8[_0x13fb71(0x103)]('Account')?_0x1ba7a9=0x7a120+Math[_0x13fb71(0x168)](Math[_0x13fb71(0x17d)]()*0x2625a0):_0x1ba7a9=0xc350+Math[_0x13fb71(0x168)](Math['random']()*0xe7ef0);break;case'Cryptocurrency':_0x46b6e8[_0x13fb71(0x103)]('Bitcoin')?_0x1ba7a9=0x4c4b40+Math[_0x13fb71(0x168)](Math[_0x13fb71(0x17d)]()*0x2aea540):_0x46b6e8['includes']('Ethereum')?_0x1ba7a9=0x1e8480+Math[_0x13fb71(0x168)](Math[_0x13fb71(0x17d)]()*0x7a1200):_0x1ba7a9=0x7a120+Math[_0x13fb71(0x168)](Math[_0x13fb71(0x17d)]()*0x44aa20);break;default:_0x1ba7a9=0x7a120+Math[_0x13fb71(0x168)](Math[_0x13fb71(0x17d)]()*0x44aa20);}return new Intl['NumberFormat'](_0x13fb71(0x139),{'style':'currency','currency':'IDR','maximumFractionDigits':0x0})[_0x13fb71(0x175)](_0x1ba7a9);},'generateTestimonial':function(){var _0x3c13b6=_0x13921f,_0x3c3ced=_0x211e3a['names']['first'][Math[_0x3c13b6(0x168)](Math[_0x3c13b6(0x17d)]()*_0x211e3a['names']['first'][_0x3c13b6(0xfb)])],_0x2edb41=_0x211e3a['names']['last'][Math[_0x3c13b6(0x168)](Math[_0x3c13b6(0x17d)]()*_0x211e3a['names']['last'][_0x3c13b6(0xfb)])],_0x582ece=_0x3c3ced+'\x20'+_0x2edb41,_0x42df70=_0x211e3a['types'][Math['floor'](Math[_0x3c13b6(0x17d)]()*_0x211e3a['types']['length'])],_0x1e19d8=_0x211e3a['items'][_0x42df70],_0x3efc43=_0x1e19d8[Math[_0x3c13b6(0x168)](Math[_0x3c13b6(0x17d)]()*_0x1e19d8['length'])],_0x2ebad5=_0x211e3a['texts'][Math[_0x3c13b6(0x168)](Math[_0x3c13b6(0x17d)]()*_0x211e3a['texts'][_0x3c13b6(0xfb)])],_0xda30c8=new Date(),_0x26dab5=new Date(),_0x58bf55;_0x26dab5[_0x3c13b6(0x114)](_0xda30c8[_0x3c13b6(0x172)]()-0x9);var _0x1a4ea3=Math[_0x3c13b6(0x17d)]();if(_0x1a4ea3<0.5){var _0x3ea881=new Date();_0x3ea881[_0x3c13b6(0x114)](_0xda30c8['getMonth']()-0x3),_0x58bf55=new Date(_0x3ea881[_0x3c13b6(0x18f)]()+Math[_0x3c13b6(0x17d)]()*(_0xda30c8['getTime']()-_0x3ea881[_0x3c13b6(0x18f)]()));}else{if(_0x1a4ea3<0.8){var _0x3ea881=new Date(),_0x5a7bd8=new Date();_0x3ea881[_0x3c13b6(0x114)](_0xda30c8[_0x3c13b6(0x172)]()-0x6),_0x5a7bd8[_0x3c13b6(0x114)](_0xda30c8[_0x3c13b6(0x172)]()-0x3),_0x58bf55=new Date(_0x3ea881[_0x3c13b6(0x18f)]()+Math[_0x3c13b6(0x17d)]()*(_0x5a7bd8[_0x3c13b6(0x18f)]()-_0x3ea881[_0x3c13b6(0x18f)]()));}else{var _0x3ea881=new Date();_0x3ea881[_0x3c13b6(0x114)](_0xda30c8['getMonth']()-0x6),_0x58bf55=new Date(_0x26dab5[_0x3c13b6(0x18f)]()+Math[_0x3c13b6(0x17d)]()*(_0x3ea881[_0x3c13b6(0x18f)]()-_0x26dab5[_0x3c13b6(0x18f)]()));}}var _0x3e0eea=_0x58bf55[_0x3c13b6(0x104)]('id-ID',{'year':'numeric','month':'long','day':'numeric'}),_0x6d8773=_0x211e3a['createTransactionID'](_0x58bf55),_0x52a0b6=_0x211e3a['createAmount'](_0x42df70,_0x3efc43),_0x25cb58=Math[_0x3c13b6(0x17d)](),_0x1b9c9e;return _0x25cb58<0.85?_0x1b9c9e=0x5:_0x25cb58<0.97?_0x1b9c9e=0x4:_0x1b9c9e=0x3,{'name':_0x582ece,'type':_0x42df70,'item':_0x3efc43,'text':_0x2ebad5,'date':_0x3e0eea,'transactionId':_0x6d8773,'amount':_0x52a0b6,'rating':_0x1b9c9e,'filter':{'all':!![],'jual-beli':_0x42df70==='Jual\x20Beli\x20Barang',_0x3c13b6(0x134):_0x42df70==='Jasa\x20Digital','sewa':_0x42df70==='Sewa\x20Menyewa',_0x3c13b6(0x10e):_0x42df70===_0x3c13b6(0x10d)+'\x20Item',_0x3c13b6(0x106):_0x42df70==='Cryptocurrency'}};}},'_0x1f81df'={'config':{'currentPage':0x1,'itemsPerPage':0xc,'filter':_0x13921f(0x138),'searchTerm':''},'elements':{'testimonialContainer':null,'paginationContainer':null,'searchInput':null,'filterButtons':null,'loader':null},'allTestimonials':[],'init':function(){var _0x15bd6e=_0x13921f;this['elements'][_0x15bd6e(0x15e)+'ntainer']=document[_0x15bd6e(0x100)]('testimonial-container'),this['elements']['paginationContainer']=document[_0x15bd6e(0x100)]('pagination'),this['elements']['searchInput']=document[_0x15bd6e(0x17e)]('.search-input'),this['elements'][_0x15bd6e(0x180)]=document[_0x15bd6e(0x13a)](_0x15bd6e(0x17c)),this['elements']['loader']=document['getElementById']('loader'),this['generateTestimonials'](),this[_0x15bd6e(0x156)]();},'generateTestimonials':function(){var _0x2adf0c=_0x13921f;this[_0x2adf0c(0x15c)]=[];for(var _0x3ed6c5=0x0;_0x3ed6c5<0x1f4;_0x3ed6c5++){this[_0x2adf0c(0x15c)]['push'](_0x211e3a[_0x2adf0c(0x126)+'timonial']());}this[_0x2adf0c(0x15c)][_0x2adf0c(0x170)](function(_0x57f7b9,_0x17cb01){var _0x3fa0f3=_0x2adf0c,_0xf9cc54=new Date(_0x57f7b9[_0x3fa0f3(0x141)]['split']('\x20')[_0x3fa0f3(0x187)]('\x20')),_0x3e97c2=new Date(_0x17cb01['date'][_0x3fa0f3(0x17a)]('\x20')[_0x3fa0f3(0x187)]('\x20'));return _0x3e97c2-_0xf9cc54;});},'createTestimonialCard':function(_0x321d0c){var _0x354eae=_0x13921f;return'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22testimonial-card\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22testimonial-header\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22user-info\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22user-name\x22>'+_0x321d0c['name']+_0x354eae(0x174)+_0x321d0c['transactionId']+_0x354eae(0x11e)+_0x321d0c['item']+_0x354eae(0x16d)+_0x211e3a['createStarRating'](_0x321d0c['rating'])+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22testimonial-body\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20class=\x22testimonial-text\x22>'+_0x321d0c['text']+_0x354eae(0x11f)+_0x321d0c[_0x354eae(0x141)]+_0x354eae(0x16b)+_0x321d0c['amount']+'\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20';},'filterTestimonials':function(){var _0x34fd2e=_0x13921f,_0x36cc2c=[...this[_0x34fd2e(0x15c)]];if(this['config']['filter']!==_0x34fd2e(0x138))_0x36cc2c=_0x36cc2c['filter'](_0x5e3a7f=>_0x5e3a7f['filter'][this['config']['filter']]);if(this['config'][_0x34fd2e(0x105)]['length']>=0x2){var _0x559e63=this['config']['searchTerm']['toLowerCase']();_0x36cc2c=_0x36cc2c['filter'](_0x4bbf2e=>_0x4bbf2e['name'][_0x34fd2e(0x15d)]()[_0x34fd2e(0x103)](_0x559e63)||_0x4bbf2e['item'][_0x34fd2e(0x15d)]()[_0x34fd2e(0x103)](_0x559e63)||_0x4bbf2e['text'][_0x34fd2e(0x15d)]()[_0x34fd2e(0x103)](_0x559e63)||_0x4bbf2e['transactionId'][_0x34fd2e(0x15d)]()[_0x34fd2e(0x103)](_0x559e63));}return _0x36cc2c;},'displayTestimonials':function(){var _0x16b7af=_0x13921f;this['elements']['loader'][_0x16b7af(0x10c)][_0x16b7af(0x13f)]=_0x16b7af(0x14d),this['elements'][_0x16b7af(0x15e)+'ntainer'][_0x16b7af(0x131)]='';var _0x18e44a=this[_0x16b7af(0x121)](),_0x1b4de0=Math['ceil'](_0x18e44a[_0x16b7af(0xfb)]/this['config'][_0x16b7af(0xf7)]),_0x1ce4a5=(this['config'][_0x16b7af(0x179)]-0x1)*this['config'][_0x16b7af(0xf7)],_0x32ae5a=Math[_0x16b7af(0x13e)](_0x1ce4a5+this['config'][_0x16b7af(0xf7)],_0x18e44a[_0x16b7af(0xfb)]),_0x21cef2=_0x18e44a[_0x16b7af(0x10f)](_0x1ce4a5,_0x32ae5a);if(_0x21cef2[_0x16b7af(0xfb)]===0x0)this['elements'][_0x16b7af(0x15e)+'ntainer'][_0x16b7af(0x131)]='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<div\x20style=\x22grid-column:\x201\x20/\x20-1;\x20text-align:\x20center;\x20padding:\x202rem;\x22>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20Tidak\x20ada\x20testimoni\x20yang\x20sesuai\x20dengan\x20kriteria\x20pencarian\x20Anda.\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20</div>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20';else{var _0x5c6d12='';_0x21cef2[_0x16b7af(0x116)](_0x5d5b8b=>{var _0x5c5f2e=_0x16b7af;_0x5c6d12+=this[_0x5c5f2e(0x135)](_0x5d5b8b);}),this['elements'][_0x16b7af(0x15e)+'ntainer'][_0x16b7af(0x131)]=_0x5c6d12;}this[_0x16b7af(0x11a)](_0x1b4de0),this['elements']['loader'][_0x16b7af(0x10c)][_0x16b7af(0x13f)]=_0x16b7af(0x133);},'renderPagination':function(_0x59c49e){var _0x22ee09=_0x13921f;if(_0x59c49e<=0x1){this['elements']['paginationContainer'][_0x22ee09(0x10c)][_0x22ee09(0x13f)]=_0x22ee09(0x133);return;}this['elements']['paginationContainer'][_0x22ee09(0x10c)][_0x22ee09(0x13f)]=_0x22ee09(0x14e);var _0x3657c2=_0x22ee09(0x15b)+(!this['config'][_0x22ee09(0x179)]===0x1?_0x22ee09(0x138):'')+'>\xab</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',_0x1c1825=0x5,_0xae1d2f=Math[_0x22ee09(0x117)](0x1,this['config'][_0x22ee09(0x179)]-Math[_0x22ee09(0x168)](_0x1c1825/0x2)),_0x1b7644=Math['min'](_0x59c49e,_0xae1d2f+_0x1c1825-0x1);_0x1b7644-_0xae1d2f+0x1<_0x1c1825&&(_0xae1d2f=Math[_0x22ee09(0x117)](0x1,_0x1b7644-_0x1c1825+0x1));for(var _0xa1b54c=_0xae1d2f;_0xa1b54c<=_0x1b7644;_0xa1b54c++){_0x3657c2+='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22page-btn\x20number-btn\x20'+(_0xa1b54c===this['config'][_0x22ee09(0x179)]?_0x22ee09(0x111):'')+''+_0xa1b54c+''+_0xa1b54c+'</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20';}_0x3657c2+='\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20<button\x20class=\x22'+_0x22ee09(0x181)+''+(!this['config']['currentPage']===_0x59c49e?_0x22ee09(0x138):'')+'>\xbb</button>\x0a\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20\x20',this['elements']['paginationContainer'][_0x22ee09(0x131)]=_0x3657c2,document[_0x22ee09(0x13a)]('.page-btn.number-btn')[_0x22ee09(0x116)](_0x358519=>{var _0x36c08=_0x22ee09;_0x358519[_0x36c08(0x16f)](_0x36c08(0x151),()=>{var _0x1f20af=_0x36c08;this['config'][_0x1f20af(0x179)]=parseInt(_0x358519['getAttribute'](_0x1f20af(0x13a))),this[_0x1f20af(0x157)](),window[_0x1f20af(0x14f)](0x0,document[_0x1f20af(0x17e)]('.testimonial-heading')[_0x1f20af(0x10a)]-_0x1f20af(0x192));}),document[_0x36c08(0x17e)]('.prev-btn')[_0x36c08(0x16f)](_0x36c08(0x151),()=>{var _0x2ce49f=_0x36c08;this['config'][_0x2ce49f(0x179)]>0x1&&(this['config'][_0x2ce49f(0x179)]--,this['displayTestimonials'](),window[_0x2ce49f(0x14f)](0x0,document[_0x2ce49f(0x17e)]('.testimonial-heading')[_0x2ce49f(0x10a)]-_0x2ce49f(0x192)));}),document[_0x36c08(0x17e)]('.next-btn')[_0x36c08(0x16f)](_0x36c08(0x151),()=>{var _0x1fcd2a=_0x36c08;this['config'][_0x1fcd2a(0x179)]<_0x59c49e&&(this['config'][_0x1fcd2a(0x179)]++,this[_0x1fcd2a(0x157)](),window['scrollTo'](0x0,document[_0x1fcd2a(0x17e)]('.testimonial-heading')[_0x1fcd2a(0x10a)]-_0x1fcd2a(0x192)));});};},'setupEventListeners':function(){var _0x3ca2de=_0x13921f,_0x34b5e3=this;this['elements'][_0x3ca2de(0x180)]['forEach'](_0x24b6ec=>{var _0x1ac07a=_0x3ca2de;_0x24b6ec[_0x1ac07a(0x16f)](_0x1ac07a(0x151),function(){var _0x31d12d=_0x1ac07a;_0x34b5e3['elements'][_0x31d12d(0x180)][_0x31d12d(0x116)](_0x3c9cf7=>_0x3c9cf7['classList'][_0x31d12d(0x108)](_0x31d12d(0x111))),this[_0x31d12d(0x174)][_0x31d12d(0x102)](_0x31d12d(0x111)),_0x34b5e3['config']['filter']=this['getAttribute'](_0x31d12d(0x10d)),_0x34b5e3['config']['currentPage']=0x1,_0x34b5e3[_0x31d12d(0x157)]();});});var _0x12f2bc;this['elements']['searchInput']['addEventListener']('input',function(){var _0x343a06=_0x3ca2de;clearTimeout(_0x12f2bc),_0x12f2bc=setTimeout(()=>{var _0x5d3cb5=_0x5a14;_0x34b5e3['config'][_0x5d3cb5(0x105)]=this[_0x5d3cb5(0xf8)]['trim'](),_0x34b5e3['config']['currentPage']=0x1,_0x34b5e3[_0x5d3cb5(0x157)]();},0x12c);});}},'_0x18e152'=document[_0x13921f(0x185)](_0x13921f(0x10e));var _0x49363f=document['createEvent'](_0x13921f(0x17c));_0x49363f['initEvent'](_0x13921f(0x151),!![],!![]),document[_0x13921f(0x16f)](_0x13921f(0x14a),function(){_0x1f81df['init']();});
+        document.addEventListener('DOMContentLoaded', function() {
+            // Back to top button functionality
+            const backToTopButton = document.getElementById('backToTop');
+            
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 300) {
+                    backToTopButton.classList.add('visible');
+                } else {
+                    backToTopButton.classList.remove('visible');
+                }
+            });
+            
+            backToTopButton.addEventListener('click', (e) => {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+            // Referensi elemen DOM
+            const testimonialContainer = document.getElementById('testimonial-container');
+            const paginationContainer = document.getElementById('pagination');
+            const searchInput = document.querySelector('.search-input');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const loader = document.getElementById('loader');
+            
+            // Konfigurasi paginasi
+            const config = {
+                currentPage: 1,
+                itemsPerPage: 12,
+                totalItems: 500,
+                filter: 'all',
+                searchTerm: ''
+            };
+            
+            // Data nama
+            const firstNames = ["Andi", "Budi", "Citra", "Dewi", "Eko", "Fitri", "Galih", "Hana", "Indra", "Joko", "Kartika", "Laras", "Mawar", "Nugroho", "Oktavia", "Putri", "Rudi", "Sinta", "Tono", "Utami", "Vina", "Wawan", "Yanti", "Zaki", "Agus", "Bambang", "Clara", "Dian", "Edi", "Fani"];
+            
+            const lastNames = ["Wijaya", "Susanto", "Hartono", "Gunawan", "Saputra", "Santoso", "Wibowo", "Mulya", "Setiawan", "Nugraha", "Hidayat", "Kusuma", "Putra", "Pratama", "Sulistyo", "Permadi", "Utomo", "Suharto", "Purnomo"];
+            
+            // Kategori transaksi
+            const transactionTypes = [
+                "Jual Beli Barang", "Jasa Digital", "Sewa Menyewa", "Game Item", "Cryptocurrency"
+            ];
+            
+            // Item spesifik per kategori
+            const transactionItems = {
+                "Jual Beli Barang": ["Smartphone Samsung S22", "Laptop Asus ROG", "Kamera Sony A7IV", "Sepeda Polygon MTB", "iPhone 14 Pro", "Monitor Gaming LG", "Jam Tangan Seiko", "PlayStation 5", "Drone DJI Mini", "Headphone Sony"],
+                "Jasa Digital": ["Desain Logo Brand", "Website Toko Online", "Jasa Edit Video", "Social Media Management", "Content Writing Blog", "SEO Website", "Mobile App Development", "Jasa Translate Dokumen", "Video Marketing", "Digital Advertising"],
+                "Sewa Menyewa": ["Apartemen Harian Jakarta", "Mobil Toyota Innova", "Kamera Sony A7S", "Ruang Meeting Office", "Villa Bali 3 Kamar", "Sound System Event", "Alat Berat Excavator", "Motor Yamaha NMAX", "Studio Foto", "Gedung Pernikahan"],
+                "Game Item": ["Skin Mobile Legends", "Weapon Mythic PUBG", "Account Genshin AR 55", "Skin Valorant Premium", "Item Counter Strike Rare", "Diamond Mobile Legends", "Riot Points LOL", "UC PUBG Mobile", "Genesis Crystal Genshin", "Skin Pokemon Unite"],
+                "Cryptocurrency": ["Bitcoin 0.01 BTC", "Ethereum 0.5 ETH", "Dogecoin 5000 DOGE", "Cardano 1000 ADA", "Solana 10 SOL", "Ripple 1000 XRP", "Binance Coin 5 BNB", "Tether 1000 USDT", "Polygon 500 MATIC", "Polkadot 100 DOT"]
+            };
+            
+            // Teks testimoni yang lebih natural dan bervariasi
+            const testimonialTexts = [
+                "Transaksi berjalan lancar banget. Admin cepat tanggap dan barang sampai tepat waktu. ProMiddleman layanan rekber yang terpercaya!",
+                "Awalnya takut karena baru pertama kali pakai rekber, tapi ternyata prosesnya gampang banget. Penjual juga langsung terima dana begitu barang sampai ke tangan saya. Recommended!",
+                "Ini ke-3 kalinya saya pakai ProMiddleman untuk beli barang online. Selalu puas dengan pelayanannya. Admin fast response dan jelas menjelaskan tahapan-tahapannya.",
+                "Terima kasih ProMiddleman, berkat kalian transaksi crypto pertama saya aman tanpa was-was. Fee-nya worth it untuk keamanan yang didapat.",
+                "Mantap! Barang sampai dengan kondisi sesuai deskripsi. Prosesnya juga cepat, cuma 1 hari dari mulai pakai rekber sampai barang di tangan. CS-nya helpful banget!",
+                "Sempat panik karena pengiriman delay 2 hari, tapi admin ProMiddleman sigap bantu follow up ke kurir. Akhirnya barang sampai dengan selamat. Best service!",
+                "Bisa nego fee untuk transaksi nominal gede. Thanks ProMiddleman udah jadi penengah yang bisa dipercaya.",
+                "Transaksi pertama sewa villa berjalan mulus. Deposit aman dan dikembalikan full setelah checkout tanpa masalah. Pasti pakai ProMiddleman lagi untuk booking berikutnya.",
+                "Jual skin ML pertama kali dan was-was takut kena tipu. Untungnya pilih pakai ProMiddleman. Prosesnya cepat, dana cair langsung begitu buyer konfirmasi. Thanks!",
+                "Puas banget! Baru chat admin jam 11 malam, eh masih direspon juga. Besoknya transaksi langsung diproses pagi-pagi. Pelayanan 24 jam bener-bener jalan!",
+                "Udah 5 tahun pakai ProMiddleman buat jual beli barang di marketplace yang ga ada fitur escrow. So far ga pernah ada masalah, selalu aman dan terpercaya. Top markotop lah!",
+                "Sempat ragu karena harga HP secondnya terlalu menarik, tapi dengan ProMiddleman jadi berani transaksi. Alhamdulillah barang sesuai, makin percaya sama layanan rekber ini.",
+                "Pakai jasa rekber ini buat bayar DP desain logo. Prosesnya transparan dan aman buat kedua belah pihak. Desainer juga puas dengan sistemnya.",
+                "Saya tipe yang paranoid soal transaksi online, tapi ProMiddleman bikin saya tenang. Sistemnya jelas dan terpercaya. Admin juga sabar banget jawab banyak pertanyaan saya.",
+                "First time pake rekber dan ga nyesel! Proses cepat, aman, fee masuk akal. Recommended banget buat yang takut tertipu belanja online.",
+                "Transaksi 15jt buat beli kamera bekas, sempat deg-degan. Tapi berkat ProMiddleman jadi smooth banget. Barang dicek dulu, sesuai, baru dana dicairkan ke penjual.",
+                "Selalu pake ProMiddleman tiap transaksi di forum jual beli. Udah jadi standar keamanan bagi saya. Better safe than sorry!",
+                "Baru tau layanan rekber segampang ini. Chat WA, transfer, tunggu barang, konfirmasi. Beres! Ga perlu ribet dan tetep aman.",
+                "Yang bikin ProMiddleman beda dari rekber lain adalah respon adminnya yang super cepat. Jam berapapun selalu dibalas, jadi transaksi bisa langsung diproses.",
+                "Alhamdulillah lancar! Awalnya khawatir karena nominal transaksinya gede, tapi ternyata prosesnya aman dan profesional banget.",
+                "Udah 2 tahun jadi langganan ProMiddleman. Ga pernah sekalipun kecewa. Pelayanan selalu konsisten bagus dan bikin nyaman.",
+                "Fee-nya bersaing dengan rekber lain tapi pelayanannya jauh lebih oke. Fast response dan profesional. Ga nyesel pake ProMiddleman.",
+                "Transaksi domain website lancar jaya. Proses verifikasi cepat dan pencairan dana ke penjual juga ga pake lama. Thanks ProMiddleman!",
+                "Rekber ini nyelametin transaksi saya. Penjualnya nakal tapi untung pakai rekber jadi dana aman. Admin bantu proses refund dengan profesional.",
+                "Salut sama admin yang sabar nuntun saya yang gaptek ini. Langkah-langkahnya dijelasin detail dan sangat mudah diikuti.",
+                "Beli sepatu limited edition dengan harga selangit jadi tenang karena ada ProMiddleman. Prosesnya sebentar, tapi security first lah buat barang mahal!",
+                "Pencairan dana cepet banget, ga sampe 5 menit setelah konfirmasi barang diterima. Penjual juga seneng karena ga perlu nunggu lama.",
+                "Bayar DP buat sewa villa lewat rekber sangat membantu. Jadi enak negonya sama pemilik villa karena ada jaminan dari pihak ketiga.",
+                "Wajib pake ProMiddleman kalo transaksi sama orang baru. Meski fee nambah dikit tapi worth it buat keamanan. No tipu-tipu!",
+                "Proses verified account-nya cepet, jadi transaksi ga tertunda. Barang sampai juga sesuai ekspektasi, makasih ProMiddleman!",
+                "Transaksi 40jt buat beli motor bekas, awalnya deg-degan. Tapi ProMiddleman bantu pastikan semua dokumen lengkap sebelum dana dicairkan. Super aman!",
+                "Admin komunikatif, step by step dijelasin dengan gamblang. Ga ada hidden fee juga, semuanya transparan dari awal.",
+                "ProMiddleman juara deh kalo soal kecepatan respon. Bahkan lebih cepet dari kurir yang nganter barangnya. Hehe. Top lah!",
+                "Udah 4x transaksi pake ProMiddleman dan selalu mulus. Prosesnya simpel, aman, terpercaya. Recommended untuk jual beli online!",
+                "Pesan jasa desain web lewat ProMiddleman. Enak, bisa cicil pembayaran sesuai progress. Jadi designer dan saya sama-sama tenang.",
+                "Sempat ragu karena kirim ke rekening orang yang ga dikenal. Tapi setelah cek testimonial dan verifikasi, akhirnya yakin. Dan terbukti amanah!",
+                "Fee 2,5% totally worth it for the peace of mind! Barang senilai 6,5jt sampai dengan aman dan sesuai deskripsi.",
+                "Beli tiket konser dari stranger di Twitter, untungnya inget ada ProMiddleman. Proses cepat dan aman, tiketnya asli. Thank you!",
+                "Transaksi jual beli crypto gampang dan cepet. Buat yang masih ragu sama platform P2P, ProMiddleman solusinya!",
+                "Barangnya ternyata cacat pas sampe. Untung pake rekber, jadi bisa nego lagi sama seller. Admin bantu mediasi dengan profesional.",
+                "CS-nya ramah dan sabar menjawab semua pertanyaan newbie kayak saya. Proses transaksi jadi lancar dan ga bikin pusing.",
+                "Suka banget sama update status transaksi yang real-time. Jadi bisa pantau terus progresnya sampe barang tiba.",
+                "Gratis ongkir untuk rekber kedua dalam sebulan! Ini yang bikin saya loyal pake ProMiddleman terus.",
+                "Udah berkali-kali pake ProMiddleman dan ga pernah kecewa. Admin ramah, proses cepat, aman pula. 5 bintang deh!",
+                "Transaksi pertama buat jual smartphone bekas. Prosesnya mudah dan cepat. Dana langsung cair begitu pembeli konfirmasi terima barang. Thanks ProMiddleman!",
+                "Pakai ProMiddleman untuk bayar DP custom furniture. Seneng rasanya ada jaminan dari pihak ketiga yang terpercaya.",
+                "Ngepoin track record ProMiddleman sejak 2015, dan memang bener-bener kredibel. Berani transaksi gede karena yakin rekbernya terpercaya.",
+                "Mau jastip barang impor ke buyer yang belum pernah kenal? ProMiddleman solusinya! Both buyer dan saya sama-sama happy dengan sistemnya.",
+                "Transaksi beli smartphone ROG Phone aman dan lancar. Fee rekber sebanding sama keamanan yang didapat. Recommended!",
+                "Admin fast response bahkan di malam hari. Jadi bisa langsung proses transaksi tanpa perlu nunggu besok. Mantap betul!"
+            ];
+            
+            // Fungsi untuk menghasilkan ID transaksi
+            function generateTransactionID() {
+                const prefix = "RBT";
+                const year = "25";
+                const randomNum = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
+                return `${prefix}${year}${randomNum}`;
+            }
+            
+            // Fungsi untuk menghasilkan tanggal acak dalam 6 bulan terakhir
+            function generateRandomDate() {
+                const today = new Date();
+                const sixMonthsAgo = new Date();
+                sixMonthsAgo.setMonth(today.getMonth() - 6);
+                
+                const randomTimestamp = sixMonthsAgo.getTime() + Math.random() * (today.getTime() - sixMonthsAgo.getTime());
+                const date = new Date(randomTimestamp);
+                
+                return date.toLocaleDateString('id-ID', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+            }
+            
+            // Fungsi untuk menghasilkan rating bintang HTML
+            function createStarRating(rating) {
+                let html = '';
+                for (let i = 1; i <= 5; i++) {
+                    if (i <= rating) {
+                        html += '<span style="color: #ffc107;">★</span>';
+                    } else {
+                        html += '<span style="color: #e0e0e0;">★</span>';
+                    }
+                }
+                return html;
+            }
+            
+            // Fungsi untuk menghasilkan testimoni acak
+            function generateRandomTestimonial() {
+                const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
+                const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
+                const name = `${firstName} ${lastName}`;
+                
+                const type = transactionTypes[Math.floor(Math.random() * transactionTypes.length)];
+                const items = transactionItems[type];
+                const item = items[Math.floor(Math.random() * items.length)];
+                
+                const text = testimonialTexts[Math.floor(Math.random() * testimonialTexts.length)];
+                
+                // Tanggal yang lebih realistis - distribusi dalam 9 bulan terakhir
+                const today = new Date();
+                const nineMonthsAgo = new Date();
+                nineMonthsAgo.setMonth(today.getMonth() - 9);
+                
+                // Buat distribusi tanggal yang lebih realistis (lebih banyak tanggal terbaru)
+                let randomDate;
+                const randomVal = Math.random();
+                if (randomVal < 0.5) { // 50% dalam 3 bulan terakhir
+                    const threeMonthsAgo = new Date();
+                    threeMonthsAgo.setMonth(today.getMonth() - 3);
+                    randomDate = new Date(threeMonthsAgo.getTime() + Math.random() * (today.getTime() - threeMonthsAgo.getTime()));
+                } else if (randomVal < 0.8) { // 30% dalam 3-6 bulan terakhir
+                    const sixMonthsAgo = new Date();
+                    const threeMonthsAgo = new Date();
+                    sixMonthsAgo.setMonth(today.getMonth() - 6);
+                    threeMonthsAgo.setMonth(today.getMonth() - 3);
+                    randomDate = new Date(sixMonthsAgo.getTime() + Math.random() * (threeMonthsAgo.getTime() - sixMonthsAgo.getTime()));
+                } else { // 20% dalam 6-9 bulan terakhir
+                    const sixMonthsAgo = new Date();
+                    sixMonthsAgo.setMonth(today.getMonth() - 6);
+                    randomDate = new Date(nineMonthsAgo.getTime() + Math.random() * (sixMonthsAgo.getTime() - nineMonthsAgo.getTime()));
+                }
+                
+                const date = randomDate.toLocaleDateString('id-ID', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                });
+                
+                // Generate ID transaksi dengan format lebih realistis
+                const monthCode = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"][randomDate.getMonth()];
+                const dayStr = randomDate.getDate().toString().padStart(2, '0');
+                const randomNum = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
+                const transactionId = `PMD${randomDate.getFullYear().toString().substring(2)}${monthCode}${dayStr}${randomNum}`;
+                
+                // Jumlah transaksi yang lebih realistis berdasarkan item
+                let amount;
+                
+                switch(type) {
+                    case "Jual Beli Barang":
+                        if (item.includes("iPhone") || item.includes("Laptop") || item.includes("PlayStation")) {
+                            amount = 8000000 + Math.floor(Math.random() * 12000000);
+                        } else if (item.includes("Kamera") || item.includes("Drone")) {
+                            amount = 5000000 + Math.floor(Math.random() * 15000000);
+                        } else if (item.includes("Monitor") || item.includes("Headphone")) {
+                            amount = 1500000 + Math.floor(Math.random() * 3500000);
+                        } else {
+                            amount = 500000 + Math.floor(Math.random() * 4500000);
+                        }
+                        break;
+                        
+                    case "Jasa Digital":
+                        if (item.includes("Website") || item.includes("App Development")) {
+                            amount = 3000000 + Math.floor(Math.random() * 7000000);
+                        } else if (item.includes("SEO") || item.includes("Marketing")) {
+                            amount = 1500000 + Math.floor(Math.random() * 3500000);
+                        } else {
+                            amount = 300000 + Math.floor(Math.random() * 1700000);
+                        }
+                        break;
+                        
+                    case "Sewa Menyewa":
+                        if (item.includes("Villa") || item.includes("Gedung")) {
+                            amount = 5000000 + Math.floor(Math.random() * 15000000);
+                        } else if (item.includes("Apartemen") || item.includes("Mobil")) {
+                            amount = 1000000 + Math.floor(Math.random() * 4000000);
+                        } else {
+                            amount = 300000 + Math.floor(Math.random() * 1700000);
+                        }
+                        break;
+                        
+                    case "Game Item":
+                        if (item.includes("Account")) {
+                            amount = 500000 + Math.floor(Math.random() * 2500000);
+                        } else {
+                            amount = 50000 + Math.floor(Math.random() * 950000);
+                        }
+                        break;
+                        
+                    case "Cryptocurrency":
+                        if (item.includes("Bitcoin")) {
+                            amount = 5000000 + Math.floor(Math.random() * 45000000);
+                        } else if (item.includes("Ethereum")) {
+                            amount = 2000000 + Math.floor(Math.random() * 8000000);
+                        } else {
+                            amount = 500000 + Math.floor(Math.random() * 4500000);
+                        }
+                        break;
+                        
+                    default:
+                        amount = 500000 + Math.floor(Math.random() * 4500000);
+                }
+                
+                const formattedAmount = new Intl.NumberFormat('id-ID', {
+                    style: 'currency',
+                    currency: 'IDR',
+                    maximumFractionDigits: 0
+                }).format(amount);
+                
+                // Rating yang realistis (dominan 5 bintang)
+                const ratingRandom = Math.random();
+                let rating;
+                if (ratingRandom < 0.85) { // 85% chance for 5 stars
+                    rating = 5;
+                } else if (ratingRandom < 0.97) { // 12% chance for 4 stars
+                    rating = 4;
+                } else { // 3% chance for 3 stars
+                    rating = 3;
+                }
+                
+                return {
+                    name,
+                    type,
+                    item,
+                    text,
+                    date,
+                    transactionId,
+                    amount: formattedAmount,
+                    rating,
+                    filter: {
+                        'all': true,
+                        'jual-beli': type === 'Jual Beli Barang',
+                        'jasa': type === 'Jasa Digital',
+                        'sewa': type === 'Sewa Menyewa',
+                        'game': type === 'Game Item',
+                        'crypto': type === 'Cryptocurrency'
+                    }
+                };
+            }
+            
+            // Menghasilkan 500 testimoni acak
+            const allTestimonials = [];
+            for (let i = 0; i < 500; i++) {
+                allTestimonials.push(generateRandomTestimonial());
+            }
+            
+            // Mengurutkan berdasarkan tanggal (terbaru dulu)
+            allTestimonials.sort((a, b) => {
+                const dateA = new Date(a.date.split(' ').join(' '));
+                const dateB = new Date(b.date.split(' ').join(' '));
+                return dateB - dateA;
+            });
+            
+            // Fungsi untuk membuat HTML kartu testimoni dengan efek animasi
+            function createTestimonialCard(testimonial) {
+                // Generate random colors for card accent from blue palette
+                const blueHues = ['#1e3c72', '#2a5298', '#3a6fc9', '#2c5eaa', '#1d3d7d', '#274f94'];
+                const randomBlue = blueHues[Math.floor(Math.random() * blueHues.length)];
+                
+                // Menentukan badge kategori transaksi
+                let categoryBadge = '';
+                switch(testimonial.type) {
+                    case 'Jual Beli Barang':
+                        categoryBadge = `<span class="category-badge" style="background-color: rgba(30, 60, 114, 0.1); color: #1e3c72;">Jual Beli</span>`;
+                        break;
+                    case 'Jasa Digital':
+                        categoryBadge = `<span class="category-badge" style="background-color: rgba(76, 175, 80, 0.1); color: #4CAF50;">Jasa Digital</span>`;
+                        break;
+                    case 'Sewa Menyewa':
+                        categoryBadge = `<span class="category-badge" style="background-color: rgba(156, 39, 176, 0.1); color: #9C27B0;">Sewa Menyewa</span>`;
+                        break;
+                    case 'Game Item':
+                        categoryBadge = `<span class="category-badge" style="background-color: rgba(255, 152, 0, 0.1); color: #FF9800;">Game Item</span>`;
+                        break;
+                    case 'Cryptocurrency':
+                        categoryBadge = `<span class="category-badge" style="background-color: rgba(255, 87, 34, 0.1); color: #FF5722;">Crypto</span>`;
+                        break;
+                }
+                
+                return `
+                    <div class="testimonial-card" style="border-top: 3px solid ${randomBlue};">
+                        <div class="testimonial-header">
+                            <div class="user-info">
+                                <div class="user-name-container">
+                                    <div class="user-name">${testimonial.name}</div>
+                                    ${categoryBadge}
+                                </div>
+                                <div class="transaction-type">
+                                    <strong>ID Transaksi:</strong> ${testimonial.transactionId}
+                                </div>
+                                <div class="transaction-type">
+                                    <strong>Item:</strong> ${testimonial.item}
+                                </div>
+                                <div class="rating">
+                                    ${createStarRating(testimonial.rating)}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-body">
+                            <div class="testimonial-text">${testimonial.text}</div>
+                        </div>
+                        <div class="testimonial-footer">
+                            <div class="transaction-date">${testimonial.date}</div>
+                            <div class="transaction-amount">${testimonial.amount}</div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Fungsi untuk filter testimoni
+            function filterTestimonials() {
+                let filtered = [...allTestimonials];
+                
+                // Aplikasikan filter kategori
+                if (config.filter !== 'all') {
+                    filtered = filtered.filter(t => t.filter[config.filter]);
+                }
+                
+                // Aplikasikan pencarian
+                if (config.searchTerm.length >= 2) {
+                    const term = config.searchTerm.toLowerCase();
+                    filtered = filtered.filter(t => 
+                        t.name.toLowerCase().includes(term) ||
+                        t.item.toLowerCase().includes(term) ||
+                        t.text.toLowerCase().includes(term) ||
+                        t.transactionId.toLowerCase().includes(term)
+                    );
+                }
+                
+                return filtered;
+            }
+            
+            // Fungsi untuk menampilkan testimoni
+            function displayTestimonials() {
+                // Tampilkan loader
+                loader.style.display = 'block';
+                testimonialContainer.innerHTML = '';
+                
+                // Filter testimoni
+                const filteredTestimonials = filterTestimonials();
+                
+                // Hitung total halaman
+                const totalPages = Math.ceil(filteredTestimonials.length / config.itemsPerPage);
+                
+                // Ambil item untuk halaman saat ini
+                const startIndex = (config.currentPage - 1) * config.itemsPerPage;
+                const endIndex = Math.min(startIndex + config.itemsPerPage, filteredTestimonials.length);
+                const currentPageItems = filteredTestimonials.slice(startIndex, endIndex);
+                
+                // Jika tidak ada hasil
+                if (currentPageItems.length === 0) {
+                    testimonialContainer.innerHTML = `
+                        <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+                            Tidak ada testimoni yang sesuai dengan kriteria pencarian Anda.
+                        </div>
+                    `;
+                } else {
+                    // Buat HTML untuk setiap testimoni
+                    let testimonialsHTML = '';
+                    currentPageItems.forEach(testimonial => {
+                        testimonialsHTML += createTestimonialCard(testimonial);
+                    });
+                    
+                    // Tampilkan testimoni
+                    testimonialContainer.innerHTML = testimonialsHTML;
+                }
+                
+                // Buat paginasi
+                renderPagination(totalPages);
+                
+                // Sembunyikan loader
+                loader.style.display = 'none';
+            }
+            
+            // Fungsi untuk membuat paginasi
+            function renderPagination(totalPages) {
+                if (totalPages <= 1) {
+                    paginationContainer.style.display = 'none';
+                    return;
+                }
+                
+                paginationContainer.style.display = 'flex';
+                
+                let paginationHTML = `
+                    <button class="page-btn prev-btn" ${config.currentPage === 1 ? 'disabled' : ''}>«</button>
+                `;
+                
+                // Tentukan halaman yang ditampilkan
+                const maxVisiblePages = 5;
+                let startPage = Math.max(1, config.currentPage - Math.floor(maxVisiblePages / 2));
+                let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+                
+                if (endPage - startPage + 1 < maxVisiblePages) {
+                    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+                }
+                
+                // Buat tombol untuk setiap halaman
+                for (let i = startPage; i <= endPage; i++) {
+                    paginationHTML += `
+                        <button class="page-btn number-btn ${i === config.currentPage ? 'active' : ''}" data-page="${i}">${i}</button>
+                    `;
+                }
+                
+                paginationHTML += `
+                    <button class="page-btn next-btn" ${config.currentPage === totalPages ? 'disabled' : ''}>»</button>
+                `;
+                
+                paginationContainer.innerHTML = paginationHTML;
+                
+                // Tambahkan event listener untuk tombol paginasi
+                document.querySelectorAll('.page-btn.number-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        config.currentPage = parseInt(this.getAttribute('data-page'));
+                        displayTestimonials();
+                        window.scrollTo(0, document.querySelector('.testimonial-heading').offsetTop - 50);
+                    });
+                });
+                
+                // Tombol previous
+                document.querySelector('.prev-btn').addEventListener('click', function() {
+                    if (config.currentPage > 1) {
+                        config.currentPage--;
+                        displayTestimonials();
+                        window.scrollTo(0, document.querySelector('.testimonial-heading').offsetTop - 50);
+                    }
+                });
+                
+                // Tombol next
+                document.querySelector('.next-btn').addEventListener('click', function() {
+                    if (config.currentPage < totalPages) {
+                        config.currentPage++;
+                        displayTestimonials();
+                        window.scrollTo(0, document.querySelector('.testimonial-heading').offsetTop - 50);
+                    }
+                });
+            }
+            
+            // Inisialisasi tombol filter
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    config.filter = this.getAttribute('data-filter');
+                    config.currentPage = 1;
+                    displayTestimonials();
+                });
+            });
+            
+            // Inisialisasi pencarian
+            let searchTimeout;
+            searchInput.addEventListener('input', function() {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(() => {
+                    config.searchTerm = this.value.trim();
+                    config.currentPage = 1;
+                    displayTestimonials();
+                }, 300);
+            });
+            
+            // Animasi untuk tombol CTA
+            const ctaButton = document.querySelector('.cta-btn');
+            ctaButton.addEventListener('mouseover', () => {
+                ctaButton.style.transform = 'translateY(-5px)';
+                ctaButton.style.boxShadow = '0 8px 25px rgba(0,0,0,0.2)';
+            });
+            
+            ctaButton.addEventListener('mouseout', () => {
+                ctaButton.style.transform = '';
+                ctaButton.style.boxShadow = '';
+            });
+            
+            // Tampilkan testimoni saat halaman dimuat
+            displayTestimonials();
+        });
     </script>
 </body>
 </html>
