@@ -1124,11 +1124,6 @@
                             <i class="fab fa-whatsapp"></i>
                             <span id="whatsapp-btn-text">Kirim ke WhatsApp</span>
                         </a>
-                        
-                        <a href="https://www.facebook.com/promiddleman.admin" target="_blank" class="contact-btn facebook-btn">
-                            <i class="fab fa-facebook-f"></i>
-                            <span id="contact-btn-text">Hubungi via Facebook</span>
-                        </a>
                     </div>
                     
                     <p><a href="#" id="new-transaction" class="new-transaction">
@@ -1504,7 +1499,7 @@
         const updateWhatsAppLink = () => {
             const transactionId = document.getElementById('transaction-id').textContent;
             const whatsappMessage = createWhatsAppMessage(transactionId);
-            const whatsappNumber = '628123456789'; // Change to your admin's WhatsApp number
+            const whatsappNumber = '6285702402751'; // Change to your admin's WhatsApp number
             const whatsappLink = `https://wa.me/${whatsappNumber}?text=${whatsappMessage}`;
             document.getElementById('whatsapp-btn').href = whatsappLink;
         };
