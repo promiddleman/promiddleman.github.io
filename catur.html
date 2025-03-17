@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Permainan Catur</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        header {
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+        }
+        
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .board-container {
+            position: relative;
+        }
+        
+        .board {
+            display: grid;
+            grid-template-columns: repeat(8, 1fr);
+            grid-template-rows: repeat(8, 1fr);
+            width: 480px;
+            height: 480px;
+            border: 5px solid #654321;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .square {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 40px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .white {
+            background-color: #f0d9b5;
+        }
+        
+        .black {
+            background-color: #b58863;
+        }
+        
+        .highlighted {
+            background-color: rgba(124, 252, 0, 0.5);
+        }
+        
+        .selected {
+            background-color: rgba(255, 255, 0, 0.5);
+        }
+        
+        .last-move {
+            background-color: rgba(173, 216, 230, 0.6);
+        }
+        
+        .check {
+            background-color: rgba(255, 0, 0, 0.4);
+        }
+        
+        .coordinate {
+            position: absolute;
+            font-size: 12px;
+            color: #555;
+        }
+        
+        .file {
+            bottom: 2px;
+            right: 2px;
+        }
+        
+        .rank {
+            top: 2px;
+            left: 2px;
+        }
+        
+        .status {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            padding: 10px;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            width: 480px;
+        }
+        
+        .controls {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        button {
+            padding: 8px 16px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+        .move-history {
+            width: 480px;
+            margin-top: 20px;
+            max-height: 200px;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .move-list {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            gap: 5px;
+        }
+        
+        .move-number {
+            font-weight: bold;
+        }
+        
+        .promotion-modal {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+            z-index: 10;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .promotion-options {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .promotion-piece {
+            font-size: 40px;
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+        }
+        
+        .promotion-piece:hover {
+            background-color: #f0f0f0;
+        }
+        
+        @media (max-width: 500px) {
+            .board {
+                width: 320px;
+                height: 320px;
+            }
+            
+            .square {
+                width: 40px;
+                height: 40px;
+                font-size: 30px;
+            }
+            
+            .status, .move-history {
+                width: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Permainan Catur</h1>
+    </header>
+    
+    <div class="game-container">
+        <div class="board-container">
+            <div class="board" id="chessboard"></div>
+            <div class="promotion-modal" id="promotionModal">
+                <h3>Pilih Promosi Pion</h3>
+                <div class="promotion-options" id="promotionOptions"></div>
+            </div>
+        </div>
+        
+        <div class="status" id="gameStatus">Giliran Putih</div>
+        
+        <div class="controls">
+            <button id="newGameBtn">Permainan Baru</button>
+            <button id="undoBtn">Batalkan Gerakan</button>
+            <button id="flipBoardBtn">Putar Papan</button>
+        </div>
+        
+        <div class="move-history">
+            <h3>Riwayat Gerakan</h3>
+            <div class="move-list" id="moveList"></div>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Konstanta dan variabel untuk game
+            const PIECES = {
+                WHITE_KING: '♔',
+                WHITE_QUEEN: '♕',
+                WHITE_ROOK: '♖',
+                WHITE_BISHOP: '♗',
+                WHITE_KNIGHT: '♘',
+                WHITE_PAWN: '♙',
+                BLACK_KING: '♚',
+                BLACK_QUEEN: '♛',
+                BLACK_ROOK: '♜',
+                BLACK_BISHOP: '♝',
+                BLACK_KNIGHT: '♞',
+                BLACK_PAWN: '♟'
+            };
+            
+            const FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
+            const RANKS = ['8', '7', '6', '5', '4', '3', '2', '1'];
+            
+            let board = [];
+            let selectedPiece = null;
+            let currentPlayer = 'WHITE';
+            let moveHistory = [];
+            let boardFlipped = false;
+            let kingPositions = { WHITE: { row: 7, col: 4 }, BLACK: { row: 0, col: 4 } };
+            let castlingRights = {
+                WHITE: { kingSide: true, queenSide: true },
+                BLACK: { kingSide: true, queenSide: true }
+            };
+            let enPassantTarget = null;
+            let lastMove = null;
+            let promotionPending = null;
+            
+            // Elemen DOM
+            const chessboard = document.getElementById('chessboard');
+            const gameStatus = document.getElementById('gameStatus');
+            const moveList = document.getElementById('moveList');
+            const promotionModal = document.getElementById('promotionModal');
+            const promotionOptions = document.getElementById('promotionOptions');
+            
+            // Fungsi untuk inisialisasi papan catur
+            function initializeBoard() {
+                board = Array(8).fill().map(() => Array(8).fill(null));
+                
+                // Penempatan bidak putih
+                board[7][0] = { type: 'ROOK', color: 'WHITE', hasMoved: false };
+                board[7][1] = { type: 'KNIGHT', color: 'WHITE', hasMoved: false };
+                board[7][2] = { type: 'BISHOP', color: 'WHITE', hasMoved: false };
+                board[7][3] = { type: 'QUEEN', color: 'WHITE', hasMoved: false };
+                board[7][4] = { type: 'KING', color: 'WHITE', hasMoved: false };
+                board[7][5] = { type: 'BISHOP', color: 'WHITE', hasMoved: false };
+                board[7][6] = { type: 'KNIGHT', color: 'WHITE', hasMoved: false };
+                board[7][7] = { type: 'ROOK', color: 'WHITE', hasMoved: false };
+                
+                for (let i = 0; i < 8; i++) {
+                    board[6][i] = { type: 'PAWN', color: 'WHITE', hasMoved: false };
+                }
+                
+                // Penempatan bidak hitam
+                board[0][0] = { type: 'ROOK', color: 'BLACK', hasMoved: false };
+                board[0][1] = { type: 'KNIGHT', color: 'BLACK', hasMoved: false };
+                board[0][2] = { type: 'BISHOP', color: 'BLACK', hasMoved: false };
+                board[0][3] = { type: 'QUEEN', color: 'BLACK', hasMoved: false };
+                board[0][4] = { type: 'KING', color: 'BLACK', hasMoved: false };
+                board[0][5] = { type: 'BISHOP', color: 'BLACK', hasMoved: false };
+                board[0][6] = { type: 'KNIGHT', color: 'BLACK', hasMoved: false };
+                board[0][7] = { type: 'ROOK', color: 'BLACK', hasMoved: false };
+                
+                for (let i = 0; i < 8; i++) {
+                    board[1][i] = { type: 'PAWN', color: 'BLACK', hasMoved: false };
+                }
+                
+                kingPositions = { 
+                    WHITE: { row: 7, col: 4 }, 
+                    BLACK: { row: 0, col: 4 } 
+                };
+                
+                castlingRights = {
+                    WHITE: { kingSide: true, queenSide: true },
+                    BLACK: { kingSide: true, queenSide: true }
+                };
+                
+                enPassantTarget = null;
+                currentPlayer = 'WHITE';
+                moveHistory = [];
+                lastMove = null;
+                
+                renderBoard();
+                updateGameStatus();
+                renderMoveHistory();
+            }
+            
+            // Fungsi untuk menampilkan papan catur
+            function renderBoard() {
+                chessboard.innerHTML = '';
+                
+                for (let r = 0; r < 8; r++) {
+                    for (let c = 0; c < 8; c++) {
+                        const boardRow = boardFlipped ? 7 - r : r;
+                        const boardCol = boardFlipped ? 7 - c : c;
+                        
+                        const square = document.createElement('div');
+                        square.className = `square ${(r + c) % 2 === 0 ? 'white' : 'black'}`;
+                        square.dataset.row = boardRow;
+                        square.dataset.col = boardCol;
+                        
+                        // Tambahkan koordinat papan
+                        if (!boardFlipped && c === 0 || boardFlipped && c === 7) {
+                            const rankElem = document.createElement('span');
+                            rankElem.className = 'coordinate rank';
+                            rankElem.textContent = RANKS[r];
+                            square.appendChild(rankElem);
+                        }
+                        
+                        if (!boardFlipped && r === 7 || boardFlipped && r === 0) {
+                            const fileElem = document.createElement('span');
+                            fileElem.className = 'coordinate file';
+                            fileElem.textContent = FILES[c];
+                            square.appendChild(fileElem);
+                        }
+                        
+                        const piece = board[boardRow][boardCol];
+                        if (piece) {
+                            square.textContent = getPieceSymbol(piece);
+                        }
+                        
+                        // Highlight last move
+                        if (lastMove && 
+                            ((boardRow === lastMove.fromRow && boardCol === lastMove.fromCol) || 
+                             (boardRow === lastMove.toRow && boardCol === lastMove.toCol))) {
+                            square.classList.add('last-move');
+                        }
+                        
+                        // Highlight king in check
+                        const isCheck = isKingInCheck(currentPlayer);
+                        if (isCheck && piece && piece.type === 'KING' && piece.color === currentPlayer) {
+                            square.classList.add('check');
+                        }
+                        
+                        square.addEventListener('click', handleSquareClick);
+                        chessboard.appendChild(square);
+                    }
+                }
+            }
+            
+            // Fungsi untuk mendapatkan simbol bidak
+            function getPieceSymbol(piece) {
+                if (!piece) return '';
+                return PIECES[`${piece.color}_${piece.type}`];
+            }
+            
+            // Fungsi untuk menangani klik pada kotak
+            function handleSquareClick(event) {
+                const square = event.currentTarget;
+                const row = parseInt(square.dataset.row);
+                const col = parseInt(square.dataset.col);
+                
+                if (promotionPending) return;
+                
+                if (selectedPiece) {
+                    const fromRow = selectedPiece.row;
+                    const fromCol = selectedPiece.col;
+                    
+                    // Jika mengklik kotak yang sama, batalkan pilihan
+                    if (fromRow === row && fromCol === col) {
+                        selectedPiece = null;
+                        renderBoard();
+                        return;
+                    }
+                    
+                    // Jika mengklik bidak lain dengan warna yang sama
+                    const targetPiece = board[row][col];
+                    if (targetPiece && targetPiece.color === currentPlayer) {
+                        selectedPiece = { row, col, piece: targetPiece };
+                        renderBoard();
+                        highlightLegalMoves(row, col);
+                        return;
+                    }
+                    
+                    // Mencoba untuk melakukan gerakan
+                    const legalMoves = getLegalMoves(fromRow, fromCol);
+                    const isLegalMove = legalMoves.some(move => move.row === row && move.col === col);
+                    
+                    if (isLegalMove) {
+                        makeMove(fromRow, fromCol, row, col);
+                    } else {
+                        selectedPiece = null;
+                        renderBoard();
+                    }
+                } else {
+                    const piece = board[row][col];
+                    if (piece && piece.color === currentPlayer) {
+                        selectedPiece = { row, col, piece };
+                        renderBoard();
+                        
+                        // Highlight kotak yang dipilih
+                        const squareElem = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
+                        squareElem.classList.add('selected');
+                        
+                        // Highlight gerakan yang valid
+                        highlightLegalMoves(row, col);
+                    }
+                }
+            }
+            
+            // Fungsi untuk highlight gerakan legal
+            function highlightLegalMoves(row, col) {
+                const legalMoves = getLegalMoves(row, col);
+                
+                legalMoves.forEach(move => {
+                    const squareElem = document.querySelector(`[data-row="${move.row}"][data-col="${move.col}"]`);
+                    if (squareElem) {
+                        squareElem.classList.add('highlighted');
+                    }
+                });
+            }
+            
+            // Fungsi untuk mendapatkan gerakan legal untuk sebuah bidak
+            function getLegalMoves(row, col) {
+                const piece = board[row][col];
+                if (!piece) return [];
+                
+                let moves = getPseudoLegalMoves(row, col);
+                
+                // Filter gerakan untuk mencegah raja berada dalam posisi skak
+                moves = moves.filter(move => {
+                    const result = simulateMove(row, col, move.row, move.col);
+                    const inCheck = result.inCheck;
+                    
+                    // Kembalikan state papan ke semula
+                    board = result.originalBoard;
+                    kingPositions = result.originalKingPositions;
+                    
+                    return !inCheck;
+                });
+                
+                return moves;
+            }
+            
+            // Fungsi untuk mendapatkan semua gerakan yang mungkin (tanpa memperhitungkan skak)
+            function getPseudoLegalMoves(row, col) {
+                const piece = board[row][col];
+                if (!piece) return [];
+                
+                const moves = [];
+                
+                switch (piece.type) {
+                    case 'PAWN':
+                        getPawnMoves(row, col, piece, moves);
+                        break;
+                    case 'KNIGHT':
+                        getKnightMoves(row, col, piece, moves);
+                        break;
+                    case 'BISHOP':
+                        getBishopMoves(row, col, piece, moves);
+                        break;
+                    case 'ROOK':
+                        getRookMoves(row, col, piece, moves);
+                        break;
+                    case 'QUEEN':
+                        getBishopMoves(row, col, piece, moves); // Queen bergerak seperti Bishop
+                        getRookMoves(row, col, piece, moves);   // dan seperti Rook
+                        break;
+                    case 'KING':
+                        getKingMoves(row, col, piece, moves);
+                        break;
+                }
+                
+                return moves;
+            }
+            
+            // Fungsi untuk gerakan pion
+            function getPawnMoves(row, col, piece, moves) {
+                const direction = piece.color === 'WHITE' ? -1 : 1;
+                const startRow = piece.color === 'WHITE' ? 6 : 1;
+                
+                // Gerakan maju 1 langkah
+                if (isValidPosition(row + direction, col) && !board[row + direction][col]) {
+                    moves.push({ row: row + direction, col: col });
+                    
+                    // Gerakan maju 2 langkah dari posisi awal
+                    if (row === startRow && !board[row + 2 * direction][col]) {
+                        moves.push({ row: row + 2 * direction, col: col });
+                    }
+                }
+                
+                // Gerakan diagonal untuk mengambil bidak lawan
+                const captureOffsets = [{ r: direction, c: -1 }, { r: direction, c: 1 }];
+                for (const offset of captureOffsets) {
+                    const newRow = row + offset.r;
+                    const newCol = col + offset.c;
+                    
+                    if (isValidPosition(newRow, newCol)) {
+                        const targetPiece = board[newRow][newCol];
+                        
+                        // Normal capture
+                        if (targetPiece && targetPiece.color !== piece.color) {
+                            moves.push({ row: newRow, col: newCol });
+                        }
+                        
+                        // En passant capture
+                        if (enPassantTarget && 
+                            newRow === enPassantTarget.row && 
+                            newCol === enPassantTarget.col) {
+                            moves.push({ row: newRow, col: newCol, isEnPassant: true });
+                        }
+                    }
+                }
+            }
+            
+            // Fungsi untuk gerakan kuda
+            function getKnightMoves(row, col, piece, moves) {
+                const offsets = [
+                    { r: -2, c: -1 }, { r: -2, c: 1 },
+                    { r: -1, c: -2 }, { r: -1, c: 2 },
+                    { r: 1, c: -2 }, { r: 1, c: 2 },
+                    { r: 2, c: -1 }, { r: 2, c: 1 }
+                ];
+                
+                for (const offset of offsets) {
+                    const newRow = row + offset.r;
+                    const newCol = col + offset.c;
+                    
+                    if (isValidPosition(newRow, newCol)) {
+                        const targetPiece = board[newRow][newCol];
+                        if (!targetPiece || targetPiece.color !== piece.color) {
+                            moves.push({ row: newRow, col: newCol });
+                        }
+                    }
+                }
+            }
+            
+            // Fungsi untuk gerakan gajah
+            function getBishopMoves(row, col, piece, moves) {
+                const directions = [
+                    { r: -1, c: -1 }, { r: -1, c: 1 },
+                    { r: 1, c: -1 }, { r: 1, c: 1 }
+                ];
+                
+                for (const dir of directions) {
+                    for (let i = 1; i < 8; i++) {
+                        const newRow = row + i * dir.r;
+                        const newCol = col + i * dir.c;
+                        
+                        if (!isValidPosition(newRow, newCol)) break;
+                        
+                        const targetPiece = board[newRow][newCol];
+                        if (!targetPiece) {
+                            moves.push({ row: newRow, col: newCol });
+                        } else {
+                            if (targetPiece.color !== piece.color) {
+                                moves.push({ row: newRow, col: newCol });
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            // Fungsi untuk gerakan benteng
+            function getRookMoves(row, col, piece, moves) {
+                const directions = [
+                    { r: -1, c: 0 }, { r: 1, c: 0 },
+                    { r: 0, c: -1 }, { r: 0, c: 1 }
+                ];
+                
+                for (const dir of directions) {
+                    for (let i = 1; i < 8; i++) {
+                        const newRow = row + i * dir.r;
+                        const newCol = col + i * dir.c;
+                        
+                        if (!isValidPosition(newRow, newCol)) break;
+                        
+                        const targetPiece = board[newRow][newCol];
+                        if (!targetPiece) {
+                            moves.push({ row: newRow, col: newCol });
+                        } else {
+                            if (targetPiece.color !== piece.color) {
+                                moves.push({ row: newRow, col: newCol });
+                            }
+                            break;
+                        }
+                    }
+                }
+            }
+            
+            // Fungsi untuk gerakan raja
+            function getKingMoves(row, col, piece, moves) {
+                const offsets = [
+                    { r: -1, c: -1 }, { r: -1, c: 0 }, { r: -1, c: 1 },
+                    { r: 0, c: -1 }, { r: 0, c: 1 },
+                    { r: 1, c: -1 }, { r: 1, c: 0 }, { r: 1, c: 1 }
+                ];
+                
+                for (const offset of offsets) {
+                    const newRow = row + offset.r;
+                    const newCol = col + offset.c;
+                    
+                    if (isValidPosition(newRow, newCol)) {
+                        const targetPiece = board[newRow][newCol];
+                        if (!targetPiece || targetPiece.color !== piece.color) {
+                            moves.push({ row: newRow, col: newCol });
+                        }
+                    }
+                }
+                
+                // Rokade/Castling
+                if (!piece.hasMoved && !isKingInCheck(piece.color)) {
+                    // King-side castling
+                    if (castlingRights[piece.color].kingSide) {
+                        let canCastle = true;
+                        // Check if squares between king and rook are empty
+                        for (let c = col + 1; c < 7; c++) {
+                            if (board[row][c]) {
+                                canCastle = false;
+                                break;
+                            }
+                        }
+                        
+                        // Check if rook is present and hasn't moved
+                        const rookPiece = board[row][7];
+                        if (!rookPiece || rookPiece.type !== 'ROOK' || 
+                            rookPiece.color !== piece.color || rookPiece.hasMoved) {
+                            canCastle = false;
+                        }
+                        
+                        // Check if king passes through check
+                        if (canCastle) {
+                            const result1 = simulateMove(row, col, row, col + 1);
+                            const inCheck1 = result1.inCheck;
+                            board = result1.originalBoard;
+                            kingPositions = result1.originalKingPositions;
+                            
+                            const result2 = simulateMove(row, col, row, col + 2);
+                            const inCheck2 = result2.inCheck;
+                            board = result2.originalBoard;
+                            kingPositions = result2.originalKingPositions;
+                            
+                            if (!inCheck1 && !inCheck2) {
+                                moves.push({ row: row, col: col + 2, isCastling: 'kingside' });
+                            }
+                        }
+                    }
+                    
+                    // Queen-side castling
+                    if (castlingRights[piece.color].queenSide) {
+                        let canCastle = true;
+                        // Check if squares between king and rook are empty
+                        for (let c = col - 1; c > 0; c--) {
+                            if (board[row][c]) {
+                                canCastle = false;
+                                break;
+                            }
+                        }
+                        
+                        // Check if rook is present and hasn't moved
+                        const rookPiece = board[row][0];
+                        if (!rookPiece || rookPiece.type !== 'ROOK' || 
+                            rookPiece.color !== piece.color || rookPiece.hasMoved) {
+                            canCastle = false;
+                        }
+                        
+                        // Check if king passes through check
+                        if (canCastle) {
+                            const result1 = simulateMove(row, col, row, col - 1);
+                            const inCheck1 = result1.inCheck;
+                            board = result1.originalBoard;
+                            kingPositions = result1.originalKingPositions;
+                            
+                            const result2 = simulateMove(row, col, row, col - 2);
+                            const inCheck2 = result2.inCheck;
+                            board = result2.originalBoard;
+                            kingPositions = result2.originalKingPositions;
+                            
+                            if (!inCheck1 && !inCheck2) {
+                                moves.push({ row: row, col: col - 2, isCastling: 'queenside' });
+                            }
+                        }
+                    }
+                }
+            }
+            
+            // Fungsi untuk memeriksa apakah posisi valid
+            function isValidPosition(row, col) {
+                return row >= 0 && row < 8 && col >= 0 && col < 8;
+            }
+            
+            // Fungsi untuk mensimulasikan gerakan dan memeriksa skak
+            function simulateMove(fromRow, fromCol, toRow, toCol) {
+                // Salin papan dan posisi raja
+                const originalBoard = JSON.parse(JSON.stringify(board));
+                const originalKingPositions = JSON.parse(JSON.stringify(kingPositions));
+                
+                const piece = board[fromRow][fromCol];
+                const targetPiece = board[toRow][toCol];
+                
+                // Melakukan gerakan pada salinan papan
+                board[toRow][toCol] = piece;
+                board[fromRow][fromCol] = null;
+                
+                // Update posisi raja jika raja yang digerakkan
+                if (piece.type === 'KING') {
+                    kingPositions[piece.color] = { row: toRow, col: toCol };
+                }
+                
+                // Memeriksa apakah raja dalam skak setelah gerakan
+                const inCheck = isKingInCheck(piece.color);
+                
+                return { inCheck, originalBoard, originalKingPositions };
+            }
+            
+            // Fungsi untuk memeriksa apakah raja dalam skak
+            function isKingInCheck(color) {
+                const kingPos = kingPositions[color];
+                const opponentColor = color === 'WHITE' ? 'BLACK' : 'WHITE';
+                
+                // Memeriksa semua bidak lawan apakah bisa menyerang raja
+                for (let r = 0; r < 8; r++) {
+                    for (let c = 0; c < 8; c++) {
+                        const piece = board[r][c];
+                        if (piece && piece.color === opponentColor) {
+                            const moves = getPseudoLegalMoves(r, c);
+                            for (const move of moves) {
+                                if (move.row === kingPos.row && move.col === kingPos.col) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+                
+                return false;
+            }
+            
+            // Fungsi untuk memeriksa apakah raja dalam skak mat
+            function isCheckmate(color) {
+                if (!isKingInCheck(color)) return false;
+                
+                // Memeriksa apakah ada gerakan yang bisa menyelamatkan raja
+                for (let r = 0; r < 8; r++) {
+                    for (let c = 0; c < 8; c++) {
+                        const piece = board[r][c];
+                        if (piece && piece.color === color) {
+                            const legalMoves = getLegalMoves(r, c);
+                            if (legalMoves.length > 0) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                
+                return true;
+            }
+            
+            // Fungsi untuk memeriksa stalemate (pat)
+            function isStalemate(color) {
+                if (isKingInCheck(color)) return false;
+                
+                // Memeriksa apakah ada gerakan legal untuk pemain saat ini
+                for (let r = 0; r < 8; r++) {
+                    for (let c = 0; c < 8; c++) {
+                        const piece = board[r][c];
+                        if (piece && piece.color === color) {
+                            const legalMoves = getLegalMoves(r, c);
+                            if (legalMoves.length > 0) {
+                                return false;
+                            }
+                        }
+                    }
+                }
+                
+                return true;
+            }
+            
+            // Fungsi untuk melakukan gerakan bidak
+            function makeMove(fromRow, fromCol, toRow, toCol) {
+                const piece = board[fromRow][fromCol];
+                const targetPiece = board[toRow][toCol];
+                const move = { 
+                    fromRow, fromCol, toRow, toCol,
+                    piece: JSON.parse(JSON.stringify(piece)),
+                    capturedPiece: targetPiece ? JSON.parse(JSON.stringify(targetPiece)) : null,
+                    castlingRights: JSON.parse(JSON.stringify(castlingRights)),
+                    enPassantTarget: enPassantTarget ? JSON.parse(JSON.stringify(enPassantTarget)) : null
+                };
+                
+                // Cek apakah gerakan adalah rokade
+                if (piece.type === 'KING' && Math.abs(toCol - fromCol) === 2) {
+                    if (toCol > fromCol) {
+                        // King-side castling
+                        const rookFromCol = 7;
+                        const rookToCol = toCol - 1;
+                        
+                        // Pindahkan benteng
+                        const rook = board[fromRow][rookFromCol];
+                        board[fromRow][rookToCol] = rook;
+                        board[fromRow][rookFromCol] = null;
+                        
+                        move.isCastling = 'kingside';
+                        move.rookMove = { fromRow, fromCol: rookFromCol, toRow: fromRow, toCol: rookToCol };
+                    } else {
+                        // Queen-side castling
+                        const rookFromCol = 0;
+                        const rookToCol = toCol + 1;
+                        
+                        // Pindahkan benteng
+                        const rook = board[fromRow][rookFromCol];
+                        board[fromRow][rookToCol] = rook;
+                        board[fromRow][rookFromCol] = null;
+                        
+                        move.isCastling = 'queenside';
+                        move.rookMove = { fromRow, fromCol: rookFromCol, toRow: fromRow, toCol: rookToCol };
+                    }
+                }
+                
+                // Cek apakah gerakan adalah en passant
+                let isEnPassant = false;
+                if (piece.type === 'PAWN' && enPassantTarget &&
+                    toRow === enPassantTarget.row && toCol === enPassantTarget.col) {
+                    const capturedPawnRow = fromRow;
+                    const capturedPawnCol = toCol;
+                    
+                    move.capturedPiece = board[capturedPawnRow][capturedPawnCol];
+                    move.isEnPassant = true;
+                    
+                    // Hapus pion yang di-en passant
+                    board[capturedPawnRow][capturedPawnCol] = null;
+                    isEnPassant = true;
+                }
+                
+                // Update en passant target untuk gerakan pion dua langkah
+                enPassantTarget = null;
+                if (piece.type === 'PAWN' && Math.abs(toRow - fromRow) === 2) {
+                    enPassantTarget = { 
+                        row: (fromRow + toRow) / 2, 
+                        col: toCol 
+                    };
+                }
+                
+                // Cek untuk promosi pion
+                if (piece.type === 'PAWN' && (toRow === 0 || toRow === 7)) {
+                    promotionPending = { fromRow, fromCol, toRow, toCol, move };
+                    showPromotionDialog(piece.color, toRow, toCol);
+                    return;
+                }
+                
+                // Pindahkan bidak
+                board[toRow][toCol] = piece;
+                board[fromRow][fromCol] = null;
+                
+                // Update posisi raja jika raja digerakkan
+                if (piece.type === 'KING') {
+                    kingPositions[piece.color] = { row: toRow, col: toCol };
+                }
+                
+                // Update status bidak telah bergerak
+                piece.hasMoved = true;
+                
+                // Update hak rokade
+                if (piece.type === 'KING') {
+                    castlingRights[piece.color].kingSide = false;
+                    castlingRights[piece.color].queenSide = false;
+                }
+                
+                if (piece.type === 'ROOK') {
+                    if (fromRow === 7 && fromCol === 0 && piece.color === 'WHITE') {
+                        castlingRights.WHITE.queenSide = false;
+                    } else if (fromRow === 7 && fromCol === 7 && piece.color === 'WHITE') {
+                        castlingRights.WHITE.kingSide = false;
+                    } else if (fromRow === 0 && fromCol === 0 && piece.color === 'BLACK') {
+                        castlingRights.BLACK.queenSide = false;
+                    } else if (fromRow === 0 && fromCol === 7 && piece.color === 'BLACK') {
+                        castlingRights.BLACK.kingSide = false;
+                    }
+                }
+                
+                // Simpan gerakan ke history
+                moveHistory.push(move);
+                
+                // Update last move untuk highlight
+                lastMove = { fromRow, fromCol, toRow, toCol };
+                
+                // Reset selectedPiece
+                selectedPiece = null;
+                
+                // Ganti pemain
+                currentPlayer = currentPlayer === 'WHITE' ? 'BLACK' : 'WHITE';
+                
+                // Update tampilan dan status
+                renderBoard();
+                updateGameStatus();
+                renderMoveHistory();
+            }
+            
+            // Fungsi untuk menampilkan dialog promosi pion
+            function showPromotionDialog(color, row, col) {
+                promotionModal.style.display = 'flex';
+                promotionOptions.innerHTML = '';
+                
+                const promotionPieces = ['QUEEN', 'ROOK', 'BISHOP', 'KNIGHT'];
+                
+                promotionPieces.forEach(pieceType => {
+                    const pieceElem = document.createElement('div');
+                    pieceElem.className = 'promotion-piece';
+                    pieceElem.textContent = PIECES[`${color}_${pieceType}`];
+                    
+                    pieceElem.addEventListener('click', () => {
+                        completePromotion(pieceType);
+                    });
+                    
+                    promotionOptions.appendChild(pieceElem);
+                });
+            }
+            
+            // Fungsi untuk menyelesaikan promosi pion
+            function completePromotion(pieceType) {
+                const { fromRow, fromCol, toRow, toCol, move } = promotionPending;
+                
+                // Update bidak yang dipromosikan
+                const pawn = board[fromRow][fromCol];
+                board[toRow][toCol] = { 
+                    type: pieceType, 
+                    color: pawn.color,
+                    hasMoved: true
+                };
+                board[fromRow][fromCol] = null;
+                
+                // Update move history
+                move.promotedTo = pieceType;
+                moveHistory.push(move);
+                
+                // Update last move
+                lastMove = { fromRow, fromCol, toRow, toCol };
+                
+                // Reset
+                selectedPiece = null;
+                promotionPending = null;
+                promotionModal.style.display = 'none';
+                
+                // Ganti pemain
+                currentPlayer = currentPlayer === 'WHITE' ? 'BLACK' : 'WHITE';
+                
+                // Update tampilan dan status
+                renderBoard();
+                updateGameStatus();
+                renderMoveHistory();
+            }
+            
+            // Fungsi untuk membatalkan gerakan terakhir
+            function undoLastMove() {
+                if (moveHistory.length === 0) return;
+                
+                const move = moveHistory.pop();
+                const { fromRow, fromCol, toRow, toCol, piece, capturedPiece, castlingRights: prevCastlingRights, enPassantTarget: prevEnPassantTarget } = move;
+                
+                // Kembalikan bidak ke posisi semula
+                board[fromRow][fromCol] = piece;
+                
+                // Kembalikan bidak yang diambil jika ada
+                if (move.isEnPassant) {
+                    board[toRow][toCol] = null;
+                    board[fromRow][toCol] = capturedPiece;
+                } else {
+                    board[toRow][toCol] = capturedPiece;
+                }
+                
+                // Kembalikan hak rokade
+                castlingRights = prevCastlingRights;
+                enPassantTarget = prevEnPassantTarget;
+                
+                // Kembalikan posisi raja jika perlu
+                if (piece.type === 'KING') {
+                    kingPositions[piece.color] = { row: fromRow, col: fromCol };
+                }
+                
+                // Kembalikan posisi benteng jika rokade
+                if (move.isCastling) {
+                    const rookMove = move.rookMove;
+                    const rook = board[rookMove.toRow][rookMove.toCol];
+                    board[rookMove.fromRow][rookMove.fromCol] = rook;
+                    board[rookMove.toRow][rookMove.toCol] = null;
+                }
+                
+                // Setel hasMoved kembali ke nilai aslinya
+                if (!capturedPiece && moveHistory.length === 0) {
+                    // Jika ini adalah gerakan pertama, setel hasMoved ke false
+                    piece.hasMoved = false;
+                }
+                
+                // Update last move
+                lastMove = moveHistory.length > 0 ? 
+                    { 
+                        fromRow: moveHistory[moveHistory.length - 1].fromRow,
+                        fromCol: moveHistory[moveHistory.length - 1].fromCol,
+                        toRow: moveHistory[moveHistory.length - 1].toRow,
+                        toCol: moveHistory[moveHistory.length - 1].toCol
+                    } : null;
+                
+                // Ganti pemain
+                currentPlayer = currentPlayer === 'WHITE' ? 'BLACK' : 'WHITE';
+                
+                // Update tampilan dan status
+                renderBoard();
+                updateGameStatus();
+                renderMoveHistory();
+            }
+            
+            // Fungsi untuk mengupdate status permainan
+            function updateGameStatus() {
+                let status = `Giliran ${currentPlayer === 'WHITE' ? 'Putih' : 'Hitam'}`;
+                
+                if (isKingInCheck(currentPlayer)) {
+                    if (isCheckmate(currentPlayer)) {
+                        status = `Skak Mat! ${currentPlayer === 'WHITE' ? 'Hitam' : 'Putih'} Menang!`;
+                    } else {
+                        status = `${currentPlayer === 'WHITE' ? 'Putih' : 'Hitam'} Dalam Skak!`;
+                    }
+                } else if (isStalemate(currentPlayer)) {
+                    status = 'Remis - Pat!';
+                }
+                
+                gameStatus.textContent = status;
+            }
+            
+            // Fungsi untuk merender history gerakan
+            function renderMoveHistory() {
+                moveList.innerHTML = '';
+                
+                for (let i = 0; i < moveHistory.length; i += 2) {
+                    const moveNumber = Math.floor(i / 2) + 1;
+                    const moveRow = document.createElement('div');
+                    moveRow.className = 'move-number';
+                    moveRow.textContent = moveNumber + '.';
+                    moveList.appendChild(moveRow);
+                    
+                    const moveWhite = document.createElement('div');
+                    moveWhite.textContent = getAlgebraicNotation(moveHistory[i]);
+                    moveList.appendChild(moveWhite);
+                    
+                    const moveBlack = document.createElement('div');
+                    if (i + 1 < moveHistory.length) {
+                        moveBlack.textContent = getAlgebraicNotation(moveHistory[i + 1]);
+                    }
+                    moveList.appendChild(moveBlack);
+                }
+            }
+            
+            // Fungsi untuk mengkonversi gerakan ke notasi aljabar
+            function getAlgebraicNotation(move) {
+                if (!move) return '';
+                
+                const { fromRow, fromCol, toRow, toCol, piece, capturedPiece, isCastling, promotedTo } = move;
+                
+                if (isCastling === 'kingside') {
+                    return 'O-O';
+                } else if (isCastling === 'queenside') {
+                    return 'O-O-O';
+                }
+                
+                let notation = '';
+                
+                // Tambahkan simbol bidak (kecuali pion)
+                if (piece.type !== 'PAWN') {
+                    notation += piece.type.charAt(0);
+                }
+                
+                // Ambiguitas: perlu menambahkan file/rank asal jika ada bidak lain yang bisa bergerak ke kotak tujuan
+                const ambiguousPieces = [];
+                for (let r = 0; r < 8; r++) {
+                    for (let c = 0; c < 8; c++) {
+                        if ((r !== fromRow || c !== fromCol) && 
+                            board[r][c] && 
+                            board[r][c].type === piece.type && 
+                            board[r][c].color === piece.color) {
+                            
+                            const legalMoves = getLegalMoves(r, c);
+                            if (legalMoves.some(m => m.row === toRow && m.col === toCol)) {
+                                ambiguousPieces.push({ row: r, col: c });
+                            }
+                        }
+                    }
+                }
+                
+                if (ambiguousPieces.length > 0) {
+                    let needFile = false;
+                    let needRank = false;
+                    
+                    for (const ambig of ambiguousPieces) {
+                        if (ambig.col === fromCol) {
+                            needRank = true;
+                        }
+                        if (ambig.row === fromRow) {
+                            needFile = true;
+                        }
+                    }
+                    
+                    if (needFile || (ambiguousPieces.length > 0 && !needRank)) {
+                        notation += FILES[fromCol];
+                    }
+                    
+                    if (needRank) {
+                        notation += RANKS[fromRow];
+                    }
+                }
+                
+                // Tambahkan 'x' jika capture
+                if (capturedPiece || move.isEnPassant) {
+                    if (piece.type === 'PAWN' && notation === '') {
+                        notation += FILES[fromCol];
+                    }
+                    notation += 'x';
+                }
+                
+                // Tambahkan kotak tujuan
+                notation += FILES[toCol] + RANKS[toRow];
+                
+                // Tambahkan simbol promosi jika ada
+                if (promotedTo) {
+                    notation += '=' + promotedTo.charAt(0);
+                }
+                
+                // Tambahkan simbol skak atau skak mat
+                const opponentColor = piece.color === 'WHITE' ? 'BLACK' : 'WHITE';
+                if (isCheckmate(opponentColor)) {
+                    notation += '#';
+                } else if (isKingInCheck(opponentColor)) {
+                    notation += '+';
+                }
+                
+                return notation;
+            }
+            
+            // Event listeners untuk tombol-tombol
+            document.getElementById('newGameBtn').addEventListener('click', initializeBoard);
+            document.getElementById('undoBtn').addEventListener('click', undoLastMove);
+            document.getElementById('flipBoardBtn').addEventListener('click', function() {
+                boardFlipped = !boardFlipped;
+                renderBoard();
+            });
+            
+            // Inisialisasi permainan saat halaman dimuat
+            initializeBoard();
+        });
+    </script>
+</body>
+</html>
