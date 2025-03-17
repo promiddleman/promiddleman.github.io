@@ -1,1178 +1,1579 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Permainan Catur</title>
+    <title>Advanced Slot Machine</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #4a148c;
+            --secondary-color: #7b1fa2;
+            --accent-color: #e91e63;
+            --gold-color: #ffd700;
+            --text-color: #f5f5f5;
+            --dark-bg: #1a1a1a;
+            --light-bg: #2a2a2a;
+            --reel-bg: #000;
+            --win-color: #4caf50;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
+            background: radial-gradient(circle, var(--primary-color), var(--dark-bg));
+            color: var(--text-color);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
-            background-color: #f0f0f0;
-            color: #333;
-            margin: 0;
+            overflow-x: hidden;
             padding: 20px;
         }
-        
-        header {
-            margin-bottom: 20px;
-        }
-        
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-        }
-        
+
         .game-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
+            width: 100%;
+            max-width: 800px;
+            background: linear-gradient(145deg, var(--light-bg), var(--dark-bg));
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
         }
-        
-        .board-container {
+
+        .game-title {
+            text-align: center;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 1.8rem;
+            position: relative;
+            text-shadow: 0 0 10px var(--primary-color);
+        }
+
+        .game-title::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: var(--accent-color);
+            border-radius: 3px;
+        }
+
+        .casino-lights {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 10px;
+            display: flex;
+            justify-content: space-around;
+            z-index: -1;
+        }
+
+        .light {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--gold-color);
+            animation: lightBlink 0.5s infinite alternate;
+        }
+
+        @keyframes lightBlink {
+            from { opacity: 0.2; }
+            to { opacity: 1; }
+        }
+
+        .dashboard {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.2);
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .stat-box {
+            text-align: center;
+            flex: 1;
+            padding: 5px;
             position: relative;
         }
-        
-        .board {
-            display: grid;
-            grid-template-columns: repeat(8, 1fr);
-            grid-template-rows: repeat(8, 1fr);
-            width: 480px;
-            height: 480px;
-            border: 5px solid #654321;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+
+        .stat-box:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 25%;
+            height: 50%;
+            width: 1px;
+            background: rgba(255, 255, 255, 0.1);
         }
-        
-        .square {
-            width: 60px;
-            height: 60px;
+
+        .stat-label {
+            font-size: 0.8rem;
+            opacity: 0.8;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--gold-color);
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+
+        .slot-machine {
+            position: relative;
+            width: 100%;
+            background: var(--reel-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8),
+                        0 0 10px rgba(255, 255, 255, 0.1);
+            border: 2px solid #333;
+            overflow: hidden;
+        }
+
+        .slot-display {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .payline {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--accent-color);
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 0;
+            box-shadow: 0 0 10px var(--accent-color);
+            opacity: 0.8;
+        }
+
+        .reel-container {
+            display: flex;
+            justify-content: space-around;
+            position: relative;
+            z-index: 1;
+        }
+
+        .reel {
+            width: 18%;
+            height: 120px;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .symbols {
+            position: absolute;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .symbol {
             display: flex;
             justify-content: center;
             align-items: center;
-            font-size: 40px;
-            cursor: pointer;
-            position: relative;
+            height: 120px;
+            font-size: 60px;
+            background: white;
+            border-bottom: 1px solid #eee;
         }
-        
-        .white {
-            background-color: #f0d9b5;
-        }
-        
-        .black {
-            background-color: #b58863;
-        }
-        
-        .highlighted {
-            background-color: rgba(124, 252, 0, 0.5);
-        }
-        
-        .selected {
-            background-color: rgba(255, 255, 0, 0.5);
-        }
-        
-        .last-move {
-            background-color: rgba(173, 216, 230, 0.6);
-        }
-        
-        .check {
-            background-color: rgba(255, 0, 0, 0.4);
-        }
-        
-        .coordinate {
-            position: absolute;
-            font-size: 12px;
-            color: #555;
-        }
-        
-        .file {
-            bottom: 2px;
-            right: 2px;
-        }
-        
-        .rank {
-            top: 2px;
-            left: 2px;
-        }
-        
-        .status {
-            margin-top: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            text-align: center;
-            padding: 10px;
-            border-radius: 5px;
-            background-color: #fff;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-            width: 480px;
-        }
-        
+
         .controls {
             display: flex;
-            gap: 10px;
-            margin-top: 10px;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
-        
-        button {
-            padding: 8px 16px;
-            font-size: 16px;
-            cursor: pointer;
-            background-color: #4CAF50;
+
+        .control-btn {
+            background: linear-gradient(145deg, var(--secondary-color), var(--primary-color));
             color: white;
             border: none;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-        
-        button:hover {
-            background-color: #45a049;
-        }
-        
-        .move-history {
-            width: 480px;
-            margin-top: 20px;
-            max-height: 200px;
-            overflow-y: auto;
-            padding: 10px;
-            background-color: #fff;
-            border-radius: 5px;
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .move-list {
-            display: grid;
-            grid-template-columns: auto auto auto;
-            gap: 5px;
-        }
-        
-        .move-number {
+            padding: 12px 25px;
+            font-size: 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             font-weight: bold;
-        }
-        
-        .promotion-modal {
-            display: none;
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-            z-index: 10;
-            flex-direction: column;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            display: flex;
             align-items: center;
+            justify-content: center;
+            min-width: 120px;
         }
-        
-        .promotion-options {
+
+        .control-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .control-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .control-btn:disabled {
+            background: #666;
+            cursor: not-allowed;
+            transform: none;
+            opacity: 0.7;
+        }
+
+        .control-btn i {
+            margin-right: 8px;
+        }
+
+        .spin-btn {
+            background: linear-gradient(145deg, #e91e63, #d81b60);
+            min-width: 140px;
+        }
+
+        .spin-btn:hover {
+            background: linear-gradient(145deg, #d81b60, #c2185b);
+        }
+
+        .bet-controls {
             display: flex;
             gap: 10px;
-            margin-top: 10px;
+            align-items: center;
         }
-        
-        .promotion-piece {
-            font-size: 40px;
+
+        .bet-amount {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 15px;
+            border-radius: 20px;
+            min-width: 80px;
+            text-align: center;
+            font-weight: bold;
+            color: var(--gold-color);
+        }
+
+        .message-area {
+            text-align: center;
+            margin: 15px 0;
+            min-height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+        }
+
+        .win-message {
+            color: var(--gold-color);
+            animation: winPulse 1s infinite alternate;
+        }
+
+        @keyframes winPulse {
+            from { transform: scale(1); text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
+            to { transform: scale(1.1); text-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
+        }
+
+        .jackpot-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            flex-direction: column;
+            gap: 20px;
+            animation: jackpotBg 0.5s infinite alternate;
+        }
+
+        .jackpot-text {
+            font-size: 3rem;
+            color: var(--gold-color);
+            font-weight: bold;
+            text-shadow: 0 0 20px gold;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: jackpotText 0.5s infinite alternate;
+        }
+
+        .jackpot-value {
+            font-size: 2rem;
+            color: white;
+        }
+
+        .jackpot-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: var(--gold-color);
+            color: black;
+            border: none;
+            border-radius: 20px;
             cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            animation: jackpotButton 1s infinite alternate;
+        }
+
+        @keyframes jackpotBg {
+            from { background-color: rgba(0, 0, 0, 0.8); }
+            to { background-color: rgba(74, 20, 140, 0.8); }
+        }
+
+        @keyframes jackpotText {
+            from { transform: scale(1); color: var(--gold-color); }
+            to { transform: scale(1.2); color: white; text-shadow: 0 0 30px var(--gold-color); }
+        }
+
+        @keyframes jackpotButton {
+            from { transform: scale(1); box-shadow: 0 0 10px var(--gold-color); }
+            to { transform: scale(1.1); box-shadow: 0 0 20px var(--gold-color); }
+        }
+
+        .payout-table {
+            margin-top: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            padding: 15px;
+            width: 100%;
+        }
+
+        .payout-title {
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+            color: var(--gold-color);
+        }
+
+        .payout-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .payout-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
             padding: 5px;
             border-radius: 5px;
+            background: rgba(255, 255, 255, 0.05);
         }
-        
-        .promotion-piece:hover {
-            background-color: #f0f0f0;
+
+        .payout-symbols {
+            display: flex;
+            font-size: 1.2rem;
         }
-        
-        @media (max-width: 500px) {
-            .board {
-                width: 320px;
-                height: 320px;
+
+        .payout-value {
+            font-weight: bold;
+            color: var(--gold-color);
+        }
+
+        .progress-container {
+            width: 100%;
+            height: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0%;
+            transition: width 0.3s;
+            border-radius: 5px;
+        }
+
+        .bonus-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            display: none;
+        }
+
+        .bonus-active {
+            display: block;
+            animation: bonusPulse 1s infinite alternate;
+        }
+
+        @keyframes bonusPulse {
+            from { background: rgba(0, 0, 0, 0.5); }
+            to { background: var(--accent-color); }
+        }
+
+        .settings-panel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 20;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .settings-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            color: var(--gold-color);
+        }
+
+        .settings-options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            width: 80%;
+            max-width: 300px;
+        }
+
+        .setting-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .toggle-button {
+            position: relative;
+            width: 50px;
+            height: 24px;
+            background: #333;
+            border-radius: 12px;
+            cursor: pointer;
+        }
+
+        .toggle-button::after {
+            content: '';
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            width: 20px;
+            height: 20px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-button.active {
+            background: var(--accent-color);
+        }
+
+        .toggle-button.active::after {
+            transform: translateX(26px);
+        }
+
+        .close-settings {
+            margin-top: 30px;
+            padding: 8px 20px;
+            background: var(--accent-color);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .footer {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* Animations */
+        .coin-animation {
+            position: absolute;
+            font-size: 24px;
+            color: var(--gold-color);
+            user-select: none;
+            z-index: 5;
+            animation: coinFall 1s forwards;
+        }
+
+        @keyframes coinFall {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(200px) rotate(360deg); opacity: 0; }
+        }
+
+        .win-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        .win-line {
+            position: absolute;
+            height: 3px;
+            background: var(--accent-color);
+            box-shadow: 0 0 10px var(--accent-color);
+            animation: winLineFlash 0.5s infinite alternate;
+        }
+
+        @keyframes winLineFlash {
+            from { opacity: 0.3; }
+            to { opacity: 1; }
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .game-container {
+                padding: 15px;
             }
-            
-            .square {
-                width: 40px;
-                height: 40px;
-                font-size: 30px;
+
+            .game-title {
+                font-size: 1.5rem;
             }
-            
-            .status, .move-history {
-                width: 320px;
+
+            .reel {
+                height: 100px;
             }
+
+            .symbol {
+                height: 100px;
+                font-size: 50px;
+            }
+
+            .payout-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .game-container {
+                padding: 10px;
+            }
+
+            .game-title {
+                font-size: 1.2rem;
+                margin-bottom: 10px;
+            }
+
+            .dashboard {
+                flex-wrap: wrap;
+            }
+
+            .stat-box {
+                flex: 1 1 33%;
+                margin-bottom: 10px;
+            }
+
+            .stat-value {
+                font-size: 1.2rem;
+            }
+
+            .reel {
+                height: 80px;
+                width: 16%;
+            }
+
+            .symbol {
+                height: 80px;
+                font-size: 40px;
+            }
+
+            .controls {
+                gap: 10px;
+            }
+
+            .control-btn {
+                padding: 8px 15px;
+                font-size: 0.9rem;
+                min-width: 100px;
+            }
+
+            .payout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .bet-controls {
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+        }
+
+        /* Sound icon */
+        .sound-toggle {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 5;
+        }
+
+        .sound-icon {
+            color: var(--text-color);
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Permainan Catur</h1>
-    </header>
-    
     <div class="game-container">
-        <div class="board-container">
-            <div class="board" id="chessboard"></div>
-            <div class="promotion-modal" id="promotionModal">
-                <h3>Pilih Promosi Pion</h3>
-                <div class="promotion-options" id="promotionOptions"></div>
+        <div class="casino-lights">
+            <!-- These lights will be generated by JavaScript -->
+        </div>
+        
+        <h1 class="game-title">Lucky Slots Deluxe</h1>
+        
+        <div class="dashboard">
+            <div class="stat-box">
+                <div class="stat-label">Credits</div>
+                <div class="stat-value" id="credits">1000</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Win</div>
+                <div class="stat-value" id="win-amount">0</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Jackpot</div>
+                <div class="stat-value" id="jackpot-amount">5000</div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="jackpot-progress"></div>
+                </div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Level</div>
+                <div class="stat-value" id="level">1</div>
+                <div class="progress-container">
+                    <div class="progress-bar" id="level-progress"></div>
+                </div>
             </div>
         </div>
         
-        <div class="status" id="gameStatus">Giliran Putih</div>
-        
-        <div class="controls">
-            <button id="newGameBtn">Permainan Baru</button>
-            <button id="undoBtn">Batalkan Gerakan</button>
-            <button id="flipBoardBtn">Putar Papan</button>
+        <div class="slot-machine">
+            <div class="bonus-indicator" id="bonus-indicator">
+                Free Spins: <span id="free-spins-left">0</span>
+            </div>
+            
+            <div class="slot-display">
+                <div class="payline"></div>
+                <div class="reel-container">
+                    <!-- Reels will be added by JavaScript -->
+                </div>
+                <div class="win-lines" id="win-lines"></div>
+            </div>
+            
+            <div class="message-area" id="message"></div>
+            
+            <div class="controls">
+                <div class="bet-controls">
+                    <button class="control-btn" id="bet-down-btn">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <div class="bet-amount" id="bet-amount">10</div>
+                    <button class="control-btn" id="bet-up-btn">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                
+                <button class="control-btn spin-btn" id="spin-btn">
+                    <i class="fas fa-play"></i> SPIN
+                </button>
+                
+                <button class="control-btn" id="max-bet-btn">
+                    <i class="fas fa-gem"></i> MAX BET
+                </button>
+            </div>
+            
+            <div class="jackpot-overlay" id="jackpot-overlay">
+                <div class="jackpot-text">JACKPOT!</div>
+                <div class="jackpot-value" id="jackpot-win-amount">5000</div>
+                <button class="jackpot-button" id="claim-jackpot-btn">CLAIM REWARD</button>
+            </div>
         </div>
         
-        <div class="move-history">
-            <h3>Riwayat Gerakan</h3>
-            <div class="move-list" id="moveList"></div>
+        <div class="payout-table">
+            <div class="payout-title">PAYOUT TABLE</div>
+            <div class="payout-grid" id="payout-grid">
+                <!-- Payout information will be added by JavaScript -->
+            </div>
+        </div>
+        
+        <div class="sound-toggle" id="sound-toggle">
+            <i class="fas fa-volume-up sound-icon" id="sound-icon"></i>
+        </div>
+        
+        <div class="settings-panel" id="settings-panel">
+            <div class="settings-title">SETTINGS</div>
+            <div class="settings-options">
+                <div class="setting-item">
+                    <span>Sound</span>
+                    <div class="toggle-button active" id="sound-toggle-setting"></div>
+                </div>
+                <div class="setting-item">
+                    <span>Music</span>
+                    <div class="toggle-button active" id="music-toggle-setting"></div>
+                </div>
+                <div class="setting-item">
+                    <span>Animations</span>
+                    <div class="toggle-button active" id="animations-toggle-setting"></div>
+                </div>
+                <div class="setting-item">
+                    <span>Save Progress</span>
+                    <div class="toggle-button active" id="save-toggle-setting"></div>
+                </div>
+            </div>
+            <button class="close-settings" id="close-settings-btn">SAVE</button>
         </div>
     </div>
     
+    <div class="footer">
+        &copy; 2025 Lucky Slots Deluxe | For entertainment purposes only
+    </div>
+
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Konstanta dan variabel untuk game
-            const PIECES = {
-                WHITE_KING: '♔',
-                WHITE_QUEEN: '♕',
-                WHITE_ROOK: '♖',
-                WHITE_BISHOP: '♗',
-                WHITE_KNIGHT: '♘',
-                WHITE_PAWN: '♙',
-                BLACK_KING: '♚',
-                BLACK_QUEEN: '♛',
-                BLACK_ROOK: '♜',
-                BLACK_BISHOP: '♝',
-                BLACK_KNIGHT: '♞',
-                BLACK_PAWN: '♟'
+        document.addEventListener('DOMContentLoaded', () => {
+            // Game configuration
+            const config = {
+                reelCount: 5,               // Number of reels
+                symbolsPerReel: 20,         // Symbols on each reel
+                visibleSymbols: 1,          // Visible symbols per reel
+                spinDuration: 2000,         // Spin animation duration in ms
+                startingCredits: 1000,      // Starting credits
+                minBet: 10,                 // Minimum bet
+                maxBet: 100,                // Maximum bet
+                betIncrement: 10,           // Bet increment
+                jackpotAmount: 5000,        // Initial jackpot amount
+                jackpotIncrement: 0.01,     // Percentage of bet added to jackpot
+                maxLevel: 10,               // Maximum player level
+                xpPerSpin: 1,               // XP earned per spin
+                bonusProbability: 0.05,     // Probability for bonus features
+                soundEnabled: true,         // Sound enabled by default
+                musicEnabled: true,         // Music enabled by default
+                animationsEnabled: true,    // Animations enabled by default
+                saveEnabled: true           // Save progress enabled by default
             };
-            
-            const FILES = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
-            const RANKS = ['8', '7', '6', '5', '4', '3', '2', '1'];
-            
-            let board = [];
-            let selectedPiece = null;
-            let currentPlayer = 'WHITE';
-            let moveHistory = [];
-            let boardFlipped = false;
-            let kingPositions = { WHITE: { row: 7, col: 4 }, BLACK: { row: 0, col: 4 } };
-            let castlingRights = {
-                WHITE: { kingSide: true, queenSide: true },
-                BLACK: { kingSide: true, queenSide: true }
+
+            // Symbol definitions with payout multipliers
+            const symbols = [
+                { id: 'cherry', symbol: '🍒', weight: 20, payout: 5 },
+                { id: 'lemon', symbol: '🍋', weight: 17, payout: 10 },
+                { id: 'orange', symbol: '🍊', weight: 15, payout: 15 },
+                { id: 'grape', symbol: '🍇', weight: 12, payout: 20 },
+                { id: 'watermelon', symbol: '🍉', weight: 10, payout: 25 },
+                { id: 'bell', symbol: '🔔', weight: 8, payout: 40 },
+                { id: 'diamond', symbol: '💎', weight: 5, payout: 100 },
+                { id: 'seven', symbol: '7️⃣', weight: 3, payout: 200 },
+                { id: 'slot', symbol: '🎰', weight: 1, payout: 500 },
+                { id: 'wild', symbol: '⭐', weight: 2, payout: 0, isWild: true },
+                { id: 'scatter', symbol: '🎁', weight: 2, payout: 0, isScatter: true }
+            ];
+
+            // Special paylines
+            const paylines = [
+                { name: 'Middle', positions: [0, 0, 0, 0, 0], multiplier: 1 },
+                // Additional paylines can be added here
+            ];
+
+            // Game state
+            let state = {
+                credits: config.startingCredits,
+                bet: config.minBet,
+                isSpinning: false,
+                reelResults: [],
+                lastWin: 0,
+                jackpot: config.jackpotAmount,
+                jackpotProgress: 0,
+                level: 1,
+                xp: 0,
+                xpToNextLevel: 100,
+                bonusMode: false,
+                freeSpins: 0,
+                totalSpins: 0,
+                totalWins: 0,
+                biggestWin: 0
             };
-            let enPassantTarget = null;
-            let lastMove = null;
-            let promotionPending = null;
-            
-            // Elemen DOM
-            const chessboard = document.getElementById('chessboard');
-            const gameStatus = document.getElementById('gameStatus');
-            const moveList = document.getElementById('moveList');
-            const promotionModal = document.getElementById('promotionModal');
-            const promotionOptions = document.getElementById('promotionOptions');
-            
-            // Fungsi untuk inisialisasi papan catur
-            function initializeBoard() {
-                board = Array(8).fill().map(() => Array(8).fill(null));
+
+            // Audio files - these would be actual paths in a real implementation
+            const audio = {
+                spin: new Audio(),
+                win: new Audio(),
+                jackpot: new Audio(),
+                click: new Audio(),
+                bonus: new Audio(),
+                background: new Audio()
+            };
+
+            // DOM elements
+            const elements = {
+                reelContainer: document.querySelector('.reel-container'),
+                spinBtn: document.getElementById('spin-btn'),
+                betDownBtn: document.getElementById('bet-down-btn'),
+                betUpBtn: document.getElementById('bet-up-btn'),
+                maxBetBtn: document.getElementById('max-bet-btn'),
+                betAmountDisplay: document.getElementById('bet-amount'),
+                creditsDisplay: document.getElementById('credits'),
+                winAmountDisplay: document.getElementById('win-amount'),
+                jackpotAmountDisplay: document.getElementById('jackpot-amount'),
+                jackpotProgress: document.getElementById('jackpot-progress'),
+                messageArea: document.getElementById('message'),
+                jackpotOverlay: document.getElementById('jackpot-overlay'),
+                jackpotWinAmount: document.getElementById('jackpot-win-amount'),
+                claimJackpotBtn: document.getElementById('claim-jackpot-btn'),
+                levelDisplay: document.getElementById('level'),
+                levelProgress: document.getElementById('level-progress'),
+                payoutGrid: document.getElementById('payout-grid'),
+                bonusIndicator: document.getElementById('bonus-indicator'),
+                freeSpinsLeft: document.getElementById('free-spins-left'),
+                winLines: document.getElementById('win-lines'),
+                soundToggle: document.getElementById('sound-toggle'),
+                soundIcon: document.getElementById('sound-icon'),
+                settingsPanel: document.getElementById('settings-panel'),
+                soundToggleSetting: document.getElementById('sound-toggle-setting'),
+                musicToggleSetting: document.getElementById('music-toggle-setting'),
+                animationsToggleSetting: document.getElementById('animations-toggle-setting'),
+                saveToggleSetting: document.getElementById('save-toggle-setting'),
+                closeSettingsBtn: document.getElementById('close-settings-btn')
+            };
+
+            // Initialize casino lights
+            function initCasinoLights() {
+                const lightsContainer = document.querySelector('.casino-lights');
+                lightsContainer.innerHTML = '';
                 
-                // Penempatan bidak putih
-                board[7][0] = { type: 'ROOK', color: 'WHITE', hasMoved: false };
-                board[7][1] = { type: 'KNIGHT', color: 'WHITE', hasMoved: false };
-                board[7][2] = { type: 'BISHOP', color: 'WHITE', hasMoved: false };
-                board[7][3] = { type: 'QUEEN', color: 'WHITE', hasMoved: false };
-                board[7][4] = { type: 'KING', color: 'WHITE', hasMoved: false };
-                board[7][5] = { type: 'BISHOP', color: 'WHITE', hasMoved: false };
-                board[7][6] = { type: 'KNIGHT', color: 'WHITE', hasMoved: false };
-                board[7][7] = { type: 'ROOK', color: 'WHITE', hasMoved: false };
-                
-                for (let i = 0; i < 8; i++) {
-                    board[6][i] = { type: 'PAWN', color: 'WHITE', hasMoved: false };
-                }
-                
-                // Penempatan bidak hitam
-                board[0][0] = { type: 'ROOK', color: 'BLACK', hasMoved: false };
-                board[0][1] = { type: 'KNIGHT', color: 'BLACK', hasMoved: false };
-                board[0][2] = { type: 'BISHOP', color: 'BLACK', hasMoved: false };
-                board[0][3] = { type: 'QUEEN', color: 'BLACK', hasMoved: false };
-                board[0][4] = { type: 'KING', color: 'BLACK', hasMoved: false };
-                board[0][5] = { type: 'BISHOP', color: 'BLACK', hasMoved: false };
-                board[0][6] = { type: 'KNIGHT', color: 'BLACK', hasMoved: false };
-                board[0][7] = { type: 'ROOK', color: 'BLACK', hasMoved: false };
-                
-                for (let i = 0; i < 8; i++) {
-                    board[1][i] = { type: 'PAWN', color: 'BLACK', hasMoved: false };
-                }
-                
-                kingPositions = { 
-                    WHITE: { row: 7, col: 4 }, 
-                    BLACK: { row: 0, col: 4 } 
-                };
-                
-                castlingRights = {
-                    WHITE: { kingSide: true, queenSide: true },
-                    BLACK: { kingSide: true, queenSide: true }
-                };
-                
-                enPassantTarget = null;
-                currentPlayer = 'WHITE';
-                moveHistory = [];
-                lastMove = null;
-                
-                renderBoard();
-                updateGameStatus();
-                renderMoveHistory();
-            }
-            
-            // Fungsi untuk menampilkan papan catur
-            function renderBoard() {
-                chessboard.innerHTML = '';
-                
-                for (let r = 0; r < 8; r++) {
-                    for (let c = 0; c < 8; c++) {
-                        const boardRow = boardFlipped ? 7 - r : r;
-                        const boardCol = boardFlipped ? 7 - c : c;
-                        
-                        const square = document.createElement('div');
-                        square.className = `square ${(r + c) % 2 === 0 ? 'white' : 'black'}`;
-                        square.dataset.row = boardRow;
-                        square.dataset.col = boardCol;
-                        
-                        // Tambahkan koordinat papan
-                        if (!boardFlipped && c === 0 || boardFlipped && c === 7) {
-                            const rankElem = document.createElement('span');
-                            rankElem.className = 'coordinate rank';
-                            rankElem.textContent = RANKS[r];
-                            square.appendChild(rankElem);
-                        }
-                        
-                        if (!boardFlipped && r === 7 || boardFlipped && r === 0) {
-                            const fileElem = document.createElement('span');
-                            fileElem.className = 'coordinate file';
-                            fileElem.textContent = FILES[c];
-                            square.appendChild(fileElem);
-                        }
-                        
-                        const piece = board[boardRow][boardCol];
-                        if (piece) {
-                            square.textContent = getPieceSymbol(piece);
-                        }
-                        
-                        // Highlight last move
-                        if (lastMove && 
-                            ((boardRow === lastMove.fromRow && boardCol === lastMove.fromCol) || 
-                             (boardRow === lastMove.toRow && boardCol === lastMove.toCol))) {
-                            square.classList.add('last-move');
-                        }
-                        
-                        // Highlight king in check
-                        const isCheck = isKingInCheck(currentPlayer);
-                        if (isCheck && piece && piece.type === 'KING' && piece.color === currentPlayer) {
-                            square.classList.add('check');
-                        }
-                        
-                        square.addEventListener('click', handleSquareClick);
-                        chessboard.appendChild(square);
-                    }
+                for (let i = 0; i < 30; i++) {
+                    const light = document.createElement('div');
+                    light.className = 'light';
+                    light.style.animationDelay = `${Math.random() * 2}s`;
+                    lightsContainer.appendChild(light);
                 }
             }
-            
-            // Fungsi untuk mendapatkan simbol bidak
-            function getPieceSymbol(piece) {
-                if (!piece) return '';
-                return PIECES[`${piece.color}_${piece.type}`];
-            }
-            
-            // Fungsi untuk menangani klik pada kotak
-            function handleSquareClick(event) {
-                const square = event.currentTarget;
-                const row = parseInt(square.dataset.row);
-                const col = parseInt(square.dataset.col);
+
+            // Initialize reels
+            function initReels() {
+                elements.reelContainer.innerHTML = '';
                 
-                if (promotionPending) return;
-                
-                if (selectedPiece) {
-                    const fromRow = selectedPiece.row;
-                    const fromCol = selectedPiece.col;
+                for (let i = 0; i < config.reelCount; i++) {
+                    const reel = document.createElement('div');
+                    reel.className = 'reel';
                     
-                    // Jika mengklik kotak yang sama, batalkan pilihan
-                    if (fromRow === row && fromCol === col) {
-                        selectedPiece = null;
-                        renderBoard();
-                        return;
-                    }
+                    const symbolsContainer = document.createElement('div');
+                    symbolsContainer.className = 'symbols';
+                    symbolsContainer.id = `symbols-${i}`;
                     
-                    // Jika mengklik bidak lain dengan warna yang sama
-                    const targetPiece = board[row][col];
-                    if (targetPiece && targetPiece.color === currentPlayer) {
-                        selectedPiece = { row, col, piece: targetPiece };
-                        renderBoard();
-                        highlightLegalMoves(row, col);
-                        return;
-                    }
-                    
-                    // Mencoba untuk melakukan gerakan
-                    const legalMoves = getLegalMoves(fromRow, fromCol);
-                    const isLegalMove = legalMoves.some(move => move.row === row && move.col === col);
-                    
-                    if (isLegalMove) {
-                        makeMove(fromRow, fromCol, row, col);
-                    } else {
-                        selectedPiece = null;
-                        renderBoard();
-                    }
-                } else {
-                    const piece = board[row][col];
-                    if (piece && piece.color === currentPlayer) {
-                        selectedPiece = { row, col, piece };
-                        renderBoard();
+                    // Add random symbols to each reel based on their weight
+                    for (let j = 0; j < config.symbolsPerReel; j++) {
+                        const symbolEl = document.createElement('div');
+                        symbolEl.className = 'symbol';
                         
-                        // Highlight kotak yang dipilih
-                        const squareElem = document.querySelector(`[data-row="${row}"][data-col="${col}"]`);
-                        squareElem.classList.add('selected');
+                        // Pick a random symbol based on weight
+                        const randomSymbol = pickWeightedSymbol();
+                        symbolEl.textContent = randomSymbol.symbol;
+                        symbolEl.dataset.symbolId = randomSymbol.id;
                         
-                        // Highlight gerakan yang valid
-                        highlightLegalMoves(row, col);
+                        symbolsContainer.appendChild(symbolEl);
                     }
+                    
+                    reel.appendChild(symbolsContainer);
+                    elements.reelContainer.appendChild(reel);
                 }
             }
-            
-            // Fungsi untuk highlight gerakan legal
-            function highlightLegalMoves(row, col) {
-                const legalMoves = getLegalMoves(row, col);
+
+            // Pick a random symbol based on weight
+            function pickWeightedSymbol() {
+                const totalWeight = symbols.reduce((sum, symbol) => sum + symbol.weight, 0);
+                let random = Math.random() * totalWeight;
                 
-                legalMoves.forEach(move => {
-                    const squareElem = document.querySelector(`[data-row="${move.row}"][data-col="${move.col}"]`);
-                    if (squareElem) {
-                        squareElem.classList.add('highlighted');
+                for (const symbol of symbols) {
+                    random -= symbol.weight;
+                    if (random <= 0) {
+                        return symbol;
+                    }
+                }
+                
+                return symbols[0]; // Fallback
+            }
+
+            // Initialize payout table
+            function initPayoutTable() {
+                elements.payoutGrid.innerHTML = '';
+                
+                symbols.forEach(symbol => {
+                    if (symbol.payout > 0) {
+                        const payoutItem = document.createElement('div');
+                        payoutItem.className = 'payout-item';
+                        
+                        const symbolsDisplay = document.createElement('div');
+                        symbolsDisplay.className = 'payout-symbols';
+                        
+                        // Show 3 of the same symbol
+                        for (let i = 0; i < 3; i++) {
+                            const symbolSpan = document.createElement('span');
+                            symbolSpan.textContent = symbol.symbol;
+                            symbolsDisplay.appendChild(symbolSpan);
+                        }
+                        
+                        const payoutValue = document.createElement('div');
+                        payoutValue.className = 'payout-value';
+                        payoutValue.textContent = `${symbol.payout}x`;
+                        
+                        payoutItem.appendChild(symbolsDisplay);
+                        payoutItem.appendChild(payoutValue);
+                        elements.payoutGrid.appendChild(payoutItem);
                     }
                 });
+                
+                // Add special symbols information
+                const wildInfo = document.createElement('div');
+                wildInfo.className = 'payout-item';
+                wildInfo.innerHTML = `
+                    <div class="payout-symbols">
+                        <span>⭐</span>
+                    </div>
+                    <div class="payout-value">WILD</div>
+                `;
+                elements.payoutGrid.appendChild(wildInfo);
+                
+                const scatterInfo = document.createElement('div');
+                scatterInfo.className = 'payout-item';
+                scatterInfo.innerHTML = `
+                    <div class="payout-symbols">
+                        <span>🎁</span>
+                    </div>
+                    <div class="payout-value">FREE SPINS</div>
+                `;
+                elements.payoutGrid.appendChild(scatterInfo);
             }
-            
-            // Fungsi untuk mendapatkan gerakan legal untuk sebuah bidak
-            function getLegalMoves(row, col) {
-                const piece = board[row][col];
-                if (!piece) return [];
+
+            // Spin the reels
+            function spinReels() {
+                if (state.isSpinning) return;
                 
-                let moves = getPseudoLegalMoves(row, col);
-                
-                // Filter gerakan untuk mencegah raja berada dalam posisi skak
-                moves = moves.filter(move => {
-                    const result = simulateMove(row, col, move.row, move.col);
-                    const inCheck = result.inCheck;
-                    
-                    // Kembalikan state papan ke semula
-                    board = result.originalBoard;
-                    kingPositions = result.originalKingPositions;
-                    
-                    return !inCheck;
-                });
-                
-                return moves;
-            }
-            
-            // Fungsi untuk mendapatkan semua gerakan yang mungkin (tanpa memperhitungkan skak)
-            function getPseudoLegalMoves(row, col) {
-                const piece = board[row][col];
-                if (!piece) return [];
-                
-                const moves = [];
-                
-                switch (piece.type) {
-                    case 'PAWN':
-                        getPawnMoves(row, col, piece, moves);
-                        break;
-                    case 'KNIGHT':
-                        getKnightMoves(row, col, piece, moves);
-                        break;
-                    case 'BISHOP':
-                        getBishopMoves(row, col, piece, moves);
-                        break;
-                    case 'ROOK':
-                        getRookMoves(row, col, piece, moves);
-                        break;
-                    case 'QUEEN':
-                        getBishopMoves(row, col, piece, moves); // Queen bergerak seperti Bishop
-                        getRookMoves(row, col, piece, moves);   // dan seperti Rook
-                        break;
-                    case 'KING':
-                        getKingMoves(row, col, piece, moves);
-                        break;
-                }
-                
-                return moves;
-            }
-            
-            // Fungsi untuk gerakan pion
-            function getPawnMoves(row, col, piece, moves) {
-                const direction = piece.color === 'WHITE' ? -1 : 1;
-                const startRow = piece.color === 'WHITE' ? 6 : 1;
-                
-                // Gerakan maju 1 langkah
-                if (isValidPosition(row + direction, col) && !board[row + direction][col]) {
-                    moves.push({ row: row + direction, col: col });
-                    
-                    // Gerakan maju 2 langkah dari posisi awal
-                    if (row === startRow && !board[row + 2 * direction][col]) {
-                        moves.push({ row: row + 2 * direction, col: col });
-                    }
-                }
-                
-                // Gerakan diagonal untuk mengambil bidak lawan
-                const captureOffsets = [{ r: direction, c: -1 }, { r: direction, c: 1 }];
-                for (const offset of captureOffsets) {
-                    const newRow = row + offset.r;
-                    const newCol = col + offset.c;
-                    
-                    if (isValidPosition(newRow, newCol)) {
-                        const targetPiece = board[newRow][newCol];
-                        
-                        // Normal capture
-                        if (targetPiece && targetPiece.color !== piece.color) {
-                            moves.push({ row: newRow, col: newCol });
-                        }
-                        
-                        // En passant capture
-                        if (enPassantTarget && 
-                            newRow === enPassantTarget.row && 
-                            newCol === enPassantTarget.col) {
-                            moves.push({ row: newRow, col: newCol, isEnPassant: true });
-                        }
-                    }
-                }
-            }
-            
-            // Fungsi untuk gerakan kuda
-            function getKnightMoves(row, col, piece, moves) {
-                const offsets = [
-                    { r: -2, c: -1 }, { r: -2, c: 1 },
-                    { r: -1, c: -2 }, { r: -1, c: 2 },
-                    { r: 1, c: -2 }, { r: 1, c: 2 },
-                    { r: 2, c: -1 }, { r: 2, c: 1 }
-                ];
-                
-                for (const offset of offsets) {
-                    const newRow = row + offset.r;
-                    const newCol = col + offset.c;
-                    
-                    if (isValidPosition(newRow, newCol)) {
-                        const targetPiece = board[newRow][newCol];
-                        if (!targetPiece || targetPiece.color !== piece.color) {
-                            moves.push({ row: newRow, col: newCol });
-                        }
-                    }
-                }
-            }
-            
-            // Fungsi untuk gerakan gajah
-            function getBishopMoves(row, col, piece, moves) {
-                const directions = [
-                    { r: -1, c: -1 }, { r: -1, c: 1 },
-                    { r: 1, c: -1 }, { r: 1, c: 1 }
-                ];
-                
-                for (const dir of directions) {
-                    for (let i = 1; i < 8; i++) {
-                        const newRow = row + i * dir.r;
-                        const newCol = col + i * dir.c;
-                        
-                        if (!isValidPosition(newRow, newCol)) break;
-                        
-                        const targetPiece = board[newRow][newCol];
-                        if (!targetPiece) {
-                            moves.push({ row: newRow, col: newCol });
-                        } else {
-                            if (targetPiece.color !== piece.color) {
-                                moves.push({ row: newRow, col: newCol });
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-            
-            // Fungsi untuk gerakan benteng
-            function getRookMoves(row, col, piece, moves) {
-                const directions = [
-                    { r: -1, c: 0 }, { r: 1, c: 0 },
-                    { r: 0, c: -1 }, { r: 0, c: 1 }
-                ];
-                
-                for (const dir of directions) {
-                    for (let i = 1; i < 8; i++) {
-                        const newRow = row + i * dir.r;
-                        const newCol = col + i * dir.c;
-                        
-                        if (!isValidPosition(newRow, newCol)) break;
-                        
-                        const targetPiece = board[newRow][newCol];
-                        if (!targetPiece) {
-                            moves.push({ row: newRow, col: newCol });
-                        } else {
-                            if (targetPiece.color !== piece.color) {
-                                moves.push({ row: newRow, col: newCol });
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-            
-            // Fungsi untuk gerakan raja
-            function getKingMoves(row, col, piece, moves) {
-                const offsets = [
-                    { r: -1, c: -1 }, { r: -1, c: 0 }, { r: -1, c: 1 },
-                    { r: 0, c: -1 }, { r: 0, c: 1 },
-                    { r: 1, c: -1 }, { r: 1, c: 0 }, { r: 1, c: 1 }
-                ];
-                
-                for (const offset of offsets) {
-                    const newRow = row + offset.r;
-                    const newCol = col + offset.c;
-                    
-                    if (isValidPosition(newRow, newCol)) {
-                        const targetPiece = board[newRow][newCol];
-                        if (!targetPiece || targetPiece.color !== piece.color) {
-                            moves.push({ row: newRow, col: newCol });
-                        }
-                    }
-                }
-                
-                // Rokade/Castling
-                if (!piece.hasMoved && !isKingInCheck(piece.color)) {
-                    // King-side castling
-                    if (castlingRights[piece.color].kingSide) {
-                        let canCastle = true;
-                        // Check if squares between king and rook are empty
-                        for (let c = col + 1; c < 7; c++) {
-                            if (board[row][c]) {
-                                canCastle = false;
-                                break;
-                            }
-                        }
-                        
-                        // Check if rook is present and hasn't moved
-                        const rookPiece = board[row][7];
-                        if (!rookPiece || rookPiece.type !== 'ROOK' || 
-                            rookPiece.color !== piece.color || rookPiece.hasMoved) {
-                            canCastle = false;
-                        }
-                        
-                        // Check if king passes through check
-                        if (canCastle) {
-                            const result1 = simulateMove(row, col, row, col + 1);
-                            const inCheck1 = result1.inCheck;
-                            board = result1.originalBoard;
-                            kingPositions = result1.originalKingPositions;
-                            
-                            const result2 = simulateMove(row, col, row, col + 2);
-                            const inCheck2 = result2.inCheck;
-                            board = result2.originalBoard;
-                            kingPositions = result2.originalKingPositions;
-                            
-                            if (!inCheck1 && !inCheck2) {
-                                moves.push({ row: row, col: col + 2, isCastling: 'kingside' });
-                            }
-                        }
-                    }
-                    
-                    // Queen-side castling
-                    if (castlingRights[piece.color].queenSide) {
-                        let canCastle = true;
-                        // Check if squares between king and rook are empty
-                        for (let c = col - 1; c > 0; c--) {
-                            if (board[row][c]) {
-                                canCastle = false;
-                                break;
-                            }
-                        }
-                        
-                        // Check if rook is present and hasn't moved
-                        const rookPiece = board[row][0];
-                        if (!rookPiece || rookPiece.type !== 'ROOK' || 
-                            rookPiece.color !== piece.color || rookPiece.hasMoved) {
-                            canCastle = false;
-                        }
-                        
-                        // Check if king passes through check
-                        if (canCastle) {
-                            const result1 = simulateMove(row, col, row, col - 1);
-                            const inCheck1 = result1.inCheck;
-                            board = result1.originalBoard;
-                            kingPositions = result1.originalKingPositions;
-                            
-                            const result2 = simulateMove(row, col, row, col - 2);
-                            const inCheck2 = result2.inCheck;
-                            board = result2.originalBoard;
-                            kingPositions = result2.originalKingPositions;
-                            
-                            if (!inCheck1 && !inCheck2) {
-                                moves.push({ row: row, col: col - 2, isCastling: 'queenside' });
-                            }
-                        }
-                    }
-                }
-            }
-            
-            // Fungsi untuk memeriksa apakah posisi valid
-            function isValidPosition(row, col) {
-                return row >= 0 && row < 8 && col >= 0 && col < 8;
-            }
-            
-            // Fungsi untuk mensimulasikan gerakan dan memeriksa skak
-            function simulateMove(fromRow, fromCol, toRow, toCol) {
-                // Salin papan dan posisi raja
-                const originalBoard = JSON.parse(JSON.stringify(board));
-                const originalKingPositions = JSON.parse(JSON.stringify(kingPositions));
-                
-                const piece = board[fromRow][fromCol];
-                const targetPiece = board[toRow][toCol];
-                
-                // Melakukan gerakan pada salinan papan
-                board[toRow][toCol] = piece;
-                board[fromRow][fromCol] = null;
-                
-                // Update posisi raja jika raja yang digerakkan
-                if (piece.type === 'KING') {
-                    kingPositions[piece.color] = { row: toRow, col: toCol };
-                }
-                
-                // Memeriksa apakah raja dalam skak setelah gerakan
-                const inCheck = isKingInCheck(piece.color);
-                
-                return { inCheck, originalBoard, originalKingPositions };
-            }
-            
-            // Fungsi untuk memeriksa apakah raja dalam skak
-            function isKingInCheck(color) {
-                const kingPos = kingPositions[color];
-                const opponentColor = color === 'WHITE' ? 'BLACK' : 'WHITE';
-                
-                // Memeriksa semua bidak lawan apakah bisa menyerang raja
-                for (let r = 0; r < 8; r++) {
-                    for (let c = 0; c < 8; c++) {
-                        const piece = board[r][c];
-                        if (piece && piece.color === opponentColor) {
-                            const moves = getPseudoLegalMoves(r, c);
-                            for (const move of moves) {
-                                if (move.row === kingPos.row && move.col === kingPos.col) {
-                                    return true;
-                                }
-                            }
-                        }
-                    }
-                }
-                
-                return false;
-            }
-            
-            // Fungsi untuk memeriksa apakah raja dalam skak mat
-            function isCheckmate(color) {
-                if (!isKingInCheck(color)) return false;
-                
-                // Memeriksa apakah ada gerakan yang bisa menyelamatkan raja
-                for (let r = 0; r < 8; r++) {
-                    for (let c = 0; c < 8; c++) {
-                        const piece = board[r][c];
-                        if (piece && piece.color === color) {
-                            const legalMoves = getLegalMoves(r, c);
-                            if (legalMoves.length > 0) {
-                                return false;
-                            }
-                        }
-                    }
-                }
-                
-                return true;
-            }
-            
-            // Fungsi untuk memeriksa stalemate (pat)
-            function isStalemate(color) {
-                if (isKingInCheck(color)) return false;
-                
-                // Memeriksa apakah ada gerakan legal untuk pemain saat ini
-                for (let r = 0; r < 8; r++) {
-                    for (let c = 0; c < 8; c++) {
-                        const piece = board[r][c];
-                        if (piece && piece.color === color) {
-                            const legalMoves = getLegalMoves(r, c);
-                            if (legalMoves.length > 0) {
-                                return false;
-                            }
-                        }
-                    }
-                }
-                
-                return true;
-            }
-            
-            // Fungsi untuk melakukan gerakan bidak
-            function makeMove(fromRow, fromCol, toRow, toCol) {
-                const piece = board[fromRow][fromCol];
-                const targetPiece = board[toRow][toCol];
-                const move = { 
-                    fromRow, fromCol, toRow, toCol,
-                    piece: JSON.parse(JSON.stringify(piece)),
-                    capturedPiece: targetPiece ? JSON.parse(JSON.stringify(targetPiece)) : null,
-                    castlingRights: JSON.parse(JSON.stringify(castlingRights)),
-                    enPassantTarget: enPassantTarget ? JSON.parse(JSON.stringify(enPassantTarget)) : null
-                };
-                
-                // Cek apakah gerakan adalah rokade
-                if (piece.type === 'KING' && Math.abs(toCol - fromCol) === 2) {
-                    if (toCol > fromCol) {
-                        // King-side castling
-                        const rookFromCol = 7;
-                        const rookToCol = toCol - 1;
-                        
-                        // Pindahkan benteng
-                        const rook = board[fromRow][rookFromCol];
-                        board[fromRow][rookToCol] = rook;
-                        board[fromRow][rookFromCol] = null;
-                        
-                        move.isCastling = 'kingside';
-                        move.rookMove = { fromRow, fromCol: rookFromCol, toRow: fromRow, toCol: rookToCol };
-                    } else {
-                        // Queen-side castling
-                        const rookFromCol = 0;
-                        const rookToCol = toCol + 1;
-                        
-                        // Pindahkan benteng
-                        const rook = board[fromRow][rookFromCol];
-                        board[fromRow][rookToCol] = rook;
-                        board[fromRow][rookFromCol] = null;
-                        
-                        move.isCastling = 'queenside';
-                        move.rookMove = { fromRow, fromCol: rookFromCol, toRow: fromRow, toCol: rookToCol };
-                    }
-                }
-                
-                // Cek apakah gerakan adalah en passant
-                let isEnPassant = false;
-                if (piece.type === 'PAWN' && enPassantTarget &&
-                    toRow === enPassantTarget.row && toCol === enPassantTarget.col) {
-                    const capturedPawnRow = fromRow;
-                    const capturedPawnCol = toCol;
-                    
-                    move.capturedPiece = board[capturedPawnRow][capturedPawnCol];
-                    move.isEnPassant = true;
-                    
-                    // Hapus pion yang di-en passant
-                    board[capturedPawnRow][capturedPawnCol] = null;
-                    isEnPassant = true;
-                }
-                
-                // Update en passant target untuk gerakan pion dua langkah
-                enPassantTarget = null;
-                if (piece.type === 'PAWN' && Math.abs(toRow - fromRow) === 2) {
-                    enPassantTarget = { 
-                        row: (fromRow + toRow) / 2, 
-                        col: toCol 
-                    };
-                }
-                
-                // Cek untuk promosi pion
-                if (piece.type === 'PAWN' && (toRow === 0 || toRow === 7)) {
-                    promotionPending = { fromRow, fromCol, toRow, toCol, move };
-                    showPromotionDialog(piece.color, toRow, toCol);
+                // Check if in bonus mode or if player has enough credits
+                if (!state.bonusMode && state.credits < state.bet) {
+                    showMessage("Not enough credits!");
                     return;
                 }
                 
-                // Pindahkan bidak
-                board[toRow][toCol] = piece;
-                board[fromRow][fromCol] = null;
+                // Reset UI
+                elements.messageArea.textContent = '';
+                elements.messageArea.classList.remove('win-message');
+                elements.winLines.innerHTML = '';
                 
-                // Update posisi raja jika raja digerakkan
-                if (piece.type === 'KING') {
-                    kingPositions[piece.color] = { row: toRow, col: toCol };
+                state.isSpinning = true;
+                state.lastWin = 0;
+                elements.winAmountDisplay.textContent = '0';
+                
+                // Play spin sound
+                if (config.soundEnabled) {
+                    playSound('spin');
                 }
                 
-                // Update status bidak telah bergerak
-                piece.hasMoved = true;
-                
-                // Update hak rokade
-                if (piece.type === 'KING') {
-                    castlingRights[piece.color].kingSide = false;
-                    castlingRights[piece.color].queenSide = false;
-                }
-                
-                if (piece.type === 'ROOK') {
-                    if (fromRow === 7 && fromCol === 0 && piece.color === 'WHITE') {
-                        castlingRights.WHITE.queenSide = false;
-                    } else if (fromRow === 7 && fromCol === 7 && piece.color === 'WHITE') {
-                        castlingRights.WHITE.kingSide = false;
-                    } else if (fromRow === 0 && fromCol === 0 && piece.color === 'BLACK') {
-                        castlingRights.BLACK.queenSide = false;
-                    } else if (fromRow === 0 && fromCol === 7 && piece.color === 'BLACK') {
-                        castlingRights.BLACK.kingSide = false;
-                    }
-                }
-                
-                // Simpan gerakan ke history
-                moveHistory.push(move);
-                
-                // Update last move untuk highlight
-                lastMove = { fromRow, fromCol, toRow, toCol };
-                
-                // Reset selectedPiece
-                selectedPiece = null;
-                
-                // Ganti pemain
-                currentPlayer = currentPlayer === 'WHITE' ? 'BLACK' : 'WHITE';
-                
-                // Update tampilan dan status
-                renderBoard();
-                updateGameStatus();
-                renderMoveHistory();
-            }
-            
-            // Fungsi untuk menampilkan dialog promosi pion
-            function showPromotionDialog(color, row, col) {
-                promotionModal.style.display = 'flex';
-                promotionOptions.innerHTML = '';
-                
-                const promotionPieces = ['QUEEN', 'ROOK', 'BISHOP', 'KNIGHT'];
-                
-                promotionPieces.forEach(pieceType => {
-                    const pieceElem = document.createElement('div');
-                    pieceElem.className = 'promotion-piece';
-                    pieceElem.textContent = PIECES[`${color}_${pieceType}`];
+                // Deduct bet if not in bonus mode
+                if (!state.bonusMode) {
+                    state.credits -= state.bet;
+                    updateCreditsDisplay();
                     
-                    pieceElem.addEventListener('click', () => {
-                        completePromotion(pieceType);
-                    });
-                    
-                    promotionOptions.appendChild(pieceElem);
-                });
-            }
-            
-            // Fungsi untuk menyelesaikan promosi pion
-            function completePromotion(pieceType) {
-                const { fromRow, fromCol, toRow, toCol, move } = promotionPending;
-                
-                // Update bidak yang dipromosikan
-                const pawn = board[fromRow][fromCol];
-                board[toRow][toCol] = { 
-                    type: pieceType, 
-                    color: pawn.color,
-                    hasMoved: true
-                };
-                board[fromRow][fromCol] = null;
-                
-                // Update move history
-                move.promotedTo = pieceType;
-                moveHistory.push(move);
-                
-                // Update last move
-                lastMove = { fromRow, fromCol, toRow, toCol };
-                
-                // Reset
-                selectedPiece = null;
-                promotionPending = null;
-                promotionModal.style.display = 'none';
-                
-                // Ganti pemain
-                currentPlayer = currentPlayer === 'WHITE' ? 'BLACK' : 'WHITE';
-                
-                // Update tampilan dan status
-                renderBoard();
-                updateGameStatus();
-                renderMoveHistory();
-            }
-            
-            // Fungsi untuk membatalkan gerakan terakhir
-            function undoLastMove() {
-                if (moveHistory.length === 0) return;
-                
-                const move = moveHistory.pop();
-                const { fromRow, fromCol, toRow, toCol, piece, capturedPiece, castlingRights: prevCastlingRights, enPassantTarget: prevEnPassantTarget } = move;
-                
-                // Kembalikan bidak ke posisi semula
-                board[fromRow][fromCol] = piece;
-                
-                // Kembalikan bidak yang diambil jika ada
-                if (move.isEnPassant) {
-                    board[toRow][toCol] = null;
-                    board[fromRow][toCol] = capturedPiece;
+                    // Add to jackpot
+                    state.jackpot += state.bet * config.jackpotIncrement;
+                    state.jackpotProgress += state.bet * config.jackpotIncrement / config.jackpotAmount;
+                    updateJackpotDisplay();
                 } else {
-                    board[toRow][toCol] = capturedPiece;
-                }
-                
-                // Kembalikan hak rokade
-                castlingRights = prevCastlingRights;
-                enPassantTarget = prevEnPassantTarget;
-                
-                // Kembalikan posisi raja jika perlu
-                if (piece.type === 'KING') {
-                    kingPositions[piece.color] = { row: fromRow, col: fromCol };
-                }
-                
-                // Kembalikan posisi benteng jika rokade
-                if (move.isCastling) {
-                    const rookMove = move.rookMove;
-                    const rook = board[rookMove.toRow][rookMove.toCol];
-                    board[rookMove.fromRow][rookMove.fromCol] = rook;
-                    board[rookMove.toRow][rookMove.toCol] = null;
-                }
-                
-                // Setel hasMoved kembali ke nilai aslinya
-                if (!capturedPiece && moveHistory.length === 0) {
-                    // Jika ini adalah gerakan pertama, setel hasMoved ke false
-                    piece.hasMoved = false;
-                }
-                
-                // Update last move
-                lastMove = moveHistory.length > 0 ? 
-                    { 
-                        fromRow: moveHistory[moveHistory.length - 1].fromRow,
-                        fromCol: moveHistory[moveHistory.length - 1].fromCol,
-                        toRow: moveHistory[moveHistory.length - 1].toRow,
-                        toCol: moveHistory[moveHistory.length - 1].toCol
-                    } : null;
-                
-                // Ganti pemain
-                currentPlayer = currentPlayer === 'WHITE' ? 'BLACK' : 'WHITE';
-                
-                // Update tampilan dan status
-                renderBoard();
-                updateGameStatus();
-                renderMoveHistory();
-            }
-            
-            // Fungsi untuk mengupdate status permainan
-            function updateGameStatus() {
-                let status = `Giliran ${currentPlayer === 'WHITE' ? 'Putih' : 'Hitam'}`;
-                
-                if (isKingInCheck(currentPlayer)) {
-                    if (isCheckmate(currentPlayer)) {
-                        status = `Skak Mat! ${currentPlayer === 'WHITE' ? 'Hitam' : 'Putih'} Menang!`;
-                    } else {
-                        status = `${currentPlayer === 'WHITE' ? 'Putih' : 'Hitam'} Dalam Skak!`;
-                    }
-                } else if (isStalemate(currentPlayer)) {
-                    status = 'Remis - Pat!';
-                }
-                
-                gameStatus.textContent = status;
-            }
-            
-            // Fungsi untuk merender history gerakan
-            function renderMoveHistory() {
-                moveList.innerHTML = '';
-                
-                for (let i = 0; i < moveHistory.length; i += 2) {
-                    const moveNumber = Math.floor(i / 2) + 1;
-                    const moveRow = document.createElement('div');
-                    moveRow.className = 'move-number';
-                    moveRow.textContent = moveNumber + '.';
-                    moveList.appendChild(moveRow);
+                    state.freeSpins--;
+                    elements.freeSpinsLeft.textContent = state.freeSpins;
                     
-                    const moveWhite = document.createElement('div');
-                    moveWhite.textContent = getAlgebraicNotation(moveHistory[i]);
-                    moveList.appendChild(moveWhite);
-                    
-                    const moveBlack = document.createElement('div');
-                    if (i + 1 < moveHistory.length) {
-                        moveBlack.textContent = getAlgebraicNotation(moveHistory[i + 1]);
+                    if (state.freeSpins <= 0) {
+                        state.bonusMode = false;
+                        elements.bonusIndicator.classList.remove('bonus-active');
                     }
-                    moveList.appendChild(moveBlack);
+                }
+                
+                // Disable buttons during spin
+                elements.spinBtn.disabled = true;
+                elements.betDownBtn.disabled = true;
+                elements.betUpBtn.disabled = true;
+                elements.maxBetBtn.disabled = true;
+                
+                // Prepare results array
+                state.reelResults = [];
+                
+                // Spin each reel with a slight delay
+                for (let i = 0; i < config.reelCount; i++) {
+                    const symbolsElement = document.getElementById(`symbols-${i}`);
+                    const symbols = symbolsElement.children;
+                    
+                    // Get a random position to stop the reel
+                    const randomPosition = Math.floor(Math.random() * (config.symbolsPerReel - config.visibleSymbols));
+                    const symbolHeight = symbols[0].offsetHeight;
+                    
+                    // Reset position first
+                    symbolsElement.style.transition = 'none';
+                    symbolsElement.style.transform = 'translateY(0)';
+                    
+                    // Start spinning after a short delay
+                    setTimeout(() => {
+                        symbolsElement.style.transition = `transform ${config.spinDuration / 1000 * (1 + (i * 0.2))}s cubic-bezier(0.23, 1, 0.32, 1)`;
+                        symbolsElement.style.transform = `translateY(-${randomPosition * symbolHeight}px)`;
+                        
+                        // Store the result
+                        const symbolId = symbols[randomPosition].dataset.symbolId;
+                        const symbolObj = symbols.find(s => s.id === symbolId) || symbols[0];
+                        state.reelResults.push({ id: symbolId, position: randomPosition });
+                        
+                        // Check if this is the last reel and process results
+                        if (i === config.reelCount - 1) {
+                            setTimeout(() => {
+                                processResults();
+                                state.isSpinning = false;
+                                elements.spinBtn.disabled = false;
+                                elements.betDownBtn.disabled = false;
+                                elements.betUpBtn.disabled = false;
+                                elements.maxBetBtn.disabled = false;
+                                
+                                // Add XP
+                                addXP(config.xpPerSpin);
+                                
+                                // Increment stats
+                                state.totalSpins++;
+                                
+                                // Check for bonus trigger
+                                checkForBonus();
+                                
+                                // Save game if enabled
+                                if (config.saveEnabled) {
+                                    saveGame();
+                                }
+                            }, config.spinDuration * 1.4);
+                        }
+                    }, 10 + (i * 200)); // Staggered spin start
                 }
             }
-            
-            // Fungsi untuk mengkonversi gerakan ke notasi aljabar
-            function getAlgebraicNotation(move) {
-                if (!move) return '';
+
+            // Process the spin results
+            function processResults() {
+                // Check for winning combinations on paylines
+                const winningLines = checkWinningLines();
+                let totalWin = 0;
                 
-                const { fromRow, fromCol, toRow, toCol, piece, capturedPiece, isCastling, promotedTo } = move;
-                
-                if (isCastling === 'kingside') {
-                    return 'O-O';
-                } else if (isCastling === 'queenside') {
-                    return 'O-O-O';
+                if (winningLines.length > 0) {
+                    // Calculate total win
+                    totalWin = winningLines.reduce((sum, line) => sum + line.win, 0);
+                    
+                    // Update credits
+                    state.credits += totalWin;
+                    state.lastWin = totalWin;
+                    
+                    // Update stats
+                    state.totalWins++;
+                    state.biggestWin = Math.max(state.biggestWin, totalWin);
+                    
+                    // Show win message
+                    showWinMessage(totalWin);
+                    
+                    // Highlight winning lines
+                    highlightWinningLines(winningLines);
+                    
+                    // Play win sound
+                    if (config.soundEnabled) {
+                        playSound('win');
+                    }
+                    
+                    // Check for jackpot
+                    if (checkJackpot()) {
+                        // Jackpot won!
+                        if (config.soundEnabled) {
+                            playSound('jackpot');
+                        }
+                        elements.jackpotWinAmount.textContent = state.jackpot.toLocaleString();
+                        elements.jackpotOverlay.style.display = 'flex';
+                    }
+                } else {
+                    showMessage("Try again!");
                 }
                 
-                let notation = '';
+                // Update displays
+                updateCreditsDisplay();
+                elements.winAmountDisplay.textContent = totalWin.toLocaleString();
+            }
+
+            // Check for winning combinations on paylines
+            function checkWinningLines() {
+                const winningLines = [];
                 
-                // Tambahkan simbol bidak (kecuali pion)
-                if (piece.type !== 'PAWN') {
-                    notation += piece.type.charAt(0);
-                }
-                
-                // Ambiguitas: perlu menambahkan file/rank asal jika ada bidak lain yang bisa bergerak ke kotak tujuan
-                const ambiguousPieces = [];
-                for (let r = 0; r < 8; r++) {
-                    for (let c = 0; c < 8; c++) {
-                        if ((r !== fromRow || c !== fromCol) && 
-                            board[r][c] && 
-                            board[r][c].type === piece.type && 
-                            board[r][c].color === piece.color) {
-                            
-                            const legalMoves = getLegalMoves(r, c);
-                            if (legalMoves.some(m => m.row === toRow && m.col === toCol)) {
-                                ambiguousPieces.push({ row: r, col: c });
+                // Check paylines
+                paylines.forEach((payline, index) => {
+                    const lineSymbols = [];
+                    
+                    // Get symbols on this payline
+                    for (let i = 0; i < config.reelCount; i++) {
+                        const symbolPosition = state.reelResults[i].position + payline.positions[i];
+                        const symbolElement = document.getElementById(`symbols-${i}`).children[symbolPosition];
+                        lineSymbols.push(symbolElement.dataset.symbolId);
+                    }
+                    
+                    // Check for matching symbols (3 or more)
+                    let matchCount = 1;
+                    let matchSymbol = lineSymbols[0];
+                    let hasWild = matchSymbol === 'wild';
+                    
+                    for (let i = 1; i < lineSymbols.length; i++) {
+                        const currentSymbol = lineSymbols[i];
+                        const isWild = currentSymbol === 'wild';
+                        
+                        // Check if the current symbol matches or is a wild
+                        if (currentSymbol === matchSymbol || isWild) {
+                            matchCount++;
+                            hasWild = hasWild || isWild;
+                        } else {
+                            // If the match symbol is a wild, and we encounter a non-wild,
+                            // change the match symbol to this one
+                            if (matchSymbol === 'wild' && !isWild) {
+                                matchSymbol = currentSymbol;
+                                matchCount++;
+                            } else {
+                                break;
                             }
                         }
                     }
-                }
-                
-                if (ambiguousPieces.length > 0) {
-                    let needFile = false;
-                    let needRank = false;
                     
-                    for (const ambig of ambiguousPieces) {
-                        if (ambig.col === fromCol) {
-                            needRank = true;
+                    // If we have at least 3 matches
+                    if (matchCount >= 3) {
+                        // Get the payout multiplier
+                        let payoutMultiplier = 0;
+                        const matchSymbolObj = symbols.find(s => s.id === matchSymbol);
+                        
+                        if (matchSymbolObj && !matchSymbolObj.isWild && !matchSymbolObj.isScatter) {
+                            payoutMultiplier = matchSymbolObj.payout;
+                            
+                            // Apply wild bonus if applicable
+                            if (hasWild) {
+                                payoutMultiplier *= 2;
+                            }
+                            
+                            // Apply payline multiplier
+                            payoutMultiplier *= payline.multiplier;
+                            
+                            // Calculate win
+                            const win = state.bet * payoutMultiplier;
+                            
+                            // Add to winning lines
+                            winningLines.push({
+                                index,
+                                payline,
+                                win,
+                                matchCount,
+                                matchSymbol,
+                                hasWild
+                            });
                         }
-                        if (ambig.row === fromRow) {
-                            needFile = true;
-                        }
                     }
-                    
-                    if (needFile || (ambiguousPieces.length > 0 && !needRank)) {
-                        notation += FILES[fromCol];
-                    }
-                    
-                    if (needRank) {
-                        notation += RANKS[fromRow];
-                    }
+                });
+                
+                // Check for scatter symbols (free spins)
+                const scatterCount = state.reelResults.filter(result => {
+                    const symbolElement = document.getElementById(`symbols-${result.position}`).children[result.position];
+                    return symbolElement.dataset.symbolId === 'scatter';
+                }).length;
+                
+                if (scatterCount >= 3) {
+                    // Trigger free spins
+                    triggerFreeSpins(scatterCount);
                 }
                 
-                // Tambahkan 'x' jika capture
-                if (capturedPiece || move.isEnPassant) {
-                    if (piece.type === 'PAWN' && notation === '') {
-                        notation += FILES[fromCol];
-                    }
-                    notation += 'x';
-                }
-                
-                // Tambahkan kotak tujuan
-                notation += FILES[toCol] + RANKS[toRow];
-                
-                // Tambahkan simbol promosi jika ada
-                if (promotedTo) {
-                    notation += '=' + promotedTo.charAt(0);
-                }
-                
-                // Tambahkan simbol skak atau skak mat
-                const opponentColor = piece.color === 'WHITE' ? 'BLACK' : 'WHITE';
-                if (isCheckmate(opponentColor)) {
-                    notation += '#';
-                } else if (isKingInCheck(opponentColor)) {
-                    notation += '+';
-                }
-                
-                return notation;
+                return winningLines;
             }
-            
-            // Event listeners untuk tombol-tombol
-            document.getElementById('newGameBtn').addEventListener('click', initializeBoard);
-            document.getElementById('undoBtn').addEventListener('click', undoLastMove);
-            document.getElementById('flipBoardBtn').addEventListener('click', function() {
-                boardFlipped = !boardFlipped;
-                renderBoard();
-            });
-            
-            // Inisialisasi permainan saat halaman dimuat
-            initializeBoard();
+
+            // Highlight winning lines
+            function highlightWinningLines(winningLines) {
+                elements.winLines.innerHTML = '';
+                
+                winningLines.forEach(line => {
+                    const winLine = document.createElement('div');
+                    winLine.className = 'win-line';
+                    
+                    // Position the line according to payline
+                    const positions = line.payline.positions;
+                    const height = 3;
+                    
+                    // Set line style based on payline positions
+                    let topPosition = 50;  // Center by default
+                    winLine.style.top = `${topPosition}%`;
+                    winLine.style.width = '100%';
+                    
+                    elements.winLines.appendChild(winLine);
+                    
+                    // Create coin animation for win
+                    if (config.animationsEnabled) {
+                        createCoinAnimation(line.win);
+                    }
+                });
+            }
+
+            // Check for jackpot (all slots symbols)
+            function checkJackpot() {
+                // Check if all reels have the slot machine symbol
+                const isJackpot = state.reelResults.every(result => {
+                    const symbolElement = document.getElementById(`symbols-${result.position}`).children[result.position];
+                    return symbolElement.dataset.symbolId === 'slot';
+                });
+                
+                return isJackpot;
+            }
+
+            // Trigger free spins
+            function triggerFreeSpins(scatterCount) {
+                // Award free spins based on scatter count
+                const freeSpins = scatterCount * 3;
+                state.freeSpins += freeSpins;
+                state.bonusMode = true;
+                
+                // Update UI
+                elements.bonusIndicator.classList.add('bonus-active');
+                elements.freeSpinsLeft.textContent = state.freeSpins;
+                
+                // Show message
+                showMessage(`${freeSpins} FREE SPINS AWARDED!`);
+                
+                // Play bonus sound
+                if (config.soundEnabled) {
+                    playSound('bonus');
+                }
+            }
+
+            // Check for random bonus features
+            function checkForBonus() {
+                if (!state.bonusMode && Math.random() < config.bonusProbability) {
+                    const bonusType = Math.floor(Math.random() * 3);
+                    
+                    switch (bonusType) {
+                        case 0:
+                            // Instant credits
+                            const bonusCredits = state.bet * (Math.floor(Math.random() * 10) + 1);
+                            state.credits += bonusCredits;
+                            showMessage(`BONUS! ${bonusCredits} CREDITS!`);
+                            break;
+                        case 1:
+                            // Free spins
+                            triggerFreeSpins(1);
+                            break;
+                        case 2:
+                            // Multiplier on next win
+                            // Implementation would go here
+                            break;
+                    }
+                }
+            }
+
+            // Create coin animation for wins
+            function createCoinAnimation(win) {
+                const coinCount = Math.min(20, Math.max(5, Math.floor(win / state.bet)));
+                const slotMachine = document.querySelector('.slot-machine');
+                
+                for (let i = 0; i < coinCount; i++) {
+                    setTimeout(() => {
+                        const coin = document.createElement('div');
+                        coin.className = 'coin-animation';
+                        coin.textContent = '💰';
+                        
+                        // Random position within the slot machine
+                        const left = 10 + Math.random() * 80;
+                        coin.style.left = `${left}%`;
+                        
+                        slotMachine.appendChild(coin);
+                        
+                        // Remove after animation completes
+                        setTimeout(() => {
+                            coin.remove();
+                        }, 1000);
+                    }, i * 100);
+                }
+            }
+
+            // Show message
+            function showMessage(text) {
+                elements.messageArea.textContent = text;
+                
+                if (text.includes('WIN') || text.includes('BONUS')) {
+                    elements.messageArea.classList.add('win-message');
+                } else {
+                    elements.messageArea.classList.remove('win-message');
+                }
+            }
+
+            // Show win message
+            function showWinMessage(amount) {
+                const messages = [
+                    "YOU WIN!",
+                    "GREAT WIN!",
+                    "AWESOME!",
+                    "BIG WIN!"
+                ];
+                
+                let messageIndex = 0;
+                if (amount > state.bet * 10) messageIndex = 3;
+                else if (amount > state.bet * 5) messageIndex = 2;
+                else if (amount > state.bet * 2) messageIndex = 1;
+                
+                showMessage(`${messages[messageIndex]} ${amount.toLocaleString()}`);
+            }
+
+            // Update credits display
+            function updateCreditsDisplay() {
+                elements.creditsDisplay.textContent = state.credits.toLocaleString();
+            }
+
+            // Update jackpot display
+            function updateJackpotDisplay() {
+                elements.jackpotAmountDisplay.textContent = Math.floor(state.jackpot).toLocaleString();
+                elements.jackpotProgress.style.width = `${Math.min(100, state.jackpotProgress * 100)}%`;
+            }
+
+            // Add XP and check for level up
+            function addXP(amount) {
+                if (state.level >= config.maxLevel) return;
+                
+                state.xp += amount;
+                
+                // Check for level up
+                if (state.xp >= state.xpToNextLevel) {
+                    levelUp();
+                }
+                
+                // Update level progress
+                const progress = (state.xp / state.xpToNextLevel) * 100;
+                elements.levelProgress.style.width = `${progress}%`;
+            }
+
+            // Level up
+            function levelUp() {
+                state.xp -= state.xpToNextLevel;
+                state.level++;
+                state.xpToNextLevel = state.level * 100;
+                
+                // Update display
+                elements.levelDisplay.textContent = state.level;
+                
+                // Award level up bonus
+                const bonus = state.level * 100;
+                state.credits += bonus;
+                updateCreditsDisplay();
+                
+                showMessage(`LEVEL UP! ${bonus} CREDITS BONUS!`);
+            }
+
+            // Update bet amount
+            function updateBet(amount) {
+                state.bet = amount;
+                elements.betAmountDisplay.textContent = state.bet.toLocaleString();
+            }
+
+            // Increase bet
+            function increaseBet() {
+                if (state.bet < config.maxBet) {
+                    updateBet(state.bet + config.betIncrement);
+                    playSound('click');
+                }
+            }
+
+            // Decrease bet
+            function decreaseBet() {
+                if (state.bet > config.minBet) {
+                    updateBet(state.bet - config.betIncrement);
+                    playSound('click');
+                }
+            }
+
+            // Set max bet
+            function setMaxBet() {
+                updateBet(config.maxBet);
+                playSound('click');
+            }
+
+            // Claim jackpot
+            function claimJackpot() {
+                state.credits += state.jackpot;
+                updateCreditsDisplay();
+                
+                // Reset jackpot
+                state.jackpot = config.jackpotAmount;
+                state.jackpotProgress = 0;
+                updateJackpotDisplay();
+                
+                // Hide overlay
+                elements.jackpotOverlay.style.display = 'none';
+            }
+
+            // Toggle sound
+            function toggleSound() {
+                config.soundEnabled = !config.soundEnabled;
+                
+                if (config.soundEnabled) {
+                    elements.soundIcon.className = 'fas fa-volume-up sound-icon';
+                } else {
+                    elements.soundIcon.className = 'fas fa-volume-mute sound-icon';
+                }
+            }
+
+            // Play sound
+            function playSound(soundName) {
+                if (!config.soundEnabled) return;
+                
+                if (audio[soundName]) {
+                    audio[soundName].currentTime = 0;
+                    audio[soundName].play().catch(e => {
+                        // Silent fallback for browsers that block autoplay
+                        console.log('Audio playback was prevented:', e);
+                    });
+                }
+            }
+
+            // Toggle settings
+            function toggleSettings() {
+                elements.settingsPanel.style.display = elements.settingsPanel.style.display === 'flex' ? 'none' : 'flex';
+            }
+
+            // Toggle setting option
+            function toggleOption(element, option) {
+                const isActive = element.classList.contains('active');
+                
+                if (isActive) {
+                    element.classList.remove('active');
+                    config[option] = false;
+                } else {
+                    element.classList.add('active');
+                    config[option] = true;
+                }
+                
+                // Update sound icon if needed
+                if (option === 'soundEnabled') {
+                    if (config.soundEnabled) {
+                        elements.soundIcon.className = 'fas fa-volume-up sound-icon';
+                    } else {
+                        elements.soundIcon.className = 'fas fa-volume-mute sound-icon';
+                    }
+                }
+                
+                playSound('click');
+            }
+
+            // Save game to local storage
+            function saveGame() {
+                if (!config.saveEnabled) return;
+                
+                localStorage.setItem('slotGame', JSON.stringify({
+                    credits: state.credits,
+                    level: state.level,
+                    xp: state.xp,
+                    xpToNextLevel: state.xpToNextLevel,
+                    jackpot: state.jackpot,
+                    totalSpins: state.totalSpins,
+                    totalWins: state.totalWins,
+                    biggestWin: state.biggestWin
+                }));
+            }
+
+            // Load game from local storage
+            function loadGame() {
+                if (!config.saveEnabled) return;
+                
+                const savedGame = localStorage.getItem('slotGame');
+                
+                if (savedGame) {
+                    try {
+                        const gameData = JSON.parse(savedGame);
+                        
+                        // Update state with saved data
+                        state.credits = gameData.credits || config.startingCredits;
+                        state.level = gameData.level || 1;
+                        state.xp = gameData.xp || 0;
+                        state.xpToNextLevel = gameData.xpToNextLevel || 100;
+                        state.jackpot = gameData.jackpot || config.jackpotAmount;
+                        state.totalSpins = gameData.totalSpins || 0;
+                        state.totalWins = gameData.totalWins || 0;
+                        state.biggestWin = gameData.biggestWin || 0;
+                        
+                        // Update displays
+                        updateCreditsDisplay();
+                        elements.levelDisplay.textContent = state.level;
+                        elements.levelProgress.style.width = `${(state.xp / state.xpToNextLevel) * 100}%`;
+                        updateJackpotDisplay();
+                    } catch (e) {
+                        console.error('Error loading saved game:', e);
+                    }
+                }
+            }
+
+            // Event listeners
+            function setupEventListeners() {
+                elements.spinBtn.addEventListener('click', spinReels);
+                elements.betUpBtn.addEventListener('click', increaseBet);
+                elements.betDownBtn.addEventListener('click', decreaseBet);
+                elements.maxBetBtn.addEventListener('click', setMaxBet);
+                elements.claimJackpotBtn.addEventListener('click', claimJackpot);
+                elements.soundToggle.addEventListener('click', toggleSound);
+                
+                // Settings panel
+                elements.soundToggleSetting.addEventListener('click', () => toggleOption(elements.soundToggleSetting, 'soundEnabled'));
+                elements.musicToggleSetting.addEventListener('click', () => toggleOption(elements.musicToggleSetting, 'musicEnabled'));
+                elements.animationsToggleSetting.addEventListener('click', () => toggleOption(elements.animationsToggleSetting, 'animationsEnabled'));
+                elements.saveToggleSetting.addEventListener('click', () => toggleOption(elements.saveToggleSetting, 'saveEnabled'));
+                elements.closeSettingsBtn.addEventListener('click', toggleSettings);
+            }
+
+            // Initialize game
+            function init() {
+                initCasinoLights();
+                initReels();
+                initPayoutTable();
+                setupEventListeners();
+                loadGame();
+                updateCreditsDisplay();
+                updateJackpotDisplay();
+            }
+
+            // Start the game
+            init();
         });
     </script>
 </body>
