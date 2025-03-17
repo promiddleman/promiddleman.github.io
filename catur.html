@@ -3,1578 +3,535 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Slot Machine</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Jadwal Pertandingan Sepak Bola</title>
     <style>
-        :root {
-            --primary-color: #4a148c;
-            --secondary-color: #7b1fa2;
-            --accent-color: #e91e63;
-            --gold-color: #ffd700;
-            --text-color: #f5f5f5;
-            --dark-bg: #1a1a1a;
-            --light-bg: #2a2a2a;
-            --reel-bg: #000;
-            --win-color: #4caf50;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-
+        
         body {
-            font-family: 'Arial', sans-serif;
-            background: radial-gradient(circle, var(--primary-color), var(--dark-bg));
-            color: var(--text-color);
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            overflow-x: hidden;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 20px;
         }
-
-        .game-container {
-            width: 100%;
-            max-width: 800px;
-            background: linear-gradient(145deg, var(--light-bg), var(--dark-bg));
-            border-radius: 20px;
-            padding: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .game-title {
+        
+        header {
+            background-color: #0a3b60;
+            color: #fff;
+            padding: 20px 0;
             text-align: center;
             margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-size: 1.8rem;
-            position: relative;
-            text-shadow: 0 0 10px var(--primary-color);
+            border-radius: 5px;
         }
-
-        .game-title::after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: var(--accent-color);
-            border-radius: 3px;
-        }
-
-        .casino-lights {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 10px;
-            display: flex;
-            justify-content: space-around;
-            z-index: -1;
-        }
-
-        .light {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--gold-color);
-            animation: lightBlink 0.5s infinite alternate;
-        }
-
-        @keyframes lightBlink {
-            from { opacity: 0.2; }
-            to { opacity: 1; }
-        }
-
-        .dashboard {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 15px;
-            padding: 10px;
-            border-radius: 10px;
-            background: rgba(0, 0, 0, 0.2);
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .stat-box {
-            text-align: center;
-            flex: 1;
-            padding: 5px;
-            position: relative;
-        }
-
-        .stat-box:not(:last-child)::after {
-            content: '';
-            position: absolute;
-            right: 0;
-            top: 25%;
-            height: 50%;
-            width: 1px;
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
-            opacity: 0.8;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .stat-value {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--gold-color);
-            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
-        }
-
-        .slot-machine {
-            position: relative;
-            width: 100%;
-            background: var(--reel-bg);
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 20px;
-            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.8),
-                        0 0 10px rgba(255, 255, 255, 0.1);
-            border: 2px solid #333;
-            overflow: hidden;
-        }
-
-        .slot-display {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .payline {
-            position: absolute;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: var(--accent-color);
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 0;
-            box-shadow: 0 0 10px var(--accent-color);
-            opacity: 0.8;
-        }
-
-        .reel-container {
-            display: flex;
-            justify-content: space-around;
-            position: relative;
-            z-index: 1;
-        }
-
-        .reel {
-            width: 18%;
-            height: 120px;
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .symbols {
-            position: absolute;
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-        }
-
-        .symbol {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 120px;
-            font-size: 60px;
-            background: white;
-            border-bottom: 1px solid #eee;
-        }
-
-        .controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .control-btn {
-            background: linear-gradient(145deg, var(--secondary-color), var(--primary-color));
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 1rem;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: bold;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-width: 120px;
-        }
-
-        .control-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
-        }
-
-        .control-btn:active {
-            transform: translateY(1px);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
-        }
-
-        .control-btn:disabled {
-            background: #666;
-            cursor: not-allowed;
-            transform: none;
-            opacity: 0.7;
-        }
-
-        .control-btn i {
-            margin-right: 8px;
-        }
-
-        .spin-btn {
-            background: linear-gradient(145deg, #e91e63, #d81b60);
-            min-width: 140px;
-        }
-
-        .spin-btn:hover {
-            background: linear-gradient(145deg, #d81b60, #c2185b);
-        }
-
-        .bet-controls {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .bet-amount {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 8px 15px;
-            border-radius: 20px;
-            min-width: 80px;
-            text-align: center;
-            font-weight: bold;
-            color: var(--gold-color);
-        }
-
-        .message-area {
-            text-align: center;
-            margin: 15px 0;
-            min-height: 40px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.2rem;
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
-        }
-
-        .win-message {
-            color: var(--gold-color);
-            animation: winPulse 1s infinite alternate;
-        }
-
-        @keyframes winPulse {
-            from { transform: scale(1); text-shadow: 0 0 10px rgba(255, 215, 0, 0.5); }
-            to { transform: scale(1.1); text-shadow: 0 0 20px rgba(255, 215, 0, 0.8); }
-        }
-
-        .jackpot-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.8);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 10;
-            flex-direction: column;
-            gap: 20px;
-            animation: jackpotBg 0.5s infinite alternate;
-        }
-
-        .jackpot-text {
-            font-size: 3rem;
-            color: var(--gold-color);
-            font-weight: bold;
-            text-shadow: 0 0 20px gold;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            animation: jackpotText 0.5s infinite alternate;
-        }
-
-        .jackpot-value {
+        
+        h1 {
             font-size: 2rem;
-            color: white;
+            margin-bottom: 10px;
         }
-
-        .jackpot-button {
-            margin-top: 20px;
-            padding: 10px 20px;
-            background: var(--gold-color);
-            color: black;
+        
+        .competition-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .competition-tab {
+            padding: 10px 15px;
+            background-color: #e0e0e0;
             border: none;
             border-radius: 20px;
             cursor: pointer;
-            font-weight: bold;
-            font-size: 1rem;
-            animation: jackpotButton 1s infinite alternate;
+            transition: all 0.3s ease;
+            font-weight: 600;
         }
-
-        @keyframes jackpotBg {
-            from { background-color: rgba(0, 0, 0, 0.8); }
-            to { background-color: rgba(74, 20, 140, 0.8); }
+        
+        .competition-tab:hover {
+            background-color: #d0d0d0;
         }
-
-        @keyframes jackpotText {
-            from { transform: scale(1); color: var(--gold-color); }
-            to { transform: scale(1.2); color: white; text-shadow: 0 0 30px var(--gold-color); }
+        
+        .competition-tab.active {
+            background-color: #0a3b60;
+            color: white;
         }
-
-        @keyframes jackpotButton {
-            from { transform: scale(1); box-shadow: 0 0 10px var(--gold-color); }
-            to { transform: scale(1.1); box-shadow: 0 0 20px var(--gold-color); }
-        }
-
-        .payout-table {
-            margin-top: 20px;
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
-            padding: 15px;
-            width: 100%;
-        }
-
-        .payout-title {
-            text-align: center;
-            margin-bottom: 10px;
-            font-size: 1.2rem;
-            color: var(--gold-color);
-        }
-
-        .payout-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-        }
-
-        .payout-item {
+        
+        .date-navigation {
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 5px;
-            border-radius: 5px;
-            background: rgba(255, 255, 255, 0.05);
-        }
-
-        .payout-symbols {
-            display: flex;
-            font-size: 1.2rem;
-        }
-
-        .payout-value {
-            font-weight: bold;
-            color: var(--gold-color);
-        }
-
-        .progress-container {
-            width: 100%;
-            height: 10px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 5px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            width: 0%;
-            transition: width 0.3s;
-            border-radius: 5px;
-        }
-
-        .bonus-indicator {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 5px 10px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            display: none;
-        }
-
-        .bonus-active {
-            display: block;
-            animation: bonusPulse 1s infinite alternate;
-        }
-
-        @keyframes bonusPulse {
-            from { background: rgba(0, 0, 0, 0.5); }
-            to { background: var(--accent-color); }
-        }
-
-        .settings-panel {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 20;
-            display: none;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-        }
-
-        .settings-title {
-            font-size: 1.5rem;
             margin-bottom: 20px;
-            color: var(--gold-color);
-        }
-
-        .settings-options {
-            display: flex;
-            flex-direction: column;
             gap: 15px;
-            width: 80%;
-            max-width: 300px;
         }
-
-        .setting-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .toggle-button {
-            position: relative;
-            width: 50px;
-            height: 24px;
-            background: #333;
-            border-radius: 12px;
+        
+        .date-btn {
+            background-color: #0a3b60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 15px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
-
-        .toggle-button::after {
-            content: '';
-            position: absolute;
-            top: 2px;
-            left: 2px;
-            width: 20px;
-            height: 20px;
-            background: white;
-            border-radius: 50%;
+        
+        .date-btn:hover {
+            background-color: #0c4b7d;
+        }
+        
+        .current-date {
+            font-size: 1.2rem;
+            font-weight: 600;
+            min-width: 200px;
+            text-align: center;
+        }
+        
+        .matches-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .match-card {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
             transition: transform 0.3s;
         }
-
-        .toggle-button.active {
-            background: var(--accent-color);
+        
+        .match-card:hover {
+            transform: translateY(-5px);
         }
-
-        .toggle-button.active::after {
-            transform: translateX(26px);
-        }
-
-        .close-settings {
-            margin-top: 30px;
-            padding: 8px 20px;
-            background: var(--accent-color);
-            border: none;
-            border-radius: 20px;
+        
+        .match-header {
+            background-color: #0a3b60;
             color: white;
-            cursor: pointer;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .match-league {
             font-weight: bold;
         }
-
-        .footer {
-            margin-top: 20px;
-            text-align: center;
+        
+        .match-time {
+            font-weight: bold;
+        }
+        
+        .match-status {
+            padding: 3px 8px;
+            border-radius: 12px;
             font-size: 0.8rem;
-            opacity: 0.7;
+            margin-left: 10px;
         }
-
-        /* Animations */
-        .coin-animation {
-            position: absolute;
-            font-size: 24px;
-            color: var(--gold-color);
-            user-select: none;
-            z-index: 5;
-            animation: coinFall 1s forwards;
+        
+        .status-scheduled {
+            background-color: #f0f0f0;
+            color: #333;
         }
-
-        @keyframes coinFall {
-            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
-            100% { transform: translateY(200px) rotate(360deg); opacity: 0; }
+        
+        .status-live {
+            background-color: #ff4242;
+            color: white;
+            animation: pulse 1.5s infinite;
         }
-
-        .win-lines {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 2;
+        
+        .status-finished {
+            background-color: #4caf50;
+            color: white;
         }
-
-        .win-line {
-            position: absolute;
-            height: 3px;
-            background: var(--accent-color);
-            box-shadow: 0 0 10px var(--accent-color);
-            animation: winLineFlash 0.5s infinite alternate;
-        }
-
-        @keyframes winLineFlash {
-            from { opacity: 0.3; }
-            to { opacity: 1; }
-        }
-
-        /* Responsive design */
-        @media (max-width: 768px) {
-            .game-container {
-                padding: 15px;
+        
+        @keyframes pulse {
+            0% {
+                opacity: 1;
             }
-
-            .game-title {
-                font-size: 1.5rem;
+            50% {
+                opacity: 0.7;
             }
-
-            .reel {
-                height: 100px;
-            }
-
-            .symbol {
-                height: 100px;
-                font-size: 50px;
-            }
-
-            .payout-grid {
-                grid-template-columns: repeat(2, 1fr);
+            100% {
+                opacity: 1;
             }
         }
-
-        @media (max-width: 480px) {
-            .game-container {
-                padding: 10px;
-            }
-
-            .game-title {
-                font-size: 1.2rem;
-                margin-bottom: 10px;
-            }
-
-            .dashboard {
-                flex-wrap: wrap;
-            }
-
-            .stat-box {
-                flex: 1 1 33%;
-                margin-bottom: 10px;
-            }
-
-            .stat-value {
-                font-size: 1.2rem;
-            }
-
-            .reel {
-                height: 80px;
-                width: 16%;
-            }
-
-            .symbol {
-                height: 80px;
-                font-size: 40px;
-            }
-
-            .controls {
-                gap: 10px;
-            }
-
-            .control-btn {
-                padding: 8px 15px;
-                font-size: 0.9rem;
-                min-width: 100px;
-            }
-
-            .payout-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .bet-controls {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
+        
+        .match-content {
+            padding: 15px;
         }
-
-        /* Sound icon */
-        .sound-toggle {
-            position: absolute;
-            top: 15px;
-            right: 15px;
+        
+        .team-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+        }
+        
+        .team {
+            display: flex;
+            align-items: center;
+            width: 45%;
+        }
+        
+        .team.home {
+            justify-content: flex-end;
+            text-align: right;
+        }
+        
+        .team.away {
+            justify-content: flex-start;
+            text-align: left;
+        }
+        
+        .team-logo {
             width: 30px;
             height: 30px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 50%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            z-index: 5;
+            object-fit: contain;
+            margin: 0 10px;
         }
-
-        .sound-icon {
-            color: var(--text-color);
-            font-size: 14px;
+        
+        .team-name {
+            font-weight: 600;
+        }
+        
+        .score-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            min-width: 60px;
+        }
+        
+        .venue {
+            font-size: 0.85rem;
+            color: #666;
+            text-align: center;
+            margin-top: 10px;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.2rem;
+            color: #666;
+        }
+        
+        .error-message {
+            background-color: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            text-align: center;
+        }
+        
+        footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .matches-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .team-name {
+                font-size: 0.9rem;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="game-container">
-        <div class="casino-lights">
-            <!-- These lights will be generated by JavaScript -->
+    <div class="container">
+        <header>
+            <h1>Jadwal Pertandingan Sepak Bola</h1>
+            <p>Data pertandingan sepak bola dari berbagai liga secara real-time</p>
+        </header>
+        
+        <div class="competition-tabs" id="competition-tabs">
+            <!-- Competition tabs will be inserted here -->
         </div>
         
-        <h1 class="game-title">Lucky Slots Deluxe</h1>
-        
-        <div class="dashboard">
-            <div class="stat-box">
-                <div class="stat-label">Credits</div>
-                <div class="stat-value" id="credits">1000</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-label">Win</div>
-                <div class="stat-value" id="win-amount">0</div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-label">Jackpot</div>
-                <div class="stat-value" id="jackpot-amount">5000</div>
-                <div class="progress-container">
-                    <div class="progress-bar" id="jackpot-progress"></div>
-                </div>
-            </div>
-            <div class="stat-box">
-                <div class="stat-label">Level</div>
-                <div class="stat-value" id="level">1</div>
-                <div class="progress-container">
-                    <div class="progress-bar" id="level-progress"></div>
-                </div>
-            </div>
+        <div class="date-navigation">
+            <button class="date-btn" id="prev-date">← Hari Sebelumnya</button>
+            <div class="current-date" id="current-date"></div>
+            <button class="date-btn" id="next-date">Hari Berikutnya →</button>
         </div>
         
-        <div class="slot-machine">
-            <div class="bonus-indicator" id="bonus-indicator">
-                Free Spins: <span id="free-spins-left">0</span>
-            </div>
-            
-            <div class="slot-display">
-                <div class="payline"></div>
-                <div class="reel-container">
-                    <!-- Reels will be added by JavaScript -->
-                </div>
-                <div class="win-lines" id="win-lines"></div>
-            </div>
-            
-            <div class="message-area" id="message"></div>
-            
-            <div class="controls">
-                <div class="bet-controls">
-                    <button class="control-btn" id="bet-down-btn">
-                        <i class="fas fa-minus"></i>
-                    </button>
-                    <div class="bet-amount" id="bet-amount">10</div>
-                    <button class="control-btn" id="bet-up-btn">
-                        <i class="fas fa-plus"></i>
-                    </button>
-                </div>
-                
-                <button class="control-btn spin-btn" id="spin-btn">
-                    <i class="fas fa-play"></i> SPIN
-                </button>
-                
-                <button class="control-btn" id="max-bet-btn">
-                    <i class="fas fa-gem"></i> MAX BET
-                </button>
-            </div>
-            
-            <div class="jackpot-overlay" id="jackpot-overlay">
-                <div class="jackpot-text">JACKPOT!</div>
-                <div class="jackpot-value" id="jackpot-win-amount">5000</div>
-                <button class="jackpot-button" id="claim-jackpot-btn">CLAIM REWARD</button>
-            </div>
+        <div id="matches-container" class="matches-container">
+            <div class="loading">Memuat jadwal pertandingan...</div>
         </div>
         
-        <div class="payout-table">
-            <div class="payout-title">PAYOUT TABLE</div>
-            <div class="payout-grid" id="payout-grid">
-                <!-- Payout information will be added by JavaScript -->
-            </div>
-        </div>
-        
-        <div class="sound-toggle" id="sound-toggle">
-            <i class="fas fa-volume-up sound-icon" id="sound-icon"></i>
-        </div>
-        
-        <div class="settings-panel" id="settings-panel">
-            <div class="settings-title">SETTINGS</div>
-            <div class="settings-options">
-                <div class="setting-item">
-                    <span>Sound</span>
-                    <div class="toggle-button active" id="sound-toggle-setting"></div>
-                </div>
-                <div class="setting-item">
-                    <span>Music</span>
-                    <div class="toggle-button active" id="music-toggle-setting"></div>
-                </div>
-                <div class="setting-item">
-                    <span>Animations</span>
-                    <div class="toggle-button active" id="animations-toggle-setting"></div>
-                </div>
-                <div class="setting-item">
-                    <span>Save Progress</span>
-                    <div class="toggle-button active" id="save-toggle-setting"></div>
-                </div>
-            </div>
-            <button class="close-settings" id="close-settings-btn">SAVE</button>
-        </div>
-    </div>
-    
-    <div class="footer">
-        &copy; 2025 Lucky Slots Deluxe | For entertainment purposes only
+        <footer>
+            <p>© <span id="current-year"></span> Jadwal Bola Real-Time | Data dari Football-Data.org API</p>
+        </footer>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Game configuration
-            const config = {
-                reelCount: 5,               // Number of reels
-                symbolsPerReel: 20,         // Symbols on each reel
-                visibleSymbols: 1,          // Visible symbols per reel
-                spinDuration: 2000,         // Spin animation duration in ms
-                startingCredits: 1000,      // Starting credits
-                minBet: 10,                 // Minimum bet
-                maxBet: 100,                // Maximum bet
-                betIncrement: 10,           // Bet increment
-                jackpotAmount: 5000,        // Initial jackpot amount
-                jackpotIncrement: 0.01,     // Percentage of bet added to jackpot
-                maxLevel: 10,               // Maximum player level
-                xpPerSpin: 1,               // XP earned per spin
-                bonusProbability: 0.05,     // Probability for bonus features
-                soundEnabled: true,         // Sound enabled by default
-                musicEnabled: true,         // Music enabled by default
-                animationsEnabled: true,    // Animations enabled by default
-                saveEnabled: true           // Save progress enabled by default
-            };
-
-            // Symbol definitions with payout multipliers
-            const symbols = [
-                { id: 'cherry', symbol: '🍒', weight: 20, payout: 5 },
-                { id: 'lemon', symbol: '🍋', weight: 17, payout: 10 },
-                { id: 'orange', symbol: '🍊', weight: 15, payout: 15 },
-                { id: 'grape', symbol: '🍇', weight: 12, payout: 20 },
-                { id: 'watermelon', symbol: '🍉', weight: 10, payout: 25 },
-                { id: 'bell', symbol: '🔔', weight: 8, payout: 40 },
-                { id: 'diamond', symbol: '💎', weight: 5, payout: 100 },
-                { id: 'seven', symbol: '7️⃣', weight: 3, payout: 200 },
-                { id: 'slot', symbol: '🎰', weight: 1, payout: 500 },
-                { id: 'wild', symbol: '⭐', weight: 2, payout: 0, isWild: true },
-                { id: 'scatter', symbol: '🎁', weight: 2, payout: 0, isScatter: true }
-            ];
-
-            // Special paylines
-            const paylines = [
-                { name: 'Middle', positions: [0, 0, 0, 0, 0], multiplier: 1 },
-                // Additional paylines can be added here
-            ];
-
-            // Game state
-            let state = {
-                credits: config.startingCredits,
-                bet: config.minBet,
-                isSpinning: false,
-                reelResults: [],
-                lastWin: 0,
-                jackpot: config.jackpotAmount,
-                jackpotProgress: 0,
-                level: 1,
-                xp: 0,
-                xpToNextLevel: 100,
-                bonusMode: false,
-                freeSpins: 0,
-                totalSpins: 0,
-                totalWins: 0,
-                biggestWin: 0
-            };
-
-            // Audio files - these would be actual paths in a real implementation
-            const audio = {
-                spin: new Audio(),
-                win: new Audio(),
-                jackpot: new Audio(),
-                click: new Audio(),
-                bonus: new Audio(),
-                background: new Audio()
-            };
-
-            // DOM elements
-            const elements = {
-                reelContainer: document.querySelector('.reel-container'),
-                spinBtn: document.getElementById('spin-btn'),
-                betDownBtn: document.getElementById('bet-down-btn'),
-                betUpBtn: document.getElementById('bet-up-btn'),
-                maxBetBtn: document.getElementById('max-bet-btn'),
-                betAmountDisplay: document.getElementById('bet-amount'),
-                creditsDisplay: document.getElementById('credits'),
-                winAmountDisplay: document.getElementById('win-amount'),
-                jackpotAmountDisplay: document.getElementById('jackpot-amount'),
-                jackpotProgress: document.getElementById('jackpot-progress'),
-                messageArea: document.getElementById('message'),
-                jackpotOverlay: document.getElementById('jackpot-overlay'),
-                jackpotWinAmount: document.getElementById('jackpot-win-amount'),
-                claimJackpotBtn: document.getElementById('claim-jackpot-btn'),
-                levelDisplay: document.getElementById('level'),
-                levelProgress: document.getElementById('level-progress'),
-                payoutGrid: document.getElementById('payout-grid'),
-                bonusIndicator: document.getElementById('bonus-indicator'),
-                freeSpinsLeft: document.getElementById('free-spins-left'),
-                winLines: document.getElementById('win-lines'),
-                soundToggle: document.getElementById('sound-toggle'),
-                soundIcon: document.getElementById('sound-icon'),
-                settingsPanel: document.getElementById('settings-panel'),
-                soundToggleSetting: document.getElementById('sound-toggle-setting'),
-                musicToggleSetting: document.getElementById('music-toggle-setting'),
-                animationsToggleSetting: document.getElementById('animations-toggle-setting'),
-                saveToggleSetting: document.getElementById('save-toggle-setting'),
-                closeSettingsBtn: document.getElementById('close-settings-btn')
-            };
-
-            // Initialize casino lights
-            function initCasinoLights() {
-                const lightsContainer = document.querySelector('.casino-lights');
-                lightsContainer.innerHTML = '';
+        // Configuration
+        const API_KEY = 'YOUR_API_KEY'; // You need to get an API key from football-data.org
+        const BASE_URL = 'https://api.football-data.org/v4';
+        
+        // DOM Elements
+        const competitionTabsElement = document.getElementById('competition-tabs');
+        const matchesContainerElement = document.getElementById('matches-container');
+        const currentDateElement = document.getElementById('current-date');
+        const prevDateButton = document.getElementById('prev-date');
+        const nextDateButton = document.getElementById('next-date');
+        const currentYearElement = document.getElementById('current-year');
+        
+        // Set current year in footer
+        currentYearElement.textContent = new Date().getFullYear();
+        
+        // State
+        let currentDate = new Date();
+        let selectedCompetition = 'ALL';
+        
+        // Competitions
+        const competitions = [
+            { id: 'ALL', name: 'Semua Liga' },
+            { id: 'PL', name: 'Premier League', code: 'PL' },
+            { id: 'PD', name: 'La Liga', code: 'PD' },
+            { id: 'SA', name: 'Serie A', code: 'SA' },
+            { id: 'BL1', name: 'Bundesliga', code: 'BL1' },
+            { id: 'FL1', name: 'Ligue 1', code: 'FL1' },
+            { id: 'CL', name: 'Champions League', code: 'CL' },
+        ];
+        
+        // Initialize the application
+        function init() {
+            updateCurrentDateDisplay();
+            createCompetitionTabs();
+            loadMatches();
+            
+            // Event listeners
+            prevDateButton.addEventListener('click', () => {
+                currentDate.setDate(currentDate.getDate() - 1);
+                updateCurrentDateDisplay();
+                loadMatches();
+            });
+            
+            nextDateButton.addEventListener('click', () => {
+                currentDate.setDate(currentDate.getDate() + 1);
+                updateCurrentDateDisplay();
+                loadMatches();
+            });
+        }
+        
+        // Format date to YYYY-MM-DD
+        function formatDate(date) {
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        
+        // Format date to display format
+        function formatDisplayDate(date) {
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('id-ID', options);
+        }
+        
+        // Update current date display
+        function updateCurrentDateDisplay() {
+            currentDateElement.textContent = formatDisplayDate(currentDate);
+        }
+        
+        // Create competition tabs
+        function createCompetitionTabs() {
+            competitions.forEach(competition => {
+                const tabElement = document.createElement('button');
+                tabElement.classList.add('competition-tab');
+                tabElement.textContent = competition.name;
                 
-                for (let i = 0; i < 30; i++) {
-                    const light = document.createElement('div');
-                    light.className = 'light';
-                    light.style.animationDelay = `${Math.random() * 2}s`;
-                    lightsContainer.appendChild(light);
+                if (competition.id === selectedCompetition) {
+                    tabElement.classList.add('active');
                 }
-            }
-
-            // Initialize reels
-            function initReels() {
-                elements.reelContainer.innerHTML = '';
                 
-                for (let i = 0; i < config.reelCount; i++) {
-                    const reel = document.createElement('div');
-                    reel.className = 'reel';
-                    
-                    const symbolsContainer = document.createElement('div');
-                    symbolsContainer.className = 'symbols';
-                    symbolsContainer.id = `symbols-${i}`;
-                    
-                    // Add random symbols to each reel based on their weight
-                    for (let j = 0; j < config.symbolsPerReel; j++) {
-                        const symbolEl = document.createElement('div');
-                        symbolEl.className = 'symbol';
-                        
-                        // Pick a random symbol based on weight
-                        const randomSymbol = pickWeightedSymbol();
-                        symbolEl.textContent = randomSymbol.symbol;
-                        symbolEl.dataset.symbolId = randomSymbol.id;
-                        
-                        symbolsContainer.appendChild(symbolEl);
-                    }
-                    
-                    reel.appendChild(symbolsContainer);
-                    elements.reelContainer.appendChild(reel);
-                }
-            }
-
-            // Pick a random symbol based on weight
-            function pickWeightedSymbol() {
-                const totalWeight = symbols.reduce((sum, symbol) => sum + symbol.weight, 0);
-                let random = Math.random() * totalWeight;
+                tabElement.addEventListener('click', () => {
+                    document.querySelectorAll('.competition-tab').forEach(tab => tab.classList.remove('active'));
+                    tabElement.classList.add('active');
+                    selectedCompetition = competition.id;
+                    loadMatches();
+                });
                 
-                for (const symbol of symbols) {
-                    random -= symbol.weight;
-                    if (random <= 0) {
-                        return symbol;
+                competitionTabsElement.appendChild(tabElement);
+            });
+        }
+        
+        // Load matches from API
+        async function loadMatches() {
+            try {
+                matchesContainerElement.innerHTML = '<div class="loading">Memuat jadwal pertandingan...</div>';
+                
+                const formattedDate = formatDate(currentDate);
+                let url = `${BASE_URL}/matches?dateFrom=${formattedDate}&dateTo=${formattedDate}`;
+                
+                if (selectedCompetition !== 'ALL') {
+                    const competition = competitions.find(comp => comp.id === selectedCompetition);
+                    if (competition && competition.code) {
+                        url = `${BASE_URL}/competitions/${competition.code}/matches?dateFrom=${formattedDate}&dateTo=${formattedDate}`;
                     }
                 }
                 
-                return symbols[0]; // Fallback
-            }
-
-            // Initialize payout table
-            function initPayoutTable() {
-                elements.payoutGrid.innerHTML = '';
-                
-                symbols.forEach(symbol => {
-                    if (symbol.payout > 0) {
-                        const payoutItem = document.createElement('div');
-                        payoutItem.className = 'payout-item';
-                        
-                        const symbolsDisplay = document.createElement('div');
-                        symbolsDisplay.className = 'payout-symbols';
-                        
-                        // Show 3 of the same symbol
-                        for (let i = 0; i < 3; i++) {
-                            const symbolSpan = document.createElement('span');
-                            symbolSpan.textContent = symbol.symbol;
-                            symbolsDisplay.appendChild(symbolSpan);
-                        }
-                        
-                        const payoutValue = document.createElement('div');
-                        payoutValue.className = 'payout-value';
-                        payoutValue.textContent = `${symbol.payout}x`;
-                        
-                        payoutItem.appendChild(symbolsDisplay);
-                        payoutItem.appendChild(payoutValue);
-                        elements.payoutGrid.appendChild(payoutItem);
+                const response = await fetch(url, {
+                    headers: {
+                        'X-Auth-Token': c89f077c595247899655252c07af3bd6
                     }
                 });
                 
-                // Add special symbols information
-                const wildInfo = document.createElement('div');
-                wildInfo.className = 'payout-item';
-                wildInfo.innerHTML = `
-                    <div class="payout-symbols">
-                        <span>⭐</span>
-                    </div>
-                    <div class="payout-value">WILD</div>
-                `;
-                elements.payoutGrid.appendChild(wildInfo);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
                 
-                const scatterInfo = document.createElement('div');
-                scatterInfo.className = 'payout-item';
-                scatterInfo.innerHTML = `
-                    <div class="payout-symbols">
-                        <span>🎁</span>
-                    </div>
-                    <div class="payout-value">FREE SPINS</div>
-                `;
-                elements.payoutGrid.appendChild(scatterInfo);
-            }
-
-            // Spin the reels
-            function spinReels() {
-                if (state.isSpinning) return;
+                const data = await response.json();
                 
-                // Check if in bonus mode or if player has enough credits
-                if (!state.bonusMode && state.credits < state.bet) {
-                    showMessage("Not enough credits!");
+                // Check if matches exist
+                if (!data.matches || data.matches.length === 0) {
+                    matchesContainerElement.innerHTML = `
+                        <div class="error-message">
+                            <p>Tidak ada pertandingan yang dijadwalkan untuk tanggal ini.</p>
+                        </div>
+                    `;
                     return;
                 }
                 
-                // Reset UI
-                elements.messageArea.textContent = '';
-                elements.messageArea.classList.remove('win-message');
-                elements.winLines.innerHTML = '';
+                // Render matches
+                renderMatches(data.matches);
                 
-                state.isSpinning = true;
-                state.lastWin = 0;
-                elements.winAmountDisplay.textContent = '0';
+            } catch (error) {
+                console.error('Error loading matches:', error);
                 
-                // Play spin sound
-                if (config.soundEnabled) {
-                    playSound('spin');
-                }
-                
-                // Deduct bet if not in bonus mode
-                if (!state.bonusMode) {
-                    state.credits -= state.bet;
-                    updateCreditsDisplay();
-                    
-                    // Add to jackpot
-                    state.jackpot += state.bet * config.jackpotIncrement;
-                    state.jackpotProgress += state.bet * config.jackpotIncrement / config.jackpotAmount;
-                    updateJackpotDisplay();
+                // Check if it's an API key error
+                if (API_KEY === 'YOUR_API_KEY') {
+                    matchesContainerElement.innerHTML = `
+                        <div class="error-message">
+                            <p>Anda perlu mengganti 'YOUR_API_KEY' di kode dengan API key yang valid dari football-data.org</p>
+                            <p>Daftar di <a href="https://www.football-data.org/client/register" target="_blank">football-data.org</a> untuk mendapatkan API key gratis.</p>
+                        </div>
+                    `;
                 } else {
-                    state.freeSpins--;
-                    elements.freeSpinsLeft.textContent = state.freeSpins;
-                    
-                    if (state.freeSpins <= 0) {
-                        state.bonusMode = false;
-                        elements.bonusIndicator.classList.remove('bonus-active');
-                    }
-                }
-                
-                // Disable buttons during spin
-                elements.spinBtn.disabled = true;
-                elements.betDownBtn.disabled = true;
-                elements.betUpBtn.disabled = true;
-                elements.maxBetBtn.disabled = true;
-                
-                // Prepare results array
-                state.reelResults = [];
-                
-                // Spin each reel with a slight delay
-                for (let i = 0; i < config.reelCount; i++) {
-                    const symbolsElement = document.getElementById(`symbols-${i}`);
-                    const symbols = symbolsElement.children;
-                    
-                    // Get a random position to stop the reel
-                    const randomPosition = Math.floor(Math.random() * (config.symbolsPerReel - config.visibleSymbols));
-                    const symbolHeight = symbols[0].offsetHeight;
-                    
-                    // Reset position first
-                    symbolsElement.style.transition = 'none';
-                    symbolsElement.style.transform = 'translateY(0)';
-                    
-                    // Start spinning after a short delay
-                    setTimeout(() => {
-                        symbolsElement.style.transition = `transform ${config.spinDuration / 1000 * (1 + (i * 0.2))}s cubic-bezier(0.23, 1, 0.32, 1)`;
-                        symbolsElement.style.transform = `translateY(-${randomPosition * symbolHeight}px)`;
-                        
-                        // Store the result
-                        const symbolId = symbols[randomPosition].dataset.symbolId;
-                        const symbolObj = symbols.find(s => s.id === symbolId) || symbols[0];
-                        state.reelResults.push({ id: symbolId, position: randomPosition });
-                        
-                        // Check if this is the last reel and process results
-                        if (i === config.reelCount - 1) {
-                            setTimeout(() => {
-                                processResults();
-                                state.isSpinning = false;
-                                elements.spinBtn.disabled = false;
-                                elements.betDownBtn.disabled = false;
-                                elements.betUpBtn.disabled = false;
-                                elements.maxBetBtn.disabled = false;
-                                
-                                // Add XP
-                                addXP(config.xpPerSpin);
-                                
-                                // Increment stats
-                                state.totalSpins++;
-                                
-                                // Check for bonus trigger
-                                checkForBonus();
-                                
-                                // Save game if enabled
-                                if (config.saveEnabled) {
-                                    saveGame();
-                                }
-                            }, config.spinDuration * 1.4);
-                        }
-                    }, 10 + (i * 200)); // Staggered spin start
+                    matchesContainerElement.innerHTML = `
+                        <div class="error-message">
+                            <p>Gagal memuat jadwal pertandingan. Error: ${error.message}</p>
+                        </div>
+                    `;
                 }
             }
-
-            // Process the spin results
-            function processResults() {
-                // Check for winning combinations on paylines
-                const winningLines = checkWinningLines();
-                let totalWin = 0;
+        }
+        
+        // Render matches
+        function renderMatches(matches) {
+            matchesContainerElement.innerHTML = '';
+            
+            matches.forEach(match => {
+                const matchCard = document.createElement('div');
+                matchCard.classList.add('match-card');
                 
-                if (winningLines.length > 0) {
-                    // Calculate total win
-                    totalWin = winningLines.reduce((sum, line) => sum + line.win, 0);
-                    
-                    // Update credits
-                    state.credits += totalWin;
-                    state.lastWin = totalWin;
-                    
-                    // Update stats
-                    state.totalWins++;
-                    state.biggestWin = Math.max(state.biggestWin, totalWin);
-                    
-                    // Show win message
-                    showWinMessage(totalWin);
-                    
-                    // Highlight winning lines
-                    highlightWinningLines(winningLines);
-                    
-                    // Play win sound
-                    if (config.soundEnabled) {
-                        playSound('win');
-                    }
-                    
-                    // Check for jackpot
-                    if (checkJackpot()) {
-                        // Jackpot won!
-                        if (config.soundEnabled) {
-                            playSound('jackpot');
-                        }
-                        elements.jackpotWinAmount.textContent = state.jackpot.toLocaleString();
-                        elements.jackpotOverlay.style.display = 'flex';
-                    }
-                } else {
-                    showMessage("Try again!");
+                // Format match time
+                const matchDate = new Date(match.utcDate);
+                const formattedTime = matchDate.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
+                
+                // Get match status and style
+                let statusText = 'Dijadwalkan';
+                let statusClass = 'status-scheduled';
+                
+                if (match.status === 'IN_PLAY' || match.status === 'PAUSED') {
+                    statusText = 'LIVE';
+                    statusClass = 'status-live';
+                } else if (match.status === 'FINISHED') {
+                    statusText = 'Selesai';
+                    statusClass = 'status-finished';
                 }
                 
-                // Update displays
-                updateCreditsDisplay();
-                elements.winAmountDisplay.textContent = totalWin.toLocaleString();
-            }
-
-            // Check for winning combinations on paylines
-            function checkWinningLines() {
-                const winningLines = [];
+                matchCard.innerHTML = `
+                    <div class="match-header">
+                        <span class="match-league">${match.competition.name}</span>
+                        <span>
+                            <span class="match-time">${formattedTime}</span>
+                            <span class="match-status ${statusClass}">${statusText}</span>
+                        </span>
+                    </div>
+                    <div class="match-content">
+                        <div class="team-container">
+                            <div class="team home">
+                                <span class="team-name">${match.homeTeam.shortName || match.homeTeam.name}</span>
+                                <img class="team-logo" src="/api/placeholder/30/30" alt="${match.homeTeam.name} logo" onerror="this.src='/api/placeholder/30/30'">
+                            </div>
+                            <div class="score-container">
+                                ${match.status === 'SCHEDULED' ? 'VS' : `${match.score.fullTime.home ?? '-'} - ${match.score.fullTime.away ?? '-'}`}
+                            </div>
+                            <div class="team away">
+                                <img class="team-logo" src="/api/placeholder/30/30" alt="${match.awayTeam.name} logo" onerror="this.src='/api/placeholder/30/30'">
+                                <span class="team-name">${match.awayTeam.shortName || match.awayTeam.name}</span>
+                            </div>
+                        </div>
+                        ${match.venue ? `<div class="venue">${match.venue}</div>` : ''}
+                    </div>
+                `;
                 
-                // Check paylines
-                paylines.forEach((payline, index) => {
-                    const lineSymbols = [];
-                    
-                    // Get symbols on this payline
-                    for (let i = 0; i < config.reelCount; i++) {
-                        const symbolPosition = state.reelResults[i].position + payline.positions[i];
-                        const symbolElement = document.getElementById(`symbols-${i}`).children[symbolPosition];
-                        lineSymbols.push(symbolElement.dataset.symbolId);
-                    }
-                    
-                    // Check for matching symbols (3 or more)
-                    let matchCount = 1;
-                    let matchSymbol = lineSymbols[0];
-                    let hasWild = matchSymbol === 'wild';
-                    
-                    for (let i = 1; i < lineSymbols.length; i++) {
-                        const currentSymbol = lineSymbols[i];
-                        const isWild = currentSymbol === 'wild';
-                        
-                        // Check if the current symbol matches or is a wild
-                        if (currentSymbol === matchSymbol || isWild) {
-                            matchCount++;
-                            hasWild = hasWild || isWild;
-                        } else {
-                            // If the match symbol is a wild, and we encounter a non-wild,
-                            // change the match symbol to this one
-                            if (matchSymbol === 'wild' && !isWild) {
-                                matchSymbol = currentSymbol;
-                                matchCount++;
-                            } else {
-                                break;
-                            }
-                        }
-                    }
-                    
-                    // If we have at least 3 matches
-                    if (matchCount >= 3) {
-                        // Get the payout multiplier
-                        let payoutMultiplier = 0;
-                        const matchSymbolObj = symbols.find(s => s.id === matchSymbol);
-                        
-                        if (matchSymbolObj && !matchSymbolObj.isWild && !matchSymbolObj.isScatter) {
-                            payoutMultiplier = matchSymbolObj.payout;
-                            
-                            // Apply wild bonus if applicable
-                            if (hasWild) {
-                                payoutMultiplier *= 2;
-                            }
-                            
-                            // Apply payline multiplier
-                            payoutMultiplier *= payline.multiplier;
-                            
-                            // Calculate win
-                            const win = state.bet * payoutMultiplier;
-                            
-                            // Add to winning lines
-                            winningLines.push({
-                                index,
-                                payline,
-                                win,
-                                matchCount,
-                                matchSymbol,
-                                hasWild
-                            });
-                        }
-                    }
-                });
-                
-                // Check for scatter symbols (free spins)
-                const scatterCount = state.reelResults.filter(result => {
-                    const symbolElement = document.getElementById(`symbols-${result.position}`).children[result.position];
-                    return symbolElement.dataset.symbolId === 'scatter';
-                }).length;
-                
-                if (scatterCount >= 3) {
-                    // Trigger free spins
-                    triggerFreeSpins(scatterCount);
+                matchesContainerElement.appendChild(matchCard);
+            });
+        }
+        
+        // Initialize the app when the DOM is fully loaded
+        document.addEventListener('DOMContentLoaded', init);
+        
+        // If you don't have an API key, you can use this function to load sample data for testing
+        function loadSampleData() {
+            const sampleMatches = [
+                {
+                    "id": 1,
+                    "utcDate": new Date().toISOString(),
+                    "status": "SCHEDULED",
+                    "competition": { "name": "Premier League" },
+                    "homeTeam": { "name": "Arsenal FC", "shortName": "Arsenal" },
+                    "awayTeam": { "name": "Chelsea FC", "shortName": "Chelsea" },
+                    "score": { "fullTime": { "home": null, "away": null } },
+                    "venue": "Emirates Stadium"
+                },
+                {
+                    "id": 2,
+                    "utcDate": new Date().toISOString(),
+                    "status": "IN_PLAY",
+                    "competition": { "name": "La Liga" },
+                    "homeTeam": { "name": "FC Barcelona", "shortName": "Barcelona" },
+                    "awayTeam": { "name": "Real Madrid CF", "shortName": "R. Madrid" },
+                    "score": { "fullTime": { "home": 2, "away": 1 } },
+                    "venue": "Camp Nou"
+                },
+                {
+                    "id": 3,
+                    "utcDate": new Date().toISOString(),
+                    "status": "FINISHED",
+                    "competition": { "name": "Serie A" },
+                    "homeTeam": { "name": "Juventus FC", "shortName": "Juventus" },
+                    "awayTeam": { "name": "AC Milan", "shortName": "Milan" },
+                    "score": { "fullTime": { "home": 3, "away": 2 } },
+                    "venue": "Allianz Stadium"
                 }
-                
-                return winningLines;
-            }
-
-            // Highlight winning lines
-            function highlightWinningLines(winningLines) {
-                elements.winLines.innerHTML = '';
-                
-                winningLines.forEach(line => {
-                    const winLine = document.createElement('div');
-                    winLine.className = 'win-line';
-                    
-                    // Position the line according to payline
-                    const positions = line.payline.positions;
-                    const height = 3;
-                    
-                    // Set line style based on payline positions
-                    let topPosition = 50;  // Center by default
-                    winLine.style.top = `${topPosition}%`;
-                    winLine.style.width = '100%';
-                    
-                    elements.winLines.appendChild(winLine);
-                    
-                    // Create coin animation for win
-                    if (config.animationsEnabled) {
-                        createCoinAnimation(line.win);
-                    }
-                });
-            }
-
-            // Check for jackpot (all slots symbols)
-            function checkJackpot() {
-                // Check if all reels have the slot machine symbol
-                const isJackpot = state.reelResults.every(result => {
-                    const symbolElement = document.getElementById(`symbols-${result.position}`).children[result.position];
-                    return symbolElement.dataset.symbolId === 'slot';
-                });
-                
-                return isJackpot;
-            }
-
-            // Trigger free spins
-            function triggerFreeSpins(scatterCount) {
-                // Award free spins based on scatter count
-                const freeSpins = scatterCount * 3;
-                state.freeSpins += freeSpins;
-                state.bonusMode = true;
-                
-                // Update UI
-                elements.bonusIndicator.classList.add('bonus-active');
-                elements.freeSpinsLeft.textContent = state.freeSpins;
-                
-                // Show message
-                showMessage(`${freeSpins} FREE SPINS AWARDED!`);
-                
-                // Play bonus sound
-                if (config.soundEnabled) {
-                    playSound('bonus');
-                }
-            }
-
-            // Check for random bonus features
-            function checkForBonus() {
-                if (!state.bonusMode && Math.random() < config.bonusProbability) {
-                    const bonusType = Math.floor(Math.random() * 3);
-                    
-                    switch (bonusType) {
-                        case 0:
-                            // Instant credits
-                            const bonusCredits = state.bet * (Math.floor(Math.random() * 10) + 1);
-                            state.credits += bonusCredits;
-                            showMessage(`BONUS! ${bonusCredits} CREDITS!`);
-                            break;
-                        case 1:
-                            // Free spins
-                            triggerFreeSpins(1);
-                            break;
-                        case 2:
-                            // Multiplier on next win
-                            // Implementation would go here
-                            break;
-                    }
-                }
-            }
-
-            // Create coin animation for wins
-            function createCoinAnimation(win) {
-                const coinCount = Math.min(20, Math.max(5, Math.floor(win / state.bet)));
-                const slotMachine = document.querySelector('.slot-machine');
-                
-                for (let i = 0; i < coinCount; i++) {
-                    setTimeout(() => {
-                        const coin = document.createElement('div');
-                        coin.className = 'coin-animation';
-                        coin.textContent = '💰';
-                        
-                        // Random position within the slot machine
-                        const left = 10 + Math.random() * 80;
-                        coin.style.left = `${left}%`;
-                        
-                        slotMachine.appendChild(coin);
-                        
-                        // Remove after animation completes
-                        setTimeout(() => {
-                            coin.remove();
-                        }, 1000);
-                    }, i * 100);
-                }
-            }
-
-            // Show message
-            function showMessage(text) {
-                elements.messageArea.textContent = text;
-                
-                if (text.includes('WIN') || text.includes('BONUS')) {
-                    elements.messageArea.classList.add('win-message');
-                } else {
-                    elements.messageArea.classList.remove('win-message');
-                }
-            }
-
-            // Show win message
-            function showWinMessage(amount) {
-                const messages = [
-                    "YOU WIN!",
-                    "GREAT WIN!",
-                    "AWESOME!",
-                    "BIG WIN!"
-                ];
-                
-                let messageIndex = 0;
-                if (amount > state.bet * 10) messageIndex = 3;
-                else if (amount > state.bet * 5) messageIndex = 2;
-                else if (amount > state.bet * 2) messageIndex = 1;
-                
-                showMessage(`${messages[messageIndex]} ${amount.toLocaleString()}`);
-            }
-
-            // Update credits display
-            function updateCreditsDisplay() {
-                elements.creditsDisplay.textContent = state.credits.toLocaleString();
-            }
-
-            // Update jackpot display
-            function updateJackpotDisplay() {
-                elements.jackpotAmountDisplay.textContent = Math.floor(state.jackpot).toLocaleString();
-                elements.jackpotProgress.style.width = `${Math.min(100, state.jackpotProgress * 100)}%`;
-            }
-
-            // Add XP and check for level up
-            function addXP(amount) {
-                if (state.level >= config.maxLevel) return;
-                
-                state.xp += amount;
-                
-                // Check for level up
-                if (state.xp >= state.xpToNextLevel) {
-                    levelUp();
-                }
-                
-                // Update level progress
-                const progress = (state.xp / state.xpToNextLevel) * 100;
-                elements.levelProgress.style.width = `${progress}%`;
-            }
-
-            // Level up
-            function levelUp() {
-                state.xp -= state.xpToNextLevel;
-                state.level++;
-                state.xpToNextLevel = state.level * 100;
-                
-                // Update display
-                elements.levelDisplay.textContent = state.level;
-                
-                // Award level up bonus
-                const bonus = state.level * 100;
-                state.credits += bonus;
-                updateCreditsDisplay();
-                
-                showMessage(`LEVEL UP! ${bonus} CREDITS BONUS!`);
-            }
-
-            // Update bet amount
-            function updateBet(amount) {
-                state.bet = amount;
-                elements.betAmountDisplay.textContent = state.bet.toLocaleString();
-            }
-
-            // Increase bet
-            function increaseBet() {
-                if (state.bet < config.maxBet) {
-                    updateBet(state.bet + config.betIncrement);
-                    playSound('click');
-                }
-            }
-
-            // Decrease bet
-            function decreaseBet() {
-                if (state.bet > config.minBet) {
-                    updateBet(state.bet - config.betIncrement);
-                    playSound('click');
-                }
-            }
-
-            // Set max bet
-            function setMaxBet() {
-                updateBet(config.maxBet);
-                playSound('click');
-            }
-
-            // Claim jackpot
-            function claimJackpot() {
-                state.credits += state.jackpot;
-                updateCreditsDisplay();
-                
-                // Reset jackpot
-                state.jackpot = config.jackpotAmount;
-                state.jackpotProgress = 0;
-                updateJackpotDisplay();
-                
-                // Hide overlay
-                elements.jackpotOverlay.style.display = 'none';
-            }
-
-            // Toggle sound
-            function toggleSound() {
-                config.soundEnabled = !config.soundEnabled;
-                
-                if (config.soundEnabled) {
-                    elements.soundIcon.className = 'fas fa-volume-up sound-icon';
-                } else {
-                    elements.soundIcon.className = 'fas fa-volume-mute sound-icon';
-                }
-            }
-
-            // Play sound
-            function playSound(soundName) {
-                if (!config.soundEnabled) return;
-                
-                if (audio[soundName]) {
-                    audio[soundName].currentTime = 0;
-                    audio[soundName].play().catch(e => {
-                        // Silent fallback for browsers that block autoplay
-                        console.log('Audio playback was prevented:', e);
-                    });
-                }
-            }
-
-            // Toggle settings
-            function toggleSettings() {
-                elements.settingsPanel.style.display = elements.settingsPanel.style.display === 'flex' ? 'none' : 'flex';
-            }
-
-            // Toggle setting option
-            function toggleOption(element, option) {
-                const isActive = element.classList.contains('active');
-                
-                if (isActive) {
-                    element.classList.remove('active');
-                    config[option] = false;
-                } else {
-                    element.classList.add('active');
-                    config[option] = true;
-                }
-                
-                // Update sound icon if needed
-                if (option === 'soundEnabled') {
-                    if (config.soundEnabled) {
-                        elements.soundIcon.className = 'fas fa-volume-up sound-icon';
-                    } else {
-                        elements.soundIcon.className = 'fas fa-volume-mute sound-icon';
-                    }
-                }
-                
-                playSound('click');
-            }
-
-            // Save game to local storage
-            function saveGame() {
-                if (!config.saveEnabled) return;
-                
-                localStorage.setItem('slotGame', JSON.stringify({
-                    credits: state.credits,
-                    level: state.level,
-                    xp: state.xp,
-                    xpToNextLevel: state.xpToNextLevel,
-                    jackpot: state.jackpot,
-                    totalSpins: state.totalSpins,
-                    totalWins: state.totalWins,
-                    biggestWin: state.biggestWin
-                }));
-            }
-
-            // Load game from local storage
-            function loadGame() {
-                if (!config.saveEnabled) return;
-                
-                const savedGame = localStorage.getItem('slotGame');
-                
-                if (savedGame) {
-                    try {
-                        const gameData = JSON.parse(savedGame);
-                        
-                        // Update state with saved data
-                        state.credits = gameData.credits || config.startingCredits;
-                        state.level = gameData.level || 1;
-                        state.xp = gameData.xp || 0;
-                        state.xpToNextLevel = gameData.xpToNextLevel || 100;
-                        state.jackpot = gameData.jackpot || config.jackpotAmount;
-                        state.totalSpins = gameData.totalSpins || 0;
-                        state.totalWins = gameData.totalWins || 0;
-                        state.biggestWin = gameData.biggestWin || 0;
-                        
-                        // Update displays
-                        updateCreditsDisplay();
-                        elements.levelDisplay.textContent = state.level;
-                        elements.levelProgress.style.width = `${(state.xp / state.xpToNextLevel) * 100}%`;
-                        updateJackpotDisplay();
-                    } catch (e) {
-                        console.error('Error loading saved game:', e);
-                    }
-                }
-            }
-
-            // Event listeners
-            function setupEventListeners() {
-                elements.spinBtn.addEventListener('click', spinReels);
-                elements.betUpBtn.addEventListener('click', increaseBet);
-                elements.betDownBtn.addEventListener('click', decreaseBet);
-                elements.maxBetBtn.addEventListener('click', setMaxBet);
-                elements.claimJackpotBtn.addEventListener('click', claimJackpot);
-                elements.soundToggle.addEventListener('click', toggleSound);
-                
-                // Settings panel
-                elements.soundToggleSetting.addEventListener('click', () => toggleOption(elements.soundToggleSetting, 'soundEnabled'));
-                elements.musicToggleSetting.addEventListener('click', () => toggleOption(elements.musicToggleSetting, 'musicEnabled'));
-                elements.animationsToggleSetting.addEventListener('click', () => toggleOption(elements.animationsToggleSetting, 'animationsEnabled'));
-                elements.saveToggleSetting.addEventListener('click', () => toggleOption(elements.saveToggleSetting, 'saveEnabled'));
-                elements.closeSettingsBtn.addEventListener('click', toggleSettings);
-            }
-
-            // Initialize game
-            function init() {
-                initCasinoLights();
-                initReels();
-                initPayoutTable();
-                setupEventListeners();
-                loadGame();
-                updateCreditsDisplay();
-                updateJackpotDisplay();
-            }
-
-            // Start the game
-            init();
-        });
+            ];
+            
+            renderMatches(sampleMatches);
+        }
+        
+        // Uncomment this line to use sample data instead of the API
+        // loadSampleData();
     </script>
 </body>
 </html>
