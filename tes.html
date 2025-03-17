@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="RekberTrust - Jasa rekening bersama terpercaya untuk transaksi online aman dan nyaman. Solusi escrow terbaik untuk marketplace, forum jual beli, dan sosial media.">
     <meta name="keywords" content="rekber, rekening bersama, escrow, jasa rekber, transaksi aman, jual beli online">
     <meta name="author" content="RekberTrust">
@@ -18,8 +18,32 @@
     <!-- AOS Animation Library -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" rel="stylesheet">
     
+    <!-- Favicon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💼</text></svg>">
+    
+    <!-- Improved SEO Meta Tags -->
+    <meta name="description" content="RekberTrust - Jasa rekening bersama (escrow) terpercaya untuk transaksi online aman. Solusi pembayaran aman untuk marketplace, forum jual beli, dan media sosial.">
+    <meta name="keywords" content="rekber, rekening bersama, escrow, jasa rekber, transaksi aman, jual beli online, marketplace, forum jual beli, payment gateway">
+    <meta name="author" content="RekberTrust">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#2563eb">
+    
+    <!-- Open Graph / Social Media Meta Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://rekbertrust.com/">
+    <meta property="og:title" content="RekberTrust - Jasa Rekening Bersama Terpercaya">
+    <meta property="og:description" content="Layanan rekening bersama terpercaya untuk transaksi online aman dan nyaman. Jadikan setiap transaksi online Anda bebas khawatir.">
+    <meta property="og:image" content="https://rekbertrust.com/img/og-image.jpg">
+    
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="RekberTrust - Jasa Rekening Bersama Terpercaya">
+    <meta name="twitter:description" content="Layanan rekening bersama terpercaya untuk transaksi online aman dan nyaman. Jadikan setiap transaksi online Anda bebas khawatir.">
+    <meta name="twitter:image" content="https://rekbertrust.com/img/twitter-image.jpg">
+    
     <style>
         :root {
+            /* Base colors */
             --primary-color: #2563eb;
             --primary-dark: #1d4ed8;
             --primary-light: #3b82f6;
@@ -37,15 +61,22 @@
             --success-color: #10b981;
             --info-color: #3b82f6;
             
-            --font-primary: 'Segoe UI', 'Roboto', sans-serif;
-            --font-secondary: 'Poppins', sans-serif;
+            /* Fonts */
+            --font-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            --font-secondary: 'Poppins', 'SF Pro Display', 'SF Pro Text', -apple-system, sans-serif;
             
+            /* Shadows */
             --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
             --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
             --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
             --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
             
+            /* Transitions & Animations */
             --transition: all 0.3s ease;
+            --transition-fast: all 0.2s ease;
+            --transition-slow: all 0.5s ease;
+            
+            /* Border radius */
             --border-radius-sm: 0.25rem;
             --border-radius: 0.5rem;
             --border-radius-md: 0.75rem;
@@ -57,6 +88,24 @@
             --dark-primary: #3b82f6;
             --dark-secondary: #34d399;
             --dark-text: #e5e7eb;
+            
+            /* Spacing */
+            --spacing-xs: 0.25rem;
+            --spacing-sm: 0.5rem;
+            --spacing-md: 1rem;
+            --spacing-lg: 1.5rem;
+            --spacing-xl: 2rem;
+            --spacing-2xl: 3rem;
+            
+            /* Z-index layers */
+            --z-base: 1;
+            --z-menu: 100;
+            --z-modal: 200;
+            --z-overlay: 300;
+            --z-tooltip: 400;
+            
+            /* Mobile specific values - for iOS viewport height fix */
+            --vh: 1vh;
         }
         
         /* Dark mode styles */
@@ -2520,12 +2569,47 @@
             transform: scale(1.1);
         }
         
-        /* Responsive Styles */
-        @media (max-width: 992px) {
-            .hero h1 {
-                font-size: 40px;
+        /* Responsive Styles - Improved */
+        @media (max-width: 1200px) {
+            .container {
+                padding: 0 30px;
             }
             
+            .pricing-card {
+                max-width: 320px;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            /* Typography for medium devices */
+            h1, .hero h1 {
+                font-size: 40px;
+                line-height: 1.3;
+            }
+            
+            h2, .section-title h2 {
+                font-size: 34px;
+            }
+            
+            h3 {
+                font-size: 22px;
+            }
+            
+            p {
+                font-size: 16px;
+            }
+            
+            /* Layout adjustments */
+            .section {
+                padding: 70px 0;
+            }
+            
+            .hero {
+                padding-top: 150px;
+                padding-bottom: 80px;
+            }
+            
+            /* Hero section */
             .hero-container {
                 flex-direction: column;
             }
@@ -2538,22 +2622,43 @@
             
             .hero-image {
                 margin-left: 0;
+                max-width: 80%;
+                margin: 0 auto;
             }
             
             .cta-buttons {
                 justify-content: center;
+                max-width: 400px;
+                margin-left: auto;
+                margin-right: auto;
             }
             
             .hero-badges {
                 justify-content: center;
+                flex-wrap: wrap;
             }
             
+            /* Stats */
+            .stats-container {
+                flex-wrap: wrap;
+                gap: 20px;
+            }
+            
+            .stats-box {
+                width: calc(50% - 20px);
+                margin-bottom: 20px;
+            }
+            
+            /* About section */
             .about-container {
                 flex-direction: column;
             }
             
             .about-image {
                 margin-bottom: 40px;
+                max-width: 80%;
+                margin-left: auto;
+                margin-right: auto;
             }
             
             .about-content h2::after {
@@ -2579,19 +2684,67 @@
             .certification-badges {
                 justify-content: center;
             }
+            
+            /* Services */
+            .services-container {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+            
+            /* Pricing */
+            .pricing-plans {
+                gap: 20px;
+            }
+            
+            .pricing-card {
+                max-width: 300px;
+            }
+            
+            /* Calculator */
+            .calculator, .status-checker {
+                padding: 30px 20px;
+            }
+            
+            /* Contact */
+            .contact-container {
+                gap: 30px;
+            }
         }
         
         @media (max-width: 768px) {
+            /* Typography for smaller devices */
+            h1, .hero h1 {
+                font-size: 32px;
+            }
+            
+            h2, .section-title h2 {
+                font-size: 28px;
+            }
+            
+            .section-title p {
+                font-size: 16px;
+            }
+            
+            /* Layout adjustments */
             .section {
                 padding: 60px 0;
             }
             
-            .section-title h2 {
-                font-size: 32px;
+            .section-title {
+                margin-bottom: 40px;
             }
             
+            .container {
+                padding: 0 20px;
+            }
+            
+            /* Navigation */
             .mobile-nav-toggle {
                 display: flex;
+            }
+            
+            .nav-right {
+                display: flex;
+                align-items: center;
             }
             
             .nav-links {
@@ -2608,6 +2761,10 @@
                 opacity: 0;
                 visibility: hidden;
                 z-index: 999;
+                height: auto;
+                max-height: calc(100vh - 80px);
+                overflow-y: auto;
+                padding: 20px 0;
             }
             
             .dark-mode .nav-links {
@@ -2634,24 +2791,41 @@
                 display: none;
             }
             
-            .hero h1 {
-                font-size: 36px;
+            /* Hero section */
+            .hero {
+                padding-top: 120px;
+            }
+            
+            .hero-content {
+                margin-bottom: 40px;
+            }
+            
+            .hero-image {
+                max-width: 100%;
             }
             
             .cta-buttons {
                 flex-direction: column;
-                gap: 10px;
+                gap: 15px;
+                width: 100%;
             }
             
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            /* Stats */
             .stats-container {
                 flex-direction: column;
-                gap: 20px;
             }
             
             .stats-box {
                 width: 100%;
+                margin-bottom: 20px;
             }
             
+            /* Steps */
             .steps-line {
                 display: none;
             }
@@ -2660,6 +2834,7 @@
                 flex-direction: column;
                 align-items: center;
                 text-align: center;
+                margin-bottom: 40px;
             }
             
             .step-number {
@@ -2671,15 +2846,45 @@
                 display: none;
             }
             
-            .calculator-form {
-                flex-direction: column;
+            /* Services */
+            .services-container {
+                grid-template-columns: 1fr;
             }
             
-            .status-form {
-                flex-direction: column;
-                gap: 10px;
+            .service-card {
+                max-width: 100%;
             }
             
+            /* Pricing */
+            .pricing-card {
+                max-width: 100%;
+            }
+            
+            .pricing-card.featured {
+                transform: scale(1);
+                order: -1;
+            }
+            
+            .pricing-card.featured:hover {
+                transform: translateY(-15px);
+            }
+            
+            .pricing-plans {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            /* Forms */
+            .calculator-form, .status-form {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .form-control, .status-form input, .status-form button {
+                width: 100%;
+            }
+            
+            /* Testimonials */
             .testimonial-card {
                 padding: 30px 20px;
             }
@@ -2688,85 +2893,275 @@
                 font-size: 16px;
             }
             
-            .pricing-card.featured {
-                transform: scale(1);
+            /* Blog */
+            .blog-container {
+                grid-template-columns: 1fr;
             }
             
-            .pricing-card.featured:hover {
-                transform: translateY(-15px);
+            /* Contact */
+            .contact-form, .contact-info {
+                min-width: 100%;
             }
             
+            .contact-card, .form-card {
+                padding: 25px 20px;
+            }
+            
+            /* Chat */
             .chat-container {
                 width: 300px;
+                right: -20px;
+            }
+            
+            /* Footer */
+            .footer-container {
+                gap: 30px;
+            }
+            
+            .footer-col {
+                min-width: 100%;
             }
         }
         
         @media (max-width: 576px) {
-            .hero h1 {
-                font-size: 30px;
-            }
-            
-            .hero p {
-                font-size: 16px;
-            }
-            
-            .section-title h2 {
+            /* Typography for extra small devices */
+            h1, .hero h1 {
                 font-size: 28px;
+                line-height: 1.3;
             }
             
-            .cta h2 {
-                font-size: 30px;
+            h2, .section-title h2, .cta h2 {
+                font-size: 26px;
             }
             
-            .cta p {
+            h3 {
+                font-size: 20px;
+            }
+            
+            p, .hero p, .cta p {
+                font-size: 15px;
+            }
+            
+            /* Layout adjustments */
+            .section {
+                padding: 50px 0;
+            }
+            
+            .container {
+                padding: 0 15px;
+            }
+            
+            .section-title {
+                margin-bottom: 30px;
+            }
+            
+            /* Header */
+            .navbar {
+                padding: 15px 0;
+            }
+            
+            .logo {
+                font-size: 24px;
+            }
+            
+            /* Hero section */
+            .hero {
+                padding-top: 100px;
+                padding-bottom: 60px;
+            }
+            
+            /* Hero badges & stats */
+            .hero-badges {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+                margin-top: 20px;
+            }
+            
+            .hero-badge {
+                margin-right: 0;
+                width: 100%;
+                justify-content: center;
+            }
+            
+            /* Buttons */
+            .btn {
+                padding: 10px 20px;
+                font-size: 15px;
+            }
+            
+            .btn-lg {
+                padding: 12px 24px;
                 font-size: 16px;
             }
             
+            /* FAQ & Tabs */
             .faq-tabs {
                 flex-direction: column;
                 align-items: center;
+                gap: 8px;
             }
             
             .faq-tab {
                 width: 100%;
                 text-align: center;
+                padding: 10px;
             }
             
-            .hero-badges {
-                flex-direction: column;
-                align-items: center;
-                gap: 10px;
+            .faq-question {
+                padding: 15px;
+                font-size: 15px;
             }
             
-            .hero-badge {
-                margin-right: 0;
+            .faq-container {
+                margin-top: 20px;
             }
             
+            /* Form elements */
+            .calculator, .status-checker {
+                padding: 25px 15px;
+                margin-top: 40px;
+            }
+            
+            input.form-control, select.form-control, textarea.form-control {
+                padding: 12px;
+                font-size: 15px;
+            }
+            
+            /* Pricing */
+            .pricing-icon, .service-icon, .step-icon {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+            
+            .price {
+                font-size: 36px;
+            }
+            
+            /* Floating elements */
             .whatsapp-btn, .chat-button {
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+                bottom: 15px;
             }
             
             .back-to-top {
                 width: 40px;
                 height: 40px;
-                bottom: 20px;
-                right: 20px;
+                bottom: 15px;
+                right: 15px;
+                font-size: 16px;
             }
             
             .whatsapp-btn {
-                bottom: 20px;
-                left: 20px;
+                bottom: 15px;
+                left: 15px;
             }
             
             .chat-widget {
-                bottom: 80px;
-                right: 20px;
+                bottom: 70px;
+                right: 15px;
             }
             
             .chat-container {
                 width: 280px;
+                bottom: 60px;
+            }
+            
+            .chat-messages {
+                height: 250px;
+            }
+            
+            /* Steps & Timeline */
+            .step-number {
+                width: 60px;
+                height: 60px;
+                font-size: 24px;
+            }
+            
+            .status-timeline {
+                padding-left: 20px;
+            }
+            
+            .status-marker {
+                width: 25px;
+                height: 25px;
+                left: -20px;
+            }
+            
+            .status-content {
+                padding: 15px;
+            }
+            
+            /* Contact & Footer */
+            .contact-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            
+            .footer-col h3 {
+                font-size: 18px;
+                margin-bottom: 20px;
+            }
+            
+            .copyright {
+                font-size: 13px;
+            }
+        }
+        
+        /* Extra small devices */
+        @media (max-width: 400px) {
+            h1, .hero h1 {
+                font-size: 26px;
+            }
+            
+            .logo {
+                font-size: 22px;
+            }
+            
+            .hero-image {
+                margin-top: -20px;
+            }
+            
+            .testimonial-arrows {
+                margin-left: 15px;
+                gap: 10px;
+            }
+            
+            .testimonial-arrow {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .testimonial-author .author-avatar {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .chat-container {
+                width: 260px;
+                right: -15px;
+            }
+            
+            .social-icon, .footer-social a {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+            
+            .calculator-result .result-row {
+                flex-direction: column;
+                align-items: flex-start;
+                padding-bottom: 8px;
+            }
+            
+            .result-row:last-child {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
             }
         }
     </style>
@@ -3880,12 +4275,33 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
     
     <script>
-        // Preloader
+        // Improved preloader with fallback
         window.addEventListener('load', function() {
             const preloader = document.querySelector('.preloader');
             setTimeout(function() {
                 preloader.classList.add('fade-out');
             }, 500);
+            
+            // Fallback if load event doesn't fire correctly
+            setTimeout(function() {
+                if (preloader && !preloader.classList.contains('fade-out')) {
+                    preloader.classList.add('fade-out');
+                }
+            }, 3500); // Fallback timeout
+        });
+        
+        // Fix for iOS Safari viewport height issues
+        function setVH() {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        
+        // Set the height initially and on resize
+        setVH();
+        window.addEventListener('resize', setVH);
+        window.addEventListener('orientationchange', () => {
+            // Small timeout to ensure correct calculation after orientation change completes
+            setTimeout(setVH, 100);
         });
         
         // Initialize AOS Animation
@@ -4113,12 +4529,50 @@
                 });
             });
             
-            // Auto slide
-            setInterval(() => {
+            // Auto slide with touch event handling
+            let autoSlideInterval = setInterval(() => {
                 let newSlide = currentSlide + 1;
                 if (newSlide > testimonialSlides.length) newSlide = 1;
                 showSlide(newSlide);
             }, 5000);
+            
+            // Touch events for testimonial slider
+            const testimonialCarousel = document.querySelector('.testimonial-carousel');
+            let touchStartX = 0;
+            let touchEndX = 0;
+            
+            testimonialCarousel.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+                // Pause auto slide on touch
+                clearInterval(autoSlideInterval);
+            }, {passive: true});
+            
+            testimonialCarousel.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+                // Restart auto slide after touch
+                autoSlideInterval = setInterval(() => {
+                    let newSlide = currentSlide + 1;
+                    if (newSlide > testimonialSlides.length) newSlide = 1;
+                    showSlide(newSlide);
+                }, 5000);
+            }, {passive: true});
+            
+            function handleSwipe() {
+                // Swipe left (next)
+                if (touchEndX < touchStartX - 50) {
+                    let newSlide = currentSlide + 1;
+                    if (newSlide > testimonialSlides.length) newSlide = 1;
+                    showSlide(newSlide);
+                }
+                
+                // Swipe right (previous)
+                if (touchEndX > touchStartX + 50) {
+                    let newSlide = currentSlide - 1;
+                    if (newSlide < 1) newSlide = testimonialSlides.length;
+                    showSlide(newSlide);
+                }
+            }
             
             // Live Chat Widget
             const chatButton = document.getElementById('chatButton');
@@ -4202,10 +4656,37 @@
             transactionValue.addEventListener('input', calculateFee);
             transactionType.addEventListener('change', calculateFee);
             
-            // Format currency input
+            // Format currency input with better handling
             transactionValue.addEventListener('input', function() {
+                // Store cursor position
+                const start = this.selectionStart;
+                const end = this.selectionEnd;
+                const length = this.value.length;
+                
+                // Format the value
                 let value = this.value.replace(/[^0-9]/g, '');
                 this.value = value.replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+                
+                // Adjust cursor position based on change in length
+                const newLength = this.value.length;
+                const cursorAdjust = newLength - length;
+                this.setSelectionRange(start + cursorAdjust, end + cursorAdjust);
+            });
+            
+            // Better mobile input handling for form fields
+            const allInputs = document.querySelectorAll('input, textarea, select');
+            allInputs.forEach(input => {
+                // Adjust padding on mobile to prevent zoom
+                if (window.innerWidth < 768) {
+                    input.style.fontSize = '16px'; // Prevents zoom on iOS
+                }
+                
+                // Fix for iOS scrolling issues when focusing inputs
+                input.addEventListener('focus', function() {
+                    setTimeout(() => {
+                        window.scrollTo(0, window.scrollY);
+                    }, 50);
+                });
             });
             
             // Contact Form
