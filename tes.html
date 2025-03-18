@@ -664,13 +664,6 @@
                 
                 <div class="card">
                     <div class="card-content">
-                        <h3 class="card-title">Apakah program ini benar-benar gratis?</h3>
-                        <p>Ya, program mudik gratis ini sepenuhnya ditanggung oleh pemerintah. Peserta tidak dikenakan biaya apapun untuk transportasi pulang pergi.</p>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-content">
                         <h3 class="card-title">Berapa jumlah anggota keluarga yang dapat didaftarkan?</h3>
                         <p>Setiap pendaftar dapat mengajak maksimal 3 anggota keluarga, sehingga total 4 orang termasuk pendaftar.</p>
                     </div>
@@ -694,7 +687,7 @@
                 <h3>Pendaftaran Berhasil!</h3>
                 <p>Terima kasih telah mendaftar program mudik gratis 2025. Data Anda telah kami terima dan sedang dalam proses verifikasi.</p>
                 <p>Nomor registrasi Anda: <strong id="registrationNumber">REG-2025-XXXXX</strong></p>
-                <p>Informasi lebih lanjut akan dikirimkan melalui email dan SMS.</p>
+                <p>Data pendaftaran akan otomatis dikirim ke WhatsApp admin.</p>
                 <button class="cta-button" id="closeModal">Kembali ke Beranda</button>
             </div>
         </div>
@@ -818,8 +811,61 @@
                     const regNumber = 'REG-2025-' + Math.floor(10000 + Math.random() * 90000);
                     document.getElementById('registrationNumber').textContent = regNumber;
                     
+                    // Prepare data for WhatsApp message
+                    const name = document.getElementById('name').value;
+                    const nik = document.getElementById('nik').value;
+                    const origin = document.getElementById('origin').value;
+                    const destination = document.getElementById('destination').value;
+                    const transportMode = document.getElementById('transportMode').value;
+                    const departureDate = document.getElementById('departureDate').value;
+                    const passengersCount = document.getElementById('passengers').value;
+                    
+                    // Construct WhatsApp message
+                    let whatsappMessage = `*PENDAFTARAN MUDIK GRATIS 2025*%0A%0A`;
+                    whatsappMessage += `No. Registrasi: *${regNumber}*%0A`;
+                    whatsappMessage += `Nama: ${name}%0A`;
+                    whatsappMessage += `NIK: ${nik}%0A`;
+                    whatsappMessage += `Dari: ${origin}%0A`;
+                    whatsappMessage += `Tujuan: ${destination}%0A`;
+                    whatsappMessage += `Transportasi: ${transportMode}%0A`;
+                    whatsappMessage += `Tanggal: ${departureDate}%0A`;
+                    whatsappMessage += `Jumlah Penumpang: ${passengersCount}%0A%0A`;
+                    
+                    // Add additional passengers if any
+                    if (passengersCount > 1) {
+                        whatsappMessage += `*Data Penumpang Tambahan:*%0A`;
+                        for (let i = 2; i <= passengersCount; i++) {
+                            const passengerName = document.getElementById(`passenger${i}Name`).value;
+                            const passengerNIK = document.getElementById(`passenger${i}NIK`).value;
+                            whatsappMessage += `${i}. ${passengerName} (NIK: ${passengerNIK})%0A`;
+                        }
+                    }
+                    
+                    // Open WhatsApp with the message
+                    const whatsappURL = `https://wa.me/6285702402751?text=${whatsappMessage}`;
+                    
                     // Show success modal
                     document.getElementById('successModal').style.display = 'block';
+                    
+                    // Add button to send to WhatsApp in the modal
+                    const whatsappButton = document.createElement('a');
+                    whatsappButton.href = whatsappURL;
+                    whatsappButton.className = 'cta-button';
+                    whatsappButton.style.marginTop = '1rem';
+                    whatsappButton.style.display = 'inline-block';
+                    whatsappButton.style.backgroundColor = '#25D366';
+                    whatsappButton.style.marginLeft = '1rem';
+                    whatsappButton.target = '_blank';
+                    whatsappButton.textContent = 'Kirim ke WhatsApp';
+                    
+                    // Add the button after the close button
+                    const closeButton = document.getElementById('closeModal');
+                    closeButton.parentNode.insertBefore(whatsappButton, closeButton.nextSibling);
+                    
+                    // Automatically open WhatsApp after 2 seconds
+                    setTimeout(function() {
+                        window.open(whatsappURL, '_blank');
+                    }, 2000);
                 }
             });
             
