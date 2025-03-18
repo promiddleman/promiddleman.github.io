@@ -300,57 +300,178 @@
             display: none;
         }
         
-        .step {
-            display: none;
-        }
-        
-        .step.active {
-            display: block;
-        }
-        
-        .steps-indicator {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2rem;
-        }
-        
-        .step-indicator {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            background-color: #ddd;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 8px;
-            font-weight: bold;
+        /* ===== PROGRESS BAR VISUAL BARU ===== */
+        .progress-container {
             position: relative;
+            margin: 0 auto 2.5rem;
+            max-width: 600px;
         }
-        
-        .step-indicator.active {
-            background-color: var(--primary-color);
-            color: white;
+
+        .progress-bar {
+            position: relative;
+            counter-reset: step;
+            z-index: 1;
         }
-        
-        .step-indicator.completed {
-            background-color: var(--secondary-color);
-            color: white;
-        }
-        
-        .step-indicator:not(:last-child)::after {
+
+        .progress-bar::before {
             content: '';
-            height: 2px;
-            width: 60px;
-            background-color: #ddd;
             position: absolute;
             top: 50%;
-            left: 30px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: #e0e0e0;
             transform: translateY(-50%);
             z-index: -1;
         }
-        
-        .step-indicator.completed:not(:last-child)::after {
+
+        .progress-bar-fill {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            height: 4px;
+            background-color: var(--primary-color);
+            transform: translateY(-50%);
+            z-index: -1;
+            transition: width 0.5s ease-in-out;
+        }
+
+        .progress-steps {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+
+        .progress-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .step-icon-container {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #fff;
+            border: 3px solid #e0e0e0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .step-icon {
+            font-size: 24px;
+            color: #bdbdbd;
+            transition: all 0.3s ease;
+        }
+
+        .step-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #757575;
+            text-align: center;
+            transition: all 0.3s ease;
+            max-width: 100px;
+        }
+
+        .progress-step.active .step-icon-container {
+            border-color: var(--primary-color);
+            background-color: #f1f8e9;
+            transform: scale(1.1);
+        }
+
+        .progress-step.active .step-icon {
+            color: var(--primary-color);
+        }
+
+        .progress-step.active .step-label {
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+
+        .progress-step.completed .step-icon-container {
+            border-color: var(--secondary-color);
             background-color: var(--secondary-color);
+        }
+
+        .progress-step.completed .step-icon {
+            color: white;
+            display: none;
+        }
+
+        .progress-step.completed .step-label {
+            color: var(--secondary-color);
+        }
+
+        .checkmark {
+            display: none;
+            font-size: 26px;
+            color: white;
+            position: absolute;
+            opacity: 0;
+            transform: scale(0);
+            animation: scale-in 0.3s forwards;
+        }
+
+        .progress-step.completed .checkmark {
+            display: block;
+        }
+
+        @keyframes scale-in {
+            0% {
+                opacity: 0;
+                transform: scale(0);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* ===== ANIMASI TRANSISI SLIDE ===== */
+        .steps-container {
+            position: relative;
+            overflow: hidden;
+            min-height: 450px;
+        }
+
+        .step {
+            position: absolute;
+            width: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateX(50px);
+            transition: all 0.5s ease-in-out;
+        }
+
+        .step.incoming {
+            transform: translateX(-50px);
+        }
+
+        .step.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(0);
+            position: relative;
+        }
+
+        .step.outgoing-left {
+            transform: translateX(-50px);
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .step.outgoing-right {
+            transform: translateX(50px);
+            opacity: 0;
+            visibility: hidden;
         }
         
         .nav-buttons {
@@ -551,6 +672,36 @@
                 width: 95%;
                 padding: 1.5rem;
             }
+            
+            .step-icon-container {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .step-icon {
+                font-size: 20px;
+            }
+            
+            .step-label {
+                font-size: 12px;
+                max-width: 70px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .step-icon-container {
+                width: 40px;
+                height: 40px;
+            }
+            
+            .step-icon {
+                font-size: 18px;
+            }
+            
+            .step-label {
+                font-size: 11px;
+                max-width: 60px;
+            }
         }
     </style>
 </head>
@@ -643,146 +794,173 @@
                 <p><strong>⚠️ PENTING:</strong> Harap simpan nomor registrasi Anda sebagai bukti pendaftaran dan lakukan konfirmasi melalui WhatsApp untuk mengamankan tempat Anda.</p>
             </div>
             <div class="form-container">
-                <div class="steps-indicator">
-                    <div class="step-indicator active">1</div>
-                    <div class="step-indicator">2</div>
-                    <div class="step-indicator">3</div>
+                <!-- PROGRESS BAR BARU - menggantikan steps-indicator -->
+                <div class="progress-container">
+                    <div class="progress-bar">
+                        <div class="progress-bar-fill" id="progressBarFill" style="width: 0%"></div>
+                        <div class="progress-steps">
+                            <div class="progress-step active" id="progressStep1">
+                                <div class="step-icon-container">
+                                    <span class="step-icon">👤</span>
+                                    <span class="checkmark">✓</span>
+                                </div>
+                                <div class="step-label">Data Pribadi</div>
+                            </div>
+                            <div class="progress-step" id="progressStep2">
+                                <div class="step-icon-container">
+                                    <span class="step-icon">🚌</span>
+                                    <span class="checkmark">✓</span>
+                                </div>
+                                <div class="step-label">Perjalanan</div>
+                            </div>
+                            <div class="progress-step" id="progressStep3">
+                                <div class="step-icon-container">
+                                    <span class="step-icon">📋</span>
+                                    <span class="checkmark">✓</span>
+                                </div>
+                                <div class="step-label">Konfirmasi</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
                 <form id="registrationForm">
-                    <div class="step active" id="step1">
-                        <h3>Data Pribadi</h3>
-                        <div class="form-group">
-                            <label for="name" class="form-label">Nama Lengkap</label>
-                            <input type="text" id="name" class="form-input" required>
-                            <div class="error-message">Nama lengkap harus diisi</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="nik" class="form-label">NIK (Nomor Induk Kependudukan)</label>
-                            <input type="text" id="nik" class="form-input" required minlength="16" maxlength="16">
-                            <div class="error-message">NIK harus 16 digit</div>
-                        </div>
-                        
-                        <div class="form-row">
+                    <!-- Bungkus semua steps dalam container untuk animasi -->
+                    <div class="steps-container">
+                        <div class="step active" id="step1">
+                            <h3>Data Pribadi</h3>
                             <div class="form-group">
-                                <label for="birthPlace" class="form-label">Tempat Lahir</label>
-                                <input type="text" id="birthPlace" class="form-input" required>
-                                <div class="error-message">Tempat lahir harus diisi</div>
+                                <label for="name" class="form-label">Nama Lengkap</label>
+                                <input type="text" id="name" class="form-input" required>
+                                <div class="error-message">Nama lengkap harus diisi</div>
                             </div>
                             
                             <div class="form-group">
-                                <label for="birthDate" class="form-label">Tanggal Lahir</label>
-                                <input type="date" id="birthDate" class="form-input" required>
-                                <div class="error-message">Tanggal lahir harus diisi</div>
+                                <label for="nik" class="form-label">NIK (Nomor Induk Kependudukan)</label>
+                                <input type="text" id="nik" class="form-input" required minlength="16" maxlength="16">
+                                <div class="error-message">NIK harus 16 digit</div>
                             </div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="gender" class="form-label">Jenis Kelamin</label>
-                            <select id="gender" class="form-select" required>
-                                <option value="">Pilih Jenis Kelamin</option>
-                                <option value="L">Laki-laki</option>
-                                <option value="P">Perempuan</option>
-                            </select>
-                            <div class="error-message">Jenis kelamin harus dipilih</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="address" class="form-label">Alamat Lengkap</label>
-                            <textarea id="address" class="form-input" rows="3" required></textarea>
-                            <div class="error-message">Alamat harus diisi</div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label for="phone" class="form-label">Nomor HP</label>
-                                <input type="tel" id="phone" class="form-input" required>
-                                <div class="error-message">Nomor HP harus diisi dengan benar</div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="birthPlace" class="form-label">Tempat Lahir</label>
+                                    <input type="text" id="birthPlace" class="form-input" required>
+                                    <div class="error-message">Tempat lahir harus diisi</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="birthDate" class="form-label">Tanggal Lahir</label>
+                                    <input type="date" id="birthDate" class="form-input" required>
+                                    <div class="error-message">Tanggal lahir harus diisi</div>
+                                </div>
                             </div>
                             
                             <div class="form-group">
-                                <label for="email" class="form-label">Email</label>
-                                <input type="email" id="email" class="form-input" required>
-                                <div class="error-message">Email harus diisi dengan benar</div>
+                                <label for="gender" class="form-label">Jenis Kelamin</label>
+                                <select id="gender" class="form-select" required>
+                                    <option value="">Pilih Jenis Kelamin</option>
+                                    <option value="L">Laki-laki</option>
+                                    <option value="P">Perempuan</option>
+                                </select>
+                                <div class="error-message">Jenis kelamin harus dipilih</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="address" class="form-label">Alamat Lengkap</label>
+                                <textarea id="address" class="form-input" rows="3" required></textarea>
+                                <div class="error-message">Alamat harus diisi</div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">Nomor HP</label>
+                                    <input type="tel" id="phone" class="form-input" required>
+                                    <div class="error-message">Nomor HP harus diisi dengan benar</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Email</label>
+                                    <input type="email" id="email" class="form-input" required>
+                                    <div class="error-message">Email harus diisi dengan benar</div>
+                                </div>
+                            </div>
+                            
+                            <div class="nav-buttons">
+                                <div></div>
+                                <button type="button" class="cta-button" id="nextToStep2">Selanjutnya</button>
                             </div>
                         </div>
                         
-                        <div class="nav-buttons">
-                            <div></div>
-                            <button type="button" class="cta-button" id="nextToStep2">Selanjutnya</button>
-                        </div>
-                    </div>
-                    
-                    <div class="step" id="step2">
-                        <h3>Data Perjalanan</h3>
-                        
-                        <div class="form-group">
-                            <label for="origin" class="form-label">Kota Asal</label>
-                            <input type="text" id="origin" class="form-input" placeholder="Masukkan kota asal Anda" required>
-                            <div class="error-message">Kota asal harus diisi</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="destination" class="form-label">Kota Tujuan</label>
-                            <input type="text" id="destination" class="form-input" placeholder="Masukkan kota tujuan Anda" required>
-                            <div class="error-message">Kota tujuan harus diisi</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="transportMode" class="form-label">Moda Transportasi</label>
-                            <select id="transportMode" class="form-select" required>
-                                <option value="">Pilih Moda Transportasi</option>
-                                <option value="Bus">Bus</option>
-                                <option value="Kereta">Kereta</option>
-                                <option value="Kapal">Kapal</option>
-                            </select>
-                            <div class="error-message">Moda transportasi harus dipilih</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="departureDate" class="form-label">Tanggal Keberangkatan</label>
-                            <input type="date" id="departureDate" class="form-input" required>
-                            <div class="error-message">Tanggal keberangkatan harus dipilih</div>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="passengers" class="form-label">Jumlah Penumpang</label>
-                            <input type="number" id="passengers" class="form-input" min="1" max="4" value="1" required>
-                            <div class="error-message">Jumlah penumpang maksimal 4 orang</div>
-                        </div>
-                        
-                        <div id="additionalPassengers"></div>
-                        
-                        <div class="nav-buttons">
-                            <button type="button" class="cta-button" id="prevToStep1">Sebelumnya</button>
-                            <button type="button" class="cta-button" id="nextToStep3">Selanjutnya</button>
-                        </div>
-                    </div>
-                    
-                    <div class="step" id="step3">
-                        <h3>Konfirmasi Data</h3>
-                        
-                        <div class="info-box">
-                            <div class="info-box-title">Perhatian!</div>
-                            <p>Mohon periksa kembali data yang Anda masukkan. Pastikan semua data sudah benar sebelum mengirimkan formulir pendaftaran.</p>
+                        <div class="step" id="step2">
+                            <h3>Data Perjalanan</h3>
+                            
+                            <div class="form-group">
+                                <label for="origin" class="form-label">Kota Asal</label>
+                                <input type="text" id="origin" class="form-input" placeholder="Masukkan kota asal Anda" required>
+                                <div class="error-message">Kota asal harus diisi</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="destination" class="form-label">Kota Tujuan</label>
+                                <input type="text" id="destination" class="form-input" placeholder="Masukkan kota tujuan Anda" required>
+                                <div class="error-message">Kota tujuan harus diisi</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="transportMode" class="form-label">Moda Transportasi</label>
+                                <select id="transportMode" class="form-select" required>
+                                    <option value="">Pilih Moda Transportasi</option>
+                                    <option value="Bus">Bus</option>
+                                    <option value="Kereta">Kereta</option>
+                                    <option value="Kapal">Kapal</option>
+                                </select>
+                                <div class="error-message">Moda transportasi harus dipilih</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="departureDate" class="form-label">Tanggal Keberangkatan</label>
+                                <input type="date" id="departureDate" class="form-input" required>
+                                <div class="error-message">Tanggal keberangkatan harus dipilih</div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="passengers" class="form-label">Jumlah Penumpang</label>
+                                <input type="number" id="passengers" class="form-input" min="1" max="4" value="1" required>
+                                <div class="error-message">Jumlah penumpang maksimal 4 orang</div>
+                            </div>
+                            
+                            <div id="additionalPassengers"></div>
+                            
+                            <div class="nav-buttons">
+                                <button type="button" class="cta-button" id="prevToStep1">Sebelumnya</button>
+                                <button type="button" class="cta-button" id="nextToStep3">Selanjutnya</button>
+                            </div>
                         </div>
                         
-                        <div id="summaryData">
-                            <!-- Summary data will be populated here -->
-                        </div>
-                        
-                        <div class="form-group">
-                            <label class="form-checkbox">
-                                <input type="checkbox" id="agreement" required>
-                                Saya menyatakan bahwa data yang saya masukkan adalah benar dan saya bersedia mengikuti seluruh ketentuan program mudik gratis 2025.
-                            </label>
-                            <div class="error-message">Anda harus menyetujui ketentuan program</div>
-                        </div>
-                        
-                        <div class="nav-buttons">
-                            <button type="button" class="cta-button" id="prevToStep2">Sebelumnya</button>
-                            <button type="submit" class="cta-button" id="submitForm">Kirim Pendaftaran</button>
+                        <div class="step" id="step3">
+                            <h3>Konfirmasi Data</h3>
+                            
+                            <div class="info-box">
+                                <div class="info-box-title">Perhatian!</div>
+                                <p>Mohon periksa kembali data yang Anda masukkan. Pastikan semua data sudah benar sebelum mengirimkan formulir pendaftaran.</p>
+                            </div>
+                            
+                            <div id="summaryData">
+                                <!-- Summary data will be populated here -->
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-checkbox">
+                                    <input type="checkbox" id="agreement" required>
+                                    Saya menyatakan bahwa data yang saya masukkan adalah benar dan saya bersedia mengikuti seluruh ketentuan program mudik gratis 2025.
+                                </label>
+                                <div class="error-message">Anda harus menyetujui ketentuan program</div>
+                            </div>
+                            
+                            <div class="nav-buttons">
+                                <button type="button" class="cta-button" id="prevToStep2">Sebelumnya</button>
+                                <button type="submit" class="cta-button" id="submitForm">Kirim Pendaftaran</button>
+                            </div>
                         </div>
                     </div>
                 </form>
@@ -956,48 +1134,92 @@
             doc.save(`Bukti_Pendaftaran_Mudik_${data.regNumber}.pdf`);
         }
 
-        document.addEventListener('DOMContentLoaded', function() {
-            // Form navigation
-            const steps = document.querySelectorAll('.step');
-            const stepIndicators = document.querySelectorAll('.step-indicator');
+        // Function to update progress bar
+        function updateProgressBar(stepNumber, totalSteps) {
+            // Calculate progress percentage
+            const progress = ((stepNumber - 1) / (totalSteps - 1)) * 100;
             
-            // Next buttons
+            // Update progress bar fill
+            document.getElementById('progressBarFill').style.width = `${progress}%`;
+            
+            // Update step status
+            for (let i = 1; i <= totalSteps; i++) {
+                const stepEl = document.getElementById(`progressStep${i}`);
+                
+                if (i < stepNumber) {
+                    stepEl.classList.remove('active');
+                    stepEl.classList.add('completed');
+                } else if (i === stepNumber) {
+                    stepEl.classList.add('active');
+                    stepEl.classList.remove('completed');
+                } else {
+                    stepEl.classList.remove('active', 'completed');
+                }
+            }
+        }
+
+        // Navigate with animation
+        function navigateToStep(currentStep, targetStep) {
+            const steps = document.querySelectorAll('.step');
+            const currentStepEl = document.getElementById(`step${currentStep}`);
+            const targetStepEl = document.getElementById(`step${targetStep}`);
+            
+            // Determine direction for animation
+            const isForward = targetStep > currentStep;
+            
+            // Add appropriate animation classes
+            if (isForward) {
+                currentStepEl.classList.add('outgoing-left');
+                targetStepEl.classList.remove('incoming');
+            } else {
+                currentStepEl.classList.add('outgoing-right');
+                targetStepEl.classList.add('incoming');
+            }
+            
+            // Remove active class from current step
+            currentStepEl.classList.remove('active');
+            
+            // Add active class to target step with slight delay
+            setTimeout(() => {
+                targetStepEl.classList.add('active');
+                targetStepEl.classList.remove('incoming', 'outgoing-left', 'outgoing-right');
+                
+                // Update progress bar
+                updateProgressBar(targetStep, steps.length);
+            }, 50);
+            
+            // Clean up animation classes after transition
+            setTimeout(() => {
+                currentStepEl.classList.remove('outgoing-left', 'outgoing-right');
+            }, 500);
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize progress bar
+            const steps = document.querySelectorAll('.step');
+            updateProgressBar(1, steps.length);
+            
+            // Next buttons with enhanced navigation
             document.getElementById('nextToStep2').addEventListener('click', function() {
                 if (validateStep1()) {
-                    steps[0].classList.remove('active');
-                    steps[1].classList.add('active');
-                    stepIndicators[0].classList.remove('active');
-                    stepIndicators[0].classList.add('completed');
-                    stepIndicators[1].classList.add('active');
+                    navigateToStep(1, 2);
                 }
             });
             
             document.getElementById('nextToStep3').addEventListener('click', function() {
                 if (validateStep2()) {
-                    steps[1].classList.remove('active');
-                    steps[2].classList.add('active');
-                    stepIndicators[1].classList.remove('active');
-                    stepIndicators[1].classList.add('completed');
-                    stepIndicators[2].classList.add('active');
+                    navigateToStep(2, 3);
                     populateSummary();
                 }
             });
             
-            // Previous buttons
+            // Previous buttons with enhanced navigation
             document.getElementById('prevToStep1').addEventListener('click', function() {
-                steps[1].classList.remove('active');
-                steps[0].classList.add('active');
-                stepIndicators[1].classList.remove('active');
-                stepIndicators[0].classList.remove('completed');
-                stepIndicators[0].classList.add('active');
+                navigateToStep(2, 1);
             });
             
             document.getElementById('prevToStep2').addEventListener('click', function() {
-                steps[2].classList.remove('active');
-                steps[1].classList.add('active');
-                stepIndicators[2].classList.remove('active');
-                stepIndicators[1].classList.remove('completed');
-                stepIndicators[1].classList.add('active');
+                navigateToStep(3, 2);
             });
             
             // Passengers change handler
@@ -1080,7 +1302,7 @@
                         window.open(whatsappURL, '_blank');
                     });
                     
-                    // Show success modal
+                    // Show success modal with animation
                     document.getElementById('successModal').style.display = 'block';
                     
                     // Add download functionality
