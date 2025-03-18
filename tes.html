@@ -38,13 +38,7 @@
             position: relative;
         }
         
-        .countdown {
-            background-color: var(--accent-color);
-            color: var(--text-color);
-            padding: 0.5rem;
-            font-weight: bold;
-            text-align: center;
-        }
+
         
         .container {
             max-width: 1200px;
@@ -59,9 +53,7 @@
             justify-content: center;
             text-align: center;
             padding: 2rem 1rem;
-            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/api/placeholder/1200/400');
-            background-size: cover;
-            background-position: center;
+            background: linear-gradient(to right, var(--primary-color), var(--secondary-color));
             color: white;
             margin-bottom: 2rem;
         }
@@ -140,20 +132,11 @@
             box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
         }
         
-        .card-image {
-            height: 200px;
-            overflow: hidden;
-        }
-        
-        .card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.5s ease;
-        }
-        
-        .card:hover .card-image img {
-            transform: scale(1.1);
+        .card-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-align: center;
         }
         
         .card-content {
@@ -288,26 +271,7 @@
             margin-top: 2rem;
         }
         
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 2rem;
-        }
-        
-        th, td {
-            border: 1px solid #ddd;
-            padding: 0.8rem;
-            text-align: left;
-        }
-        
-        th {
-            background-color: var(--primary-color);
-            color: white;
-        }
-        
-        tr:nth-child(even) {
-            background-color: #f2f2f2;
-        }
+
         
         .info-box {
             background-color: rgba(76, 175, 80, 0.1);
@@ -323,67 +287,7 @@
             color: var(--primary-color);
         }
         
-        .timeline {
-            position: relative;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 2rem 0;
-        }
-        
-        .timeline::after {
-            content: '';
-            position: absolute;
-            width: 4px;
-            background-color: var(--secondary-color);
-            top: 0;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-        
-        .timeline-item {
-            position: relative;
-            width: 45%;
-            padding: 1rem;
-            background-color: var(--card-color);
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-bottom: 2rem;
-        }
-        
-        .timeline-item::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            background-color: var(--accent-color);
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 1;
-        }
-        
-        .timeline-item.left {
-            left: 0;
-        }
-        
-        .timeline-item.right {
-            left: 55%;
-        }
-        
-        .timeline-item.left::after {
-            right: -10px;
-        }
-        
-        .timeline-item.right::after {
-            left: -10px;
-        }
-        
-        .timeline-date {
-            font-weight: bold;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
-        }
+
         
         footer {
             background-color: var(--primary-color);
@@ -501,7 +405,7 @@
             margin-bottom: 1rem;
         }
         
-        /* Responsiveness */
+                    /* Responsiveness */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
@@ -520,20 +424,6 @@
                 gap: 0;
             }
             
-            .timeline::after {
-                left: 31px;
-            }
-            
-            .timeline-item {
-                width: 100%;
-                left: 0 !important;
-                padding-left: 70px;
-            }
-            
-            .timeline-item::after {
-                left: 21px !important;
-            }
-            
             .footer-content {
                 flex-direction: column;
             }
@@ -548,9 +438,7 @@
         </div>
     </header>
     
-    <div class="countdown" id="countdown">
-        Pendaftaran ditutup dalam: <span id="timer">30 hari 12 jam 45 menit</span>
-    </div>
+
     
     <section class="hero">
         <h1>Mudik Gratis untuk Semua</h1>
@@ -568,10 +456,8 @@
             
             <div class="cards">
                 <div class="card">
-                    <div class="card-image">
-                        <img src="/api/placeholder/400/200" alt="Bus Mudik">
-                    </div>
                     <div class="card-content">
+                        <div class="card-icon">🚌</div>
                         <h3 class="card-title">Bus Eksekutif</h3>
                         <p class="card-text">Armada bus eksekutif dengan fasilitas lengkap untuk kenyamanan perjalanan mudik Anda.</p>
                         <ul>
@@ -584,10 +470,8 @@
                 </div>
                 
                 <div class="card">
-                    <div class="card-image">
-                        <img src="/api/placeholder/400/200" alt="Kereta Api">
-                    </div>
                     <div class="card-content">
+                        <div class="card-icon">🚆</div>
                         <h3 class="card-title">Kereta Api</h3>
                         <p class="card-text">Perjalanan mudik dengan kereta api untuk rute-rute tertentu di Pulau Jawa.</p>
                         <ul>
@@ -600,10 +484,8 @@
                 </div>
                 
                 <div class="card">
-                    <div class="card-image">
-                        <img src="/api/placeholder/400/200" alt="Kapal Laut">
-                    </div>
                     <div class="card-content">
+                        <div class="card-icon">🚢</div>
                         <h3 class="card-title">Kapal Laut</h3>
                         <p class="card-text">Perjalanan mudik dengan kapal laut untuk rute antar pulau.</p>
                         <ul>
@@ -617,108 +499,9 @@
             </div>
         </section>
         
-        <section class="section">
-            <h2 class="section-title">Rute Tersedia</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Asal</th>
-                        <th>Tujuan</th>
-                        <th>Moda Transportasi</th>
-                        <th>Tanggal Keberangkatan</th>
-                        <th>Kuota</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Jakarta</td>
-                        <td>Semarang</td>
-                        <td>Bus</td>
-                        <td>10, 11, 12 Maret 2025</td>
-                        <td>500 orang</td>
-                    </tr>
-                    <tr>
-                        <td>Jakarta</td>
-                        <td>Yogyakarta</td>
-                        <td>Bus, Kereta</td>
-                        <td>10, 11, 12, 13 Maret 2025</td>
-                        <td>750 orang</td>
-                    </tr>
-                    <tr>
-                        <td>Jakarta</td>
-                        <td>Surabaya</td>
-                        <td>Bus, Kereta</td>
-                        <td>10, 11, 12, 13 Maret 2025</td>
-                        <td>600 orang</td>
-                    </tr>
-                    <tr>
-                        <td>Jakarta</td>
-                        <td>Palembang</td>
-                        <td>Bus</td>
-                        <td>10, 11 Maret 2025</td>
-                        <td>300 orang</td>
-                    </tr>
-                    <tr>
-                        <td>Jakarta</td>
-                        <td>Lampung</td>
-                        <td>Bus</td>
-                        <td>10, 11, 12 Maret 2025</td>
-                        <td>400 orang</td>
-                    </tr>
-                    <tr>
-                        <td>Jakarta</td>
-                        <td>Makassar</td>
-                        <td>Kapal</td>
-                        <td>8, 9 Maret 2025</td>
-                        <td>200 orang</td>
-                    </tr>
-                    <tr>
-                        <td>Surabaya</td>
-                        <td>Jakarta</td>
-                        <td>Bus, Kereta</td>
-                        <td>15, 16, 17 Maret 2025</td>
-                        <td>500 orang</td>
-                    </tr>
-                    <tr>
-                        <td>Bandung</td>
-                        <td>Jakarta</td>
-                        <td>Bus</td>
-                        <td>15, 16 Maret 2025</td>
-                        <td>300 orang</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+
         
-        <section class="section">
-            <h2 class="section-title">Timeline Program</h2>
-            <div class="timeline">
-                <div class="timeline-item left">
-                    <div class="timeline-date">1 Januari 2025</div>
-                    <p>Pembukaan pendaftaran program mudik gratis 2025</p>
-                </div>
-                <div class="timeline-item right">
-                    <div class="timeline-date">15 Februari 2025</div>
-                    <p>Penutupan pendaftaran</p>
-                </div>
-                <div class="timeline-item left">
-                    <div class="timeline-date">25 Februari 2025</div>
-                    <p>Pengumuman peserta yang lolos verifikasi</p>
-                </div>
-                <div class="timeline-item right">
-                    <div class="timeline-date">1-7 Maret 2025</div>
-                    <p>Distribusi tiket secara elektronik</p>
-                </div>
-                <div class="timeline-item left">
-                    <div class="timeline-date">10-15 Maret 2025</div>
-                    <p>Periode keberangkatan mudik</p>
-                </div>
-                <div class="timeline-item right">
-                    <div class="timeline-date">16-20 Maret 2025</div>
-                    <p>Periode kepulangan (arus balik)</p>
-                </div>
-            </div>
-        </section>
+
         
         <section class="section" id="daftar">
             <h2 class="section-title">Formulir Pendaftaran</h2>
@@ -1170,10 +953,6 @@
                     document.getElementById('successModal').style.display = 'none';
                 }
             });
-            
-            // Countdown timer
-            updateCountdown();
-            setInterval(updateCountdown, 60000); // Update every minute
         });
         
         // Form validation functions
@@ -1429,21 +1208,7 @@
             return `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
         }
         
-        function updateCountdown() {
-            const deadline = new Date('February 15, 2025 23:59:59').getTime();
-            const now = new Date().getTime();
-            const timeLeft = deadline - now;
-            
-            if (timeLeft > 0) {
-                const days = Math.floor(timeLeft / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
-                
-                document.getElementById('timer').textContent = `${days} hari ${hours} jam ${minutes} menit`;
-            } else {
-                document.getElementById('countdown').textContent = 'Pendaftaran telah ditutup';
-            }
-        }
+
     </script>
 </body>
 </html>
