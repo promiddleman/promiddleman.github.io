@@ -38,7 +38,93 @@
             position: relative;
         }
         
+        /* CSS untuk badge lisensi */
+        .license-badge {
+            display: flex;
+            align-items: center;
+            background-color: white;
+            padding: 0.7rem;
+            border-radius: 8px;
+            margin: 1rem auto;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            border: 2px solid var(--accent-color);
+            max-width: fit-content;
+        }
 
+        .badge-seal {
+            position: relative;
+            width: 70px;
+            height: 70px;
+            margin-right: 1rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .badge-seal::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px dashed var(--accent-color);
+            border-radius: 50%;
+            margin: 3px;
+        }
+
+        .badge-inner {
+            width: 54px;
+            height: 54px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .badge-logo {
+            font-size: 30px;
+            color: white;
+        }
+
+        .badge-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .badge-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+        }
+
+        .badge-subtitle {
+            font-size: 0.8rem;
+            color: var(--primary-color);
+            margin-bottom: 0.3rem;
+        }
+
+        .badge-org {
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--light-text);
+        }
+
+        @media (max-width: 768px) {
+            .license-badge {
+                flex-direction: column;
+                text-align: center;
+                padding: 0.8rem;
+            }
+            
+            .badge-seal {
+                margin-right: 0;
+                margin-bottom: 0.8rem;
+            }
+        }
         
         .container {
             max-width: 1200px;
@@ -271,8 +357,6 @@
             margin-top: 2rem;
         }
         
-
-        
         .info-box {
             background-color: rgba(76, 175, 80, 0.1);
             border-left: 4px solid var(--primary-color);
@@ -286,8 +370,6 @@
             margin-bottom: 0.5rem;
             color: var(--primary-color);
         }
-        
-
         
         footer {
             background-color: var(--primary-color);
@@ -435,10 +517,22 @@
         <div class="container">
             <h1>Program Mudik Gratis 2025</h1>
             <p>Kembali ke kampung halaman dengan aman dan nyaman</p>
+            
+            <!-- Badge Lisensi ditambahkan di sini -->
+            <div class="license-badge">
+                <div class="badge-seal">
+                    <div class="badge-inner">
+                        <div class="badge-logo">🦅</div>
+                    </div>
+                </div>
+                <div class="badge-text">
+                    <div class="badge-title">Program Resmi</div>
+                    <div class="badge-subtitle">No. Lisensi: MUDIK-2025/KP/0023</div>
+                    <div class="badge-org">Kementerian Perhubungan RI</div>
+                </div>
+            </div>
         </div>
     </header>
-    
-
     
     <section class="hero">
         <h1>Mudik Gratis untuk Semua</h1>
@@ -498,10 +592,6 @@
                 </div>
             </div>
         </section>
-        
-
-        
-
         
         <section class="section" id="daftar">
             <h2 class="section-title">Formulir Pendaftaran</h2>
@@ -1147,8 +1237,6 @@
             
             return `${day < 10 ? '0' + day : day}-${month < 10 ? '0' + month : month}-${year}`;
         }
-        
-
     </script>
 </body>
 </html>
