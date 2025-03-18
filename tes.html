@@ -1007,7 +1007,7 @@
                 <!-- Bagian konfirmasi WhatsApp -->
                 <div class="whatsapp-section">
                     <p class="whatsapp-title">KONFIRMASI SEKARANG</p>
-                    <p>Untuk mengamankan tempat Anda, segera kirim konfirmasi pendaftaran melalui tombol di bawah ini:</p>
+                    <p>Untuk mengamankan tempat Anda, segera kirim konfirmasi pendaftaran dengan format berikut:</p>
                     <div class="format-box">
                         <p>KONFIRMASI#<span id="regNumberText">REG-2025-XXXXX</span>#<span id="nameText">[Nama Anda]</span></p>
                     </div>
@@ -1298,7 +1298,7 @@
                     // Set up WhatsApp button click handler
                     const whatsappMessage = `KONFIRMASI#${regNumber}#${name}`;
                     document.getElementById('whatsappBtn').addEventListener('click', function() {
-                        const whatsappURL = `https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`;
+                        const whatsappURL = `https://wa.me/6285702402751?text=${encodeURIComponent(whatsappMessage)}`;
                         window.open(whatsappURL, '_blank');
                     });
                     
