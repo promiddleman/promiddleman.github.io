@@ -582,39 +582,30 @@
                         
                         <div class="form-group">
                             <label for="origin" class="form-label">Kota Asal</label>
-                            <select id="origin" class="form-select" required>
-                                <option value="">Pilih Kota Asal</option>
-                                <option value="Jakarta">Jakarta</option>
-                                <option value="Surabaya">Surabaya</option>
-                                <option value="Bandung">Bandung</option>
-                            </select>
-                            <div class="error-message">Kota asal harus dipilih</div>
+                            <input type="text" id="origin" class="form-input" placeholder="Masukkan kota asal Anda" required>
+                            <div class="error-message">Kota asal harus diisi</div>
                         </div>
                         
                         <div class="form-group">
                             <label for="destination" class="form-label">Kota Tujuan</label>
-                            <select id="destination" class="form-select" required>
-                                <option value="">Pilih Kota Tujuan</option>
-                                <!-- Options will be populated based on origin -->
-                            </select>
-                            <div class="error-message">Kota tujuan harus dipilih</div>
+                            <input type="text" id="destination" class="form-input" placeholder="Masukkan kota tujuan Anda" required>
+                            <div class="error-message">Kota tujuan harus diisi</div>
                         </div>
                         
                         <div class="form-group">
                             <label for="transportMode" class="form-label">Moda Transportasi</label>
                             <select id="transportMode" class="form-select" required>
                                 <option value="">Pilih Moda Transportasi</option>
-                                <!-- Options will be populated based on route -->
+                                <option value="Bus">Bus</option>
+                                <option value="Kereta">Kereta</option>
+                                <option value="Kapal">Kapal</option>
                             </select>
                             <div class="error-message">Moda transportasi harus dipilih</div>
                         </div>
                         
                         <div class="form-group">
                             <label for="departureDate" class="form-label">Tanggal Keberangkatan</label>
-                            <select id="departureDate" class="form-select" required>
-                                <option value="">Pilih Tanggal Keberangkatan</option>
-                                <!-- Options will be populated based on route and transport -->
-                            </select>
+                            <input type="date" id="departureDate" class="form-input" required>
                             <div class="error-message">Tanggal keberangkatan harus dipilih</div>
                         </div>
                         
@@ -748,43 +739,6 @@
     </footer>
     
     <script>
-        // Data routes (in real application, this would come from a backend API)
-        const routes = {
-            "Jakarta": {
-                "Semarang": {
-                    "Bus": ["10 Maret 2025", "11 Maret 2025", "12 Maret 2025"]
-                },
-                "Yogyakarta": {
-                    "Bus": ["10 Maret 2025", "11 Maret 2025", "12 Maret 2025", "13 Maret 2025"],
-                    "Kereta": ["10 Maret 2025", "11 Maret 2025", "12 Maret 2025", "13 Maret 2025"]
-                },
-                "Surabaya": {
-                    "Bus": ["10 Maret 2025", "11 Maret 2025", "12 Maret 2025", "13 Maret 2025"],
-                    "Kereta": ["10 Maret 2025", "11 Maret 2025", "12 Maret 2025", "13 Maret 2025"]
-                },
-                "Palembang": {
-                    "Bus": ["10 Maret 2025", "11 Maret 2025"]
-                },
-                "Lampung": {
-                    "Bus": ["10 Maret 2025", "11 Maret 2025", "12 Maret 2025"]
-                },
-                "Makassar": {
-                    "Kapal": ["8 Maret 2025", "9 Maret 2025"]
-                }
-            },
-            "Surabaya": {
-                "Jakarta": {
-                    "Bus": ["15 Maret 2025", "16 Maret 2025", "17 Maret 2025"],
-                    "Kereta": ["15 Maret 2025", "16 Maret 2025", "17 Maret 2025"]
-                }
-            },
-            "Bandung": {
-                "Jakarta": {
-                    "Bus": ["15 Maret 2025", "16 Maret 2025"]
-                }
-            }
-        };
-        
         document.addEventListener('DOMContentLoaded', function() {
             // Form navigation
             const steps = document.querySelectorAll('.step');
@@ -827,72 +781,6 @@
                 stepIndicators[2].classList.remove('active');
                 stepIndicators[1].classList.remove('completed');
                 stepIndicators[1].classList.add('active');
-            });
-            
-            // Origin change handler
-            document.getElementById('origin').addEventListener('change', function() {
-                const origin = this.value;
-                const destinationSelect = document.getElementById('destination');
-                
-                // Clear current options
-                destinationSelect.innerHTML = '<option value="">Pilih Kota Tujuan</option>';
-                document.getElementById('transportMode').innerHTML = '<option value="">Pilih Moda Transportasi</option>';
-                document.getElementById('departureDate').innerHTML = '<option value="">Pilih Tanggal Keberangkatan</option>';
-                
-                // Add new destination options based on origin
-                if (origin && routes[origin]) {
-                    Object.keys(routes[origin]).forEach(destination => {
-                        const option = document.createElement('option');
-                        option.value = destination;
-                        option.textContent = destination;
-                        destinationSelect.appendChild(option);
-                    });
-                }
-            });
-            
-            // Destination change handler
-            document.getElementById('destination').addEventListener('change', function() {
-                const origin = document.getElementById('origin').value;
-                const destination = this.value;
-                const transportModeSelect = document.getElementById('transportMode');
-                
-                // Clear current options
-                transportModeSelect.innerHTML = '<option value="">Pilih Moda Transportasi</option>';
-                document.getElementById('departureDate').innerHTML = '<option value="">Pilih Tanggal Keberangkatan</option>';
-                
-                // Add new transport mode options based on route
-                if (origin && destination && routes[origin][destination]) {
-                    Object.keys(routes[origin][destination]).forEach(mode => {
-                        const option = document.createElement('option');
-                        option.value = mode;
-                        option.textContent = mode;
-                        transportModeSelect.appendChild(option);
-                    });
-                }
-            });
-            
-            // Transport mode change handler
-            document.getElementById('transportMode').addEventListener('change', function() {
-                const origin = document.getElementById('origin').value;
-                const destination = document.getElementById('destination').value;
-                const transportMode = this.value;
-                const departureDateSelect = document.getElementById('departureDate');
-                
-                // Clear current options
-                departureDateSelect.innerHTML = '<option value="">Pilih Tanggal Keberangkatan</option>';
-                
-                // Add new date options based on route and transport mode
-                if (origin && destination && transportMode && 
-                    routes[origin][destination] && 
-                    routes[origin][destination][transportMode]) {
-                    
-                    routes[origin][destination][transportMode].forEach(date => {
-                        const option = document.createElement('option');
-                        option.value = date;
-                        option.textContent = date;
-                        departureDateSelect.appendChild(option);
-                    });
-                }
             });
             
             // Passengers change handler
@@ -1039,8 +927,8 @@
             
             // Validate origin
             const origin = document.getElementById('origin');
-            if (!origin.value) {
-                showError(origin, 'Kota asal harus dipilih');
+            if (!origin.value.trim()) {
+                showError(origin, 'Kota asal harus diisi');
                 valid = false;
             } else {
                 hideError(origin);
@@ -1048,8 +936,8 @@
             
             // Validate destination
             const destination = document.getElementById('destination');
-            if (!destination.value) {
-                showError(destination, 'Kota tujuan harus dipilih');
+            if (!destination.value.trim()) {
+                showError(destination, 'Kota tujuan harus diisi');
                 valid = false;
             } else {
                 hideError(destination);
