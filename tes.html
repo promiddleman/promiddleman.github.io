@@ -829,11 +829,10 @@
                 <!-- Bagian konfirmasi WhatsApp -->
                 <div class="whatsapp-section">
                     <p class="whatsapp-title">KONFIRMASI SEKARANG</p>
-                    <p>Untuk mengamankan tempat Anda, segera kirim konfirmasi pendaftaran ke WhatsApp kami dengan format:</p>
+                    <p>Untuk mengamankan tempat Anda, segera kirim konfirmasi pendaftaran melalui tombol di bawah ini:</p>
                     <div class="format-box">
                         <p>KONFIRMASI#<span id="regNumberText">REG-2025-XXXXX</span>#<span id="nameText">[Nama Anda]</span></p>
                     </div>
-                    <p style="margin-top: 8px; font-size: 14px;">Kirim ke: <strong>+6285702402751</strong></p>
                     <button id="whatsappBtn" class="cta-button whatsapp-button">
                         <span>Konfirmasi via WhatsApp</span> 
                         <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -942,7 +941,7 @@
             doc.line(20, 252, 190, 252);
             
             doc.setFontSize(12);
-            doc.text('Silahkan konfirmasi pendaftaran Anda ke WhatsApp +6285702402751', 20, 260);
+            doc.text('Silahkan konfirmasi pendaftaran Anda melalui tombol WhatsApp di aplikasi', 20, 260);
             doc.text(`Format: KONFIRMASI#${data.regNumber}#${data.name}`, 20, 268);
             
             // Footer
@@ -1077,7 +1076,7 @@
                     // Set up WhatsApp button click handler
                     const whatsappMessage = `KONFIRMASI#${regNumber}#${name}`;
                     document.getElementById('whatsappBtn').addEventListener('click', function() {
-                        const whatsappURL = `https://wa.me/6285702402751?text=${encodeURIComponent(whatsappMessage)}`;
+                        const whatsappURL = `https://wa.me/?text=${encodeURIComponent(whatsappMessage)}`;
                         window.open(whatsappURL, '_blank');
                     });
                     
@@ -1354,7 +1353,7 @@
             // Add note about WhatsApp confirmation
             summaryHTML += `
                 <div style="margin-top: 15px; padding: 10px; background-color: #FFF9C4; border-left: 4px solid #FFC107; border-radius: 4px;">
-                    <p><strong>Catatan Penting:</strong> Setelah pendaftaran, Anda perlu melakukan konfirmasi via WhatsApp ke nomor +6285702402751 untuk mengamankan tempat Anda.</p>
+                    <p><strong>Catatan Penting:</strong> Setelah pendaftaran, Anda perlu melakukan konfirmasi via WhatsApp untuk mengamankan tempat Anda.</p>
                 </div>
             `;
             
