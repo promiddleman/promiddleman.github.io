@@ -15,6 +15,7 @@
             --background-color: #FAFAFA;
             --card-color: #FFFFFF;
             --error-color: #D32F2F;
+            --whatsapp-color: #25D366;
         }
         
         * {
@@ -488,7 +489,41 @@
             margin-bottom: 1rem;
         }
         
-                    /* Responsiveness */
+        /* WhatsApp Section */
+        .whatsapp-section {
+            background-color: #FFF9C4;
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            text-align: left;
+        }
+        
+        .whatsapp-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .format-box {
+            background-color: white;
+            border: 1px dashed var(--secondary-color);
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 4px;
+            font-family: monospace;
+        }
+        
+        .whatsapp-button {
+            background-color: var(--whatsapp-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+        }
+        
+        /* Responsiveness */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2rem;
@@ -509,6 +544,12 @@
             
             .footer-content {
                 flex-direction: column;
+            }
+            
+            .modal-content {
+                margin: 15% auto;
+                width: 95%;
+                padding: 1.5rem;
             }
         }
     </style>
@@ -599,7 +640,7 @@
             <div class="info-box" style="margin-bottom: 20px;">
                 <div class="info-box-title">Petunjuk Pendaftaran</div>
                 <p>Silakan isi formulir di bawah ini untuk mendaftar program mudik gratis. Setelah mengisi formulir, Anda akan menerima nomor registrasi pendaftaran.</p>
-                <p><strong>⚠️ PENTING:</strong> Harap simpan nomor registrasi Anda sebagai bukti pendaftaran.</p>
+                <p><strong>⚠️ PENTING:</strong> Harap simpan nomor registrasi Anda sebagai bukti pendaftaran dan lakukan konfirmasi melalui WhatsApp untuk mengamankan tempat Anda.</p>
             </div>
             <div class="form-container">
                 <div class="steps-indicator">
@@ -775,16 +816,35 @@
         </section>
     </div>
     
+    <!-- Modal sukses yang diperbarui dengan konfirmasi WhatsApp -->
     <div id="successModal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
-                            <div class="success-message">
+            <div class="success-message">
                 <div class="success-icon">✓</div>
                 <h3>Pendaftaran Berhasil!</h3>
                 <p>Terima kasih telah mendaftar program mudik gratis 2025. Data Anda telah kami terima dan sedang dalam proses verifikasi.</p>
                 <p>Nomor registrasi Anda: <strong id="registrationNumber">REG-2025-XXXXX</strong></p>
-                <p class="info-box-title" style="color: #2E7D32; margin-top: 10px;">PENTING: Mohon simpan nomor registrasi ini. Anda akan menerima informasi lebih lanjut melalui email dan nomor telepon yang didaftarkan.</p>
-                <button class="cta-button" id="closeModal">Kembali ke Beranda</button>
+                
+                <!-- Bagian konfirmasi WhatsApp -->
+                <div class="whatsapp-section">
+                    <p class="whatsapp-title">KONFIRMASI SEKARANG</p>
+                    <p>Untuk mengamankan tempat Anda, segera kirim konfirmasi pendaftaran ke WhatsApp kami dengan format:</p>
+                    <div class="format-box">
+                        <p>KONFIRMASI#<span id="regNumberText">REG-2025-XXXXX</span>#<span id="nameText">[Nama Anda]</span></p>
+                    </div>
+                    <p style="margin-top: 8px; font-size: 14px;">Kirim ke: <strong>+6285702402751</strong></p>
+                    <button id="whatsappBtn" class="cta-button whatsapp-button">
+                        <span>Konfirmasi via WhatsApp</span> 
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.095 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.57-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                        </svg>
+                    </button>
+                </div>
+                
+                <p class="info-box-title" style="color: #2E7D32; margin-top: 15px;">Mohon simpan nomor registrasi ini. Anda akan menerima tiket setelah konfirmasi WhatsApp dilakukan.</p>
+                
+                <button class="cta-button" id="closeModal" style="margin-top: 15px;">Kembali ke Beranda</button>
                 <button class="cta-button" id="downloadRegistration" style="margin-top: 10px; background-color: var(--secondary-color);">Unduh Bukti Pendaftaran</button>
             </div>
         </div>
@@ -876,6 +936,15 @@
             doc.text(`Tanggal Keberangkatan: ${data.departureDate}`, 20, 225);
             doc.text(`Jumlah Penumpang: ${data.passengersCount}`, 20, 235);
             
+            // Tambahkan informasi konfirmasi WhatsApp
+            doc.setFontSize(14);
+            doc.text('INFORMASI KONFIRMASI', 20, 250);
+            doc.line(20, 252, 190, 252);
+            
+            doc.setFontSize(12);
+            doc.text('Silahkan konfirmasi pendaftaran Anda ke WhatsApp +6285702402751', 20, 260);
+            doc.text(`Format: KONFIRMASI#${data.regNumber}#${data.name}`, 20, 268);
+            
             // Footer
             doc.setFillColor(46, 125, 50);
             doc.rect(0, 270, 210, 25, 'F');
@@ -965,10 +1034,14 @@
                 if (validateStep3()) {
                     // Generate registration number
                     const regNumber = 'REG-2025-' + Math.floor(10000 + Math.random() * 90000);
+                    const name = document.getElementById('name').value;
+                    
+                    // Set nomor registrasi dan nama di modal
                     document.getElementById('registrationNumber').textContent = regNumber;
+                    document.getElementById('regNumberText').textContent = regNumber;
+                    document.getElementById('nameText').textContent = name;
                     
                     // Collect registration data
-                    const name = document.getElementById('name').value;
                     const nik = document.getElementById('nik').value;
                     const birthPlace = document.getElementById('birthPlace').value;
                     const birthDate = document.getElementById('birthDate').value;
@@ -1000,6 +1073,13 @@
                         departureDate,
                         passengersCount
                     };
+                    
+                    // Set up WhatsApp button click handler
+                    const whatsappMessage = `KONFIRMASI#${regNumber}#${name}`;
+                    document.getElementById('whatsappBtn').addEventListener('click', function() {
+                        const whatsappURL = `https://wa.me/6285702402751?text=${encodeURIComponent(whatsappMessage)}`;
+                        window.open(whatsappURL, '_blank');
+                    });
                     
                     // Show success modal
                     document.getElementById('successModal').style.display = 'block';
@@ -1270,6 +1350,13 @@
                     `;
                 }
             }
+            
+            // Add note about WhatsApp confirmation
+            summaryHTML += `
+                <div style="margin-top: 15px; padding: 10px; background-color: #FFF9C4; border-left: 4px solid #FFC107; border-radius: 4px;">
+                    <p><strong>Catatan Penting:</strong> Setelah pendaftaran, Anda perlu melakukan konfirmasi via WhatsApp ke nomor +6285702402751 untuk mengamankan tempat Anda.</p>
+                </div>
+            `;
             
             // Set the summary HTML
             summaryContainer.innerHTML = summaryHTML;
