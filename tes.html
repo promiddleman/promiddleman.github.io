@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pendaftaran Mudik Gratis 2025</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <style>
         :root {
             --primary-color: #2E7D32;
@@ -597,8 +598,8 @@
             <h2 class="section-title">Formulir Pendaftaran</h2>
             <div class="info-box" style="margin-bottom: 20px;">
                 <div class="info-box-title">Petunjuk Pendaftaran</div>
-                <p>Silakan isi formulir di bawah ini untuk mendaftar program mudik gratis. Setelah mengisi formulir, Anda akan diarahkan ke WhatsApp untuk konfirmasi pendaftaran.</p>
-                <p><strong>⚠️ PENTING:</strong> Pendaftaran Anda belum selesai hingga konfirmasi melalui WhatsApp dikirim.</p>
+                <p>Silakan isi formulir di bawah ini untuk mendaftar program mudik gratis. Setelah mengisi formulir, Anda akan menerima nomor registrasi pendaftaran.</p>
+                <p><strong>⚠️ PENTING:</strong> Harap simpan nomor registrasi Anda sebagai bukti pendaftaran.</p>
             </div>
             <div class="form-container">
                 <div class="steps-indicator">
@@ -777,14 +778,14 @@
     <div id="successModal" class="modal">
         <div class="modal-content">
             <span class="close-modal">&times;</span>
-            <div class="success-message">
+                            <div class="success-message">
                 <div class="success-icon">✓</div>
                 <h3>Pendaftaran Berhasil!</h3>
                 <p>Terima kasih telah mendaftar program mudik gratis 2025. Data Anda telah kami terima dan sedang dalam proses verifikasi.</p>
                 <p>Nomor registrasi Anda: <strong id="registrationNumber">REG-2025-XXXXX</strong></p>
-                <p>Data pendaftaran akan otomatis dikirim ke WhatsApp admin.</p>
-                <p class="info-box-title" style="color: #ff0000; margin-top: 10px;">PENTING: Segera konfirmasi pendaftaran Anda melalui WhatsApp yang terbuka otomatis. Pendaftaran belum selesai hingga Anda mengirim pesan konfirmasi!</p>
+                <p class="info-box-title" style="color: #2E7D32; margin-top: 10px;">PENTING: Mohon simpan nomor registrasi ini. Anda akan menerima informasi lebih lanjut melalui email dan nomor telepon yang didaftarkan.</p>
                 <button class="cta-button" id="closeModal">Kembali ke Beranda</button>
+                <button class="cta-button" id="downloadRegistration" style="margin-top: 10px; background-color: var(--secondary-color);">Unduh Bukti Pendaftaran</button>
             </div>
         </div>
     </div>
@@ -811,7 +812,7 @@
                     <h3>Kontak</h3>
                     <p>Call Center: 150080</p>
                     <p>Email: mudikgratis@perhubungan.go.id</p>
-                    <p>WhatsApp: 081234567890</p>
+                    <p>Bantuan: (021) 3456-7890</p>
                     <div class="social-links">
                         <a href="#">FB</a>
                         <a href="#">IG</a>
@@ -828,6 +829,65 @@
     </footer>
     
     <script>
+        // Set up jsPDF for download functionality
+        window.jsPDF = window.jspdf.jsPDF;
+        
+        // Function to generate PDF from registration data
+        function generatePDF(data) {
+            const doc = new jsPDF();
+            
+            // Add header with logo
+            doc.setFillColor(46, 125, 50);
+            doc.rect(0, 0, 210, 40, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(22);
+            doc.text('PROGRAM MUDIK GRATIS 2025', 105, 20, { align: 'center' });
+            
+            // Add registration details
+            doc.setTextColor(0, 0, 0);
+            doc.setFontSize(16);
+            doc.text('BUKTI PENDAFTARAN', 105, 50, { align: 'center' });
+            
+            doc.setFontSize(12);
+            doc.text(`Nomor Registrasi: ${data.regNumber}`, 20, 65);
+            doc.text(`Tanggal Pendaftaran: ${new Date().toLocaleDateString('id-ID')}`, 20, 75);
+            
+            doc.setFontSize(14);
+            doc.text('DATA PENDAFTAR', 20, 90);
+            doc.line(20, 92, 190, 92);
+            
+            doc.setFontSize(12);
+            doc.text(`Nama: ${data.name}`, 20, 105);
+            doc.text(`NIK: ${data.nik}`, 20, 115);
+            doc.text(`Tempat, Tanggal Lahir: ${data.birthPlace}, ${formatDate(data.birthDate)}`, 20, 125);
+            doc.text(`Jenis Kelamin: ${data.gender}`, 20, 135);
+            doc.text(`Alamat: ${data.address}`, 20, 145);
+            doc.text(`Telepon: ${data.phone}`, 20, 155);
+            doc.text(`Email: ${data.email}`, 20, 165);
+            
+            doc.setFontSize(14);
+            doc.text('INFORMASI PERJALANAN', 20, 180);
+            doc.line(20, 182, 190, 182);
+            
+            doc.setFontSize(12);
+            doc.text(`Kota Asal: ${data.origin}`, 20, 195);
+            doc.text(`Kota Tujuan: ${data.destination}`, 20, 205);
+            doc.text(`Moda Transportasi: ${data.transportMode}`, 20, 215);
+            doc.text(`Tanggal Keberangkatan: ${data.departureDate}`, 20, 225);
+            doc.text(`Jumlah Penumpang: ${data.passengersCount}`, 20, 235);
+            
+            // Footer
+            doc.setFillColor(46, 125, 50);
+            doc.rect(0, 270, 210, 25, 'F');
+            doc.setTextColor(255, 255, 255);
+            doc.setFontSize(10);
+            doc.text('Dokumen ini merupakan bukti resmi pendaftaran program Mudik Gratis 2025', 105, 280, { align: 'center' });
+            doc.text('Kementerian Perhubungan Republik Indonesia', 105, 285, { align: 'center' });
+            
+            // Save the PDF
+            doc.save(`Bukti_Pendaftaran_Mudik_${data.regNumber}.pdf`);
+        }
+
         document.addEventListener('DOMContentLoaded', function() {
             // Form navigation
             const steps = document.querySelectorAll('.step');
@@ -907,61 +967,47 @@
                     const regNumber = 'REG-2025-' + Math.floor(10000 + Math.random() * 90000);
                     document.getElementById('registrationNumber').textContent = regNumber;
                     
-                    // Prepare data for WhatsApp message
+                    // Collect registration data
                     const name = document.getElementById('name').value;
                     const nik = document.getElementById('nik').value;
+                    const birthPlace = document.getElementById('birthPlace').value;
+                    const birthDate = document.getElementById('birthDate').value;
+                    const gender = document.getElementById('gender').options[document.getElementById('gender').selectedIndex].text;
+                    const address = document.getElementById('address').value;
+                    const phone = document.getElementById('phone').value;
+                    const email = document.getElementById('email').value;
+                    
                     const origin = document.getElementById('origin').value;
                     const destination = document.getElementById('destination').value;
                     const transportMode = document.getElementById('transportMode').value;
                     const departureDate = document.getElementById('departureDate').value;
                     const passengersCount = document.getElementById('passengers').value;
                     
-                    // Construct WhatsApp message
-                    let whatsappMessage = `*PENDAFTARAN MUDIK GRATIS 2025*%0A%0A`;
-                    whatsappMessage += `No. Registrasi: *${regNumber}*%0A`;
-                    whatsappMessage += `Nama: ${name}%0A`;
-                    whatsappMessage += `NIK: ${nik}%0A`;
-                    whatsappMessage += `Dari: ${origin}%0A`;
-                    whatsappMessage += `Tujuan: ${destination}%0A`;
-                    whatsappMessage += `Transportasi: ${transportMode}%0A`;
-                    whatsappMessage += `Tanggal: ${departureDate}%0A`;
-                    whatsappMessage += `Jumlah Penumpang: ${passengersCount}%0A%0A`;
-                    
-                    // Add additional passengers if any
-                    if (passengersCount > 1) {
-                        whatsappMessage += `*Data Penumpang Tambahan:*%0A`;
-                        for (let i = 2; i <= passengersCount; i++) {
-                            const passengerName = document.getElementById(`passenger${i}Name`).value;
-                            const passengerNIK = document.getElementById(`passenger${i}NIK`).value;
-                            whatsappMessage += `${i}. ${passengerName} (NIK: ${passengerNIK})%0A`;
-                        }
-                    }
-                    
-                    // Open WhatsApp with the message
-                    const whatsappURL = `https://wa.me/6285702402751?text=${whatsappMessage}`;
+                    // Store registration data for download functionality
+                    window.registrationData = {
+                        regNumber,
+                        name,
+                        nik,
+                        birthPlace,
+                        birthDate,
+                        gender,
+                        address,
+                        phone,
+                        email,
+                        origin,
+                        destination,
+                        transportMode,
+                        departureDate,
+                        passengersCount
+                    };
                     
                     // Show success modal
                     document.getElementById('successModal').style.display = 'block';
                     
-                    // Add button to send to WhatsApp in the modal
-                    const whatsappButton = document.createElement('a');
-                    whatsappButton.href = whatsappURL;
-                    whatsappButton.className = 'cta-button';
-                    whatsappButton.style.marginTop = '1rem';
-                    whatsappButton.style.display = 'inline-block';
-                    whatsappButton.style.backgroundColor = '#25D366';
-                    whatsappButton.style.marginLeft = '1rem';
-                    whatsappButton.target = '_blank';
-                    whatsappButton.textContent = 'Kirim ke WhatsApp';
-                    
-                    // Add the button after the close button
-                    const closeButton = document.getElementById('closeModal');
-                    closeButton.parentNode.insertBefore(whatsappButton, closeButton.nextSibling);
-                    
-                    // Automatically open WhatsApp after 2 seconds
-                    setTimeout(function() {
-                        window.open(whatsappURL, '_blank');
-                    }, 2000);
+                    // Add download functionality
+                    document.getElementById('downloadRegistration').addEventListener('click', function() {
+                        generatePDF(window.registrationData);
+                    });
                 }
             });
             
