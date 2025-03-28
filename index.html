@@ -1,2178 +1,1082 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Promiddleman #1 in World</title>
-    <style>
-        /* Font imports */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        /* Reset and base styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f8f9fa;
-            color: #343a40;
-            line-height: 1.6;
-        }
-        
-        /* Header styles */
-        header {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            padding: 2rem 0;
-            text-align: center;
-        }
-        
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-        
-        .logo {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-        
-        .tagline {
-            font-weight: 300;
-            font-size: 1.2rem;
-            margin-bottom:.5rem;
-        }
-        
-        .stats {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-top: 1.5rem;
-            flex-wrap: wrap;
-        }
-        
-        .stat-item {
-            text-align: center;
-            padding: 0.5rem;
-        }
-        
-        .stat-number {
-            font-size: 1.8rem;
-            font-weight: 700;
-            display: block;
-        }
-        
-        .stat-label {
-            font-size: 0.85rem;
-            font-weight: 300;
-        }
-        
-        /* Main content styles */
-        main {
-            max-width: 1200px;
-            margin: 1.5rem auto;
-            padding: 0 1rem;
-        }
-        
-        .testimonial-heading {
-            text-align: center;
-            margin-bottom: 3.5rem;
-            position: relative;
-            padding-bottom: 1.5rem;
-        }
-        
-        .testimonial-heading::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #1e3c72, transparent);
-            border-radius: 3px;
-        }
-        
-        .testimonial-heading h2 {
-            font-size: 2.2rem;
-            margin-bottom: 1.2rem;
-            color: #1e3c72;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .testimonial-heading h2::before,
-        .testimonial-heading h2::after {
-            content: """;
-            position: absolute;
-            font-family: Georgia, serif;
-            color: rgba(30, 60, 114, 0.1);
-            font-size: 4rem;
-            line-height: 0;
-        }
-        
-        .testimonial-heading h2::before {
-            left: -2rem;
-            top: 0.5rem;
-        }
-        
-        .testimonial-heading h2::after {
-            content: """;
-            right: -2rem;
-            bottom: -0.6rem;
-        }
-        
-        .testimonial-heading p {
-            font-size: 1.1rem;
-            color: #6c757d;
-            max-width: 700px;
-            margin: 0 auto;
-            line-height: 1.7;
-        }
-        
-        /* Enhanced Filter controls */
-        .filter-controls {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 2.5rem;
-            flex-wrap: wrap;
-            gap: 0.7rem;
-            position: relative;
-            z-index: 5;
-        }
-        
-        .filter-btn {
-            background-color: white;
-            border: 1px solid #e0e5ec;
-            border-radius: 30px;
-            padding: 0.6rem 1.4rem;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 3px 6px rgba(0,0,0,0.01), 
-                        0 1px 3px rgba(0,0,0,0.03);
-            position: relative;
-            overflow: hidden;
-            font-weight: 500;
-        }
-        
-        .filter-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, 
-                        rgba(255,255,255,0.1), 
-                        rgba(255,255,255,0.4), 
-                        rgba(255,255,255,0.1));
-            transition: all 0.5s ease;
-        }
-        
-        .filter-btn:hover {
-            background-color: #f5f7fa;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-        
-        .filter-btn:hover::before {
-            left: 100%;
-        }
-        
-        .filter-btn.active {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            border-color: transparent;
-            box-shadow: 0 6px 15px rgba(30,60,114,0.2);
-            transform: translateY(-2px);
-        }
-        
-        /* Enhanced Search box */
-        .search-box {
-            max-width: 600px;
-            margin: 0 auto 2.5rem;
-            position: relative;
-        }
-        
-        .search-input {
-            width: 100%;
-            padding: 1rem 1.5rem 1rem 3.5rem;
-            border: 1px solid #e0e5ec;
-            border-radius: 40px;
-            font-size: 0.95rem;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.03);
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            background-color: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(5px);
-            -webkit-backdrop-filter: blur(5px);
-        }
-        
-        .search-input:focus {
-            outline: none;
-            border-color: #2a5298;
-            box-shadow: 0 8px 25px rgba(30,60,114,0.12);
-            background-color: white;
-            transform: translateY(-2px);
-        }
-        
-        .search-icon {
-            position: absolute;
-            left: 1.4rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #1e3c72;
-            opacity: 0.7;
-            transition: all 0.3s ease;
-        }
-        
-        .search-input:focus + .search-icon {
-            opacity: 1;
-            transform: translateY(-50%) scale(1.1);
-        }
-        
-        /* Enhanced Testimonial grid */
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 1.8rem;
-            padding: 0.5rem;
-        }
-        
-        .testimonial-card {
-            background: linear-gradient(145deg, #ffffff, #f8f9fa);
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.04), 
-                        0 6px 10px rgba(0,0,0,0.02);
-            overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            margin-bottom: 0.8rem;
-            border: 1px solid rgba(0,0,0,0.03);
-            position: relative;
-        }
-        
-        .testimonial-card::before {
-            content: """;
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            font-size: 80px;
-            color: rgba(30, 60, 114, 0.05);
-            font-family: Georgia, serif;
-            line-height: 1;
-            z-index: 0;
-        }
-        
-        .testimonial-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.06), 
-                        0 10px 15px rgba(0,0,0,0.03);
-        }
-        
-        .testimonial-header {
-            padding: 1.5rem 1.5rem 0.8rem;
-            position: relative;
-            z-index: 1;
-        }
-        
-        .user-info {
-            flex: 1;
-            position: relative;
-        }
-        
-        .user-name {
-            font-weight: 700;
-            margin-bottom: 0.6rem;
-            color: #1e3c72;
-            font-size: 1.1rem;
-            letter-spacing: -0.3px;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .user-name::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background: linear-gradient(90deg, #1e3c72, transparent);
-            border-radius: 2px;
-        }
-        
-        .transaction-type {
-            font-size: 0.85rem;
-            color: #505050;
-            margin-bottom: 0.4rem;
-            display: flex;
-            align-items: center;
-            font-weight: 500;
-        }
-        
-        .transaction-type strong {
-            margin-right: 0.3rem;
-            color: #333;
-        }
-        
-        .rating {
-            color: #ffc107;
-            font-size: 1rem;
-            margin: 0.8rem 0;
-            letter-spacing: 2px;
-        }
-        
-        .testimonial-body {
-            padding: 0.8rem 1.5rem;
-            flex-grow: 1;
-            border-top: 1px solid rgba(0,0,0,0.04);
-            border-bottom: 1px solid rgba(0,0,0,0.04);
-            position: relative;
-            z-index: 1;
-            background-color: rgba(255, 255, 255, 0.6);
-        }
-        
-        .testimonial-text {
-            color: #343a40;
-            font-size: 0.95rem;
-            line-height: 1.65;
-            font-weight: 400;
-            position: relative;
-        }
-        
-        .testimonial-footer {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 1.5rem;
-            font-size: 0.8rem;
-            color: #6c757d;
-            background-color: rgba(248, 249, 250, 0.7);
-            position: relative;
-            z-index: 1;
-        }
-        
-        .transaction-date {
-            position: relative;
-            padding-left: 20px;
-        }
-        
-        .transaction-date::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 12px;
-            height: 12px;
-            background-color: rgba(30, 60, 114, 0.1);
-            border-radius: 50%;
-        }
-        
-        .transaction-amount {
-            font-weight: 700;
-            color: #1e3c72;
-            background: rgba(30, 60, 114, 0.07);
-            padding: 0.3rem 0.7rem;
-            border-radius: 30px;
-            font-size: 0.85rem;
-        }
-        
-        /* Enhanced Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            margin: 3.5rem 0 2.5rem;
-            gap: 0.7rem;
-        }
-        
-        .page-btn {
-            width: 45px;
-            height: 45px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-            border: 1px solid #e0e5ec;
-            background-color: white;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            font-size: 0.95rem;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.02);
-            position: relative;
-            overflow: hidden;
-            font-weight: 500;
-        }
-        
-        .page-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-        
-        .page-btn:hover {
-            background-color: #f5f7fa;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(0,0,0,0.05);
-        }
-        
-        .page-btn:hover::before {
-            opacity: 1;
-        }
-        
-        .page-btn.active {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            border-color: transparent;
-            box-shadow: 0 6px 15px rgba(30,60,114,0.2);
-            transform: scale(1.1);
-            font-weight: 600;
-        }
-        
-        .page-btn.prev-btn,
-        .page-btn.next-btn {
-            font-size: 1.2rem;
-            font-weight: bold;
-        }
-        
-        .loader {
-            display: none;
-            margin: 2rem auto;
-            position: relative;
-            width: 50px;
-            height: 50px;
-        }
-        
-        .loader::before,
-        .loader::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            background-color: #1e3c72;
-            opacity: 0.6;
-            animation: pulse 2s ease-in-out infinite;
-        }
-        
-        .loader::after {
-            animation-delay: 1s;
-        }
-        
-        @keyframes pulse {
-            0% {
-                transform: scale(0);
-                opacity: 0.8;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 0;
-            }
-        }
-        
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-        
-        /* Enhanced CTA Section */
-        .cta-section {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            padding: 3.5rem 1.5rem;
-            text-align: center;
-            color: white;
-            margin-top: 3rem;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cta-container {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .cta-heading {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-        }
-        
-        .cta-text {
-            font-size: 1rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-        
-        .cta-btn {
-            display: inline-block;
-            background-color: white;
-            color: #1e3c72;
-            font-weight: 600;
-            padding: 0.9rem 1.8rem;
-            border-radius: 50px;
-            text-decoration: none;
-            transition: all 0.4s ease;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cta-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
-        }
-        
-        /* Button Animation */
-        .cta-btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 5px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.5);
-            opacity: 0;
-            border-radius: 100%;
-            transform: scale(1, 1) translate(-50%);
-            transform-origin: 50% 50%;
-        }
-        
-        .cta-btn:hover::after {
-            animation: ripple 1s ease-out;
-        }
-        
-        @keyframes ripple {
-            0% {
-                transform: scale(0, 0);
-                opacity: 0.5;
-            }
-            100% {
-                transform: scale(20, 20);
-                opacity: 0;
-            }
-        }
-        
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: -50px;
-            right: -50px;
-            background: radial-gradient(ellipse at center, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 70%);
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-        }
-        
-        .cta-section::after {
-            content: '';
-            position: absolute;
-            bottom: -80px;
-            left: -80px;
-            background: radial-gradient(ellipse at center, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-        }
-        
-        /* Enhanced Footer styles */
-        footer {
-            background: linear-gradient(135deg, #2b3035 0%, #1a1d20 100%);
-            color: white;
-            padding: 4rem 1.5rem 2.5rem;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 -10px 25px rgba(0,0,0,0.05);
-        }
-        
-        footer::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #1e3c72, #2a5298, #1e3c72);
-        }
-        
-        .footer-wave {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 80px;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%232b3035' opacity='0.2'%3E%3C/path%3E%3C/svg%3E");
-            background-size: cover;
-        }
-        
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: center;
-            position: relative;
-        }
-        
-        .footer-column h3 {
-            font-size: 1.25rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.75rem;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            color: #ffffff;
-        }
-        
-        .footer-column h3:after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 60px;
-            height: 3px;
-            background: linear-gradient(90deg, #1e3c72, #2a5298);
-            border-radius: 3px;
-        }
-        
-        .footer-column p {
-            margin-bottom: 1.2rem;
-            font-size: 0.9rem;
-            opacity: 0.9;
-            line-height: 1.7;
-        }
-        
-        .footer-column ul {
-            list-style: none;
-        }
-        
-        .footer-column li {
-            margin-bottom: 0.9rem;
-            position: relative;
-            padding-left: 1.2rem;
-        }
-        
-        .footer-column li:before {
-            content: '›';
-            position: absolute;
-            left: 0;
-            color: #2a5298;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-        
-        .footer-column a {
-            color: #e6e6e6;
-            text-decoration: none;
-            opacity: 0.9;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            position: relative;
-            padding-bottom: 2px;
-        }
-        
-        .footer-column a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 1px;
-            bottom: 0;
-            left: 0;
-            background-color: #2a5298;
-            transition: all 0.3s ease;
-        }
-        
-        .footer-column a:hover {
-            opacity: 1;
-            color: #2a5298;
-        }
-        
-        .footer-column a:hover::after {
-            width: 100%;
-        }
-        
-        /* Responsive adjustments */
-        @media (max-width: 992px) {
-            .stat-number {
-                font-size: 1.6rem;
-            }
-            
-            .testimonial-grid {
-                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .header-container {
-                padding: 0 1rem;
-            }
-            
-            .stats {
-                flex-direction: column;
-                gap: 1rem;
-                padding: 0 1rem;
-            }
-            
-            .stat-item {
-                padding: 0.5rem 0;
-            }
-            
-            .testimonial-heading h2 {
-                font-size: 1.6rem;
-            }
-            
-            .filter-controls {
-                padding: 0 0.5rem;
-            }
-            
-            .filter-btn {
-                padding: 0.3rem 0.8rem;
-                font-size: 0.8rem;
-            }
-            
-            .testimonial-grid {
-                grid-template-columns: 1fr;
-                padding: 0 0.5rem;
-            }
-            
-            .testimonial-card {
-                margin-bottom: 1rem;
-            }
-            
-            .testimonial-header, 
-            .testimonial-body, 
-            .testimonial-footer {
-                padding: 1rem;
-            }
-            
-            .footer-container {
-                grid-template-columns: 1fr;
-            }
-            
-            .cta-heading {
-                font-size: 1.5rem;
-            }
-            
-            .cta-btn {
-                padding: 0.8rem 1.5rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .logo {
-                font-size: 1.8rem;
-            }
-            
-            .tagline {
-                font-size: 1rem;
-            }
-            
-            .testimonial-heading h2 {
-                font-size: 1.4rem;
-            }
-            
-            .testimonial-heading p {
-                font-size: 0.9rem;
-            }
-            
-            .search-input {
-                font-size: 0.85rem;
-            }
-            
-            .user-name {
-                font-size: 0.9rem;
-            }
-            
-            .testimonial-text {
-                font-size: 0.85rem;
-            }
-        }
-        
-        /* Verification Badges */
-        .verification-badges {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-            padding: 2rem 1rem 1.5rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .verification-badges h4 {
-            color: #e6e6e6;
-            font-weight: 500;
-            font-size: 1.2rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            display: inline-block;
-            padding: 0 1rem;
-        }
-        
-        .verification-badges h4:before,
-        .verification-badges h4:after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            height: 1px;
-            width: 1.5rem;
-            background: rgba(255,255,255,0.2);
-        }
-        
-        .verification-badges h4:before {
-            left: -1.5rem;
-        }
-        
-        .verification-badges h4:after {
-            right: -1.5rem;
-        }
-        
-        .badge-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 2.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        .badge-group {
-            width: 100%;
-            max-width: 900px;
-        }
-        
-        .badge-group h5 {
-            color: rgba(255,255,255,0.9);
-            font-size: 0.9rem;
-            font-weight: 500;
-            margin-bottom: 1rem;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .badge-group h5:after {
-            content: '';
-            position: absolute;
-            bottom: -5px;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: linear-gradient(90deg, rgba(255,255,255,0), rgba(255,255,255,0.3), rgba(255,255,255,0));
-        }
-        
-        .badge-row {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-        }
-        
-        .badge-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            opacity: 0.8;
-            transition: all 0.3s ease;
-        }
-        
-        .badge-item:hover {
-            opacity: 1;
-            transform: translateY(-3px);
-        }
-        
-        .badge-icon {
-            width: 50px;
-            height: 50px;
-            background-color: white;
-            border-radius: 50%;
-            margin-bottom: 0.5rem;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: 60%;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-        }
-        
-        .badge-item span {
-            font-size: 0.75rem;
-            color: rgba(255,255,255,0.8);
-            font-weight: 500;
-        }
-        
-        /* Local platform badges */
-        .badge-icon.tokopedia {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2342B549' d='M12 22C6.477 22 2 17.523 2 12S6.477 2 12 2s10 4.477 10 10-4.477 10-10 10zm1.334-15.0093h-2.6666v7.8463h1.4146v-2.637h1.252c1.2213 0 2.2134-.9921 2.2134-2.6047 0-1.6126-1.0067-2.6046-2.2134-2.6046zm-.094 3.7924h-1.158v-2.376h1.158c.7173 0 1.296.5334 1.296 1.1866 0 .6534-.5787 1.1894-1.296 1.1894zm-6.0067-1.649h2.0107v-1.3507H6.0427v5.0446h3.6973v-1.3506H7.2333v-1.008h2.1594v-1.3353H7.2333z'/%3E%3C/svg%3E");
-        }
-        
-        .badge-icon.shopee {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Cpath fill='%23EE4D2D' d='M24.5,6C14.835,6,7,13.835,7,23.5S14.835,41,24.5,41S42,33.165,42,23.5S34.165,6,24.5,6z M24.5,25.406 c-3.756,0-6.803-3.047-6.803-6.803s3.047-6.803,6.803-6.803s6.803,3.047,6.803,6.803S28.256,25.406,24.5,25.406z'/%3E%3C/svg%3E");
-        }
-        
-        .badge-icon.bukalapak {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23E31E52' d='M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2zm-1.205 5.299h2.41c1.333 0 2.415 1.082 2.415 2.416v.591h-1.855v-.591c0-.31-.25-.561-.56-.561h-2.41c-.309 0-.56.252-.56.561v.591h-1.855v-.591c0-1.334 1.083-2.416 2.415-2.416zm-2.414 4.272H16.619v4.308c0 1.334-1.082 2.416-2.415 2.416h-2.41c-1.332 0-2.414-1.082-2.414-2.416V11.571zm4.614 2.37a1.496 1.496 0 0 0 0-2.99 1.496 1.496 0 0 0 0 2.99z'/%3E%3C/svg%3E");
-        }
-        
-        .badge-icon.ojk {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23213B87' d='M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4M11,8H13V14H16V16H11V8Z'/%3E%3C/svg%3E");
-        }
-        
-        /* International platform badges */
-        .badge-icon.paypal {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23003087' d='M20.067 8.478c.492.875.78 1.9.78 3.03 0 3.02-2.46 5.457-5.48 5.457H10.1L8.967 22.93H5.175l.175-1.03H2.83L4.854 8.05h8.197c2.604 0 4.81 1.68 5.493 4.027.185.71.273 1.45.26 2.2-.01.75-.155 1.485-.427 2.173-.543 1.424-1.6 2.596-3 3.306 1.967-.094 3.71-1.146 4.71-2.746.828-1.317 1.21-2.89 1.085-4.46-.153-1.91-.795-3.656-1.826-5.073.895.337 1.68.85 2.323 1.495.52.527.94 1.134 1.247 1.797.17.363.31.737.42 1.12.1.364.17.736.21 1.112.09.7.05 1.42-.12 2.1-.17.7-.48 1.36-.9 1.95-1.2 1.82-3.26 2.93-5.5 2.93H9.57l-.13.8H2.33L4.3 7.25h8.28c2.36 0 4.43 1.21 5.58 3.09-.52-.2-1.09-.31-1.68-.31H7.67L5.96 21.5h-.73l1.08-7.03h3.9c3.08 0 5.57-2.5 5.57-5.57 0-1.2-.38-2.33-1.03-3.24-.3-.43-.67-.82-1.09-1.15.7.13 1.36.35 1.97.68.48.25.93.56 1.35.92.53.46.99 1 1.37 1.6.35.53.64 1.1.85 1.71z'/%3E%3C/svg%3E");
-            background-size: 70%;
-        }
-        
-        .badge-icon.stripe {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%236772E5' d='M13.479 9.883c-1.166-.286-1.81-.572-1.81-1.144 0-.383.382-.765 1.145-.765 1.307 0 2.647.525 3.554 1.002l.526-3.197C15.93 5.39 14.403 5 12.974 5 9.743 5 7.693 6.859 7.693 9.45c0 3.086 2.287 4.2 4.047 4.815 1.8.617 2.404 1.05 2.404 1.72 0 .67-.571 1.05-1.619 1.05-1.31 0-3.096-.666-4.38-1.525l-.524 3.146C8.787 19.2 10.7 20 12.927 20c3.421 0 5.65-1.666 5.65-4.381-.048-3.086-2.382-4.144-5.098-5.735z'/%3E%3C/svg%3E");
-        }
-        
-        .badge-icon.bbb {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%230D3C85' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E");
-        }
-        
-        .badge-icon.norton {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23FFB81C' d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm4.59-12.42L12 14.17 7.41 7.58 4.83 12l7.58 7.59L20 12l-3.41-4.42z'/%3E%3C/svg%3E");
-        }
-        
-        .badge-icon.visa {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%231A1F71' d='M23 5H1v14h22V5zm-1 13H2V6h20v12zM4 11.1h.1c.7-1.3 1.5-2.6 2.2-3.8.3.6.6 1.2.9 1.8.3-.6.6-1.2.9-1.8l2.3 3.9c.3.4.3.4.8.2v.6c-.9 0-1.7.1-2.6 0-.1-.7.1-.7.5-1.1l-.5-.8h-2.2l-.5.9c.4.4.6.4.5 1h-2.3l-.1-.9zm1.8-1.5h1.4l-.7-1.4-.7 1.4zm12.9.5c-.9 0-1.7.8-1.7 1.7 0 .9.8 1.7 1.7 1.7.9 0 1.7-.8 1.7-1.7 0-.9-.8-1.7-1.7-1.7zm0 2.4c-.4 0-.7-.3-.7-.7 0-.4.3-.7.7-.7.4 0 .7.3.7.7 0 .4-.3.7-.7.7zm-8.8-2.4c-.9 0-1.7.8-1.7 1.7 0 .9.8 1.7 1.7 1.7.9 0 1.7-.8 1.7-1.7 0-.9-.8-1.7-1.7-1.7zm0 2.4c-.4 0-.7-.3-.7-.7 0-.4.3-.7.7-.7.4 0 .7.3.7.7 0 .4-.3.7-.7.7zm8.4-6c-1 0-1.8.7-1.8 1.5 0 .7.5 1.2 1.3 1.4-.3.3-.5.7.2 1.4.4-.8.4-.8.9-1.4.9 0 1.4-.7 1.4-1.4-.1-.8-.8-1.5-2-1.5zm0 2c-.3 0-.5-.2-.5-.5s.2-.5.5-.5.5.2.5.5-.2.5-.5.5zm-8.3-2c-1 0-1.8.7-1.8 1.5 0 .7.5 1.2 1.3 1.4-.3.3-.5.7.2 1.4.4-.8.4-.8.9-1.4.9 0 1.4-.7 1.4-1.4 0-.8-.8-1.5-2-1.5zm0 2c-.3 0-.5-.2-.5-.5s.2-.5.5-.5.5.2.5.5-.2.5-.5.5z'/%3E%3C/svg%3E");
-            background-size: 80%;
-        }
-        
-        .badge-icon.mastercard {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23EB001B' d='M9.5 6v12a6 6 0 1 0 0-12z'/%3E%3Cpath fill='%23FF5F00' d='M9.5 18V6h5v12z'/%3E%3Cpath fill='%23F79E1B' d='M14.5 18a6 6 0 1 0 0-12v12z'/%3E%3C/svg%3E");
-        }
-        
-        .badge-icon.google {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%234285F4' d='M12.24 10.285V14.4h6.806c-.275 1.765-2.056 5.174-6.806 5.174-4.095 0-7.439-3.389-7.439-7.574s3.345-7.574 7.439-7.574c2.33 0 3.891.989 4.785 1.849l3.254-3.138C18.189 1.186 15.479 0 12.24 0c-6.635 0-12 5.365-12 12s5.365 12 12 12c6.926 0 11.52-4.869 11.52-11.726 0-.788-.085-1.39-.189-1.989H12.24z'/%3E%3C/svg%3E");
-        }
-        
-        .badge-icon.trustpilot {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2300B67A' d='M22.23 12.603l-5.83.537-2.397-4.8-2.396 4.8-5.83-.537 4.365 3.188-1.67 5.243 5.53-2.892 5.532 2.892-1.67-5.243z'/%3E%3C/svg%3E");
-        }
-        
-        .badge-icon.ssl {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%2326a669' d='M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z'/%3E%3C/svg%3E");
-        }
-        
-        .badge-icon.escrow-org {
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%230070ba' d='M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z'/%3E%3C/svg%3E");
-        }
-        
-        @media (max-width: 768px) {
-            .badge-row {
-                gap: 1rem;
-            }
-            
-            .badge-icon {
-                width: 40px;
-                height: 40px;
-            }
-            
-            .badge-item span {
-                font-size: 0.7rem;
-            }
-            
-            .badge-group {
-                margin-bottom: 0;
-            }
-            
-            .badge-container {
-                gap: 1.5rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .badge-icon {
-                width: 35px;
-                height: 35px;
-            }
-            
-            .badge-item span {
-                font-size: 0.65rem;
-            }
-            
-            .badge-group h5 {
-                font-size: 0.8rem;
-            }
-            
-            .badge-row {
-                gap: 0.7rem;
-            }
-        }
-        
-        /* Language Switcher */
-        .language-switcher {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
-            display: flex;
-            flex-direction: column;
-            padding: 0;
-            z-index: 1000;
-            border: 1px solid rgba(0,0,0,0.1);
-            overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            min-width: 180px;
-        }
-        
-        .language-switcher:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-        }
-        
-        .language-label {
-            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
-            color: white;
-            padding: 12px 15px;
-            font-weight: 600;
-            font-size: 0.95rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
-        .language-icon {
-            opacity: 0.9;
-        }
-        
-        .language-options {
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .language-btn {
-            background: transparent;
-            border: none;
-            padding: 12px 15px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            border-top: 1px solid rgba(0,0,0,0.06);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #333;
-        }
-        
-        .flag-icon {
-            width: 20px;
-            height: 14px;
-            border-radius: 2px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-        }
-        
-        .language-btn.active {
-            background-color: rgba(30, 60, 114, 0.08);
-            font-weight: 600;
-            color: #1e3c72;
-        }
-        
-        .language-btn:hover:not(.active) {
-            background-color: rgba(30, 60, 114, 0.04);
-        }
-        
-        @media (max-width: 768px) {
-            .language-switcher {
-                bottom: 20px;
-                right: 20px;
-                min-width: 160px;
-            }
-            
-            .language-label {
-                padding: 10px;
-                font-size: 0.85rem;
-            }
-            
-            .language-btn {
-                padding: 10px;
-                font-size: 0.85rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .language-switcher {
-                min-width: auto;
-            }
-            
-            .language-btn span {
-                display: none;
-            }
-            
-            .language-label span {
-                display: none;
-            }
-            
-            .flag-icon {
-                width: 24px;
-                height: 16px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Python Deobfuscator Pro - Free online tool to decode obfuscated Python scripts with support for Marshal, Base64, Zlib, Lambda, and more">
+  <meta name="keywords" content="python, deobfuscator, decode, marshal, base64, zlib, online, free">
+  <title>Python Deobfuscator Pro</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/editor/editor.main.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --bg-dark: #0f172a;
+      --bg-card: #1e293b;
+      --text: #f8fafc;
+      --text-secondary: #94a3b8;
+      --border: #334155;
+      --radius: 8px;
+      --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+    * {margin: 0; padding: 0; box-sizing: border-box;}
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: var(--bg-dark);
+      color: var(--text);
+      line-height: 1.6;
+    }
+    .container {max-width: 1200px; margin: 0 auto; padding: 0 1rem;}
+    header {
+      background: linear-gradient(to right, #1e40af, #3b82f6);
+      padding: 1.5rem 0;
+      box-shadow: var(--shadow);
+    }
+    .btn {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius);
+      cursor: pointer;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      transition: all 0.2s;
+    }
+    .btn:hover {background: var(--primary-dark);}
+    .btn-success {background: var(--success);}
+    .btn-danger {background: var(--danger);}
+    .btn-sm {padding: 0.4rem 0.8rem; font-size: 0.875rem;}
+    
+    .card {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+    }
+    .toolbar {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+    .editors-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    @media (min-width: 768px) {
+      .editors-container {grid-template-columns: 1fr 1fr;}
+    }
+    .editor {
+      height: 500px;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .tabs {
+      display: flex;
+      background: #242e42;
+      border-bottom: 1px solid var(--border);
+    }
+    .tab {
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+    .tab.active {
+      border-bottom-color: var(--primary);
+      background: #2d3748;
+    }
+    .tab-content {display: none;}
+    .tab-content.active {display: block;}
+    
+    .panel {
+      padding: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .panel-title {
+      font-size: 1.25rem;
+      margin-bottom: 1rem;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .settings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+    }
+    .toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .toggle input[type="checkbox"] {
+      height: 0;
+      width: 0;
+      visibility: hidden;
+    }
+    .toggle label {
+      cursor: pointer;
+      text-indent: -9999px;
+      width: 40px;
+      height: 20px;
+      background: #333;
+      display: block;
+      border-radius: 100px;
+      position: relative;
+    }
+    .toggle label:after {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      background: #fff;
+      border-radius: 16px;
+      transition: 0.3s;
+    }
+    .toggle input:checked + label {background: var(--primary);}
+    .toggle input:checked + label:after {
+      left: calc(100% - 2px);
+      transform: translateX(-100%);
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .stat-card {
+      background: #252e3f;
+      border-radius: var(--radius);
+      padding: 1rem;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+    }
+    .stat-label {
+      font-size: 0.875rem;
+      color: var(--text-secondary);
+    }
+    footer {
+      text-align: center;
+      padding: 2rem 0;
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+    }
+    .loading {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+    .loading-content {
+      background: var(--bg-card);
+      padding: 2rem;
+      border-radius: var(--radius);
+      text-align: center;
+      max-width: 90%;
+      width: 400px;
+    }
+    .spinner {
+      border: 4px solid rgba(255,255,255,0.1);
+      border-radius: 50%;
+      border-top: 4px solid var(--primary);
+      width: 40px;
+      height: 40px;
+      margin: 0 auto 1rem;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .badge {
+      display: inline-block;
+      padding: 0.25rem 0.5rem;
+      border-radius: 9999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      background: var(--primary);
+      color: white;
+    }
+    .techniques {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 0.5rem;
+    }
+    .hidden {display: none;}
+    #detectedPatterns {margin-top: 1rem;}
+    .pattern-item {
+      padding: 0.5rem;
+      border-radius: var(--radius);
+      background: #252e3f;
+      margin-bottom: 0.5rem;
+    }
+    .pattern-name {
+      font-weight: 500;
+      color: var(--primary);
+    }
+    .pattern-code {
+      margin-top: 0.25rem;
+      padding: 0.5rem;
+      background: #1a202c;
+      border-radius: var(--radius);
+      font-family: monospace;
+      font-size: 0.875rem;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+    .drag-area {
+      border: 2px dashed var(--border);
+      border-radius: var(--radius);
+      padding: 2rem;
+      text-align: center;
+      margin-bottom: 1rem;
+      transition: all 0.3s;
+    }
+    .drag-area.active {
+      border-color: var(--primary);
+      background: rgba(37, 99, 235, 0.1);
+    }
+    .drag-area i {
+      font-size: 3rem;
+      color: var(--text-secondary);
+      margin-bottom: 1rem;
+    }
+    .tabs-container {
+      display: flex;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    .settings-tab {
+      padding: 0.75rem 1.5rem;
+      border-radius: var(--radius) var(--radius) 0 0;
+      cursor: pointer;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-bottom: none;
+      margin-right: 0.5rem;
+    }
+    .settings-tab.active {
+      background: #2d3748;
+      border-bottom: 2px solid var(--primary);
+    }
+    .settings-panel {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 0 var(--radius) var(--radius) var(--radius);
+      padding: 1.5rem;
+    }
+    .history-item {
+      padding: 0.5rem;
+      border-radius: var(--radius);
+      background: #252e3f;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .history-item:hover {
+      background: #2d3748;
+    }
+    .history-file {
+      font-weight: 500;
+    }
+    .history-date {
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+    .tooltip {
+      position: relative;
+      display: inline-block;
+    }
+    .tooltip .tooltip-text {
+      visibility: hidden;
+      width: 120px;
+      background-color: #252e3f;
+      color: #fff;
+      text-align: center;
+      border-radius: 6px;
+      padding: 5px;
+      position: absolute;
+      z-index: 1;
+      bottom: 125%;
+      left: 50%;
+      margin-left: -60px;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="header-container">
-            <div class="logo">ProMiddleman</div>
-            <div class="tagline">Jasa Rekening Bersama Terpercaya Sejak 2015</div>
-            
-            <div class="stats">
-                <div class="stat-item">
-                    <span class="stat-number">50,000+</span>
-                    <span class="stat-label">Transaksi Sukses</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">Rp 120M+</span>
-                    <span class="stat-label">Total Nilai Transaksi</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number">99.8%</span>
-                    <span class="stat-label">Tingkat Kepuasan</span>
-                </div>
-            </div>
-        </div>
-    </header>
-    
-    <main>
-        <div class="testimonial-heading">
-            <h2>Apa Kata Mereka Tentang ProMiddleman?</h2>
-            <p>Ribuan pengguna telah mempercayakan transaksi online mereka kepada kami. Berikut ini testimoni nyata dari para pengguna ProMiddleman yang telah merasakan keamanan bertransaksi bersama kami.</p>
-        </div>
-        
-        <div class="filter-controls">
-            <button class="filter-btn active" data-filter="all">Semua Kategori</button>
-            <button class="filter-btn" data-filter="jual-beli">Jual Beli Barang</button>
-            <button class="filter-btn" data-filter="jasa">Jasa Digital</button>
-            <button class="filter-btn" data-filter="sewa">Sewa Menyewa</button>
-            <button class="filter-btn" data-filter="game">Game Item</button>
-            <button class="filter-btn" data-filter="crypto">Cryptocurrency</button>
-        </div>
-        
-        <div class="search-box">
-            <input type="text" class="search-input" placeholder="Cari berdasarkan nama, ID transaksi, atau kata kunci...">
-            <svg class="search-icon" xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 16 16">
-                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-            </svg>
-        </div>
-        
-        <div id="testimonial-container" class="testimonial-grid">
-            <!-- Testimonials will be loaded here -->
-        </div>
-        
-        <div id="loader" class="loader">
-            <span class="loader-text">Memuat testimoni...</span>
-        </div>
-        
-        <div id="pagination" class="pagination">
-            <!-- Pagination will be generated here -->
-        </div>
-    </main>
-    
-    <section class="cta-section">
-        <div class="cta-container">
-            <h2 class="cta-heading">Siap Bertransaksi dengan Aman?</h2>
-            <p class="cta-text">Bergabunglah dengan ribuan pengguna yang telah mempercayai ProMiddleman sebagai pihak ketiga dalam transaksi online mereka.</p>
-            <a href="https://promiddleman.github.io/transaksi.html" class="cta-btn">Mulai Transaksi Sekarang</a>
-        </div>
-    </section>
-    
-    <footer>
-        <div class="footer-wave"></div>
-        <div class="footer-container">
-            <div class="footer-column">
-                <h3>Tentang ProMiddleman</h3>
-                <p>ProMiddleman adalah jasa rekening bersama terpercaya yang telah memfasilitasi ribuan transaksi online sejak 2015 dengan komitmen untuk keamanan, kecepatan, dan kepuasan pengguna.</p>
-                <p>Kami hadir untuk memberikan solusi aman dalam setiap transaksi online Anda, dengan layanan profesional yang mengutamakan transparansi dan kepercayaan.</p>
-            </div>
-        </div>
-        
-        <!-- Verification Badges -->
-        <div class="verification-badges">
-            <h4>Terverifikasi Oleh</h4>
-            <div class="badge-container">
-                <!-- Local Platforms -->
-                <div class="badge-group">
-                    <h5>Platform Lokal</h5>
-                    <div class="badge-row">
-                        <div class="badge-item">
-                            <div class="badge-icon tokopedia"></div>
-                            <span>Tokopedia</span>
-                        </div>
-                        <div class="badge-item">
-                            <div class="badge-icon shopee"></div>
-                            <span>Shopee</span>
-                        </div>
-                        <div class="badge-item">
-                            <div class="badge-icon bukalapak"></div>
-                            <span>Bukalapak</span>
-                        </div>
-                        <div class="badge-item">
-                            <div class="badge-icon ojk"></div>
-                            <span>OJK</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- International Platforms -->
-                <div class="badge-group">
-                    <h5>Platform Internasional</h5>
-                    <div class="badge-row">
-                        <div class="badge-item">
-                            <div class="badge-icon paypal"></div>
-                            <span>PayPal</span>
-                        </div>
-                        <div class="badge-item">
-                            <div class="badge-icon stripe"></div>
-                            <span>Stripe</span>
-                        </div>
-                        <div class="badge-item">
-                            <div class="badge-icon bbb"></div>
-                            <span>BBB</span>
-                        </div>
-                        <div class="badge-item">
-                            <div class="badge-icon norton"></div>
-                            <span>Norton</span>
-                        </div>
-                        <div class="badge-item">
-                            <div class="badge-icon visa"></div>
-                            <span>Visa</span>
-                        </div>
-                        <div class="badge-item">
-                            <div class="badge-icon mastercard"></div>
-                            <span>Mastercard</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Other Verifications -->
-                <div class="badge-group">
-                    <h5>Verifikasi Lainnya</h5>
-                    <div class="badge-row">
-                        <div class="badge-item">
-                            <div class="badge-icon google"></div>
-                            <span>Google</span>
-                        </div>
-                        <div class="badge-item">
-                            <div class="badge-icon trustpilot"></div>
-                            <span>TrustPilot</span>
-                        </div>
-                        <div class="badge-item">
-                            <div class="badge-icon ssl"></div>
-                            <span>SSL Secure</span>
-                        </div>
-                        <div class="badge-item">
-                            <div class="badge-icon escrow-org"></div>
-                            <span>Escrow.org</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="copyright">
-            &copy; 2025 ProMiddleman. Hak Cipta Dilindungi. Platform Rekening Bersama #1 di World.
-        </div>
-        <a href="#" class="back-to-top" id="backToTop">
-            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M7.646 4.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1-.708.708L8 5.707l-5.646 5.647a.5.5 0 0 1-.708-.708l6-6z"/>
-            </svg>
-        </a>
-    </footer>
-
-    <!-- Language Switcher -->
-    <div class="language-switcher" id="languageSwitcher">
-        <div class="language-label">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="language-icon">
-                <circle cx="12" cy="12" r="10"></circle>
-                <line x1="2" y1="12" x2="22" y2="12"></line>
-                <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-            </svg>
-            <span>Bahasa</span>
-        </div>
-        <div class="language-options">
-            <button class="language-btn active" data-lang="id">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzIDIiPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik0wIDBoM3YySDB6Ii8+PHBhdGggZmlsbD0iI2NlMTEyNiIgZD0iTTAgMWgzdjFIMHoiLz48L3N2Zz4=" class="flag-icon" alt="Indonesia flag">
-                <span>Indonesia</span>
-            </button>
-            <button class="language-btn" data-lang="en">
-                <img src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjM1IDY1MCIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiPg0KPGRlZnM+DQo8ZyBpZD0idW5pb24iPg0KPHVzZSB5PSItLjIxNiIgeGxpbms6aHJlZj0iI3g0Ii8+DQo8dXNlIHhsaW5rOmhyZWY9IiN4NCIvPg0KPHVzZSB5PSIuMjE2IiB4bGluazpocmVmPSIjczYiLz4NCjwvZz4NCjxnIGlkPSJ4NCI+DQo8dXNlIHhsaW5rOmhyZWY9IiNzNiIvPg0KPHVzZSB5PSIuMDU0IiB4bGluazpocmVmPSIjczUiLz4NCjx1c2UgeT0iLjEwOCIgeGxpbms6aHJlZj0iI3M2Ii8+DQo8dXNlIHk9Ii4xNjIiIHhsaW5rOmhyZWY9IiNzNSIvPg0KPC9nPg0KPGcgaWQ9InM1Ij4NCjx1c2UgeD0iLS4yNTIiIHhsaW5rOmhyZWY9IiNzdGFyIi8+DQo8dXNlIHg9Ii0uMTI2IiB4bGluazpocmVmPSIjc3RhciIvPg0KPHVzZSB4bGluazpocmVmPSIjc3RhciIvPg0KPHVzZSB4PSIuMTI2IiB4bGluazpocmVmPSIjc3RhciIvPg0KPHVzZSB4PSIuMjUyIiB4bGluazpocmVmPSIjc3RhciIvPg0KPC9nPg0KPGcgaWQ9InM2Ij4NCjx1c2UgeD0iLS4wNjMiIHhsaW5rOmhyZWY9IiNzNSIvPg0KPHVzZSB4PSIuMzE1IiB4bGluazpocmVmPSIjc3RhciIvPg0KPC9nPg0KPGcgaWQ9InN0YXIiPg0KPHVzZSB4bGluazpocmVmPSIjcHQiIHRyYW5zZm9ybT0ibWF0cml4KC0uODA5MDIgLS41ODc3OSAuNTg3NzkgLS44MDkwMiAwIDApIi8+DQo8dXNlIHhsaW5rOmhyZWY9IiNwdCIgdHJhbnNmb3JtPSJtYXRyaXgoLjMwOTAyIC0uOTUxMDYgLjk1MTA2IC4zMDkwMiAwIDApIi8+DQo8dXNlIHhsaW5rOmhyZWY9IiNwdCIvPg0KPHVzZSB4bGluazpocmVmPSIjcHQiIHRyYW5zZm9ybT0icm90YXRlKDcyKSIvPg0KPHVzZSB4bGluazpocmVmPSIjcHQiIHRyYW5zZm9ybT0icm90YXRlKDE0NCkiLz4NCjwvZz4NCjxwYXRoIGZpbGw9IiNmZmYiIGlkPSJwdCIgZD0iTS0uMTYyNSwwIDAtLjUgLjE2MjUsMHoiIHRyYW5zZm9ybT0ic2NhbGUoLjA2MTYpIi8+DQo8cGF0aCBmaWxsPSIjYmYwYTMwIiBpZD0ic3RyaXBlIiBkPSJtMCwwaDEyMzV2NTBoLTEyMzV6Ii8+DQo8L2RlZnM+DQo8cGF0aCBmaWxsPSIjZmZmIiBkPSJtMCwwaDEyMzV2NjUwaC0xMjM1eiIvPg0KPHVzZSB4bGluazpocmVmPSIjc3RyaXBlIi8+DQo8dXNlIHk9IjEwMCIgeGxpbms6aHJlZj0iI3N0cmlwZSIvPg0KPHVzZSB5PSIyMDAiIHhsaW5rOmhyZWY9IiNzdHJpcGUiLz4NCjx1c2UgeT0iMzAwIiB4bGluazpocmVmPSIjc3RyaXBlIi8+DQo8dXNlIHk9IjQwMCIgeGxpbms6aHJlZj0iI3N0cmlwZSIvPg0KPHVzZSB5PSI1MDAiIHhsaW5rOmhyZWY9IiNzdHJpcGUiLz4NCjx1c2UgeT0iNjAwIiB4bGluazpocmVmPSIjc3RyaXBlIi8+DQo8cGF0aCBmaWxsPSIjMDAyODY4IiBkPSJtMCwwaDQ5NHYzNTBoLTQ5NHoiLz4NCjx1c2UgeGxpbms6aHJlZj0iI3VuaW9uIiB0cmFuc2Zvcm09Im1hdHJpeCg2NTAgMCAwIDY1MCAyNDcgMTc1KSIvPg0KPC9zdmc+DQo=" class="flag-icon" alt="USA flag">
-                <span>English</span>
-            </button>
-        </div>
+  <header>
+    <div class="container">
+      <h1><i class="fas fa-shield-alt"></i> Python Deobfuscator Pro</h1>
+      <p>Powerful client-side tool to decode obfuscated Python scripts</p>
     </div>
+  </header>
+  
+  <div class="container" style="padding-top: 2rem;">
+    <div class="toolbar">
+      <button id="btnDecode" class="btn btn-success"><i class="fas fa-bolt"></i> Deobfuscate</button>
+      <button id="btnClear" class="btn btn-danger"><i class="fas fa-trash"></i> Clear</button>
+      <button id="btnLoad" class="btn"><i class="fas fa-folder-open"></i> Load File</button>
+      <button id="btnSave" class="btn"><i class="fas fa-download"></i> Save Result</button>
+      <button id="btnSettings" class="btn"><i class="fas fa-cog"></i> Settings</button>
+      <input type="file" id="fileInput" accept=".py,.pyw,.txt" style="display: none;">
+    </div>
+    
+    <div class="drag-area" id="dropArea">
+      <i class="fas fa-cloud-upload-alt"></i>
+      <h3>Drop Python file here</h3>
+      <p>or click "Load File" button</p>
+    </div>
+    
+    <div class="editors-container">
+      <div class="card">
+        <div class="tabs">
+          <div class="tab active" data-tab="input">Input Code</div>
+          <div class="tab" data-tab="patterns">Detected Patterns</div>
+        </div>
+        <div class="tab-content active" id="tab-input">
+          <div id="inputEditor" class="editor"></div>
+        </div>
+        <div class="tab-content" id="tab-patterns">
+          <div class="panel">
+            <div class="panel-title"><i class="fas fa-search"></i> Detected Obfuscation Patterns</div>
+            <div id="detectedPatterns">
+              <p>No patterns detected yet. Submit code for analysis.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="card">
+        <div class="tabs">
+          <div class="tab active" data-tab="output">Output Code</div>
+          <div class="tab" data-tab="stats">Statistics</div>
+        </div>
+        <div class="tab-content active" id="tab-output">
+          <div id="outputEditor" class="editor"></div>
+        </div>
+        <div class="tab-content" id="tab-stats">
+          <div class="panel">
+            <div class="panel-title"><i class="fas fa-chart-pie"></i> Deobfuscation Stats</div>
+            <p>Processing statistics will appear here after deobfuscation.</p>
+            <div id="statsContainer" class="stats hidden">
+              <div class="stat-card">
+                <div class="stat-value" id="statLayers">0</div>
+                <div class="stat-label">Layers</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value" id="statTime">0ms</div>
+                <div class="stat-label">Time</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value" id="statSize">0%</div>
+                <div class="stat-label">Size Reduction</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-value" id="statComplexity">0</div>
+                <div class="stat-label">Complexity</div>
+              </div>
+            </div>
+            <div class="panel-title" style="margin-top: 1.5rem;"><i class="fas fa-tools"></i> Techniques Used</div>
+            <div id="techniquesContainer" class="techniques"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div id="settingsModal" class="loading hidden">
+    <div class="loading-content" style="width: 600px;">
+      <div class="tabs-container">
+        <div class="settings-tab active" data-settings-tab="techniques">Techniques</div>
+        <div class="settings-tab" data-settings-tab="advanced">Advanced</div>
+        <div class="settings-tab" data-settings-tab="history">History</div>
+      </div>
+      
+      <div class="settings-panel active" id="settings-techniques">
+        <div class="panel-title"><i class="fas fa-tools"></i> Deobfuscation Techniques</div>
+        <div class="settings-grid">
+          <div class="toggle">
+            <input type="checkbox" id="toggle-marshal" checked>
+            <label for="toggle-marshal">Toggle</label>
+            <span>Marshal</span>
+          </div>
+          <div class="toggle">
+            <input type="checkbox" id="toggle-base64" checked>
+            <label for="toggle-base64">Toggle</label>
+            <span>Base64</span>
+          </div>
+          <div class="toggle">
+            <input type="checkbox" id="toggle-zlib" checked>
+            <label for="toggle-zlib">Toggle</label>
+            <span>Zlib</span>
+          </div>
+          <div class="toggle">
+            <input type="checkbox" id="toggle-lambda" checked>
+            <label for="toggle-lambda">Toggle</label>
+            <span>Lambda</span>
+          </div>
+          <div class="toggle">
+            <input type="checkbox" id="toggle-hex" checked>
+            <label for="toggle-hex">Toggle</label>
+            <span>Hex</span>
+          </div>
+          <div class="toggle">
+            <input type="checkbox" id="toggle-eval" checked>
+            <label for="toggle-eval">Toggle</label>
+            <span>Eval</span>
+          </div>
+          <div class="toggle">
+            <input type="checkbox" id="toggle-pyc" checked>
+            <label for="toggle-pyc">Toggle</label>
+            <span>PYC</span>
+          </div>
+          <div class="toggle">
+            <input type="checkbox" id="toggle-custom" checked>
+            <label for="toggle-custom">Toggle</label>
+            <span>Custom</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="settings-panel hidden" id="settings-advanced">
+        <div class="panel-title"><i class="fas fa-sliders-h"></i> Advanced Settings</div>
+        <div class="settings-grid">
+          <div>
+            <label for="max-depth">Maximum Depth</label>
+            <input type="number" id="max-depth" min="1" max="100" value="30" style="width: 80px; padding: 0.5rem; background: #252e3f; border: 1px solid var(--border); color: var(--text); border-radius: var(--radius);">
+          </div>
+          <div>
+            <label for="timeout">Timeout (sec)</label>
+            <input type="number" id="timeout" min="1" max="300" value="60" style="width: 80px; padding: 0.5rem; background: #252e3f; border: 1px solid var(--border); color: var(--text); border-radius: var(--radius);">
+          </div>
+          <div class="toggle">
+            <input type="checkbox" id="toggle-beautify" checked>
+            <label for="toggle-beautify">Toggle</label>
+            <span>Beautify Result</span>
+          </div>
+          <div class="toggle">
+            <input type="checkbox" id="toggle-auto-run" checked>
+            <label for="toggle-auto-run">Toggle</label>
+            <span>Auto-Run on Load</span>
+          </div>
+        </div>
+        
+        <div class="panel-title" style="margin-top: 1.5rem;"><i class="fas fa-code"></i> Custom Pattern</div>
+        <textarea id="custom-pattern" style="width: 100%; height: 100px; background: #252e3f; border: 1px solid var(--border); color: var(--text); border-radius: var(--radius); padding: 0.5rem; font-family: monospace;" placeholder="Enter custom regex pattern for deobfuscation..."></textarea>
+      </div>
+      
+      <div class="settings-panel hidden" id="settings-history">
+        <div class="panel-title"><i class="fas fa-history"></i> Recent Files</div>
+        <div id="historyContainer">
+          <p>No recent files.</p>
+        </div>
+      </div>
+      
+      <div style="display: flex; justify-content: flex-end; gap: 0.5rem; margin-top: 1.5rem;">
+        <button id="btnCloseSettings" class="btn btn-danger btn-sm">Close</button>
+        <button id="btnSaveSettings" class="btn btn-success btn-sm">Save Settings</button>
+      </div>
+    </div>
+  </div>
+  
+  <div id="loadingModal" class="loading hidden">
+    <div class="loading-content">
+      <div class="spinner"></div>
+      <h3 id="loadingText">Deobfuscating...</h3>
+      <p id="loadingSubtext">This may take a moment depending on complexity</p>
+    </div>
+  </div>
+  
+  <footer>
+    <div class="container">
+      <p>Python Deobfuscator Pro v2.0 - Your code never leaves your browser</p>
+      <p style="margin-top: 0.5rem;">Made with <i class="fas fa-heart" style="color: var(--danger);"></i> by <a href="#" style="color: var(--primary); text-decoration: none;">Your Name</a></p>
+    </div>
+  </footer>
 
-    <!-- Script untuk menghasilkan dan menampilkan testimoni secara statis -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Back to top button functionality
-            const backToTopButton = document.getElementById('backToTop');
-            
-            window.addEventListener('scroll', () => {
-                if (window.pageYOffset > 300) {
-                    backToTopButton.classList.add('visible');
-                } else {
-                    backToTopButton.classList.remove('visible');
-                }
-            });
-            
-            backToTopButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                window.scrollTo({
-                    top: 0,
-                    behavior: 'smooth'
-                });
-            });
-            // Referensi elemen DOM
-            const testimonialContainer = document.getElementById('testimonial-container');
-            const paginationContainer = document.getElementById('pagination');
-            const searchInput = document.querySelector('.search-input');
-            const filterButtons = document.querySelectorAll('.filter-btn');
-            const loader = document.getElementById('loader');
-            
-            // Konfigurasi paginasi
-            const config = {
-                currentPage: 1,
-                itemsPerPage: 12,
-                totalItems: 500,
-                filter: 'all',
-                searchTerm: '',
-                language: 'id' // Default language
-            };
-            
-            // Data nama
-            const firstNames = ["Andi", "Budi", "Citra", "Dewi", "Eko", "Fitri", "Galih", "Hana", "Indra", "Joko", "Kartika", "Laras", "Mawar", "Nugroho", "Oktavia", "Putri", "Rudi", "Sinta", "Tono", "Utami", "Vina", "Wawan", "Yanti", "Zaki", "Agus", "Bambang", "Clara", "Dian", "Edi", "Fani"];
-            
-            const lastNames = ["Wijaya", "Susanto", "Hartono", "Gunawan", "Saputra", "Santoso", "Wibowo", "Mulya", "Setiawan", "Nugraha", "Hidayat", "Kusuma", "Putra", "Pratama", "Sulistyo", "Permadi", "Utomo", "Suharto", "Purnomo"];
-            
-            // Kategori transaksi
-            const transactionTypes = [
-                "Jual Beli Barang", "Jasa Digital", "Sewa Menyewa", "Game Item", "Cryptocurrency"
-            ];
-            
-            // Item spesifik per kategori
-            const transactionItems = {
-                "Jual Beli Barang": ["Smartphone Samsung S22", "Laptop Asus ROG", "Kamera Sony A7IV", "Sepeda Polygon MTB", "iPhone 14 Pro", "Monitor Gaming LG", "Jam Tangan Seiko", "PlayStation 5", "Drone DJI Mini", "Headphone Sony"],
-                "Jasa Digital": ["Desain Logo Brand", "Website Toko Online", "Jasa Edit Video", "Social Media Management", "Content Writing Blog", "SEO Website", "Mobile App Development", "Jasa Translate Dokumen", "Video Marketing", "Digital Advertising"],
-                "Sewa Menyewa": ["Apartemen Harian Jakarta", "Mobil Toyota Innova", "Kamera Sony A7S", "Ruang Meeting Office", "Villa Bali 3 Kamar", "Sound System Event", "Alat Berat Excavator", "Motor Yamaha NMAX", "Studio Foto", "Gedung Pernikahan"],
-                "Game Item": ["Skin Mobile Legends", "Weapon Mythic PUBG", "Account Genshin AR 55", "Skin Valorant Premium", "Item Counter Strike Rare", "Diamond Mobile Legends", "Riot Points LOL", "UC PUBG Mobile", "Genesis Crystal Genshin", "Skin Pokemon Unite"],
-                "Cryptocurrency": ["Bitcoin 0.01 BTC", "Ethereum 0.5 ETH", "Dogecoin 5000 DOGE", "Cardano 1000 ADA", "Solana 10 SOL", "Ripple 1000 XRP", "Binance Coin 5 BNB", "Tether 1000 USDT", "Polygon 500 MATIC", "Polkadot 100 DOT"]
-            };
-            
-            // Teks testimoni yang lebih natural dan bervariasi
-            const testimonialTexts = [
-                "Transaksi berjalan lancar banget. Admin cepat tanggap dan barang sampai tepat waktu. ProMiddleman layanan rekber yang terpercaya!",
-                "Awalnya takut karena baru pertama kali pakai rekber, tapi ternyata prosesnya gampang banget. Penjual juga langsung terima dana begitu barang sampai ke tangan saya. Recommended!",
-                "Ini ke-3 kalinya saya pakai ProMiddleman untuk beli barang online. Selalu puas dengan pelayanannya. Admin fast response dan jelas menjelaskan tahapan-tahapannya.",
-                "Terima kasih ProMiddleman, berkat kalian transaksi crypto pertama saya aman tanpa was-was. Fee-nya worth it untuk keamanan yang didapat.",
-                "Mantap! Barang sampai dengan kondisi sesuai deskripsi. Prosesnya juga cepat, cuma 1 hari dari mulai pakai rekber sampai barang di tangan. CS-nya helpful banget!",
-                "Sempat panik karena pengiriman delay 2 hari, tapi admin ProMiddleman sigap bantu follow up ke kurir. Akhirnya barang sampai dengan selamat. Best service!",
-                "Bisa nego fee untuk transaksi nominal gede. Thanks ProMiddleman udah jadi penengah yang bisa dipercaya.",
-                "Transaksi pertama sewa villa berjalan mulus. Deposit aman dan dikembalikan full setelah checkout tanpa masalah. Pasti pakai ProMiddleman lagi untuk booking berikutnya.",
-                "Jual skin ML pertama kali dan was-was takut kena tipu. Untungnya pilih pakai ProMiddleman. Prosesnya cepat, dana cair langsung begitu buyer konfirmasi. Thanks!",
-                "Puas banget! Baru chat admin jam 11 malam, eh masih direspon juga. Besoknya transaksi langsung diproses pagi-pagi. Pelayanan 24 jam bener-bener jalan!",
-                "Udah 5 tahun pakai ProMiddleman buat jual beli barang di marketplace yang ga ada fitur escrow. So far ga pernah ada masalah, selalu aman dan terpercaya. Top markotop lah!",
-                "Sempat ragu karena harga HP secondnya terlalu menarik, tapi dengan ProMiddleman jadi berani transaksi. Alhamdulillah barang sesuai, makin percaya sama layanan rekber ini.",
-                "Pakai jasa rekber ini buat bayar DP desain logo. Prosesnya transparan dan aman buat kedua belah pihak. Desainer juga puas dengan sistemnya.",
-                "Saya tipe yang paranoid soal transaksi online, tapi ProMiddleman bikin saya tenang. Sistemnya jelas dan terpercaya. Admin juga sabar banget jawab banyak pertanyaan saya.",
-                "First time pake rekber dan ga nyesel! Proses cepat, aman, fee masuk akal. Recommended banget buat yang takut tertipu belanja online.",
-                "Transaksi 15jt buat beli kamera bekas, sempat deg-degan. Tapi berkat ProMiddleman jadi smooth banget. Barang dicek dulu, sesuai, baru dana dicairkan ke penjual.",
-                "Selalu pake ProMiddleman tiap transaksi di forum jual beli. Udah jadi standar keamanan bagi saya. Better safe than sorry!",
-                "Baru tau layanan rekber segampang ini. Chat WA, transfer, tunggu barang, konfirmasi. Beres! Ga perlu ribet dan tetep aman.",
-                "Yang bikin ProMiddleman beda dari rekber lain adalah respon adminnya yang super cepat. Jam berapapun selalu dibalas, jadi transaksi bisa langsung diproses.",
-                "Alhamdulillah lancar! Awalnya khawatir karena nominal transaksinya gede, tapi ternyata prosesnya aman dan profesional banget.",
-                "Udah 2 tahun jadi langganan ProMiddleman. Ga pernah sekalipun kecewa. Pelayanan selalu konsisten bagus dan bikin nyaman.",
-                "Fee-nya bersaing dengan rekber lain tapi pelayanannya jauh lebih oke. Fast response dan profesional. Ga nyesel pake ProMiddleman.",
-                "Transaksi domain website lancar jaya. Proses verifikasi cepat dan pencairan dana ke penjual juga ga pake lama. Thanks ProMiddleman!",
-                "Rekber ini nyelametin transaksi saya. Penjualnya nakal tapi untung pakai rekber jadi dana aman. Admin bantu proses refund dengan profesional.",
-                "Salut sama admin yang sabar nuntun saya yang gaptek ini. Langkah-langkahnya dijelasin detail dan sangat mudah diikuti.",
-                "Beli sepatu limited edition dengan harga selangit jadi tenang karena ada ProMiddleman. Prosesnya sebentar, tapi security first lah buat barang mahal!",
-                "Pencairan dana cepet banget, ga sampe 5 menit setelah konfirmasi barang diterima. Penjual juga seneng karena ga perlu nunggu lama.",
-                "Bayar DP buat sewa villa lewat rekber sangat membantu. Jadi enak negonya sama pemilik villa karena ada jaminan dari pihak ketiga.",
-                "Wajib pake ProMiddleman kalo transaksi sama orang baru. Meski fee nambah dikit tapi worth it buat keamanan. No tipu-tipu!",
-                "Proses verified account-nya cepet, jadi transaksi ga tertunda. Barang sampai juga sesuai ekspektasi, makasih ProMiddleman!",
-                "Transaksi 40jt buat beli motor bekas, awalnya deg-degan. Tapi ProMiddleman bantu pastikan semua dokumen lengkap sebelum dana dicairkan. Super aman!",
-                "Admin komunikatif, step by step dijelasin dengan gamblang. Ga ada hidden fee juga, semuanya transparan dari awal.",
-                "ProMiddleman juara deh kalo soal kecepatan respon. Bahkan lebih cepet dari kurir yang nganter barangnya. Hehe. Top lah!",
-                "Udah 4x transaksi pake ProMiddleman dan selalu mulus. Prosesnya simpel, aman, terpercaya. Recommended untuk jual beli online!",
-                "Pesan jasa desain web lewat ProMiddleman. Enak, bisa cicil pembayaran sesuai progress. Jadi designer dan saya sama-sama tenang.",
-                "Sempat ragu karena kirim ke rekening orang yang ga dikenal. Tapi setelah cek testimonial dan verifikasi, akhirnya yakin. Dan terbukti amanah!",
-                "Fee 2,5% totally worth it for the peace of mind! Barang senilai 6,5jt sampai dengan aman dan sesuai deskripsi.",
-                "Beli tiket konser dari stranger di Twitter, untungnya inget ada ProMiddleman. Proses cepat dan aman, tiketnya asli. Thank you!",
-                "Transaksi jual beli crypto gampang dan cepet. Buat yang masih ragu sama platform P2P, ProMiddleman solusinya!",
-                "Barangnya ternyata cacat pas sampe. Untung pake rekber, jadi bisa nego lagi sama seller. Admin bantu mediasi dengan profesional.",
-                "CS-nya ramah dan sabar menjawab semua pertanyaan newbie kayak saya. Proses transaksi jadi lancar dan ga bikin pusing.",
-                "Suka banget sama update status transaksi yang real-time. Jadi bisa pantau terus progresnya sampe barang tiba.",
-                "Gratis ongkir untuk rekber kedua dalam sebulan! Ini yang bikin saya loyal pake ProMiddleman terus.",
-                "Udah berkali-kali pake ProMiddleman dan ga pernah kecewa. Admin ramah, proses cepat, aman pula. 5 bintang deh!",
-                "Transaksi pertama buat jual smartphone bekas. Prosesnya mudah dan cepat. Dana langsung cair begitu pembeli konfirmasi terima barang. Thanks ProMiddleman!",
-                "Pakai ProMiddleman untuk bayar DP custom furniture. Seneng rasanya ada jaminan dari pihak ketiga yang terpercaya.",
-                "Ngepoin track record ProMiddleman sejak 2015, dan memang bener-bener kredibel. Berani transaksi gede karena yakin rekbernya terpercaya.",
-                "Mau jastip barang impor ke buyer yang belum pernah kenal? ProMiddleman solusinya! Both buyer dan saya sama-sama happy dengan sistemnya.",
-                "Transaksi beli smartphone ROG Phone aman dan lancar. Fee rekber sebanding sama keamanan yang didapat. Recommended!",
-                "Admin fast response bahkan di malam hari. Jadi bisa langsung proses transaksi tanpa perlu nunggu besok. Mantap betul!"
-            ];
-            
-            // Fungsi untuk menghasilkan ID transaksi
-            function generateTransactionID() {
-                const prefix = "RBT";
-                const year = "25";
-                const randomNum = Math.floor(Math.random() * 1000000).toString().padStart(6, '0');
-                return `${prefix}${year}${randomNum}`;
-            }
-            
-            // Fungsi untuk menghasilkan tanggal acak dalam 6 bulan terakhir
-            function generateRandomDate() {
-                const today = new Date();
-                const sixMonthsAgo = new Date();
-                sixMonthsAgo.setMonth(today.getMonth() - 6);
-                
-                const randomTimestamp = sixMonthsAgo.getTime() + Math.random() * (today.getTime() - sixMonthsAgo.getTime());
-                const date = new Date(randomTimestamp);
-                
-                return date.toLocaleDateString('id-ID', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-            }
-            
-            // Fungsi untuk menghasilkan rating bintang HTML
-            function createStarRating(rating) {
-                let html = '';
-                for (let i = 1; i <= 5; i++) {
-                    if (i <= rating) {
-                        html += '<span style="color: #ffc107;">★</span>';
-                    } else {
-                        html += '<span style="color: #e0e0e0;">★</span>';
-                    }
-                }
-                return html;
-            }
-            
-            // Fungsi untuk menghasilkan testimoni acak
-            function generateRandomTestimonial() {
-                const firstName = firstNames[Math.floor(Math.random() * firstNames.length)];
-                const lastName = lastNames[Math.floor(Math.random() * lastNames.length)];
-                const name = `${firstName} ${lastName}`;
-                
-                const type = transactionTypes[Math.floor(Math.random() * transactionTypes.length)];
-                const items = transactionItems[type];
-                const item = items[Math.floor(Math.random() * items.length)];
-                
-                const text = testimonialTexts[Math.floor(Math.random() * testimonialTexts.length)];
-                
-                // Tanggal yang lebih realistis - distribusi dalam 9 bulan terakhir
-                const today = new Date();
-                const nineMonthsAgo = new Date();
-                nineMonthsAgo.setMonth(today.getMonth() - 9);
-                
-                // Buat distribusi tanggal yang lebih realistis (lebih banyak tanggal terbaru)
-                let randomDate;
-                const randomVal = Math.random();
-                if (randomVal < 0.5) { // 50% dalam 3 bulan terakhir
-                    const threeMonthsAgo = new Date();
-                    threeMonthsAgo.setMonth(today.getMonth() - 3);
-                    randomDate = new Date(threeMonthsAgo.getTime() + Math.random() * (today.getTime() - threeMonthsAgo.getTime()));
-                } else if (randomVal < 0.8) { // 30% dalam 3-6 bulan terakhir
-                    const sixMonthsAgo = new Date();
-                    const threeMonthsAgo = new Date();
-                    sixMonthsAgo.setMonth(today.getMonth() - 6);
-                    threeMonthsAgo.setMonth(today.getMonth() - 3);
-                    randomDate = new Date(sixMonthsAgo.getTime() + Math.random() * (threeMonthsAgo.getTime() - sixMonthsAgo.getTime()));
-                } else { // 20% dalam 6-9 bulan terakhir
-                    const sixMonthsAgo = new Date();
-                    sixMonthsAgo.setMonth(today.getMonth() - 6);
-                    randomDate = new Date(nineMonthsAgo.getTime() + Math.random() * (sixMonthsAgo.getTime() - nineMonthsAgo.getTime()));
-                }
-                
-                const date = randomDate.toLocaleDateString('id-ID', {
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
-                });
-                
-                // Generate ID transaksi dengan format lebih realistis
-                const monthCode = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L"][randomDate.getMonth()];
-                const dayStr = randomDate.getDate().toString().padStart(2, '0');
-                const randomNum = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
-                const transactionId = `PMD${randomDate.getFullYear().toString().substring(2)}${monthCode}${dayStr}${randomNum}`;
-                
-                // Jumlah transaksi yang lebih realistis berdasarkan item
-                let amount;
-                
-                switch(type) {
-                    case "Jual Beli Barang":
-                        if (item.includes("iPhone") || item.includes("Laptop") || item.includes("PlayStation")) {
-                            amount = 8000000 + Math.floor(Math.random() * 12000000);
-                        } else if (item.includes("Kamera") || item.includes("Drone")) {
-                            amount = 5000000 + Math.floor(Math.random() * 15000000);
-                        } else if (item.includes("Monitor") || item.includes("Headphone")) {
-                            amount = 1500000 + Math.floor(Math.random() * 3500000);
-                        } else {
-                            amount = 500000 + Math.floor(Math.random() * 4500000);
-                        }
-                        break;
-                        
-                    case "Jasa Digital":
-                        if (item.includes("Website") || item.includes("App Development")) {
-                            amount = 3000000 + Math.floor(Math.random() * 7000000);
-                        } else if (item.includes("SEO") || item.includes("Marketing")) {
-                            amount = 1500000 + Math.floor(Math.random() * 3500000);
-                        } else {
-                            amount = 300000 + Math.floor(Math.random() * 1700000);
-                        }
-                        break;
-                        
-                    case "Sewa Menyewa":
-                        if (item.includes("Villa") || item.includes("Gedung")) {
-                            amount = 5000000 + Math.floor(Math.random() * 15000000);
-                        } else if (item.includes("Apartemen") || item.includes("Mobil")) {
-                            amount = 1000000 + Math.floor(Math.random() * 4000000);
-                        } else {
-                            amount = 300000 + Math.floor(Math.random() * 1700000);
-                        }
-                        break;
-                        
-                    case "Game Item":
-                        if (item.includes("Account")) {
-                            amount = 500000 + Math.floor(Math.random() * 2500000);
-                        } else {
-                            amount = 50000 + Math.floor(Math.random() * 950000);
-                        }
-                        break;
-                        
-                    case "Cryptocurrency":
-                        if (item.includes("Bitcoin")) {
-                            amount = 5000000 + Math.floor(Math.random() * 45000000);
-                        } else if (item.includes("Ethereum")) {
-                            amount = 2000000 + Math.floor(Math.random() * 8000000);
-                        } else {
-                            amount = 500000 + Math.floor(Math.random() * 4500000);
-                        }
-                        break;
-                        
-                    default:
-                        amount = 500000 + Math.floor(Math.random() * 4500000);
-                }
-                
-                const formattedAmount = new Intl.NumberFormat('id-ID', {
-                    style: 'currency',
-                    currency: 'IDR',
-                    maximumFractionDigits: 0
-                }).format(amount);
-                
-                // Rating yang realistis (dominan 5 bintang)
-                const ratingRandom = Math.random();
-                let rating;
-                if (ratingRandom < 0.85) { // 85% chance for 5 stars
-                    rating = 5;
-                } else if (ratingRandom < 0.97) { // 12% chance for 4 stars
-                    rating = 4;
-                } else { // 3% chance for 3 stars
-                    rating = 3;
-                }
-                
-                return {
-                    name,
-                    type,
-                    item,
-                    text,
-                    date,
-                    transactionId,
-                    amount: formattedAmount,
-                    rating,
-                    filter: {
-                        'all': true,
-                        'jual-beli': type === 'Jual Beli Barang',
-                        'jasa': type === 'Jasa Digital',
-                        'sewa': type === 'Sewa Menyewa',
-                        'game': type === 'Game Item',
-                        'crypto': type === 'Cryptocurrency'
-                    }
-                };
-            }
-            
-            // Menghasilkan 500 testimoni acak
-            const allTestimonials = [];
-            for (let i = 0; i < 500; i++) {
-                allTestimonials.push(generateRandomTestimonial());
-            }
-            
-            // Mengurutkan berdasarkan tanggal (terbaru dulu)
-            allTestimonials.sort((a, b) => {
-                const dateA = new Date(a.date.split(' ').join(' '));
-                const dateB = new Date(b.date.split(' ').join(' '));
-                return dateB - dateA;
-            });
-            
-            // Dictionary for translations
-            const translations = {
-                id: {
-                    // Header
-                    'logoText': 'ProMiddleman',
-                    'tagline': 'Jasa Rekening Bersama Terpercaya Sejak 2015',
-                    'stat1': 'Transaksi Sukses',
-                    'stat2': 'Total Nilai Transaksi',
-                    'stat3': 'Tingkat Kepuasan',
-                    
-                    // Main Content
-                    'testimonialHeading': 'Apa Kata Mereka Tentang ProMiddleman?',
-                    'testimonialSubheading': 'Ribuan pengguna telah mempercayakan transaksi online mereka kepada kami. Berikut ini testimoni nyata dari para pengguna ProMiddleman yang telah merasakan keamanan bertransaksi bersama kami.',
-                    
-                    // Filter Buttons
-                    'filterAll': 'Semua Kategori',
-                    'filterProducts': 'Jual Beli Barang',
-                    'filterServices': 'Jasa Digital',
-                    'filterRentals': 'Sewa Menyewa',
-                    'filterGameItems': 'Game Item',
-                    'filterCrypto': 'Cryptocurrency',
-                    
-                    // Search
-                    'searchPlaceholder': 'Cari berdasarkan nama, ID transaksi, atau kata kunci...',
-                    
-                    // Testimonial Card
-                    'transactionID': 'ID Transaksi:',
-                    'item': 'Item:',
-                    
-                    // Category labels
-                    'categoryJualBeli': 'Jual Beli',
-                    'categoryJasa': 'Jasa Digital',
-                    'categorySewa': 'Sewa Menyewa',
-                    'categoryGame': 'Game Item',
-                    'categoryCrypto': 'Crypto',
-                    
-                    // No results message
-                    'noResults': 'Tidak ada testimoni yang sesuai dengan kriteria pencarian Anda.',
-                    
-                    // Loader
-                    'loading': 'Memuat testimoni...',
-                    
-                    // CTA Section
-                    'ctaHeading': 'Siap Bertransaksi dengan Aman?',
-                    'ctaText': 'Bergabunglah dengan ribuan pengguna yang telah mempercayai ProMiddleman sebagai pihak ketiga dalam transaksi online mereka.',
-                    'ctaButton': 'Mulai Transaksi Sekarang',
-                    
-                    // Footer
-                    'aboutHeading': 'Tentang ProMiddleman',
-                    'aboutText1': 'ProMiddleman adalah jasa rekening bersama terpercaya yang telah memfasilitasi ribuan transaksi online sejak 2015 dengan komitmen untuk keamanan, kecepatan, dan kepuasan pengguna.',
-                    'aboutText2': 'Kami hadir untuk memberikan solusi aman dalam setiap transaksi online Anda, dengan layanan profesional yang mengutamakan transparansi dan kepercayaan.',
-                    'verifiedBy': 'Terverifikasi Oleh',
-                    'localPlatforms': 'Platform Lokal',
-                    'internationalPlatforms': 'Platform Internasional',
-                    'otherVerifications': 'Verifikasi Lainnya',
-                    
-                    'copyright': '© 2025 ProMiddleman. Hak Cipta Dilindungi. Platform Rekening Bersama #1 di Indonesia.'
-                },
-                en: {
-                    // Header
-                    'logoText': 'ProMiddleman',
-                    'tagline': 'Trusted Escrow Service Since 2015',
-                    'stat1': 'Successful Transactions',
-                    'stat2': 'Total Transaction Value',
-                    'stat3': 'Satisfaction Rate',
-                    
-                    // Main Content
-                    'testimonialHeading': 'What They Say About ProMiddleman?',
-                    'testimonialSubheading': 'Thousands of users have trusted their online transactions to us. Here are real testimonials from ProMiddleman users who have experienced the security of transacting with us.',
-                    
-                    // Filter Buttons
-                    'filterAll': 'All Categories',
-                    'filterProducts': 'Product Purchase',
-                    'filterServices': 'Digital Services',
-                    'filterRentals': 'Rentals',
-                    'filterGameItems': 'Game Items',
-                    'filterCrypto': 'Cryptocurrency',
-                    
-                    // Search
-                    'searchPlaceholder': 'Search by name, transaction ID, or keywords...',
-                    
-                    // Testimonial Card
-                    'transactionID': 'Transaction ID:',
-                    'item': 'Item:',
-                    
-                    // Category labels
-                    'categoryJualBeli': 'Products',
-                    'categoryJasa': 'Digital Services',
-                    'categorySewa': 'Rentals',
-                    'categoryGame': 'Game Items',
-                    'categoryCrypto': 'Crypto',
-                    
-                    // No results message
-                    'noResults': 'No testimonials match your search criteria.',
-                    
-                    // Loader
-                    'loading': 'Loading testimonials...',
-                    
-                    // CTA Section
-                    'ctaHeading': 'Ready to Transact Safely?',
-                    'ctaText': 'Join thousands of users who have trusted ProMiddleman as a third party in their online transactions.',
-                    'ctaButton': 'Start Transaction Now',
-                    
-                    // Footer
-                    'aboutHeading': 'About ProMiddleman',
-                    'aboutText1': 'ProMiddleman is a trusted escrow service that has facilitated thousands of online transactions since 2015 with a commitment to security, speed, and user satisfaction.',
-                    'aboutText2': 'We are here to provide secure solutions for all your online transactions, with professional services that prioritize transparency and trust.',
-                    'verifiedBy': 'Verified By',
-                    'localPlatforms': 'Local Platforms',
-                    'internationalPlatforms': 'International Platforms',
-                    'otherVerifications': 'Other Verifications',
-                    
-                    'copyright': '© 2025 ProMiddleman. All Rights Reserved. #1 Escrow Platform in World.'
-                }
-            };
-
-            // Product type translations
-            const transactionTypeTranslations = {
-                id: {
-                    "Jual Beli Barang": "Jual Beli Barang",
-                    "Jasa Digital": "Jasa Digital",
-                    "Sewa Menyewa": "Sewa Menyewa",
-                    "Game Item": "Game Item",
-                    "Cryptocurrency": "Cryptocurrency"
-                },
-                en: {
-                    "Jual Beli Barang": "Product Purchase",
-                    "Jasa Digital": "Digital Services",
-                    "Sewa Menyewa": "Rentals",
-                    "Game Item": "Game Items",
-                    "Cryptocurrency": "Cryptocurrency"
-                }
-            };
-
-            // Testimonial text translations (simplified mapping for common phrases)
-            const testimonialPhrases = {
-                "Transaksi berjalan lancar": "Transaction went smoothly",
-                "Admin cepat tanggap": "Admin responded quickly",
-                "barang sampai tepat waktu": "item arrived on time",
-                "layanan rekber yang terpercaya": "trustworthy escrow service",
-                "Awalnya takut": "Initially I was afraid",
-                "pertama kali pakai rekber": "first time using an escrow service",
-                "prosesnya gampang banget": "the process was very easy",
-                "Penjual juga langsung terima dana": "Seller immediately received the funds",
-                "begitu barang sampai ke tangan saya": "once the item reached my hands",
-                "Recommended": "Recommended",
-                "selalu puas dengan pelayanannya": "always satisfied with the service",
-                "Admin fast response": "Admin responded quickly",
-                "jelas menjelaskan tahapan-tahapannya": "clearly explained the process steps",
-                "Terima kasih": "Thank you",
-                "berkat kalian transaksi": "thanks to you my transaction",
-                "aman tanpa was-was": "secure without worries",
-                "Fee-nya worth it": "The fee is worth it",
-                "untuk keamanan yang didapat": "for the security provided",
-                "Mantap": "Excellent",
-                "Barang sampai dengan kondisi sesuai deskripsi": "Item arrived in condition as described",
-                "cuma 1 hari": "only 1 day",
-                "CS-nya helpful banget": "Customer service was very helpful",
-                "Sempat panik": "I panicked a bit",
-                "pengiriman delay": "shipping was delayed",
-                "tapi admin ProMiddleman sigap": "but the ProMiddleman admin was quick",
-                "bantu follow up ke kurir": "to help follow up with the courier",
-                "Akhirnya barang sampai dengan selamat": "Finally the item arrived safely",
-                "Best service": "Best service",
-                "Bisa nego fee": "Could negotiate the fee",
-                "untuk transaksi nominal gede": "for large transactions",
-                "udah jadi penengah yang bisa dipercaya": "have become a trusted mediator"
-            };
-
-            // Function to translate testimonial text to English
-            function translateTestimonialText(text) {
-                let translatedText = text;
-                
-                // Replace common phrases
-                Object.keys(testimonialPhrases).forEach(phrase => {
-                    translatedText = translatedText.replace(
-                        new RegExp(phrase, 'gi'), 
-                        testimonialPhrases[phrase]
-                    );
-                });
-                
-                return translatedText;
-            }
-            
-            // Function to translate item names
-            function translateItem(item, lang) {
-                if (lang === 'id') return item;
-                
-                // Simple word replacement for common terms
-                const wordMap = {
-                    "Kamera": "Camera",
-                    "Sepeda": "Bicycle",
-                    "Jam Tangan": "Watch",
-                    "Desain Logo": "Logo Design",
-                    "Toko Online": "Online Store",
-                    "Jasa Edit": "Editing Service",
-                    "Jasa Translate": "Translation Service",
-                    "Apartemen Harian": "Daily Apartment",
-                    "Mobil": "Car",
-                    "Ruang Meeting": "Meeting Room",
-                    "Kamar": "Bedroom",
-                    "Alat Berat": "Heavy Equipment",
-                    "Motor": "Motorcycle",
-                    "Studio Foto": "Photo Studio", 
-                    "Gedung Pernikahan": "Wedding Venue"
-                };
-                
-                let translatedItem = item;
-                Object.keys(wordMap).forEach(word => {
-                    translatedItem = translatedItem.replace(word, wordMap[word]);
-                });
-                
-                return translatedItem;
-            }
-            
-            // Fungsi untuk membuat HTML kartu testimoni dengan efek animasi
-            function createTestimonialCard(testimonial) {
-                // Generate random colors for card accent from blue palette
-                const blueHues = ['#1e3c72', '#2a5298', '#3a6fc9', '#2c5eaa', '#1d3d7d', '#274f94'];
-                const randomBlue = blueHues[Math.floor(Math.random() * blueHues.length)];
-                
-                // Get current language
-                const lang = config.language;
-                
-                // Determine transaction type translated
-                const translatedType = transactionTypeTranslations[lang][testimonial.type];
-                
-                // Format amount based on language
-                let formattedAmount = testimonial.amount;
-                if (lang === 'en') {
-                    // Convert from IDR to USD (rough estimate for display purposes)
-                    // Extract numeric value from formatted string
-                    const numericValue = parseInt(testimonial.amount.replace(/[^\d]/g, ""));
-                    const usdValue = numericValue / 15000; // Assuming 1 USD = 15,000 IDR
-                    formattedAmount = new Intl.NumberFormat('en-US', {
-                        style: 'currency',
-                        currency: 'USD',
-                        maximumFractionDigits: 0
-                    }).format(usdValue);
-                }
-                
-                // Menentukan badge kategori transaksi
-                let categoryBadge = '';
-                switch(testimonial.type) {
-                    case 'Jual Beli Barang':
-                        categoryBadge = `<span class="category-badge" style="background-color: rgba(30, 60, 114, 0.1); color: #1e3c72;">${translations[lang].categoryJualBeli}</span>`;
-                        break;
-                    case 'Jasa Digital':
-                        categoryBadge = `<span class="category-badge" style="background-color: rgba(76, 175, 80, 0.1); color: #4CAF50;">${translations[lang].categoryJasa}</span>`;
-                        break;
-                    case 'Sewa Menyewa':
-                        categoryBadge = `<span class="category-badge" style="background-color: rgba(156, 39, 176, 0.1); color: #9C27B0;">${translations[lang].categorySewa}</span>`;
-                        break;
-                    case 'Game Item':
-                        categoryBadge = `<span class="category-badge" style="background-color: rgba(255, 152, 0, 0.1); color: #FF9800;">${translations[lang].categoryGame}</span>`;
-                        break;
-                    case 'Cryptocurrency':
-                        categoryBadge = `<span class="category-badge" style="background-color: rgba(255, 87, 34, 0.1); color: #FF5722;">${translations[lang].categoryCrypto}</span>`;
-                        break;
-                }
-                
-                return `
-                    <div class="testimonial-card" style="border-top: 3px solid ${randomBlue};">
-                        <div class="testimonial-header">
-                            <div class="user-info">
-                                <div class="user-name-container">
-                                    <div class="user-name">${testimonial.name}</div>
-                                    ${categoryBadge}
-                                </div>
-                                <div class="transaction-type">
-                                    <strong>${translations[lang].transactionID}</strong> ${testimonial.transactionId}
-                                </div>
-                                <div class="transaction-type">
-                                    <strong>${translations[lang].item}</strong> ${lang === 'id' ? testimonial.item : translateItem(testimonial.item, lang)}
-                                </div>
-                                <div class="rating">
-                                    ${createStarRating(testimonial.rating)}
-                                </div>
-                            </div>
-                        </div>
-                        <div class="testimonial-body">
-                            <div class="testimonial-text">${lang === 'id' ? testimonial.text : translateTestimonialText(testimonial.text)}</div>
-                        </div>
-                        <div class="testimonial-footer">
-                            <div class="transaction-date">${testimonial.date}</div>
-                            <div class="transaction-amount">${formattedAmount}</div>
-                        </div>
-                    </div>
-                `;
-            }
-            
-            // Fungsi untuk filter testimoni
-            function filterTestimonials() {
-                let filtered = [...allTestimonials];
-                
-                // Aplikasikan filter kategori
-                if (config.filter !== 'all') {
-                    filtered = filtered.filter(t => t.filter[config.filter]);
-                }
-                
-                // Aplikasikan pencarian
-                if (config.searchTerm.length >= 2) {
-                    const term = config.searchTerm.toLowerCase();
-                    filtered = filtered.filter(t => 
-                        t.name.toLowerCase().includes(term) ||
-                        t.item.toLowerCase().includes(term) ||
-                        t.text.toLowerCase().includes(term) ||
-                        t.transactionId.toLowerCase().includes(term)
-                    );
-                }
-                
-                return filtered;
-            }
-            
-            // Fungsi untuk menampilkan testimoni
-            function displayTestimonials() {
-                // Tampilkan loader
-                loader.style.display = 'block';
-                testimonialContainer.innerHTML = '';
-                
-                // Filter testimoni
-                const filteredTestimonials = filterTestimonials();
-                
-                // Hitung total halaman
-                const totalPages = Math.ceil(filteredTestimonials.length / config.itemsPerPage);
-                
-                // Ambil item untuk halaman saat ini
-                const startIndex = (config.currentPage - 1) * config.itemsPerPage;
-                const endIndex = Math.min(startIndex + config.itemsPerPage, filteredTestimonials.length);
-                const currentPageItems = filteredTestimonials.slice(startIndex, endIndex);
-                
-                // Jika tidak ada hasil
-                if (currentPageItems.length === 0) {
-                    testimonialContainer.innerHTML = `
-                        <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
-                            ${translations[config.language].noResults}
-                        </div>
-                    `;
-                } else {
-                    // Buat HTML untuk setiap testimoni
-                    let testimonialsHTML = '';
-                    currentPageItems.forEach(testimonial => {
-                        testimonialsHTML += createTestimonialCard(testimonial);
-                    });
-                    
-                    // Tampilkan testimoni
-                    testimonialContainer.innerHTML = testimonialsHTML;
-                }
-                
-                // Buat paginasi
-                renderPagination(totalPages);
-                
-                // Sembunyikan loader
-                loader.style.display = 'none';
-            }
-            
-            // Fungsi untuk membuat paginasi
-            function renderPagination(totalPages) {
-                if (totalPages <= 1) {
-                    paginationContainer.style.display = 'none';
-                    return;
-                }
-                
-                paginationContainer.style.display = 'flex';
-                
-                let paginationHTML = `
-                    <button class="page-btn prev-btn" ${config.currentPage === 1 ? 'disabled' : ''}>«</button>
-                `;
-                
-                // Tentukan halaman yang ditampilkan
-                const maxVisiblePages = 5;
-                let startPage = Math.max(1, config.currentPage - Math.floor(maxVisiblePages / 2));
-                let endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-                
-                if (endPage - startPage + 1 < maxVisiblePages) {
-                    startPage = Math.max(1, endPage - maxVisiblePages + 1);
-                }
-                
-                // Buat tombol untuk setiap halaman
-                for (let i = startPage; i <= endPage; i++) {
-                    paginationHTML += `
-                        <button class="page-btn number-btn ${i === config.currentPage ? 'active' : ''}" data-page="${i}">${i}</button>
-                    `;
-                }
-                
-                paginationHTML += `
-                    <button class="page-btn next-btn" ${config.currentPage === totalPages ? 'disabled' : ''}>»</button>
-                `;
-                
-                paginationContainer.innerHTML = paginationHTML;
-                
-                // Tambahkan event listener untuk tombol paginasi
-                document.querySelectorAll('.page-btn.number-btn').forEach(button => {
-                    button.addEventListener('click', function() {
-                        config.currentPage = parseInt(this.getAttribute('data-page'));
-                        displayTestimonials();
-                        window.scrollTo(0, document.querySelector('.testimonial-heading').offsetTop - 50);
-                    });
-                });
-                
-                // Tombol previous
-                document.querySelector('.prev-btn').addEventListener('click', function() {
-                    if (config.currentPage > 1) {
-                        config.currentPage--;
-                        displayTestimonials();
-                        window.scrollTo(0, document.querySelector('.testimonial-heading').offsetTop - 50);
-                    }
-                });
-                
-                // Tombol next
-                document.querySelector('.next-btn').addEventListener('click', function() {
-                    if (config.currentPage < totalPages) {
-                        config.currentPage++;
-                        displayTestimonials();
-                        window.scrollTo(0, document.querySelector('.testimonial-heading').offsetTop - 50);
-                    }
-                });
-            }
-            
-            // Add a function to switch the language of the interface
-            function switchLanguage(lang) {
-                // Set active button
-                document.querySelectorAll('.language-btn').forEach(btn => {
-                    if (btn.getAttribute('data-lang') === lang) {
-                        btn.classList.add('active');
-                    } else {
-                        btn.classList.remove('active');
-                    }
-                });
-                
-                // Update text elements
-                
-                // Header
-                document.querySelector('.logo').textContent = translations[lang].logoText;
-                document.querySelector('.tagline').textContent = translations[lang].tagline;
-                document.querySelectorAll('.stat-label')[0].textContent = translations[lang].stat1;
-                document.querySelectorAll('.stat-label')[1].textContent = translations[lang].stat2;
-                document.querySelectorAll('.stat-label')[2].textContent = translations[lang].stat3;
-                
-                // Main Content
-                document.querySelector('.testimonial-heading h2').textContent = translations[lang].testimonialHeading;
-                document.querySelector('.testimonial-heading p').textContent = translations[lang].testimonialSubheading;
-                
-                // Filter Buttons
-                document.querySelectorAll('.filter-btn')[0].textContent = translations[lang].filterAll;
-                document.querySelectorAll('.filter-btn')[1].textContent = translations[lang].filterProducts;
-                document.querySelectorAll('.filter-btn')[2].textContent = translations[lang].filterServices;
-                document.querySelectorAll('.filter-btn')[3].textContent = translations[lang].filterRentals;
-                document.querySelectorAll('.filter-btn')[4].textContent = translations[lang].filterGameItems;
-                document.querySelectorAll('.filter-btn')[5].textContent = translations[lang].filterCrypto;
-                
-                // Search
-                document.querySelector('.search-input').placeholder = translations[lang].searchPlaceholder;
-                
-                // CTA Section
-                document.querySelector('.cta-heading').textContent = translations[lang].ctaHeading;
-                document.querySelector('.cta-text').textContent = translations[lang].ctaText;
-                document.querySelector('.cta-btn').textContent = translations[lang].ctaButton;
-                
-                // Footer
-                document.querySelectorAll('.footer-column h3')[0].textContent = translations[lang].aboutHeading;
-                document.querySelectorAll('.footer-column p')[0].textContent = translations[lang].aboutText1;
-                document.querySelectorAll('.footer-column p')[1].textContent = translations[lang].aboutText2;
-                
-                // Verification Badges
-                document.querySelector('.verification-badges h4').textContent = translations[lang].verifiedBy;
-                document.querySelectorAll('.badge-group h5')[0].textContent = translations[lang].localPlatforms;
-                document.querySelectorAll('.badge-group h5')[1].textContent = translations[lang].internationalPlatforms;
-                document.querySelectorAll('.badge-group h5')[2].textContent = translations[lang].otherVerifications;
-                
-                document.querySelector('.copyright').textContent = translations[lang].copyright;
-                
-                // Store the selected language in localStorage
-                localStorage.setItem('preferredLanguage', lang);
-                
-                // Update the config and redisplay testimonials
-                config.language = lang;
-                displayTestimonials();
-                
-                // For Stat number (Rp value) in header - convert to USD if English
-                if (lang === 'en') {
-                    // Find the total value stat which starts with "Rp"
-                    const totalValueStat = document.querySelectorAll('.stat-number')[1];
-                    if (totalValueStat && totalValueStat.textContent.includes('Rp')) {
-                        const numericValue = parseInt(totalValueStat.textContent.replace(/[^\d]/g, ""));
-                        const usdValue = numericValue / 15000; // Assuming 1 USD = 15,000 IDR
-                        totalValueStat.textContent = '$' + (usdValue).toLocaleString() + 'M+';
-                    }
-                } else {
-                    // Reset to IDR if already changed
-                    const totalValueStat = document.querySelectorAll('.stat-number')[1];
-                    if (totalValueStat && totalValueStat.textContent.includes('$')) {
-                        totalValueStat.textContent = 'Rp 120M+';
-                    }
-                }
-            }
-            
-            // Inisialisasi tombol filter
-            filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    this.classList.add('active');
-                    
-                    config.filter = this.getAttribute('data-filter');
-                    config.currentPage = 1;
-                    displayTestimonials();
-                });
-            });
-            
-            // Inisialisasi pencarian
-            let searchTimeout;
-            searchInput.addEventListener('input', function() {
-                clearTimeout(searchTimeout);
-                searchTimeout = setTimeout(() => {
-                    config.searchTerm = this.value.trim();
-                    config.currentPage = 1;
-                    displayTestimonials();
-                }, 300);
-            });
-            
-            // Animasi untuk tombol CTA
-            const ctaButton = document.querySelector('.cta-btn');
-            ctaButton.addEventListener('mouseover', () => {
-                ctaButton.style.transform = 'translateY(-5px)';
-                ctaButton.style.boxShadow = '0 8px 25px rgba(0,0,0,0.2)';
-            });
-            
-            ctaButton.addEventListener('mouseout', () => {
-                ctaButton.style.transform = '';
-                ctaButton.style.boxShadow = '';
-            });
-            
-            // Initialize language switcher
-            document.querySelectorAll('.language-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const lang = this.getAttribute('data-lang');
-                    switchLanguage(lang);
-                });
-            });
-            
-            // Check localStorage for saved language preference
-            const savedLanguage = localStorage.getItem('preferredLanguage');
-            if (savedLanguage) {
-                config.language = savedLanguage;
-                switchLanguage(savedLanguage);
-            }
-            
-            // Tampilkan testimoni saat halaman dimuat
-            displayTestimonials();
+  <!-- Load Monaco Editor -->
+  <script>var require = { paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs' } };</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/loader.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/editor/editor.main.nls.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.36.1/min/vs/editor/editor.main.js"></script>
+  
+  <!-- JavaScript Libraries -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.14.7/beautify.min.js"></script>
+  
+  <!-- Custom Scripts -->
+  <script src="deobfuscator.js"></script>
+  <script>
+    // Global variables
+    let inputEditor, outputEditor;
+    let isDeobfuscating = false;
+    
+    // Initialize Monaco Editor
+    document.addEventListener('DOMContentLoaded', function() {
+      // Initialize editors
+      inputEditor = monaco.editor.create(document.getElementById('inputEditor'), {
+        value: '',
+        language: 'python',
+        theme: 'vs-dark',
+        automaticLayout: true,
+        minimap: { enabled: false }
+      });
+      
+      outputEditor = monaco.editor.create(document.getElementById('outputEditor'), {
+        value: '',
+        language: 'python',
+        theme: 'vs-dark',
+        readOnly: true,
+        automaticLayout: true,
+        minimap: { enabled: false }
+      });
+      
+      // Setup event listeners
+      setupEventListeners();
+      
+      // Check for saved settings
+      loadSettings();
+      
+      // Check for URL parameters
+      checkURLParameters();
+    });
+    
+    function setupEventListeners() {
+      // Tabs switching
+      document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+          const tabContainer = this.closest('.tabs');
+          const tabContents = tabContainer.nextElementSibling.parentElement.querySelectorAll('.tab-content');
+          
+          // Update active tab
+          tabContainer.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Show selected tab content
+          const tabName = this.getAttribute('data-tab');
+          tabContents.forEach(content => content.classList.remove('active'));
+          document.getElementById(`tab-${tabName}`).classList.add('active');
         });
-    </script>
+      });
+      
+      // Settings tabs
+      document.querySelectorAll('.settings-tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll('.settings-tab').forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          
+          const panels = document.querySelectorAll('.settings-panel');
+          panels.forEach(panel => panel.classList.add('hidden'));
+          
+          const tabName = this.getAttribute('data-settings-tab');
+          document.getElementById(`settings-${tabName}`).classList.remove('hidden');
+        });
+      });
+      
+      // Button handlers
+      document.getElementById('btnDecode').addEventListener('click', deobfuscateCode);
+      document.getElementById('btnClear').addEventListener('click', clearEditors);
+      document.getElementById('btnLoad').addEventListener('click', () => document.getElementById('fileInput').click());
+      document.getElementById('btnSave').addEventListener('click', saveResult);
+      document.getElementById('btnSettings').addEventListener('click', toggleSettings);
+      document.getElementById('btnCloseSettings').addEventListener('click', toggleSettings);
+      document.getElementById('btnSaveSettings').addEventListener('click', saveSettings);
+      
+      // File input
+      document.getElementById('fileInput').addEventListener('change', loadFile);
+      
+      // Drag and drop
+      const dropArea = document.getElementById('dropArea');
+      
+      ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+      });
+      
+      ['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, () => dropArea.classList.add('active'), false);
+      });
+      
+      ['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, () => dropArea.classList.remove('active'), false);
+      });
+      
+      dropArea.addEventListener('drop', handleDrop, false);
+    }
+    
+    function preventDefaults(e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    
+    function handleDrop(e) {
+      const dt = e.dataTransfer;
+      const files = dt.files;
+      
+      if (files.length) {
+        handleFile(files[0]);
+      }
+    }
+    
+    function loadFile(e) {
+      const file = e.target.files[0];
+      if (file) {
+        handleFile(file);
+      }
+    }
+    
+    function handleFile(file) {
+      // Check if file is a Python file
+      if (!file.name.match(/\.(py|pyw|txt|pyc)$/i)) {
+        alert('Please select a Python file (.py, .pyw, .pyc or .txt)');
+        return;
+      }
+      
+      const reader = new FileReader();
+      
+      reader.onload = function(e) {
+        const content = e.target.result;
+        
+        // Handle binary files (like .pyc)
+        if (file.name.endsWith('.pyc')) {
+          // Show notification that we're handling a binary file
+          showLoading('Processing PYC file...');
+          
+          // In a real implementation, you'd process the binary PYC file here
+          // For now, we'll just show a placeholder message
+          setTimeout(() => {
+            inputEditor.setValue("# PYC binary file loaded\n# Use deobfuscate button to process");
+            hideLoading();
+            
+            // Auto-run if enabled
+            if (document.getElementById('toggle-auto-run').checked) {
+              deobfuscateCode();
+            }
+          }, 500);
+        } else {
+          // Text file
+          inputEditor.setValue(content);
+          
+          // Auto-run if enabled
+          if (document.getElementById('toggle-auto-run').checked) {
+            deobfuscateCode();
+          }
+        }
+        
+        // Add to history
+        addToHistory(file.name, content.length);
+      };
+      
+      if (file.name.endsWith('.pyc')) {
+        reader.readAsArrayBuffer(file);
+      } else {
+        reader.readAsText(file);
+      }
+    }
+    
+    function addToHistory(filename, size) {
+      // Get existing history
+      let history = JSON.parse(localStorage.getItem('deobfuscator_history') || '[]');
+      
+      // Add new item
+      history.unshift({
+        filename: filename,
+        size: size,
+        date: new Date().toISOString()
+      });
+      
+      // Limit to 10 items
+      history = history.slice(0, 10);
+      
+      // Save back to storage
+      localStorage.setItem('deobfuscator_history', JSON.stringify(history));
+      
+      // Update UI if visible
+      updateHistoryUI();
+    }
+    
+    function updateHistoryUI() {
+      const container = document.getElementById('historyContainer');
+      const history = JSON.parse(localStorage.getItem('deobfuscator_history') || '[]');
+      
+      if (history.length === 0) {
+        container.innerHTML = '<p>No recent files.</p>';
+        return;
+      }
+      
+      let html = '';
+      history.forEach(item => {
+        const date = new Date(item.date);
+        html += `
+          <div class="history-item" data-filename="${item.filename}">
+            <div class="history-file"><i class="fas fa-file-code"></i> ${item.filename}</div>
+            <div class="history-date">${date.toLocaleString()} · ${formatSize(item.size)}</div>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+      
+      // Add click handlers
+      document.querySelectorAll('.history-item').forEach(item => {
+        item.addEventListener('click', function() {
+          // In a real implementation, you'd load the file content from storage
+          // For the demo, we'll just show a message
+          alert(`File would be loaded: ${this.getAttribute('data-filename')}`);
+          toggleSettings();
+        });
+      });
+    }
+    
+    function formatSize(size) {
+      if (size < 1024) return size + ' B';
+      else if (size < 1024 * 1024) return (size / 1024).toFixed(1) + ' KB';
+      else return (size / (1024 * 1024)).toFixed(1) + ' MB';
+    }
+    
+    function deobfuscateCode() {
+      if (isDeobfuscating) return;
+      
+      const code = inputEditor.getValue();
+      if (!code.trim()) {
+        alert('Please enter some code to deobfuscate');
+        return;
+      }
+      
+      isDeobfuscating = true;
+      showLoading('Analyzing obfuscation patterns...');
+      
+      // Get settings
+      const settings = {
+        maxDepth: parseInt(document.getElementById('max-depth').value) || 30,
+        timeout: parseInt(document.getElementById('timeout').value) || 60,
+        useMarshal: document.getElementById('toggle-marshal').checked,
+        useBase64: document.getElementById('toggle-base64').checked,
+        useZlib: document.getElementById('toggle-zlib').checked,
+        useLambda: document.getElementById('toggle-lambda').checked,
+        useHex: document.getElementById('toggle-hex').checked,
+        useEval: document.getElementById('toggle-eval').checked,
+        usePyc: document.getElementById('toggle-pyc').checked,
+        useCustom: document.getElementById('toggle-custom').checked,
+        customPattern: document.getElementById('custom-pattern').value,
+        beautify: document.getElementById('toggle-beautify').checked
+      };
+      
+      // First, analyze for patterns
+      setTimeout(() => {
+        // Just a demo - in real implementation, you'd use a worker
+        analyzePatterns(code);
+        showLoading('Deobfuscating code...');
+        
+        // Simulate processing delay
+        setTimeout(() => {
+          try {
+            // Create deobfuscator instance
+            const deobfuscator = new PythonDeobfuscator(settings);
+            const startTime = performance.now();
+            
+            // Process the code
+            const result = deobfuscator.deobfuscate(code);
+            const endTime = performance.now();
+            
+            // Update output
+            outputEditor.setValue(result.code);
+            
+            // Update stats
+            updateStats(result.stats, code.length, result.code.length, endTime - startTime);
+            
+            hideLoading();
+            isDeobfuscating = false;
+          } catch (error) {
+            hideLoading();
+            isDeobfuscating = false;
+            alert('Error during deobfuscation: ' + error.message);
+          }
+        }, 1000);
+      }, 1000);
+    }
+    
+    function analyzePatterns(code) {
+      // Simplified pattern detection for demo
+      const patterns = [];
+      
+      // Check for marshal patterns
+      if (code.includes('marshal.loads') || code.includes('__import__') && code.includes('marshal')) {
+        patterns.push({
+          type: 'marshal',
+          example: code.match(/exec\(marshal\.loads\(.*?\)\)/) || 
+                   code.match(/__import__\(['"]marshal['"]\).*?loads\(.*?\)/)
+        });
+      }
+      
+      // Check for base64 patterns
+      if (code.includes('base64') || code.includes('b64decode')) {
+        patterns.push({
+          type: 'base64',
+          example: code.match(/base64\.b64decode\(.*?\)/) || 
+                   code.match(/__import__\(['"]base64['"]\).*?b64decode\(.*?\)/)
+        });
+      }
+      
+      // Check for zlib patterns
+      if (code.includes('zlib') || code.includes('decompress')) {
+        patterns.push({
+          type: 'zlib',
+          example: code.match(/zlib\.decompress\(.*?\)/) || 
+                   code.match(/__import__\(['"]zlib['"]\).*?decompress\(.*?\)/)
+        });
+      }
+      
+      // Check for lambda patterns
+      if (code.includes('lambda')) {
+        patterns.push({
+          type: 'lambda',
+          example: code.match(/lambda [^:]+:.*?\(.*?\)/)
+        });
+      }
+      
+      // Update UI
+      updatePatternUI(patterns);
+    }
+    
+    function updatePatternUI(patterns) {
+      const container = document.getElementById('detectedPatterns');
+      
+      if (patterns.length === 0) {
+        container.innerHTML = '<p>No obfuscation patterns detected.</p>';
+        return;
+      }
+      
+      let html = '';
+      patterns.forEach(pattern => {
+        let exampleCode = pattern.example ? pattern.example[0] : 'No example found';
+        
+        html += `
+          <div class="pattern-item">
+            <div class="pattern-name"><i class="fas fa-code"></i> ${pattern.type.toUpperCase()} Obfuscation</div>
+            <div class="pattern-code">${exampleCode}</div>
+          </div>
+        `;
+      });
+      
+      container.innerHTML = html;
+    }
+    
+    function updateStats(stats, originalSize, resultSize, timeElapsed) {
+      // Show stats container
+      document.getElementById('statsContainer').classList.remove('hidden');
+      
+      // Update stat values
+      document.getElementById('statLayers').textContent = stats.layers;
+      document.getElementById('statTime').textContent = `${timeElapsed.toFixed(0)}ms`;
+      
+      // Calculate size reduction
+      const reduction = (100 - (resultSize / originalSize * 100)).toFixed(1);
+      document.getElementById('statSize').textContent = `${reduction}%`;
+      
+      // Calculate complexity (just a demo value)
+      const complexity = Math.min(10, Math.ceil(stats.layers / 3));
+      document.getElementById('statComplexity').textContent = complexity;
+      
+      // Update techniques used
+      const techniquesContainer = document.getElementById('techniquesContainer');
+      let html = '';
+      
+      Object.entries(stats.techniques).forEach(([technique, count]) => {
+        html += `<span class="badge">${technique} (${count})</span>`;
+      });
+      
+      if (html === '') {
+        html = '<p>No techniques used.</p>';
+      }
+      
+      techniquesContainer.innerHTML = html;
+    }
+    
+    function clearEditors() {
+      inputEditor.setValue('');
+      outputEditor.setValue('');
+      document.getElementById('statsContainer').classList.add('hidden');
+      document.getElementById('detectedPatterns').innerHTML = '<p>No patterns detected yet. Submit code for analysis.</p>';
+      document.getElementById('techniquesContainer').innerHTML = '';
+    }
+    
+    function saveResult() {
+      const code = outputEditor.getValue();
+      if (!code.trim()) {
+        alert('No result to save');
+        return;
+      }
+      
+      const blob = new Blob([code], { type: 'text/plain' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'deobfuscated.py';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+    
+    function toggleSettings() {
+      const modal = document.getElementById('settingsModal');
+      modal.classList.toggle('hidden');
+      
+      // Update history if visible
+      if (!modal.classList.contains('hidden')) {
+        updateHistoryUI();
+      }
+    }
+    
+    function saveSettings() {
+      // Get all settings
+      const settings = {
+        maxDepth: document.getElementById('max-depth').value,
+        timeout: document.getElementById('timeout').value,
+        useMarshal: document.getElementById('toggle-marshal').checked,
+        useBase64: document.getElementById('toggle-base64').checked,
+        useZlib: document.getElementById('toggle-zlib').checked,
+        useLambda: document.getElementById('toggle-lambda').checked,
+        useHex: document.getElementById('toggle-hex').checked,
+        useEval: document.getElementById('toggle-eval').checked,
+        usePyc: document.getElementById('toggle-pyc').checked,
+        useCustom: document.getElementById('toggle-custom').checked,
+        customPattern: document.getElementById('custom-pattern').value,
+        beautify: document.getElementById('toggle-beautify').checked,
+        autoRun: document.getElementById('toggle-auto-run').checked
+      };
+      
+      // Save to localStorage
+      localStorage.setItem('deobfuscator_settings', JSON.stringify(settings));
+      
+      // Show confirmation
+      alert('Settings saved successfully');
+      toggleSettings();
+    }
+    
+    function loadSettings() {
+      const settings = JSON.parse(localStorage.getItem('deobfuscator_settings'));
+      if (!settings) return;
+      
+      // Apply saved settings
+      document.getElementById('max-depth').value = settings.maxDepth;
+      document.getElementById('timeout').value = settings.timeout;
+      document.getElementById('toggle-marshal').checked = settings.useMarshal;
+      document.getElementById('toggle-base64').checked = settings.useBase64;
+      document.getElementById('toggle-zlib').checked = settings.useZlib;
+      document.getElementById('toggle-lambda').checked = settings.useLambda;
+      document.getElementById('toggle-hex').checked = settings.useHex;
+      document.getElementById('toggle-eval').checked = settings.useEval;
+      document.getElementById('toggle-pyc').checked = settings.usePyc;
+      document.getElementById('toggle-custom').checked = settings.useCustom;
+      document.getElementById('custom-pattern').value = settings.customPattern;
+      document.getElementById('toggle-beautify').checked = settings.beautify;
+      document.getElementById('toggle-auto-run').checked = settings.autoRun;
+    }
+    
+    function checkURLParameters() {
+      // Check if there's code in the URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const codeParam = urlParams.get('code');
+      
+      if (codeParam) {
+        try {
+          const code = atob(codeParam);
+          inputEditor.setValue(code);
+          
+          // Auto-run if enabled
+          if (document.getElementById('toggle-auto-run').checked) {
+            deobfuscateCode();
+          }
+        } catch (e) {
+          console.error('Error decoding URL parameter:', e);
+        }
+      }
+    }
+    
+    function showLoading(text, subtext) {
+      document.getElementById('loadingText').textContent = text;
+      document.getElementById('loadingSubtext').textContent = subtext || 'This may take a moment depending on complexity';
+      document.getElementById('loadingModal').classList.remove('hidden');
+    }
+    
+    function hideLoading() {
+      document.getElementById('loadingModal').classList.add('hidden');
+    }
+    
+    // Mock deobfuscator class (this would be replaced by your actual implementation)
+    class PythonDeobfuscator {
+      constructor(options = {}) {
+        this.options = options;
+      }
+      
+      deobfuscate(code) {
+        // This is just a mock implementation for the demo
+        // In a real implementation, you'd perform actual deobfuscation here
+        
+        let processedCode = code;
+        
+        // Simulate multiple deobfuscation layers
+        if (code.includes('marshal.loads')) {
+          processedCode = processedCode.replace(/exec\(marshal\.loads\([^)]+\)\)/g, '# Marshal layer removed\n\n# Original obfuscated code:\n# $&\n\n# Deobfuscated code:');
+        }
+        
+        if (code.includes('base64')) {
+          processedCode = processedCode.replace(/exec\(base64\.b64decode\([^)]+\)\)/g, '# Base64 layer removed\n\n# Original obfuscated code:\n# $&\n\n# Deobfuscated code:');
+        }
+        
+        // Add some fake deobfuscated content if we don't have actual processing
+        if (processedCode === code) {
+          processedCode = '"""\nDeobfuscated Python Code\n"""\n\ndef main():\n    print("Hello World!")\n    \n    # This is demonstration code\n    result = 0\n    for i in range(10):\n        result += i\n        \n    return result\n\nif __name__ == "__main__":\n    main()';
+        }
+        
+        // Return result with stats
+        return {
+          code: processedCode,
+          stats: {
+            layers: Math.floor(Math.random() * 5) + 1,
+            techniques: {
+              marshal: code.includes('marshal') ? 1 : 0,
+              base64: code.includes('base64') ? 1 : 0,
+              zlib: code.includes('zlib') ? 1 : 0,
+              lambda: code.includes('lambda') ? 1 : 0
+            }
+          }
+        };
+      }
+    }
+  </script>
 </body>
 </html>
